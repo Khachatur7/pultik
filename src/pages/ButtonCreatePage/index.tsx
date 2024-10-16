@@ -21,7 +21,7 @@ const ButtonCreatePage = () => {
   const [cust, setCust] = useState("0");
   const [loading, setLoading] = useState(false);
   const [v, setV] = useState("15");
-  const [s, setS] = useState("32");
+  const [s, setS] = useState("35");
   const [g, setG] = useState("25");
   const [h, setH] = useState(false);
 
