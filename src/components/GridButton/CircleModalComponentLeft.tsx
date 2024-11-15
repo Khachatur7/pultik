@@ -159,8 +159,8 @@ const [index,setIndex] = useState(i)
                     old:i,
                     new:index
                   })
-                  .then(() => {
-                    toast.success("Цена изменена");
+                  .then((answer) => {
+                   toast.success(answer.data.xaltura)
                   });
               }}
             >
