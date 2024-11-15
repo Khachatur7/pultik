@@ -14,6 +14,7 @@ interface CircleModalComponentLeftProps {
   wBar: string;
   returnMode?: boolean;
   copy: boolean;
+  i:number
   setCopy: React.Dispatch<React.SetStateAction<boolean>>;
   setXalturaParent: React.Dispatch<any>;
 }
@@ -26,6 +27,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
   wBar,
   returnMode,
   copy,
+  i,
   setCopy,
   setXalturaParent,
 }) => {
@@ -36,7 +38,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
     JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem(`${sku}`)))) ||
       false
   );
-
+const [index,setIndex] = useState(i)
   function onMouseOver() {
     if (!exitHover) {
       setIsActive(true);
@@ -46,6 +48,13 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
   function onMouseLeave() {
     setIsActive(false);
   }
+
+  const newIndexNumber = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.value;
+    if (/^\d*$/.test(newValue)) {
+      setIndex(+newValue);
+    }
+  };
 
   async function ReturnModePlus() {
     if (!returnMode) {
@@ -134,6 +143,30 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
     >
       {isActive ? (
         <>
+         <div className="modal_comp_left_i">
+            <span>i:</span>
+            <input
+              type="text"
+              value={index}
+              onChange={(e) => newIndexNumber(e)}
+              className="max-w-[75px] outline-none border-solid border-black border-[1px]"
+            />
+            <button
+              className="modal_comp_left_i_bttn"
+              onClick={() => {
+                axios
+                  .post("/changeIndex", {
+                    old:i,
+                    new:index
+                  })
+                  .then(() => {
+                    toast.success("Цена изменена");
+                  });
+              }}
+            >
+              Ok
+            </button>
+          </div>
           <p className="popup__el">{comValue ? `com: ${comValue}` : "..."}</p>
           <p className="popup__el">{`bool: ${
             boolValue ? boolValue : "..."

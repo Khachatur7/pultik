@@ -276,6 +276,7 @@ const GridButton: React.FC<Props> = ({
           price={currentPrice}
         />
         <CircleModalComponentLeft
+        i={i}
           comValue={comValue}
           boolValue={boolValue}
           sku={sku}

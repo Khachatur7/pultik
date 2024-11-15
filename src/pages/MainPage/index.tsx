@@ -443,8 +443,10 @@ const MainPage = () => {
   const SearchBttns = () => {
     const res: ButtonItemType[] = [];
     items?.map((bttn) => {
+      console.log(items);
+      
       if (
-        bttn.fullName.toLowerCase().includes(bttnSearcher.trim().toLowerCase())
+        bttn.fullName?.toLowerCase().includes(bttnSearcher.trim().toLowerCase())
       ) {
         res.push(bttn);
       }
