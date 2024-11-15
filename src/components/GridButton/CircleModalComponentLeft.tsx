@@ -64,7 +64,6 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
       })
       
       if (post.status=200) {
-        toast.success(post.data.xaltura);
         setTimeout(()=>{
           location.reload()
         },500)
