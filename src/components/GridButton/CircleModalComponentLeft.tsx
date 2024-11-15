@@ -14,7 +14,7 @@ interface CircleModalComponentLeftProps {
   wBar: string;
   returnMode?: boolean;
   copy: boolean;
-  i:number
+  i: number;
   setCopy: React.Dispatch<React.SetStateAction<boolean>>;
   setXalturaParent: React.Dispatch<any>;
 }
@@ -38,7 +38,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
     JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem(`${sku}`)))) ||
       false
   );
-const [index,setIndex] = useState(i)
+  const [index, setIndex] = useState(i);
   function onMouseOver() {
     if (!exitHover) {
       setIsActive(true);
@@ -54,6 +54,22 @@ const [index,setIndex] = useState(i)
     if (/^\d*$/.test(newValue)) {
       setIndex(+newValue);
     }
+  };
+
+  const postNewBttnIndex = async () => {
+   const post = await axios
+      .post("/changeIndex", {
+        old: i,
+        new: index,
+      })
+      
+      if (post.status=200) {
+        toast.success(post.data.xaltura);
+        setTimeout(()=>{
+          location.reload()
+        },500)
+      }
+      
   };
 
   async function ReturnModePlus() {
@@ -143,7 +159,7 @@ const [index,setIndex] = useState(i)
     >
       {isActive ? (
         <>
-         <div className="modal_comp_left_i">
+          <div className="modal_comp_left_i">
             <span>i:</span>
             <input
               type="text"
@@ -151,19 +167,7 @@ const [index,setIndex] = useState(i)
               onChange={(e) => newIndexNumber(e)}
               className="max-w-[75px] outline-none border-solid border-black border-[1px]"
             />
-            <button
-              className="modal_comp_left_i_bttn"
-              onClick={() => {
-                axios
-                  .post("/changeIndex", {
-                    old:i,
-                    new:index
-                  })
-                  .then((answer) => {
-                   toast.success(answer.data.xaltura)
-                  });
-              }}
-            >
+            <button className="modal_comp_left_i_bttn" onClick={postNewBttnIndex}>
               Ok
             </button>
           </div>
