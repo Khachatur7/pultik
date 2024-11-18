@@ -194,6 +194,8 @@ const GridButton: React.FC<Props> = ({
     }
   };
 
+  
+
   const stockValueHandler = () => {
     if (!fStocks) {
       return "button-gradient";
@@ -276,7 +278,7 @@ const GridButton: React.FC<Props> = ({
           price={currentPrice}
         />
         <CircleModalComponentLeft
-        i={i}
+        ind={i}
           comValue={comValue}
           boolValue={boolValue}
           sku={sku}

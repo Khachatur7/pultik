@@ -14,7 +14,7 @@ interface CircleModalComponentLeftProps {
   wBar: string;
   returnMode?: boolean;
   copy: boolean;
-  i: number;
+  ind: number;
   setCopy: React.Dispatch<React.SetStateAction<boolean>>;
   setXalturaParent: React.Dispatch<any>;
 }
@@ -27,7 +27,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
   wBar,
   returnMode,
   copy,
-  i,
+  ind,
   setCopy,
   setXalturaParent,
 }) => {
@@ -38,11 +38,16 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
     JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem(`${sku}`)))) ||
       false
   );
-  const [index, setIndex] = useState(i);
+  const [index, setIndex] = useState<number>(ind);
+  const [firstRender,setFirstRender] = useState(true)
   function onMouseOver() {
     if (!exitHover) {
       setIsActive(true);
     }
+  }
+
+  if (ind>index && firstRender) {
+    setIndex(ind)
   }
 
   function onMouseLeave() {
@@ -53,24 +58,22 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
     const newValue = event.target.value;
     if (/^\d*$/.test(newValue)) {
       setIndex(+newValue);
+      setFirstRender(false)
     }
   };
 
   const postNewBttnIndex = async () => {
-   const post = await axios
-      .post("/changeIndex", {
-        old: i,
-        new: index,
-      })
-      
-      if (post.status=200) {
-        setTimeout(()=>{
-          location.reload()
-        },500)
-      }
-      
-  };
+    const post = await axios.post("/changeIndex", {
+      old: ind,
+      new: index,
+    });
 
+    if (post.status == 200) {
+      setTimeout(() => {
+        location.reload();
+      }, 500);
+    }
+  };
   async function ReturnModePlus() {
     if (!returnMode) {
       return alert("Pежим возврата выключен. Активируйте режим возврата!");
@@ -166,7 +169,10 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
               onChange={(e) => newIndexNumber(e)}
               className="max-w-[75px] outline-none border-solid border-black border-[1px]"
             />
-            <button className="modal_comp_left_i_bttn" onClick={postNewBttnIndex}>
+            <button
+              className="modal_comp_left_i_bttn"
+              onClick={postNewBttnIndex}
+            >
               Ok
             </button>
           </div>
