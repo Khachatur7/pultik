@@ -321,7 +321,9 @@ const ButtonCreatePage = () => {
     const getSalesInfo = async () => {
 
         try {
-            const res = await axios.get("/getSalles");
+            const res = await axios.post("/getSalles", {
+                user: localStorage.getItem("pultik-user-login"),
+              });
 
             if (!res || !res.data || !res.data.data) {
                 throw Error();
@@ -345,7 +347,9 @@ const ButtonCreatePage = () => {
     const getFexpInfo = async () => {
 
         try {
-            const res = await axios.get<{ data: FexpItemType[] }>("/getFexp");
+            const res = await axios.post<{ data: FexpItemType[] }>("/getFexp", {
+                user: localStorage.getItem("pultik-user-login"),
+              });
 
             if (!res.data || !res.data.data) {
                 throw Error();

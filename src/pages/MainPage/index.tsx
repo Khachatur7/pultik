@@ -410,7 +410,9 @@ const MainPage = () => {
 
   const getBots = async () => {
     try {
-      const res = await axios.get("/pultikMon");
+      const res = await axios.post("/pultikMon", {
+        user: localStorage.getItem("pultik-user-login")
+      });
 
       if (res.data) {
         setBots(res.data.answer);
