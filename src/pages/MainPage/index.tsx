@@ -237,7 +237,9 @@ const MainPage = () => {
 
   const loadData = async () => {
     try {
-      const res = await axios.get("/api/getData");
+      const res = await axios.post("/api/getData", {
+        user: localStorage.getItem("pultik-user-login"),
+      });
 
       if (!res.data) {
         throw Error();
@@ -444,7 +446,7 @@ const MainPage = () => {
     const res: ButtonItemType[] = [];
     items?.map((bttn) => {
       console.log(items);
-      
+
       if (
         bttn.fullName?.toLowerCase().includes(bttnSearcher.trim().toLowerCase())
       ) {
@@ -452,7 +454,7 @@ const MainPage = () => {
       }
     });
     setBttnsIndex(res);
-    
+
     if (notSearchYet) {
       setNotSearchYet(false);
     }
@@ -515,7 +517,7 @@ const MainPage = () => {
   }, [selectOpened]);
 
   useEffect(() => {
-    if (!(bttnSearcher=="")) {
+    if (!(bttnSearcher == "")) {
       SearchBttns();
     }
   }, [bttnSearcher]);
@@ -837,27 +839,29 @@ const MainPage = () => {
                 }}
               />
               <Button onClick={resetInputs} text="Reset" />
-             {
-              window.innerWidth > 400 &&  <div className="input_search_bttns">
-              <input
-                type="text"
-                className="searcher_input"
-                placeholder="Search"
-                value={bttnSearcher}
-                onChange={(e) => setBttnSearcher(e.target.value)}
-              />
-              <div
-                className="search_logo"
-                onClick={() => setOpenBttnModal(true)}
-              >
-                <img src={searchLogo} alt="search_logo" />
-              </div>
-              <span className="bttns_search_res">
-                {!notSearchYet && bttnsIndex.length > 0 && bttnsIndex.length}
-                {!notSearchYet && bttnsIndex.length == 0 && "Not found"}
-              </span>
-            </div>
-             }
+              {window.innerWidth > 400 && (
+                <div className="input_search_bttns">
+                  <input
+                    type="text"
+                    className="searcher_input"
+                    placeholder="Search"
+                    value={bttnSearcher}
+                    onChange={(e) => setBttnSearcher(e.target.value)}
+                  />
+                  <div
+                    className="search_logo"
+                    onClick={() => setOpenBttnModal(true)}
+                  >
+                    <img src={searchLogo} alt="search_logo" />
+                  </div>
+                  <span className="bttns_search_res">
+                    {!notSearchYet &&
+                      bttnsIndex.length > 0 &&
+                      bttnsIndex.length}
+                    {!notSearchYet && bttnsIndex.length == 0 && "Not found"}
+                  </span>
+                </div>
+              )}
             </div>
             <div className="mat__wrapper">
               {plusButtons.map((button) => (
@@ -879,29 +883,28 @@ const MainPage = () => {
                   {`-${button.value} ${buttonTextHandler(button.input)}`}
                 </Button>
               ))}
-              
             </div>
-            {
-              window.innerWidth <= 400 &&  <div className="input_search_bttns">
-              <input
-                type="text"
-                className="searcher_input"
-                placeholder="Search"
-                value={bttnSearcher}
-                onChange={(e) => setBttnSearcher(e.target.value)}
-              />
-              <div
-                className="search_logo"
-                onClick={() => setOpenBttnModal(true)}
-              >
-                <img src={searchLogo} alt="search_logo" />
+            {window.innerWidth <= 400 && (
+              <div className="input_search_bttns">
+                <input
+                  type="text"
+                  className="searcher_input"
+                  placeholder="Search"
+                  value={bttnSearcher}
+                  onChange={(e) => setBttnSearcher(e.target.value)}
+                />
+                <div
+                  className="search_logo"
+                  onClick={() => setOpenBttnModal(true)}
+                >
+                  <img src={searchLogo} alt="search_logo" />
+                </div>
+                <span className="bttns_search_res">
+                  {!notSearchYet && bttnsIndex.length > 0 && bttnsIndex.length}
+                  {!notSearchYet && bttnsIndex.length == 0 && "Not found"}
+                </span>
               </div>
-              <span className="bttns_search_res">
-                {!notSearchYet && bttnsIndex.length > 0 && bttnsIndex.length}
-                {!notSearchYet && bttnsIndex.length == 0 && "Not found"}
-              </span>
-            </div>
-             }
+            )}
             <MainPageFexp />
 
             <div className="relative text_cp">
@@ -1109,10 +1112,7 @@ const MainPage = () => {
         )}
       </Container>
       {openBttnModal && (
-        <ModalSearchRes
-          bttns={bttnsIndex}
-          closeModule={setOpenBttnModal}
-        />
+        <ModalSearchRes bttns={bttnsIndex} closeModule={setOpenBttnModal} />
       )}
     </AuthCheck>
   );
