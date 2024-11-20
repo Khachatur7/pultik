@@ -26,6 +26,8 @@ import MainPageFexp from "./MainPageFexp";
 import ZeroModesInfo from "./ZeroModesInfo";
 import { infoBlockItems } from "@/store/useBotsStore";
 import ModalSearchRes from "@/components/ModaleSearchRes";
+import ArrowSVG from "@/components/ArrowSVG";
+
 const tabs = [
   {
     id: nanoid(),
@@ -213,6 +215,36 @@ const MainPage = () => {
       // setCp(res.data.multi3);
     } catch (error) {
       setMulti(null);
+    }
+  };
+
+  const allPricesPlus = async () => {
+    try {
+      const res = await axios.post("/allPrices", {
+        percent: 1,
+        user: localStorage.getItem("pultik-user-login"),
+      });
+
+      if (res.status == 200) {
+        alert(res.data.text);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const allPricesMinus = async () => {
+    try {
+      const res = await axios.post("/allPrices", {
+        percent: -1,
+        user: localStorage.getItem("pultik-user-login"),
+      });
+
+      if (res.status == 200) {
+        alert(res.data.text);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -411,7 +443,7 @@ const MainPage = () => {
   const getBots = async () => {
     try {
       const res = await axios.post("/pultikMon", {
-        user: localStorage.getItem("pultik-user-login")
+        user: localStorage.getItem("pultik-user-login"),
       });
 
       if (res.data) {
@@ -866,25 +898,43 @@ const MainPage = () => {
               )}
             </div>
             <div className="mat__wrapper">
-              {plusButtons.map((button) => (
-                <Button
-                  key={button.id}
-                  onClick={() => plusHandler(button.value, button?.input)}
-                >
-                  {`+${button.value} ${buttonTextHandler(button.input)}`}
-                </Button>
-              ))}
+              {plusButtons.map((button) =>
+                button.value == 1 && button.input == 2 ? (
+                  <Button key={button.id} onClick={allPricesPlus}>
+                    <div className="bttn_arrow arrow_up">
+                      <ArrowSVG />
+                    </div>
+                  </Button>
+                ) : (
+                  <Button
+                    key={button.id}
+                    onClick={() => plusHandler(button.value, button?.input)}
+                  >
+                    {`+${button.value} ${buttonTextHandler(button.input)}`}
+                  </Button>
+                )
+              )}
             </div>
 
             <div className="mat__wrapper">
-              {minusButtons.map((button) => (
-                <Button
-                  key={button.id}
-                  onClick={() => minusHandler(button.value, button?.input)}
-                >
-                  {`-${button.value} ${buttonTextHandler(button.input)}`}
-                </Button>
-              ))}
+              {minusButtons.map((button) =>
+                button.value == 1 && button.input == 2 ? (
+                  <Button key={button.id} onClick={allPricesMinus}>
+                    <div className="bttn_arrow">
+                      <ArrowSVG />
+                    </div>
+                  </Button>
+                ) : (
+                  <Button
+                    key={button.id}
+                    onClick={() => minusHandler(button.value, button?.input)}
+                  >
+                    <div className="bttn_arrow">
+                      {`-${button.value} ${buttonTextHandler(button.input)}`}
+                    </div>
+                  </Button>
+                )
+              )}
             </div>
             {window.innerWidth <= 400 && (
               <div className="input_search_bttns">
