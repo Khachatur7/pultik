@@ -88,7 +88,6 @@ const GridButton: React.FC<Props> = ({
     fStocks || 0
   );
   const [fStocksValueChanged, setFStocksValueChanged] = useState(false);
-  console.log(fStocksValueChanged);
 
   const getPrice = async () => {
     if (isDisabled) {
@@ -266,7 +265,6 @@ const GridButton: React.FC<Props> = ({
         }`}
         onClick={getPrice}
         disabled={isDisabled}
-        // onMouseMove={() => setFStocksValueChanged(true)}
       >
         <span>{`${i && h ? `{${i}. ` : i ? `${i}. ` : ""}`}</span>
         {fullName ? (
