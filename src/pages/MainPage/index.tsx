@@ -204,7 +204,7 @@ const MainPage = () => {
 
   const loadMulti = async () => {
     try {
-      const res = await axios.get("/api/getMulti");
+      const res = await axios.post("/api/getMulti");
 
       if (!res.data) {
         throw Error();

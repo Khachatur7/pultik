@@ -29,6 +29,7 @@ const ChartsPage = () => {
         user: localStorage.getItem("pultik-user-login"),
       });
 
+
       if (!res.data) {
         throw Error();
       }

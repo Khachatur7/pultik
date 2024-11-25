@@ -31,7 +31,7 @@ const ChartsPage = () => {
 
         try {
             
-            const res = await axios.get<{ result: ChartDataType[] }>("/stocksData");
+            const res = await axios.post<{ result: ChartDataType[] }>("/stocksData");
 
             if (!res.data) {
                 throw Error();
