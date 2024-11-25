@@ -66,7 +66,6 @@ const GridButton: React.FC<Props> = ({
   basePrices,
   boostValue,
   // lastEvent,
-  boostInitial,
   wBar,
   cust,
   h,
@@ -76,7 +75,7 @@ const GridButton: React.FC<Props> = ({
 }) => {
   const [currentPrice, setCurrentPrice] = useState(price);
   const [currentPriceFixed, setCurrentPriceFixed] = useState(price);
-  const [boost, setBoost] = useState(boostInitial);
+  // const [boost, setBoost] = useState(boostInitial);
   const [cpValue, setCpValue] = useState(0);
   const [xaltura, setXaltura] = useState(
     JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem(`${sku}`)))) ||
@@ -88,6 +87,8 @@ const GridButton: React.FC<Props> = ({
   const [fStocksValue, setFStocksValue] = useState<number | undefined>(
     fStocks || 0
   );
+  const [fStocksValueChanged, setFStocksValueChanged] = useState(false);
+  console.log(fStocksValueChanged);
 
   const getPrice = async () => {
     if (isDisabled) {
@@ -127,14 +128,14 @@ const GridButton: React.FC<Props> = ({
 
       const resData = res.data;
 
-      const { info, boost, cP } = resData;
+      const { info, cP } = resData;
 
       setCurrentPrice(resData.basePriceCounted);
       setCurrentPriceFixed(resData.basePrice);
       setIsUpdated(true);
       setStockValue(resData.countedStocks);
       setFStocksValue(resData.fStocks);
-      setBoost(boost);
+      // setBoost(boost);
       setCpValue(cP);
 
       const getTime = () => {
@@ -194,8 +195,6 @@ const GridButton: React.FC<Props> = ({
     }
   };
 
-  
-
   const stockValueHandler = () => {
     if (!fStocks) {
       return "button-gradient";
@@ -223,16 +222,31 @@ const GridButton: React.FC<Props> = ({
   };
 
   useEffect(() => {
-    setFStocksValue(fStocks);
+    if (fStocks != fStocksValue) {
+      setFStocksValueChanged(true);
+      setFStocksValue(fStocks);
+    }
+    setTimeout(() => {
+      setFStocksValueChanged(false);
+    }, 500);
   }, [fStocks]);
+
+  // useEffect(() => {
+  //   if (fStocksValueChanged) {
+  //     setTimeout(() => {
+  //       setFStocksValueChanged(false)
+  //     }, 500);
+  //   }
+
+  // }, [fStocksValueChanged]);
 
   useEffect(() => {
     setCpValue(cp);
   }, [cp]);
 
-  useEffect(() => {
-    setBoost(boostInitial);
-  }, [boostInitial]);
+  // useEffect(() => {
+  //   setBoost(boostInitial);
+  // }, [boostInitial]);
 
   useEffect(() => {
     pricesHandler();
@@ -247,9 +261,12 @@ const GridButton: React.FC<Props> = ({
   return (
     <div className="btn__cont">
       <button
-        className={`btn _hover ${stockValueHandler()}`}
+        className={`btn _hover ${stockValueHandler()} ${
+          fStocksValueChanged && "white_flash"
+        }`}
         onClick={getPrice}
         disabled={isDisabled}
+        // onMouseMove={() => setFStocksValueChanged(true)}
       >
         <span>{`${i && h ? `{${i}. ` : i ? `${i}. ` : ""}`}</span>
         {fullName ? (
@@ -266,7 +283,7 @@ const GridButton: React.FC<Props> = ({
             cpValue
               ? ` |  CP ${cpValue} ${percent ? `(${percent}) ` : ""} `
               : ""
-          } | B ${boost || 0} ${h ? "%}" : "%"}`}
+          }`}
         </p>
         <CircleModalComponent
           ozonPrice={basePrices.ozon}
@@ -278,7 +295,7 @@ const GridButton: React.FC<Props> = ({
           price={currentPrice}
         />
         <CircleModalComponentLeft
-        ind={i}
+          ind={i}
           comValue={comValue}
           boolValue={boolValue}
           sku={sku}

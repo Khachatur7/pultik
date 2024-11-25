@@ -59,7 +59,7 @@ const tabs = [
   },
 ];
 
-const itemsPerPage = window.innerWidth>=3840? 70: 52;
+const itemsPerPage = 52;
 const pages = 9;
 
 const totalButtons = itemsPerPage * pages;

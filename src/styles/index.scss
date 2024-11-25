@@ -122,6 +122,8 @@ body {
     }
   }
 
+
+
   .select_month {
     position: absolute;
     top: -1200%;
@@ -222,7 +224,7 @@ body {
   }
 }
 
-.bttn_arrow {
+.bttn_arrow{
   width: 100%;
   height: 100%;
   display: flex;
@@ -239,8 +241,9 @@ body {
   }
 }
 
-.arrow_up svg {
+.arrow_up svg{
   transform: rotateZ(180deg);
+
 }
 
 .mat__container {
@@ -494,25 +497,7 @@ body {
 
     .button-gradient {
       background: rgb(72, 0, 255) !important;
-      background: linear-gradient(
-        135deg,
-        rgb(72, 0, 255) 10%,
-        rgb(72, 0, 255) 20%,
-        rgb(255, 0, 0) 20%,
-        rgb(255, 0, 0) 30%,
-        rgb(72, 0, 255) 30%,
-        rgb(72, 0, 255) 40%,
-        rgb(255, 0, 0) 40%,
-        rgb(255, 0, 0) 50%,
-        rgb(72, 0, 255) 50%,
-        rgb(72, 0, 255) 60%,
-        rgb(255, 0, 0) 60%,
-        rgb(255, 0, 0) 70%,
-        rgb(72, 0, 255) 70%,
-        rgb(72, 0, 255) 80%,
-        rgb(255, 0, 0) 80%,
-        rgb(255, 0, 0) 90%
-      ) !important;
+      background: linear-gradient(135deg, rgb(72, 0, 255) 10%, rgb(72, 0, 255) 20%, rgb(255, 0, 0) 20%, rgb(255, 0, 0) 30%, rgb(72, 0, 255) 30%, rgb(72, 0, 255) 40%, rgb(255, 0, 0) 40%, rgb(255, 0, 0) 50%, rgb(72, 0, 255) 50%, rgb(72, 0, 255) 60%, rgb(255, 0, 0) 60%, rgb(255, 0, 0) 70%, rgb(72, 0, 255) 70%, rgb(72, 0, 255) 80%, rgb(255, 0, 0) 80%, rgb(255, 0, 0) 90%) !important;
     }
 
     .yellow {
@@ -1490,11 +1475,9 @@ body {
 body {
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(
-    134deg,
-    rgba(109, 203, 22, 0.9) 2.99%,
-    rgba(153, 233, 28, 0.9) 100%
-  );
+  background: linear-gradient(134deg,
+      rgba(109, 203, 22, 0.9) 2.99%,
+      rgba(153, 233, 28, 0.9) 100%);
 }
 
 .container {
@@ -1577,11 +1560,9 @@ body {
 body {
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(
-    134deg,
-    rgba(109, 203, 22, 0.9) 2.99%,
-    rgba(153, 233, 28, 0.9) 100%
-  );
+  background: linear-gradient(134deg,
+      rgba(109, 203, 22, 0.9) 2.99%,
+      rgba(153, 233, 28, 0.9) 100%);
 }
 
 .container {
@@ -2852,83 +2833,119 @@ body {
   }
 }
 
-@media (max-height: 2160px) and (max-width: 3840px) {
-  .btn__wrapper {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
-    align-content: start;
-    grid-gap: 20px;
-    width: 100%;
-  }
-
-  .btn__cont {
-    width: 100%;
-    height: 95px;
-    position: relative;
-  }
-
-  .btn__wrapper .btn {
-    font-size: 28px;
-  }
-
-  .btn__wrapper {
-    .btn {
-      height: 95px;
-    }
-  }
-
-  .input__wrapper{
-    margin-bottom: 25px;
-  }
-  .input_search_bttns .search_logo {
-    position: absolute;
-    top: 28%;
-    right: -23%;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-}
-
-
-.bttns_modal_res {
-  width: 1200px;
-  right: 35%;
-}
-
-.input_search_bttns .bttns_search_res {
-  top: 100%;
-  right: -22%;
-  font-size: 29px;
-}
-
-}
-
 .mob_cursor {
   position: absolute;
   z-index: 1000;
 }
 
+.white_flash{
+  background: #fff !important;
+  color: #000;
+  transition: 0.5s ease;
+}
+
+.logout_btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  background: #fff;
+  border-radius: 15px;
+  padding: 15px;
+  font-size: 21px;
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  transition: .5s ease;
+  polyline,
+  line,
+   path{
+    transition: .5s ease;
+
+  }
+}
+
+.logout_btn:hover{
+background: #000;
+color: #fff;
+polyline,
+line,
+ path{
+  stroke:#fff !important;
+}
+}
+
+
+// @media (max-height: 2160px) and (max-width: 3840px) {
+//   .btn__wrapper {
+//     display: grid;
+//     grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+//     align-content: start;
+//     grid-gap: 20px;
+//     width: 100%;
+//   }
+
+//   .btn__cont {
+//     width: 100%;
+//     height: 95px;
+//     position: relative;
+//   }
+
+//   .btn__wrapper .btn {
+//     font-size: 28px;
+//   }
+
+//   .btn__wrapper {
+//     .btn {
+//       height: 95px;
+//     }
+//   }
+
+//   .input__wrapper{
+//     margin-bottom: 25px;
+//   }
+//   .input_search_bttns .search_logo {
+//     position: absolute;
+//     top: 28%;
+//     right: -23%;
+//     width: 40px;
+//     height: 40px;
+//     cursor: pointer;
+// }
+
+
+// .bttns_modal_res {
+//   width: 1200px;
+//   right: 35%;
+// }
+
+// .input_search_bttns .bttns_search_res {
+//   top: 100%;
+//   right: -22%;
+//   font-size: 29px;
+// }
+
+// }
+
 .button-gradient {
   background: rgb(72, 0, 255);
-  background: linear-gradient(
-    135deg,
-    rgba(72, 0, 255, 1) 10%,
-    rgba(72, 0, 255, 1) 20%,
-    rgba(255, 0, 0, 1) 20%,
-    rgba(255, 0, 0, 1) 30%,
-    rgba(72, 0, 255, 1) 30%,
-    rgba(72, 0, 255, 1) 40%,
-    rgba(255, 0, 0, 1) 40%,
-    rgba(255, 0, 0, 1) 50%,
-    rgba(72, 0, 255, 1) 50%,
-    rgba(72, 0, 255, 1) 60%,
-    rgba(255, 0, 0, 1) 60%,
-    rgba(255, 0, 0, 1) 70%,
-    rgba(72, 0, 255, 1) 70%,
-    rgba(72, 0, 255, 1) 80%,
-    rgba(255, 0, 0, 1) 80%,
-    rgba(255, 0, 0, 1) 90%
-  );
+  background: linear-gradient(135deg,
+      rgba(72, 0, 255, 1) 10%,
+      rgba(72, 0, 255, 1) 20%,
+      rgba(255, 0, 0, 1) 20%,
+      rgba(255, 0, 0, 1) 30%,
+      rgba(72, 0, 255, 1) 30%,
+      rgba(72, 0, 255, 1) 40%,
+      rgba(255, 0, 0, 1) 40%,
+      rgba(255, 0, 0, 1) 50%,
+      rgba(72, 0, 255, 1) 50%,
+      rgba(72, 0, 255, 1) 60%,
+      rgba(255, 0, 0, 1) 60%,
+      rgba(255, 0, 0, 1) 70%,
+      rgba(72, 0, 255, 1) 70%,
+      rgba(72, 0, 255, 1) 80%,
+      rgba(255, 0, 0, 1) 80%,
+      rgba(255, 0, 0, 1) 90%);
 }
 
 .grid_bttn_yellow {
