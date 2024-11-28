@@ -2918,27 +2918,34 @@ body {
       font-size: 24px;
       font-weight: 500;
     }
-    .name_field {
+    .name_input_parent{
       width: 100%;
-      height: 60px;
-      font-size: 23px;
-      border-radius: 20px;
-      background: #fff;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0px 15px 2px 15px;
-      .name_input {
-        width: 99%;
-        height: 60px;
-        padding-left: 20px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+      .name_field {
+        width: 90%;
+        height: 100%;
         font-size: 23px;
-        outline: none;
-      }
-      span {
-        font-size: 27px;
+        border-radius: 20px;
+        background: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0px 15px 2px 15px;
+        .name_input {
+          width: 99%;
+          height: 60px;
+          padding-left: 20px;
+          font-size: 23px;
+          outline: none;
+        }
+        span {
+          font-size: 27px;
+        }
       }
     }
+    
     .data_field{
       width: 100%;
       height: 350px;
@@ -2975,6 +2982,7 @@ body {
     }
  
   }
+  .send_name_bttn,
   .change_data_bttn {
     padding: 12px 27px;
     background: #2d2d2d;
@@ -2990,6 +2998,11 @@ body {
     transition: 0.5s ease;
     cursor: pointer;
   }
+  .send_name_bttn{
+    padding: 0px 27px;
+height: 100%;
+  }
+  .send_name_bttn:hover,
   .change_data_bttn:hover {
     background: #fff;
     color: #2d2d2d;

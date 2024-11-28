@@ -28,7 +28,7 @@ const ButtonCreatePage = () => {
   const rS = "}";
   const lT = "[";
   const rT = "]";
-
+  const [nameField, setNameField] = useState<string>("");
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -115,6 +115,20 @@ const ButtonCreatePage = () => {
     }
   };
 
+  const postNameRequest = async () => {
+    try {
+      const res = await axios.post("/mongoReq", {
+        user: localStorage.getItem("pultik-user-login"),
+        string: `{${nameField}}`,
+      });
+
+      if (res.status == 200) {
+        console.log(res.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <AuthCheck>
       <Container>
@@ -355,34 +369,44 @@ const ButtonCreatePage = () => {
           <div className="api_data_section">
             <div className="section_field">
               <label htmlFor="name_input">Запрос:</label>
-              <div className="name_field">
-                <span>{lS}</span>
-                <input
-                  type="text"
-                  className="name_input"
-                  id="name_input"
-                  name="name_input"
-                />
-                <span>{rS}</span>
-              </div>
+              <div className="name_input_parent">
+                {" "}
+                <div className="name_field">
+                  <span>{lS}</span>
+                  <input
+                    type="text"
+                    className="name_input"
+                    id="name_input"
+                    name="name_input"
+                    value={nameField}
+                    onChange={(e) => setNameField(e.target.value)}
+                  />
+                  <span>{rS}</span>
+                </div>
+                <button className="send_name_bttn" onClick={postNameRequest}>
+                  <span>Отправить</span>
+                </button>
+              </div>{" "}
             </div>
             <div className="section_field">
               <label htmlFor="data_input">Данные:</label>
               <div className="data_field">
                 <div className="lt">
-                <span>{lT}</span>
+                  <span>{lT}</span>
                 </div>
                 <textarea
-                className="data_input"
-                id="data_input"
-                name="data_input"
-                
-              />
-                <div className="rt"><span>{rT}</span></div>
+                  className="data_input"
+                  id="data_input"
+                  name="data_input"
+                />
+                <div className="rt">
+                  <span>{rT}</span>
+                </div>
               </div>
-              
             </div>
-            <button className="change_data_bttn"><span>Изменить</span></button>
+            <button className="change_data_bttn">
+              <span>Изменить</span>
+            </button>
           </div>
         </div>
       </Container>
