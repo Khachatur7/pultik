@@ -29,6 +29,7 @@ const ButtonCreatePage = () => {
   const lT = "[";
   const rT = "]";
   const [nameField, setNameField] = useState<string>("");
+  const [keyField, setKeyField] = useState<string>("");
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -119,7 +120,7 @@ const ButtonCreatePage = () => {
     try {
       const res = await axios.post("/mongoReq", {
         user: localStorage.getItem("pultik-user-login"),
-        string: `{${nameField}}`,
+        arr: [keyField,nameField],
       });
 
       if (res.status == 200) {
@@ -368,11 +369,21 @@ const ButtonCreatePage = () => {
           </p>
           <div className="api_data_section">
             <div className="section_field">
-              <label htmlFor="name_input">Запрос:</label>
-              <div className="name_input_parent">
-                {" "}
-                <div className="name_field">
+              <label htmlFor="key_input">Запрос:</label>
+              <div className="section_field_inputs">
+                <div className="key_field">
                   <span>{lS}</span>
+                  <input
+                    type="text"
+                    className="key_input"
+                    id="key_input"
+                    name="key_input"
+                    value={keyField}
+                    onChange={(e) => setKeyField(e.target.value)}
+                  />
+                </div>
+                :
+                <div className="name_field">
                   <input
                     type="text"
                     className="name_input"
@@ -386,7 +397,7 @@ const ButtonCreatePage = () => {
                 <button className="send_name_bttn" onClick={postNameRequest}>
                   <span>Отправить</span>
                 </button>
-              </div>{" "}
+              </div>
             </div>
             <div className="section_field">
               <label htmlFor="data_input">Данные:</label>
