@@ -224,24 +224,27 @@ body {
   }
 }
 
-.bttn_arrow{
+.bttn_arrow {
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+
   path {
     transition: 0.5s ease;
   }
+
   &:hover {
     background-color: #fff !important;
+
     path {
       fill: #000;
     }
   }
 }
 
-.arrow_up svg{
+.arrow_up svg {
   transform: rotateZ(180deg);
 
 }
@@ -2838,13 +2841,13 @@ body {
   z-index: 1000;
 }
 
-.white_flash{
+.white_flash {
   background: #fff !important;
   color: #000;
   transition: 0.5s ease;
 }
 
-.logout_btn{
+.logout_btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2857,22 +2860,64 @@ body {
   bottom: 30px;
   right: 30px;
   transition: .5s ease;
+
   polyline,
   line,
-   path{
+  path {
     transition: .5s ease;
 
   }
 }
 
-.logout_btn:hover{
-background: #000;
-color: #fff;
-polyline,
-line,
- path{
-  stroke:#fff !important;
+.logout_btn:hover {
+  background: #000;
+  color: #fff;
+
+  polyline,
+  line,
+  path {
+    stroke: #fff !important;
+  }
 }
+
+.api_data_section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  gap: 7px;
+margin-top: -40px;
+  .section_field {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    gap: 7px;
+    padding: 10px;
+
+    label {
+      font-size: 24px;
+      font-weight: 500;
+    }
+
+    .name_input {
+      width: 100%;
+      height: 60px;
+      padding-left: 20px;
+      font-size: 23px;
+      border-radius: 20px;
+    }
+    .data_input{
+      width: 100%;
+      height: 350px;
+      padding-left: 20px;
+      font-size: 23px;
+      border-radius: 20px;
+      padding: 10px;
+    }
+  }
 }
 
 

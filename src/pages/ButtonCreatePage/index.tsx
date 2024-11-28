@@ -348,7 +348,18 @@ const ButtonCreatePage = () => {
           <p className="relative text-4xl mt-[25px] text-right about_sku">
             !!! SKU Яндекса, Озона и ММ должны совпадать!!!
           </p>
+          <div className="api_data_section">
+          <div className="section_field">
+            <label htmlFor="name_input">Запрос:</label>
+            <input type="text" className="name_input" id="name_input" name="name_input"/>
+          </div>
+          <div className="section_field">
+            <label htmlFor="data_input">Данные:</label>
+            <textarea className="data_input" id="data_input" name="data_input"/>
+          </div>
         </div>
+        </div>
+       
       </Container>
     </AuthCheck>
   );
