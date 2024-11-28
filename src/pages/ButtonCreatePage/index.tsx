@@ -24,6 +24,10 @@ const ButtonCreatePage = () => {
   const [s, setS] = useState("35");
   const [g, setG] = useState("25");
   const [h, setH] = useState(false);
+  const lS = "{";
+  const rS = "}";
+  const lT = "[";
+  const rT = "]";
 
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -349,17 +353,38 @@ const ButtonCreatePage = () => {
             !!! SKU Яндекса, Озона и ММ должны совпадать!!!
           </p>
           <div className="api_data_section">
-          <div className="section_field">
-            <label htmlFor="name_input">Запрос:</label>
-            <input type="text" className="name_input" id="name_input" name="name_input"/>
-          </div>
-          <div className="section_field">
-            <label htmlFor="data_input">Данные:</label>
-            <textarea className="data_input" id="data_input" name="data_input"/>
+            <div className="section_field">
+              <label htmlFor="name_input">Запрос:</label>
+              <div className="name_field">
+                <span>{lS}</span>
+                <input
+                  type="text"
+                  className="name_input"
+                  id="name_input"
+                  name="name_input"
+                />
+                <span>{rS}</span>
+              </div>
+            </div>
+            <div className="section_field">
+              <label htmlFor="data_input">Данные:</label>
+              <div className="data_field">
+                <div className="lt">
+                <span>{lT}</span>
+                </div>
+                <textarea
+                className="data_input"
+                id="data_input"
+                name="data_input"
+                
+              />
+                <div className="rt"><span>{rT}</span></div>
+              </div>
+              
+            </div>
+            <button className="change_data_bttn"><span>Изменить</span></button>
           </div>
         </div>
-        </div>
-       
       </Container>
     </AuthCheck>
   );
