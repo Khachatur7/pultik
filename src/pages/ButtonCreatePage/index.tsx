@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AuthCheck, Container } from "@/components";
 import { toast } from "react-toastify";
 import axios from "@/axios";
@@ -137,33 +137,37 @@ const ButtonCreatePage = () => {
 
   const sendChangedData = async () => {
     try {
-      let changedFieldData = JSON.stringify(JSON.parse(dataField)).split(",");
-      // const changedData = JSON.parse(dataField);
-      dataCompare?.map((el, ind) => {
-        if (el != changedFieldData[ind]) {
-          setChangedData(changedFieldData[ind]);
-        }
-      });
-      console.log(JSON.parse(`{${changedData}}`));
+      console.log(changedData);
       
-      try {
-        const res = await axios.post("/mongoData", {
-          user: localStorage.getItem("pultik-user-login"),
-          arr: [keyField.trim(), nameField.trim()],
-          dict: JSON.parse(`{${changedData}}`),
-        });
-
-        if (res.status == 200) {
-          console.log(res.data);
-          alert("Данные изменены!");
-        }
-      } catch (error) {
-        alert("Не удалось изменить данные");
+      const res = await axios.post("/mongoData", {
+        user: localStorage.getItem("pultik-user-login"),
+        arr: [keyField.trim(), nameField.trim()],
+         dict: JSON.parse(`{${changedData}}`),
+      });
+  
+      if (res.status == 200) {
+        console.log(res.data);
+        alert("Данные изменены!");
       }
     } catch (error) {
-      alert("В тексте допущена ошибка,изменение данных невозможно");
+      alert("Не удалось изменить данные");
     }
   };
+
+  const checkChangedData = () => {
+    let changedFieldData = JSON.stringify(JSON.parse(dataField)).split(",");
+    dataCompare?.map((el, ind) => {
+      if (el != changedFieldData[ind]) {
+        setChangedData(changedFieldData[ind]);
+      }
+    });
+  };
+
+  useEffect(()=>{
+if (changedData) {
+  sendChangedData()
+}
+  },[changedData])
   return (
     <AuthCheck>
       <Container>
@@ -451,7 +455,7 @@ const ButtonCreatePage = () => {
                 </div>
               </div>
             </div>
-            <button className="change_data_bttn" onClick={sendChangedData}>
+            <button className="change_data_bttn" onClick={checkChangedData}>
               <span>Изменить</span>
             </button>
           </div>
