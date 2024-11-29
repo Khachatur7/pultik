@@ -136,15 +136,19 @@ const ButtonCreatePage = () => {
   const sendChangedData = async () => {
     try {
       const changedData = JSON.parse(dataField);
-      const res = await axios.post("/mongoReq", {
-        user: localStorage.getItem("pultik-user-login"),
-        arr: [keyField.trim(), nameField.trim()],
-        dict: changedData,
-      });
+      try {
+        const res = await axios.post("/mongoData", {
+          user: localStorage.getItem("pultik-user-login"),
+          arr: [keyField.trim(), nameField.trim()],
+          dict: changedData,
+        });
 
-      if (res.status == 200) {
-        console.log(res.data);
-        alert("Данные изменены!");
+        if (res.status == 200) {
+          console.log(res.data);
+          alert("Данные изменены!");
+        }
+      } catch (error) {
+        alert("Не удалось изменить данные");
       }
     } catch (error) {
       alert("В тексте допущена ошибка,изменение данных невозможно");
