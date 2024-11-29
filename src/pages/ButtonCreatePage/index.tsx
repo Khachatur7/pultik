@@ -31,7 +31,8 @@ const ButtonCreatePage = () => {
   const [nameField, setNameField] = useState<string>("");
   const [keyField, setKeyField] = useState<string>("");
   const [dataField, setDataField] = useState<string>("");
-
+  const [dataCompare, setDataCompare] = useState<string[]>();
+  const [changedData, setChangedData] = useState<string>();
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -127,6 +128,7 @@ const ButtonCreatePage = () => {
 
       if (res.status == 200) {
         setDataField(JSON.stringify(res.data.answer[0], null, 2));
+        setDataCompare(JSON.stringify(res.data.answer[0]).split(","));
       }
     } catch (error) {
       console.log(error);
@@ -135,12 +137,20 @@ const ButtonCreatePage = () => {
 
   const sendChangedData = async () => {
     try {
-      const changedData = JSON.parse(dataField);
+      let changedFieldData = JSON.stringify(JSON.parse(dataField)).split(",");
+      // const changedData = JSON.parse(dataField);
+      dataCompare?.map((el, ind) => {
+        if (el != changedFieldData[ind]) {
+          setChangedData(changedFieldData[ind]);
+        }
+      });
+      console.log(JSON.parse(`{${changedData}}`));
+      
       try {
         const res = await axios.post("/mongoData", {
           user: localStorage.getItem("pultik-user-login"),
           arr: [keyField.trim(), nameField.trim()],
-          dict: changedData,
+          dict: JSON.parse(`{${changedData}}`),
         });
 
         if (res.status == 200) {
