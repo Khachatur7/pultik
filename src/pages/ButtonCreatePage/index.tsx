@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { AuthCheck, Container } from "@/components";
+import { AuthCheck, Container, ToggleComponent } from "@/components";
 import { toast } from "react-toastify";
 import axios from "@/axios";
 import { useNavigate } from "react-router-dom";
@@ -29,6 +29,7 @@ const ButtonCreatePage = () => {
   const lT = "[";
   const rT = "]";
   const [nameField, setNameField] = useState<string>("");
+  const [nameFieldType, setNameFieldType] = useState<string>("number");
   const [keyField, setKeyField] = useState<string>("");
   const [dataField, setDataField] = useState<string>("");
   const [dataCompare, setDataCompare] = useState<string[]>();
@@ -119,6 +120,16 @@ const ButtonCreatePage = () => {
     }
   };
 
+  const changeNameField = (text: string) => {
+    if (nameFieldType == "string") {
+      return setNameField(text);
+    } else if (nameFieldType == "number") {
+      if (/^\d*$/.test(text)) {
+        return setNameField(text);
+      }
+    }
+  };
+
   const postNameRequest = async () => {
     try {
       const res = await axios.post("/mongoReq", {
@@ -138,13 +149,13 @@ const ButtonCreatePage = () => {
   const sendChangedData = async () => {
     try {
       console.log(changedData);
-      
+
       const res = await axios.post("/mongoData", {
         user: localStorage.getItem("pultik-user-login"),
         arr: [keyField.trim(), nameField.trim()],
-         dict: JSON.parse(`{${changedData}}`),
+        dict: JSON.parse(`{${changedData}}`),
       });
-  
+
       if (res.status == 200) {
         console.log(res.data);
         alert("Данные изменены!");
@@ -158,16 +169,27 @@ const ButtonCreatePage = () => {
     let changedFieldData = JSON.stringify(JSON.parse(dataField)).split(",");
     dataCompare?.map((el, ind) => {
       if (el != changedFieldData[ind]) {
-        setChangedData(changedFieldData[ind]);
+        console.log(changedFieldData[ind].replace(/[{}]/g, ""));
+        setDataCompare(changedFieldData);
+        setChangedData(changedFieldData[ind].replace(/[{}]/g, ""));
       }
     });
   };
 
-  useEffect(()=>{
-if (changedData) {
-  sendChangedData()
-}
-  },[changedData])
+  const toggleNameValueType = () => {
+    if (nameFieldType == "string") {
+      setNameFieldType("number");
+      setNameField(nameField.replace(/[^0-9]/g, ''))
+    } else {
+      setNameFieldType("string");
+    }
+  };
+
+  useEffect(() => {
+    if (changedData) {
+      sendChangedData();
+    }
+  }, [changedData]);
   return (
     <AuthCheck>
       <Container>
@@ -428,13 +450,17 @@ if (changedData) {
                     id="name_input"
                     name="name_input"
                     value={nameField}
-                    onChange={(e) => setNameField(e.target.value)}
+                    onChange={(e) => changeNameField(e.target.value)}
                   />
                   <span>{rS}</span>
                 </div>
                 <button className="send_name_bttn" onClick={postNameRequest}>
                   <span>Отправить</span>
                 </button>
+                <ToggleComponent
+                  isOpened={nameFieldType == "number" ? true : false}
+                  onClick={toggleNameValueType}
+                />
               </div>
             </div>
             <div className="section_field">
