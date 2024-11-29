@@ -30,6 +30,8 @@ const ButtonCreatePage = () => {
   const rT = "]";
   const [nameField, setNameField] = useState<string>("");
   const [keyField, setKeyField] = useState<string>("");
+  const [dataField, setDataField] = useState<string>("");
+
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -120,14 +122,32 @@ const ButtonCreatePage = () => {
     try {
       const res = await axios.post("/mongoReq", {
         user: localStorage.getItem("pultik-user-login"),
-        arr: [keyField,nameField],
+        arr: [keyField.trim(), nameField.trim()],
+      });
+
+      if (res.status == 200) {
+        setDataField(JSON.stringify(res.data.answer[0], null, 2));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const sendChangedData = async () => {
+    try {
+      const changedData = JSON.parse(dataField);
+      const res = await axios.post("/mongoReq", {
+        user: localStorage.getItem("pultik-user-login"),
+        arr: [keyField.trim(), nameField.trim()],
+        dict: changedData,
       });
 
       if (res.status == 200) {
         console.log(res.data);
+        alert("Данные изменены!");
       }
     } catch (error) {
-      console.log(error);
+      alert("В тексте допущена ошибка,изменение данных невозможно");
     }
   };
   return (
@@ -409,13 +429,15 @@ const ButtonCreatePage = () => {
                   className="data_input"
                   id="data_input"
                   name="data_input"
+                  value={dataField}
+                  onChange={(e) => setDataField(e.target.value)}
                 />
                 <div className="rt">
                   <span>{rT}</span>
                 </div>
               </div>
             </div>
-            <button className="change_data_bttn">
+            <button className="change_data_bttn" onClick={sendChangedData}>
               <span>Изменить</span>
             </button>
           </div>
