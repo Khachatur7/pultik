@@ -134,7 +134,10 @@ const ButtonCreatePage = () => {
     try {
       const res = await axios.post("/mongoReq", {
         user: localStorage.getItem("pultik-user-login"),
-        arr: [keyField.trim(), nameField.trim()],
+        arr: [
+          keyField.trim(),
+          nameFieldType == "string" ? nameField.trim() : +nameField.trim(),
+        ],
       });
 
       if (res.status == 200) {
@@ -152,7 +155,10 @@ const ButtonCreatePage = () => {
 
       const res = await axios.post("/mongoData", {
         user: localStorage.getItem("pultik-user-login"),
-        arr: [keyField.trim(), nameField.trim()],
+        arr: [
+          keyField.trim(),
+          nameFieldType == "string" ? nameField.trim() : +nameField.trim(),
+        ],
         dict: JSON.parse(`{${changedData}}`),
       });
 
@@ -179,7 +185,7 @@ const ButtonCreatePage = () => {
   const toggleNameValueType = () => {
     if (nameFieldType == "string") {
       setNameFieldType("number");
-      setNameField(nameField.replace(/[^0-9]/g, ''))
+      setNameField(nameField.replace(/[^0-9]/g, ""));
     } else {
       setNameFieldType("string");
     }
