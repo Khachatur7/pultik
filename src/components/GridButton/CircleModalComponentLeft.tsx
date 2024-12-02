@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import ToggleComponent from "../ToggleComponent";
 import { adminLogin } from "@/store/adminLogin";
 import PopupExit from "../PopupExit.tsx";
+import { useNavigate } from "react-router-dom";
 
 interface CircleModalComponentLeftProps {
   comValue?: ComValueType;
@@ -31,6 +32,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
   setCopy,
   setXalturaParent,
 }) => {
+  const navigate = useNavigate()
   const [isActive, setIsActive] = useState(false);
   const [exitHover, setExitHover] = useState(false);
   const [price, setPrice] = useState(basePrice.toString());
@@ -39,15 +41,15 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
       false
   );
   const [index, setIndex] = useState<number>(ind);
-  const [firstRender,setFirstRender] = useState(true)
+  const [firstRender, setFirstRender] = useState(true);
   function onMouseOver() {
     if (!exitHover) {
       setIsActive(true);
     }
   }
 
-  if (ind>index && firstRender) {
-    setIndex(ind)
+  if (ind > index && firstRender) {
+    setIndex(ind);
   }
 
   function onMouseLeave() {
@@ -58,7 +60,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
     const newValue = event.target.value;
     if (/^\d*$/.test(newValue)) {
       setIndex(+newValue);
-      setFirstRender(false)
+      setFirstRender(false);
     }
   };
 
@@ -146,6 +148,11 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
     } else {
       alert("Вы не имеете доступа");
     }
+  };
+
+  const EditBttn = () => {
+    localStorage.setItem("i", JSON.stringify(index));
+    navigate("/create-button")
   };
 
   useEffect(() => {
@@ -252,6 +259,16 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
             </button>
           </div>
           <ToggleComponent onClick={Xaltura} isOpened={xaltura} />
+          <button
+            onClick={EditBttn}
+            style={{
+              border: "1px solid #000",
+              borderRadius: "5px",
+              padding: "1px 3px",
+            }}
+          >
+            <span>Edit</span>
+          </button>
         </>
       ) : (
         <></>

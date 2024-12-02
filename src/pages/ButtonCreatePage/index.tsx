@@ -28,9 +28,10 @@ const ButtonCreatePage = () => {
   const rS = "}";
   const lT = "[";
   const rT = "]";
-  const [nameField, setNameField] = useState<string>("");
+  const i = localStorage.getItem("i");
+  const [keyField, setKeyField] = useState<string>(i ? "i" : "");
+  const [nameField, setNameField] = useState<string>(i ? i : "");
   const [nameFieldType, setNameFieldType] = useState<string>("number");
-  const [keyField, setKeyField] = useState<string>("");
   const [dataField, setDataField] = useState<string>("");
   const [dataCompare, setDataCompare] = useState<string[]>();
   const [changedData, setChangedData] = useState<string>();
@@ -151,8 +152,6 @@ const ButtonCreatePage = () => {
 
   const sendChangedData = async () => {
     try {
-      console.log(changedData);
-
       const res = await axios.post("/mongoData", {
         user: localStorage.getItem("pultik-user-login"),
         arr: [
@@ -163,7 +162,6 @@ const ButtonCreatePage = () => {
       });
 
       if (res.status == 200) {
-        console.log(res.data);
         alert("Данные изменены!");
       }
     } catch (error) {
@@ -175,7 +173,6 @@ const ButtonCreatePage = () => {
     let changedFieldData = JSON.stringify(JSON.parse(dataField)).split(",");
     dataCompare?.map((el, ind) => {
       if (el != changedFieldData[ind]) {
-        console.log(changedFieldData[ind].replace(/[{}]/g, ""));
         setDataCompare(changedFieldData);
         setChangedData(changedFieldData[ind].replace(/[{}]/g, ""));
       }
@@ -196,6 +193,13 @@ const ButtonCreatePage = () => {
       sendChangedData();
     }
   }, [changedData]);
+
+  useEffect(() => {
+    if (i) {
+      postNameRequest();
+      localStorage.removeItem("i");
+    }
+  }, []);
   return (
     <AuthCheck>
       <Container>
