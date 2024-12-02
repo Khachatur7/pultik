@@ -264,7 +264,8 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
             style={{
               border: "1px solid #000",
               borderRadius: "5px",
-              padding: "1px 3px",
+              padding: "1px 0px",
+              width:"95%",
             }}
           >
             <span>Edit</span>
