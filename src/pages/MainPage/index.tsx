@@ -12,7 +12,7 @@ import { nanoid } from "nanoid";
 import axios from "@/axios";
 import { MultiType } from "@/components/GridButton/CircleModalComponent";
 import { dataFilterHandler } from "@/handlers";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import boxImage from "@/images/boxX.png";
 import addImage from "@/images/add.png";
 import chartPageImage from "@/images/chart-page-icon.png";
@@ -142,7 +142,8 @@ const MainPage = () => {
   const [firstValue, setFirstValue] = useState("0");
   const [secondValue, setSecondValue] = useState("0");
   const [boostValue, setBoostValue] = useState("0");
-  const [currentTab, setCurrentTab] = useState(1);
+  const { id } = useParams();
+  const [currentTab, setCurrentTab] = useState(id ? +id : 1);
   const timerInterval = useRef<null | number | any>(null);
   const [lastEvent, setLastEvent] = useState<LastEventType>(null);
   const [monitoring, setMonitoring] = useState(false);
@@ -233,6 +234,17 @@ const MainPage = () => {
     }
   };
 
+  const changeTab = () => {
+    setCurrentTab(+location.pathname.substring(1, location.pathname.length));
+  };
+
+  useEffect(() => {
+    window.addEventListener("popstate", changeTab);
+    return () => {
+      window.removeEventListener("popstate", changeTab);
+    };
+  }, []);
+
   const allPricesMinus = async () => {
     try {
       const res = await axios.post("/allPrices", {
@@ -247,7 +259,6 @@ const MainPage = () => {
       console.log(error);
     }
   };
-
   const SelectMonth = async (numb: string) => {
     try {
       const res = await axios.post("/getCpData", {
@@ -645,11 +656,12 @@ const MainPage = () => {
           <>
             <div className="btn__changing flex items-center justify-center">
               {tabs.map((item) => (
-                <button
-                  key={item.id}
-                  className={`btn btn__changing-item${
+                <Link
+                  to={`/${item.value}`}
+                  className={`btn btn__changing-item flex items-center justify-center${
                     currentTab === item.value ? " active" : ""
                   }`}
+                  key={item.id}
                   onClick={() => setCurrentTab(item.value)}
                 >
                   {item.value == 5 ? (
@@ -657,12 +669,14 @@ const MainPage = () => {
                   ) : (
                     item.value
                   )}
-                </button>
+                </Link>
               ))}
-              <button
-                className={`btn btn__changing-item${
+              <Link
+                to={`/${8}`}
+                className={`btn btn__changing-item flex items-center justify-center${
                   currentTab === 8 ? " active" : ""
                 }`}
+                key={8}
                 onClick={() => setCurrentTab(8)}
               >
                 <svg
@@ -682,7 +696,7 @@ const MainPage = () => {
                   <line x1="10" x2="10" y1="11" y2="17" />
                   <line x1="14" x2="14" y1="11" y2="17" />
                 </svg>
-              </button>
+              </Link>
               <Link
                 to={"/save-sell"}
                 className={`btn btn__changing-item flex items-center justify-center`}

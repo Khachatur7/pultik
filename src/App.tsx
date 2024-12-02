@@ -1,117 +1,109 @@
-
-import { RouteProps, Route, Routes, BrowserRouter } from 'react-router-dom';
-import { AuthPage, ButtonCreatePage, ChartsPage, ChartsSecondPage, MainPage, SaveSell } from './pages';
-import { ToastContainer } from 'react-toastify';
-import WatchPage from './pages/WatchPage';
-import { useEffect } from 'react';
-import { useBotsStore } from './store';
-import { BotItem } from './store/useBotsStore';
+import { RouteProps, Route, Routes, BrowserRouter } from "react-router-dom";
+import {
+  AuthPage,
+  ButtonCreatePage,
+  ChartsPage,
+  ChartsSecondPage,
+  MainPage,
+  SaveSell,
+} from "./pages";
+import { ToastContainer } from "react-toastify";
+import WatchPage from "./pages/WatchPage";
+import { useEffect } from "react";
+import { useBotsStore } from "./store";
+import { BotItem } from "./store/useBotsStore";
 
 const routes: RouteProps[] = [
-    {
-      path: '*',
-      element: <MainPage />,
-    },
-    {
-      path: '/',
-      element: <MainPage />,
-    },
-    {
-        path: '/auth',
-        element: <AuthPage />,
-    },
-    {
-        path: '/create-button',
-        element: <ButtonCreatePage />,
-    },
-    {
-        path: '/save-sell',
-        element: <SaveSell />,
-    },
-    {
-        path: '/charts',
-        element: <ChartsPage />,
-    },
-    {
-        path: '/charts2',
-        element: <ChartsSecondPage />,
-    },
-    {
-        path: '/watch',
-        element: <WatchPage />,
-    },
+  {
+    path: "*",
+    element: <MainPage />,
+  },
+  {
+    path: "/",
+    element: <MainPage />,
+  },
+  {
+    path: "/:id",
+    element: <MainPage />,
+  },
+  {
+    path: "/auth",
+    element: <AuthPage />,
+  },
+  {
+    path: "/create-button",
+    element: <ButtonCreatePage />,
+  },
+  {
+    path: "/save-sell",
+    element: <SaveSell />,
+  },
+  {
+    path: "/charts",
+    element: <ChartsPage />,
+  },
+  {
+    path: "/charts2",
+    element: <ChartsSecondPage />,
+  },
+  {
+    path: "/watch",
+    element: <WatchPage />,
+  },
 ];
 
 interface BotInfoProps {
-    bot: BotItem;
+  bot: BotItem;
 }
 
-const BotInfo: React.FC<BotInfoProps> = ({
-    bot,
-}) => {
+const BotInfo: React.FC<BotInfoProps> = ({ bot }) => {
+  const fetchBotInfo = useBotsStore((state) => state.fetchBotInfo);
 
-    const fetchBotInfo = useBotsStore(state => state.fetchBotInfo);
+  useEffect(() => {
+    let loop = true;
+    let timeout: null | number | any = null;
 
-    useEffect(() => {
-        
-        let loop = true;
-        let timeout: null | number | any = null;
-        
-        (async () => {
-            while (loop) {
-                fetchBotInfo(bot);
-                await new Promise((res) => {
-                    timeout = setTimeout(res, 30000);
-                })
-            }
-        })();
+    (async () => {
+      while (loop) {
+        fetchBotInfo(bot);
+        await new Promise((res) => {
+          timeout = setTimeout(res, 30000);
+        });
+      }
+    })();
 
-        return () => {
+    return () => {
+      if (timeout) {
+        clearTimeout(timeout);
+      }
 
-            if (timeout) {
-                clearTimeout(timeout);
-            }
+      loop = false;
+    };
+  }, [bot.isOpened]);
 
-            loop = false;
-        }
-
-    }, [bot.isOpened]);
-
-    return <></>;
-}
+  return <></>;
+};
 
 function App() {
+  const bots = useBotsStore((state) => state.bots);
 
-    const bots = useBotsStore(state => state.bots);
-
-    return (
-        <>  
-            {
-                bots && bots.length ? 
-                    bots.map((bot) => (
-                        <BotInfo 
-                            key={bot.id}
-                            bot={bot}
-                        />
-                    )) 
-                : 
-                    <></>
-            }
-            <BrowserRouter>
-            <Routes>
-                {
-                    routes.map((route) => (
-                        <Route 
-                            key={route.path} 
-                            {...route} 
-                        />
-                    ))
-                }
-            </Routes>
-            <ToastContainer />
-        </BrowserRouter>
-        </>
-    )
+  return (
+    <>
+      {bots && bots.length ? (
+        bots.map((bot) => <BotInfo key={bot.id} bot={bot} />)
+      ) : (
+        <></>
+      )}
+      <BrowserRouter>
+        <Routes>
+          {routes.map((route) => (
+            <Route key={route.path} {...route} />
+          ))}
+        </Routes>
+        <ToastContainer />
+      </BrowserRouter>
+    </>
+  );
 }
 
-export default App
+export default App;
