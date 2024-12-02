@@ -235,7 +235,7 @@ const MainPage = () => {
   };
 
   const changeTab = () => {
-    setCurrentTab(+location.pathname.substring(1, location.pathname.length));
+    setCurrentTab(+location.pathname.substring(1, location.pathname.length) || 1);
   };
 
   useEffect(() => {
