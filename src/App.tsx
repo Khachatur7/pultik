@@ -18,10 +18,7 @@ const routes: RouteProps[] = [
     path: "*",
     element: <MainPage />,
   },
-  {
-    path: "/",
-    element: <MainPage />,
-  },
+
   {
     path: "/:id",
     element: <MainPage />,
