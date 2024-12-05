@@ -219,15 +219,12 @@ const MainPage = () => {
     }
   };
 
-  const allPricesPlus = async () => {
+  const allPrices = async () => {
     
     try {
       const res = await axios.post("/allPrices", {
         user: localStorage.getItem("pultik-user-login"),
-        priceChange:
-          +`${firstValue.replace("-", "")}` === 0
-            ? "0"
-            : `${firstValue.replace("-", "")}`,
+        priceChange: `${firstValue}%`,
       });
 
       if (res.status == 200) {
@@ -251,25 +248,25 @@ const MainPage = () => {
     };
   }, []);
 
-  const allPricesMinus = async () => {
+  // const allPricesMinus = async () => {
     
-    try {
-      const res = await axios.post("/allPrices", {
-        user: localStorage.getItem("pultik-user-login"),
-        priceChange:
-          +`${firstValue.replace("-", "")}` === 0
-            ? "0"
-            : `-${firstValue.replace("-", "")}`,
-      });
+  //   try {
+  //     const res = await axios.post("/allPrices", {
+  //       user: localStorage.getItem("pultik-user-login"),
+  //       priceChange:
+  //         +`${firstValue.replace("-", "")}` === 0
+  //           ? "0"
+  //           : `-${firstValue.replace("-", "")}`,
+  //     });
 
-      if (res.status == 200) {
-        console.log(555);
+  //     if (res.status == 200) {
+  //       console.log(555);
         
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const SelectMonth = async (numb: string) => {
     try {
@@ -925,10 +922,16 @@ const MainPage = () => {
             <div className="mat__wrapper">
               {plusButtons.map((button) =>
                 button.value == 1 && button.input == 2 ? (
-                  <Button key={button.id} onClick={allPricesPlus}>
-                    <div className="bttn_arrow arrow_up">
+                  <Button key={button.id} onClick={allPrices}>
+                    <div className="bttn_arrow">
+                      <div className="arrow_up">
                       <ArrowSVG />
+                      </div>
+                      <div className="def_arrow">
+                      <ArrowSVG />
+                      </div>
                     </div>
+                   
                   </Button>
                 ) : (
                   <Button
@@ -943,13 +946,7 @@ const MainPage = () => {
 
             <div className="mat__wrapper">
               {minusButtons.map((button) =>
-                button.value == 1 && button.input == 2 ? (
-                  <Button key={button.id} onClick={allPricesMinus}>
-                    <div className="bttn_arrow">
-                      <ArrowSVG />
-                    </div>
-                  </Button>
-                ) : (
+                button.input != 2 &&
                   <Button
                     key={button.id}
                     onClick={() => minusHandler(button.value, button?.input)}
@@ -958,7 +955,6 @@ const MainPage = () => {
                       {`-${button.value} ${buttonTextHandler(button.input)}`}
                     </div>
                   </Button>
-                )
               )}
             </div>
             {window.innerWidth <= 400 && (

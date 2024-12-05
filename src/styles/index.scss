@@ -226,6 +226,7 @@ body {
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 
@@ -234,13 +235,17 @@ body {
   }
 
   &:hover {
-    background-color: #fff !important;
 
     path {
       fill: #000;
     }
   }
 }
+
+.def_arrow{
+  margin-top: -20px;
+}
+
 
 .arrow_up svg {
   transform: rotateZ(180deg);
