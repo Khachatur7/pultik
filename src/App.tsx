@@ -1,4 +1,10 @@
-import { RouteProps, Route, Routes, BrowserRouter } from "react-router-dom";
+import {
+  RouteProps,
+  Route,
+  Routes,
+  BrowserRouter,
+  useNavigate,
+} from "react-router-dom";
 import {
   AuthPage,
   ButtonCreatePage,
@@ -86,6 +92,13 @@ const BotInfo: React.FC<BotInfoProps> = ({ bot }) => {
 
 function App() {
   const bots = useBotsStore((state) => state.bots);
+  const navigate = useNavigate();
+  useEffect(() => {
+    window.addEventListener("beforeunload", () => {
+      navigate("/");
+      location.reload()
+    });
+  }, []);
 
   return (
     <>
