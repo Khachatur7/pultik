@@ -220,11 +220,11 @@ const MainPage = () => {
   };
 
   const allPricesPlus = async () => {
+    
     try {
       const res = await axios.post("/allPrices", {
-        percent: 1,
         user: localStorage.getItem("pultik-user-login"),
-        priceChange: firstValue
+         priceChange:`${firstValue.replace("-","")}`
       });
 
       if (res.status == 200) {
@@ -247,11 +247,11 @@ const MainPage = () => {
   }, []);
 
   const allPricesMinus = async () => {
+    
     try {
       const res = await axios.post("/allPrices", {
-        percent: -1,
         user: localStorage.getItem("pultik-user-login"),
-        priceChange: firstValue
+         priceChange: `-${firstValue.replace("-","")}`
       });
 
       if (res.status == 200) {
