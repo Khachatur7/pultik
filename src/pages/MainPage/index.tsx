@@ -228,7 +228,7 @@ const MainPage = () => {
       });
 
       if (res.status == 200) {
-        console.log(555);
+        alert(res.data.text);
       }
     } catch (error) {
       console.log(error);
