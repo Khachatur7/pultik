@@ -3,6 +3,7 @@ import { AuthCheck, Container, ToggleComponent } from '@/components';
 import { toast } from 'react-toastify';
 import axios from "@/axios";
 import { createPortal } from 'react-dom';
+import { useNavigate } from 'react-router-dom';
 // import { useNavigate } from 'react-router-dom';
 
 // interface OrderInfoType {
@@ -47,8 +48,7 @@ interface FexpItemType {
 
 const ButtonCreatePage = () => {
 
-    // const navigate = useNavigate();
-
+const navigate = useNavigate();
     const [orderId, setOrderId] = useState("");
     const [sku, setSku] = useState("");
     const [isOpened, setIsOpened] = useState(false);
@@ -417,7 +417,13 @@ const ButtonCreatePage = () => {
         }
 
     }, []);
-
+    
+    useEffect(() => {
+      window.addEventListener("beforeunload", () => {
+        navigate("/");
+        location.reload()
+      });
+    }, []);
     return (
         <>
             {
