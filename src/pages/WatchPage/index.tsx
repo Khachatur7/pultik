@@ -6,11 +6,14 @@ import { useNavigate } from "react-router-dom";
 const WatchPage = () => {
   const [bots, setBots] = useState();
   const navigate = useNavigate();
-  const LogOut = () => {
-    localStorage.removeItem("pultik-user-login");
-    localStorage.removeItem("pultik-token-key");
-    navigate("/auth");
-  };
+const LogOut = () => {
+  console.log(5555);
+  
+  localStorage.removeItem("pultik-user-login");
+  localStorage.removeItem("pultik-token-key");
+  navigate("/auth");
+
+}
 
   useEffect(() => {
     fetch("https://hjklhkjlhkljhpjhkhddhgfdghfdgfcycffgh.ru:2999/pultikMon")
@@ -18,12 +21,6 @@ const WatchPage = () => {
       .then((res) => setBots(res.answer));
   }, []);
 
-  useEffect(() => {
-    window.addEventListener("beforeunload", () => {
-      navigate("/");
-      location.reload();
-    });
-  }, []);
 
   return (
     <div className="flex items-start justify-center gap-12 px-10 pt-16 h-full watch_page_list">
@@ -75,6 +72,7 @@ const WatchPage = () => {
           viewBox="0 0 512 512"
           xmlns="http://www.w3.org/2000/svg"
         >
+          
           <path
             d="M304,336v40a40,40,0,0,1-40,40H104a40,40,0,0,1-40-40V136a40,40,0,0,1,40-40H256c22.09,0,48,17.91,48,40v40"
             style={{

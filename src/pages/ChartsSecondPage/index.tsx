@@ -2,13 +2,12 @@ import { useEffect, useState } from "react";
 import axios from "@/axios";
 import { AuthCheck, Container } from "@/components";
 import ChartComponent from "../ChartsPage/ChartComponent";
-import { useNavigate } from "react-router-dom";
 
 const ChartsPage = () => {
-  const navigate = useNavigate();
   const [dates, setDates] = useState<string[] | null>(null);
   const [totalPages, setTotalPages] = useState(1);
   const [roiMonth, setRoiMonth] = useState<number[] | null>(null);
+
   const [todayMm, setTodayMm] = useState<number[] | null>(null);
   const [todayMmDates, setTodayMmDates] = useState<string[] | null>(null);
   const [todayMmTotalPages, setTodayMmTotalPages] = useState(1);
@@ -69,13 +68,7 @@ const ChartsPage = () => {
       console.log("Не удалось получить графики");
     }
   };
-  
-  useEffect(() => {
-    window.addEventListener("beforeunload", () => {
-      navigate("/");
-      location.reload()
-    });
-  }, []);
+
   useEffect(() => {
     getChartData();
   }, []);

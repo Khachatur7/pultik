@@ -96,7 +96,6 @@ export type LastEventType = "price" | "stocks" | null;
 
 const MainPage = () => {
   // const bots = useBotsStore((state) => state.bots);
-  const navigate = useNavigate();
   const [bots, setBots] = useState<IBots[] | null>(null);
   const [http, setHttp] = useState<string | null>(null);
   const [timeLeft, setTimeLeft] = useState(24);
@@ -575,11 +574,11 @@ const MainPage = () => {
       SearchBttns();
     }
   }, [bttnSearcher]);
- 
+  const navigate = useNavigate();
   useEffect(() => {
     window.addEventListener("beforeunload", () => {
       navigate("/");
-      location.reload()
+      
     });
   }, []);
   return (

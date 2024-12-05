@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Container } from "@/components";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -48,12 +48,7 @@ const AuthPage = () => {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    window.addEventListener("beforeunload", () => {
-      navigate("/");
-      location.reload()
-    });
-  }, []);
+
   return (
     <Container>
       <div className="w-full flex flex-col">

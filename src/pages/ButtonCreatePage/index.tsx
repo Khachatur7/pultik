@@ -189,13 +189,6 @@ const ButtonCreatePage = () => {
   };
 
   useEffect(() => {
-    window.addEventListener("beforeunload", () => {
-      navigate("/");
-      location.reload()
-    });
-  }, []);
-
-  useEffect(() => {
     if (changedData) {
       sendChangedData();
     }
