@@ -224,7 +224,7 @@ const MainPage = () => {
     try {
       const res = await axios.post("/allPrices", {
         user: localStorage.getItem("pultik-user-login"),
-        priceChange: `${firstValue}%`,
+        priceChange: firstValue,
       });
 
       if (res.status == 200) {
