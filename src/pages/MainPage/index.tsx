@@ -12,7 +12,7 @@ import { nanoid } from "nanoid";
 import axios from "@/axios";
 import { MultiType } from "@/components/GridButton/CircleModalComponent";
 import { dataFilterHandler } from "@/handlers";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import boxImage from "@/images/boxX.png";
 import addImage from "@/images/add.png";
 import chartPageImage from "@/images/chart-page-icon.png";
@@ -574,10 +574,10 @@ const MainPage = () => {
       SearchBttns();
     }
   }, [bttnSearcher]);
-
+const navigate = useNavigate()
   useEffect(() => {
     window.addEventListener("beforeunload", () => {
-      window.location.replace(location.origin + "/")
+      navigate("/")
     });
   }, []);
   return (
