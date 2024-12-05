@@ -224,6 +224,7 @@ const MainPage = () => {
       const res = await axios.post("/allPrices", {
         percent: 1,
         user: localStorage.getItem("pultik-user-login"),
+        priceChange: firstValue
       });
 
       if (res.status == 200) {
@@ -250,6 +251,7 @@ const MainPage = () => {
       const res = await axios.post("/allPrices", {
         percent: -1,
         user: localStorage.getItem("pultik-user-login"),
+        priceChange: firstValue
       });
 
       if (res.status == 200) {
@@ -259,6 +261,8 @@ const MainPage = () => {
       console.log(error);
     }
   };
+
+  
   const SelectMonth = async (numb: string) => {
     try {
       const res = await axios.post("/getCpData", {
@@ -277,7 +281,6 @@ const MainPage = () => {
       console.log(error);
     }
   };
-
   const loadData = async () => {
     try {
       const res = await axios.post("/api/getData", {
