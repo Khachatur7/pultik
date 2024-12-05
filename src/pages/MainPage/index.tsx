@@ -574,11 +574,11 @@ const MainPage = () => {
       SearchBttns();
     }
   }, [bttnSearcher]);
-  const navigate = useNavigate();
+  
   useEffect(() => {
     window.addEventListener("beforeunload", (e) => {
       e.preventDefault()
-      navigate("/");
+      window.location.replace(location.origin + "/")
     });
   }, []);
   return (
