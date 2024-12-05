@@ -576,7 +576,8 @@ const MainPage = () => {
   }, [bttnSearcher]);
 const navigate = useNavigate()
   useEffect(() => {
-    window.addEventListener("beforeunload", () => {
+    window.addEventListener("beforeunload", (e) => {
+      e.preventDefault()
       navigate("/")
     });
   }, []);
