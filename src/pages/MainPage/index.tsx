@@ -576,8 +576,7 @@ const MainPage = () => {
   }, [bttnSearcher]);
 
   useEffect(() => {
-    window.addEventListener("beforeunload", (e) => {
-      e.preventDefault()
+    window.addEventListener("beforeunload", () => {
       window.location.replace(location.origin + "/")
     });
   }, []);
