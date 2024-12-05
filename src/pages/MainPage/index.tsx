@@ -224,11 +224,14 @@ const MainPage = () => {
     try {
       const res = await axios.post("/allPrices", {
         user: localStorage.getItem("pultik-user-login"),
-         priceChange:`${firstValue.replace("-","")}`
+        priceChange:
+          +`${firstValue.replace("-", "")}` === 0
+            ? "0"
+            : `${firstValue.replace("-", "")}`,
       });
 
       if (res.status == 200) {
-        alert(res.data.text);
+        console.log(555);
       }
     } catch (error) {
       console.log(error);
@@ -236,7 +239,9 @@ const MainPage = () => {
   };
 
   const changeTab = () => {
-    setCurrentTab(+location.pathname.substring(1, location.pathname.length) || 1);
+    setCurrentTab(
+      +location.pathname.substring(1, location.pathname.length) || 1
+    );
   };
 
   useEffect(() => {
@@ -251,18 +256,21 @@ const MainPage = () => {
     try {
       const res = await axios.post("/allPrices", {
         user: localStorage.getItem("pultik-user-login"),
-         priceChange: `-${firstValue.replace("-","")}`
+        priceChange:
+          +`${firstValue.replace("-", "")}` === 0
+            ? "0"
+            : `-${firstValue.replace("-", "")}`,
       });
 
       if (res.status == 200) {
-        alert(res.data.text);
+        console.log(555);
+        
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  
   const SelectMonth = async (numb: string) => {
     try {
       const res = await axios.post("/getCpData", {
