@@ -276,7 +276,7 @@ const GridButton: React.FC<Props> = ({
         )}
         <p>
           {`${!isNaN(stockValue) ? ` S ${stockValue}` : ""} ||`}{" "}
-          <span>{`w 0 |`}</span>
+          <span>{`w 0 | `}</span>
           <span className="underline">{`F ${fStocksValue || 0}`}</span>{" "}
           {`${
             cpValue
