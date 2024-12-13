@@ -4,15 +4,15 @@ import { toast } from "react-toastify";
 import axios from "@/axios";
 import { useNavigate } from "react-router-dom";
 
-interface ITypeList {
-  "0":string
-  "1":string
-  "2":string
-  "3":string
-  "4":string
-  "commodites":string
-  "_id":string
-}
+// interface ITypeList {
+//   "0": string;
+//   "1": string;
+//   "2": string;
+//   "3": string;
+//   "4": string;
+//   commodites: string;
+//   _id: string;
+// }
 
 const ButtonCreatePage = () => {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ const ButtonCreatePage = () => {
   const [wBar, setWBar] = useState("0");
   const [oName, setOName] = useState("1");
   const [type, setType] = useState<string>("tel");
-  const [typesList, setTypesList] = useState<ITypeList>();
+  const [typesList, setTypesList] = useState<string[]>();
   const [cust, setCust] = useState("0");
   const [loading, setLoading] = useState(false);
   const [v, setV] = useState("15");
@@ -199,18 +199,20 @@ const ButtonCreatePage = () => {
     }
   };
 
-
   const loadComList = async () => {
     try {
       const res = await axios.get("/comList");
-
+      let loadListArr: string[] = [];
       if (!res.data) {
         throw Error();
       }
-setTypesList(res.data.complete[0])
-
-    } catch (error) {
-    }
+      Object.keys(res.data.complete[0]).map((el) => {
+        if (!isNaN(+el)) {
+          loadListArr.push(res.data.complete[0][el]);
+        }
+      });
+      setTypesList(loadListArr);
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -224,8 +226,7 @@ setTypesList(res.data.complete[0])
       postNameRequest();
       localStorage.removeItem("i");
     }
-  loadComList()
-
+    loadComList();
   }, []);
   return (
     <AuthCheck>
@@ -350,14 +351,14 @@ setTypesList(res.data.complete[0])
                 className={"h-[55px] rounded-[12px] text-2xl create_page_item"}
                 onChange={(e) => setType(e.target.value)}
               >
-                {
-                  typesList && <>
-                  <option value={typesList["0"]}>{typesList["0"]}</option>
-                <option value={typesList["1"]}>{typesList["1"]}</option>
-                <option value={typesList["2"]}>{typesList["2"]}</option>
-                <option value={typesList["3"]}>{typesList["3"]}</option>
-                <option value={typesList["4"]}>{typesList["4"]}</option></>
-                }
+                {typesList &&
+                  typesList.map((text) => {
+                    return (
+                      <option key={text} value={text}>
+                        {text}
+                      </option>
+                    );
+                  })}
               </select>
             </div>
             <div className="form_field">
