@@ -4,9 +4,18 @@ import { toast } from "react-toastify";
 import axios from "@/axios";
 import { useNavigate } from "react-router-dom";
 
+interface ITypeList {
+  "0":string
+  "1":string
+  "2":string
+  "3":string
+  "4":string
+  "commodites":string
+  "_id":string
+}
+
 const ButtonCreatePage = () => {
   const navigate = useNavigate();
-
   const [number, setNumber] = useState("");
   const [name, setName] = useState("");
   // const [fullName, setFullName] = useState("");
@@ -18,6 +27,7 @@ const ButtonCreatePage = () => {
   const [wBar, setWBar] = useState("0");
   const [oName, setOName] = useState("1");
   const [type, setType] = useState<string>("tel");
+  const [typesList, setTypesList] = useState<ITypeList>();
   const [cust, setCust] = useState("0");
   const [loading, setLoading] = useState(false);
   const [v, setV] = useState("15");
@@ -35,6 +45,7 @@ const ButtonCreatePage = () => {
   const [dataField, setDataField] = useState<string>("");
   const [dataCompare, setDataCompare] = useState<string[]>();
   const [changedData, setChangedData] = useState<string>();
+
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -188,6 +199,20 @@ const ButtonCreatePage = () => {
     }
   };
 
+
+  const loadComList = async () => {
+    try {
+      const res = await axios.get("/comList");
+
+      if (!res.data) {
+        throw Error();
+      }
+setTypesList(res.data.complete[0])
+
+    } catch (error) {
+    }
+  };
+
   useEffect(() => {
     if (changedData) {
       sendChangedData();
@@ -199,6 +224,8 @@ const ButtonCreatePage = () => {
       postNameRequest();
       localStorage.removeItem("i");
     }
+  loadComList()
+
   }, []);
   return (
     <AuthCheck>
@@ -323,11 +350,14 @@ const ButtonCreatePage = () => {
                 className={"h-[55px] rounded-[12px] text-2xl create_page_item"}
                 onChange={(e) => setType(e.target.value)}
               >
-                <option value="tel">tel</option>
-                <option value="stroy">stroy</option>
-                <option value="print">print</option>
-                <option value="zvuk">zvuk</option>
-                <option value="fen">fen</option>
+                {
+                  typesList && <>
+                  <option value={typesList["0"]}>{typesList["0"]}</option>
+                <option value={typesList["1"]}>{typesList["1"]}</option>
+                <option value={typesList["2"]}>{typesList["2"]}</option>
+                <option value={typesList["3"]}>{typesList["3"]}</option>
+                <option value={typesList["4"]}>{typesList["4"]}</option></>
+                }
               </select>
             </div>
             <div className="form_field">

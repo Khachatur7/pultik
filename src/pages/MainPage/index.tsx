@@ -220,6 +220,7 @@ const MainPage = () => {
     }
   };
 
+
   const allPrices = async () => {
     
     try {
@@ -244,6 +245,7 @@ const MainPage = () => {
 
   useEffect(() => {
     window.addEventListener("popstate", changeTab);
+
     return () => {
       window.removeEventListener("popstate", changeTab);
     };
