@@ -187,6 +187,22 @@ body {
   }
 }
 
+.btn .w_sign {
+  position: absolute;
+  bottom: -5px;
+  right: -5px;
+  transform: rotate(-45deg);
+  path{
+    stroke: rgba(153, 233, 28, 0.9);
+    fill: rgba(153, 233, 28, 0.9);
+  }
+}
+
+.btn__cont {
+  overflow: hidden;
+  border-radius: 20px;
+}
+
 .btn__wrapper {
   .btn {
     font-size: 21px;
@@ -235,17 +251,15 @@ body {
   }
 
   &:hover {
-
     path {
       fill: #000;
     }
   }
 }
 
-.def_arrow{
+.def_arrow {
   margin-top: -20px;
 }
-
 
 .arrow_up svg {
   transform: rotateZ(180deg);
@@ -421,13 +435,13 @@ body {
   position: relative;
 
   .searcher_input {
-    width: 130%;
+    width: 100%;
   }
 
   .search_logo {
     position: absolute;
     top: 18%;
-    right: -20%;
+    right: 5%;
     width: 32px;
     height: 32px;
     cursor: pointer;
@@ -436,7 +450,7 @@ body {
   .bttns_search_res {
     position: absolute;
     top: 110%;
-    right: -20%;
+    right: 5%;
     font-size: 20px;
   }
 }
@@ -1735,10 +1749,9 @@ body {
   .popup {
     width: 70%;
   }
-
   .text_cp {
-    top: 30px;
-    right: 40px;
+    top: -85px;
+    right: 250px;
   }
 
   .btn__changing {
@@ -2953,7 +2966,6 @@ body {
           font-size: 27px;
         }
       }
-     
     }
 
     .data_field {

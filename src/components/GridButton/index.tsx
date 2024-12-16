@@ -44,6 +44,7 @@ interface Props {
   returnMode?: boolean;
   copy: boolean;
   setCopy: React.Dispatch<React.SetStateAction<boolean>>;
+  wStocks?: number;
 }
 
 const GridButton: React.FC<Props> = ({
@@ -72,6 +73,7 @@ const GridButton: React.FC<Props> = ({
   returnMode,
   copy,
   setCopy,
+  wStocks,
 }) => {
   const [currentPrice, setCurrentPrice] = useState(price);
   const [currentPriceFixed, setCurrentPriceFixed] = useState(price);
@@ -266,6 +268,23 @@ const GridButton: React.FC<Props> = ({
         onClick={getPrice}
         disabled={isDisabled}
       >
+        {wStocks && wStocks > 0 && (
+          <div className="w_sign">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="34"
+              height="34"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                d="M10.293 4.793c.78-1.277 2.634-1.277 3.414 0l7.433 12.164C21.955 18.29 20.996 20 19.434 20H4.566c-1.562 0-2.52-1.71-1.706-3.043z"
+              />
+            </svg>
+          </div>
+        )}
         <span>{`${i && h ? `{${i}. ` : i ? `${i}. ` : ""}`}</span>
         {fullName ? (
           <span className={`underline ${xaltura ? "xaltura" : ""}`}>
@@ -276,7 +295,7 @@ const GridButton: React.FC<Props> = ({
         )}
         <p>
           {`${!isNaN(stockValue) ? ` S ${stockValue}` : ""} ||`}{" "}
-          <span>{`w 0 | `}</span>
+          <span>{`w ${wStocks || 0} | `}</span>
           <span className="underline">{`F ${fStocksValue || 0}`}</span>{" "}
           {`${
             cpValue

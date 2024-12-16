@@ -9,6 +9,7 @@ interface ButtonItemType {
     basePrice: number;
     sku: string;
     stocks: number;
+    wStocks?:number
     bool: number;
     fullName: string;
     i: number;

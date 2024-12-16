@@ -26,7 +26,6 @@ import MainPageFexp from "./MainPageFexp";
 import ZeroModesInfo from "./ZeroModesInfo";
 import { infoBlockItems } from "@/store/useBotsStore";
 import ModalSearchRes from "@/components/ModaleSearchRes";
-import ArrowSVG from "@/components/ArrowSVG";
 
 const tabs = [
   {
@@ -125,6 +124,7 @@ const MainPage = () => {
     fixedExp: number;
     quart: number;
     priceIndex: string;
+    middlePercent:string
   } | null>(null);
   const [returnMode, setReturnMode] = useState(false);
   const [buttonsInfo, setButtonsInfo] = useState<ButtonsInfo>({
@@ -138,6 +138,7 @@ const MainPage = () => {
     stroyNumber: 0,
     telAvailable: 0,
     stroyAvailable: 0,
+    
   });
   const [lastButton, setLastButton] = useState<LastButtonType | null>(null);
   const [firstValue, setFirstValue] = useState("0");
@@ -220,9 +221,7 @@ const MainPage = () => {
     }
   };
 
-
   const allPrices = async () => {
-    
     try {
       const res = await axios.post("/allPrices", {
         user: localStorage.getItem("pultik-user-login"),
@@ -252,7 +251,7 @@ const MainPage = () => {
   }, []);
 
   // const allPricesMinus = async () => {
-    
+
   //   try {
   //     const res = await axios.post("/allPrices", {
   //       user: localStorage.getItem("pultik-user-login"),
@@ -264,7 +263,7 @@ const MainPage = () => {
 
   //     if (res.status == 200) {
   //       console.log(555);
-        
+
   //     }
   //   } catch (error) {
   //     console.log(error);
@@ -290,6 +289,7 @@ const MainPage = () => {
     }
   };
   const loadData = async () => {
+    
     try {
       const res = await axios.post("/api/getData", {
         user: localStorage.getItem("pultik-user-login"),
@@ -362,6 +362,8 @@ const MainPage = () => {
       setItems(
         itemsButtons.sort((a: ButtonItemType, b: ButtonItemType) => a.i - b.i)
       );
+      console.log(itemsButtons);
+      
       setButtonsInfo({
         total: itemsButtons.length,
         grey: greyButtons,
@@ -423,6 +425,8 @@ const MainPage = () => {
     setFirstValue("0");
     setSecondValue("0");
     setBoostValue("0");
+    setBttnSearcher("")
+    setNotSearchYet(true)
   };
 
   const timerHandler = async () => {
@@ -525,7 +529,7 @@ const MainPage = () => {
         await new Promise((res) =>
           setTimeout(() => {
             res(true);
-          }, 15000)
+          }, 10000)
         );
 
         await initialLoad();
@@ -558,7 +562,7 @@ const MainPage = () => {
   useEffect(() => {
     setTimeout(() => {
       setMonitoring(!monitoring);
-    }, 15000);
+    }, 10000);
   }, []);
 
   useEffect(() => {
@@ -577,7 +581,7 @@ const MainPage = () => {
       SearchBttns();
     }
   }, [bttnSearcher]);
- 
+
   return (
     <AuthCheck>
       {openChangingMenu && (
@@ -849,6 +853,7 @@ const MainPage = () => {
                         returnMode={returnMode}
                         copy={copy}
                         setCopy={setCopy}
+                        wStocks={el.wStocks}
                       />
                     );
                   })}
@@ -872,32 +877,6 @@ const MainPage = () => {
                   setLastEvent("price");
                 }}
               />
-              <input
-                type="text"
-                placeholder="Изменение остатка"
-                value={`${secondValue} S`}
-                onChange={(e) => {
-                  const value = e.target.value
-                    .split(" ")
-                    .join("")
-                    .replace("S", "");
-                  setSecondValue(value ? Number(value).toString() : "");
-                  setLastEvent("stocks");
-                }}
-              />
-              <input
-                type="text"
-                placeholder="Изменение boost"
-                value={`${boostValue} B`}
-                onChange={(e) => {
-                  const value = e.target.value
-                    .split(" ")
-                    .join("")
-                    .replace("B", "");
-                  setBoostValue(value);
-                }}
-              />
-              <Button onClick={resetInputs} text="Reset" />
               {window.innerWidth > 400 && (
                 <div className="input_search_bttns">
                   <input
@@ -921,20 +900,38 @@ const MainPage = () => {
                   </span>
                 </div>
               )}
+              {/*  <input
+                type="text"
+                placeholder="Изменение остатка"
+                value={`${secondValue} S`}
+                onChange={(e) => {
+                  const value = e.target.value
+                    .split(" ")
+                    .join("")
+                    .replace("S", "");
+                  setSecondValue(value ? Number(value).toString() : "");
+                  setLastEvent("stocks");
+                }}
+              />
+              <input
+                type="text"
+                placeholder="Изменение boost"
+                value={`${boostValue} B`}
+                onChange={(e) => {
+                  const value = e.target.value
+                    .split(" ")
+                    .join("")
+                    .replace("B", "");
+                  setBoostValue(value);
+                }}
+              /> */}
+              <Button onClick={resetInputs} text="Reset" />
             </div>
             <div className="mat__wrapper">
               {plusButtons.map((button) =>
                 button.value == 1 && button.input == 2 ? (
                   <Button key={button.id} onClick={allPrices}>
-                    <div className="bttn_arrow">
-                      <div className="arrow_up">
-                      <ArrowSVG />
-                      </div>
-                      <div className="def_arrow">
-                      <ArrowSVG />
-                      </div>
-                    </div>
-                   
+                    <span>{cpData?.middlePercent || 0}</span>
                   </Button>
                 ) : (
                   <Button
@@ -948,16 +945,18 @@ const MainPage = () => {
             </div>
 
             <div className="mat__wrapper">
-              {minusButtons.map((button) =>
-                button.input != 2 &&
-                  <Button
-                    key={button.id}
-                    onClick={() => minusHandler(button.value, button?.input)}
-                  >
-                    <div className="bttn_arrow">
-                      {`-${button.value} ${buttonTextHandler(button.input)}`}
-                    </div>
-                  </Button>
+              {minusButtons.map(
+                (button) =>
+                  button.input != 2 && (
+                    <Button
+                      key={button.id}
+                      onClick={() => minusHandler(button.value, button?.input)}
+                    >
+                      <div className="bttn_arrow">
+                        {`-${button.value} ${buttonTextHandler(button.input)}`}
+                      </div>
+                    </Button>
+                  )
               )}
             </div>
             {window.innerWidth <= 400 && (
@@ -1000,7 +999,9 @@ const MainPage = () => {
                     {cpData.salesMm}
                   </p>
                   <p>fE/m: {cpData.fixedExp} Rub</p>
-                  <p>Quartal: {cpData.quart} | Price index: {cpData.priceIndex} %</p>
+                  <p>
+                    Quartal: {cpData.quart} | Price index: {cpData.priceIndex} %
+                  </p>
                   <p>user: {localStorage.getItem("pultik-user-login")}</p>
                 </>
               ) : (
