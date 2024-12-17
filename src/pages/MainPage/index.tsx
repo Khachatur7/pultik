@@ -1001,9 +1001,7 @@ const MainPage = () => {
                   <p>pL: {cpData.pL}</p>
                   <p>rO: {cpData.round}</p>
                   <p>mG: {cpData.marg}</p>
-                  <p>
-                    Eur (CB): {cpData.eurRub} | Limit: {cpData.customs}
-                  </p>
+                 
                   <p>
                     Wb: {cpData.salesWb} | Oz: {cpData.salesOz} | Ya:{" "}
                     {cpData.salesYa} | Av: {cpData.salesAv} | Mm:{" "}
@@ -1011,7 +1009,7 @@ const MainPage = () => {
                   </p>
                   <p>fE/m: {cpData.fixedExp} Rub</p>
                   <p>
-                    Quartal: {cpData.quart} | Price index: {cpData.priceIndex} %
+                    Quartal: {cpData.quart} | Price index: {cpData.priceIndex}
                   </p>
                   <p>user: {localStorage.getItem("pultik-user-login")}</p>
                 </>
