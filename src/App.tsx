@@ -12,6 +12,7 @@ import WatchPage from "./pages/WatchPage";
 import { useEffect } from "react";
 import { useBotsStore } from "./store";
 import { BotItem } from "./store/useBotsStore";
+import NewPage from "./pages/NewPage";
 
 const routes: RouteProps[] = [
   {
@@ -46,6 +47,10 @@ const routes: RouteProps[] = [
   {
     path: "/watch",
     element: <WatchPage />,
+  },
+  {
+    path: "/new",
+    element: <NewPage />,
   },
 ];
 

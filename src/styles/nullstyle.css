@@ -14,7 +14,8 @@ body {
   height: 100vh;
   font-size: 14px;
   color: #000;
-  background: linear-gradient(134deg, rgba(109, 203, 22, 0.9) 2.99%, rgba(153, 233, 28, 0.9) 100%);
+  background: #7ee41f;
+  /* background: linear-gradient(134deg, rgba(109, 203, 22, 0.9) 2.99%, rgba(153, 233, 28, 0.9) 100%); */
 }
 
 #root {

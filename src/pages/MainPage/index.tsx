@@ -20,6 +20,7 @@ import eyeImage from "@/images/eyePng.png";
 import roiImage from "@/images/roi.png";
 import recycling from "@/images/recycling.svg";
 import searchLogo from "@/images/search_1.svg";
+import newP from "@/images/new.jpg"
 import { InputTypes, ButtonItemType, LastButtonType } from "@/types/common";
 import { minusButtons, plusButtons } from "@/common";
 import MainPageFexp from "./MainPageFexp";
@@ -652,6 +653,12 @@ const MainPage = () => {
             >
               <img src={eyeImage} alt="box-image" className="w-16" />
             </Link>
+            <Link
+              to={"/new"}
+              className={`btn btn__changing-item flex items-center justify-center`}
+            >
+              <img src={newP} alt="box-image" className="w-16" />
+            </Link>
           </div>
         </>
       )}
@@ -742,6 +749,12 @@ const MainPage = () => {
               >
                 <img src={eyeImage} alt="box-image" className="w-16" />
               </Link>
+              <Link
+              to={"/new"}
+              className={`btn btn__changing-item flex items-center justify-center`}
+            >
+              <img src={newP} alt="box-image" style={{width:"80px"}} />
+            </Link>
             </div>
           </>
         )}

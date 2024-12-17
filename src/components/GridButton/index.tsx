@@ -268,7 +268,7 @@ const GridButton: React.FC<Props> = ({
         onClick={getPrice}
         disabled={isDisabled}
       >
-        {wStocks && wStocks > 0 && (
+        {wStocks && wStocks > 0 ? (
           <div className="w_sign">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -284,6 +284,8 @@ const GridButton: React.FC<Props> = ({
               />
             </svg>
           </div>
+        ) : (
+          ""
         )}
         <span>{`${i && h ? `{${i}. ` : i ? `${i}. ` : ""}`}</span>
         {fullName ? (
