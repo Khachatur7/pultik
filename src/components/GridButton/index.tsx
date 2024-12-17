@@ -265,6 +265,10 @@ const GridButton: React.FC<Props> = ({
       localStorage.removeItem("bttn-from-modale");
     }
   }, []);
+
+  useEffect(() => {
+   setFStocksValue(fStocks)
+  }, [fStocks]);
   return (
     <div className="btn__cont">
       <button

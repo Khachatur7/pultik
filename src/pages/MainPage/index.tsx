@@ -297,7 +297,7 @@ const MainPage = () => {
       if (!res.data) {
         throw Error();
       }
-
+      
       const resData = res.data.countedStocks;
 
       const itemsButtons = resData.filter(
@@ -361,7 +361,7 @@ const MainPage = () => {
       setItems(
         itemsButtons.sort((a: ButtonItemType, b: ButtonItemType) => a.i - b.i)
       );
-
+      console.log(res.data)
       setButtonsInfo({
         total: itemsButtons.length,
         grey: greyButtons,
@@ -413,8 +413,6 @@ const MainPage = () => {
   // };
 
   const initialLoad = async () => {
-    console.log(5555);
-
     await loadMulti();
     await loadData();
     // await loadCom();
