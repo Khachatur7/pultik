@@ -90,7 +90,7 @@ const GridButton: React.FC<Props> = ({
   const [fStocksValue, setFStocksValue] = useState<number | undefined>(
     fStocks || 0
   );
-  const [fStocksValueChanged, setFStocksValueChanged] = useState(false);
+  // const [fStocksValueChanged, setFStocksValueChanged] = useState(false);
 
   const getPrice = async () => {
     if (isDisabled) {
@@ -223,15 +223,15 @@ const GridButton: React.FC<Props> = ({
     }
   };
 
-  useEffect(() => {
-    if (fStocks != fStocksValue) {
-      setFStocksValueChanged(true);
-      setFStocksValue(fStocks);
-    }
-    setTimeout(() => {
-      setFStocksValueChanged(false);
-    }, 500);
-  }, [fStocks]);
+  // useEffect(() => {
+  //   if (fStocks != fStocksValue) {
+  //     setFStocksValueChanged(true);
+  //     setFStocksValue(fStocks);
+  //   }
+  //   setTimeout(() => {
+  //     setFStocksValueChanged(false);
+  //   }, 500);
+  // }, [fStocks]);
 
   // useEffect(() => {
   //   if (fStocksValueChanged) {
@@ -268,9 +268,7 @@ const GridButton: React.FC<Props> = ({
   return (
     <div className="btn__cont">
       <button
-        className={`btn _hover ${stockValueHandler()} ${
-          fStocksValueChanged && "white_flash"
-        }`}
+        className={`btn _hover ${stockValueHandler()}`}
         onClick={getPrice}
         disabled={isDisabled}
       >
