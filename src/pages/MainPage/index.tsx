@@ -528,7 +528,7 @@ const MainPage = () => {
         await new Promise((res) =>
           setTimeout(() => {
             res(true);
-          }, 10000)
+          }, 5000)
         );
 
         await initialLoad();
@@ -561,7 +561,7 @@ const MainPage = () => {
   useEffect(() => {
     setTimeout(() => {
       setMonitoring(!monitoring);
-    }, 10000);
+    }, 5000);
   }, []);
 
   useEffect(() => {
