@@ -361,7 +361,6 @@ const MainPage = () => {
       setItems(
         itemsButtons.sort((a: ButtonItemType, b: ButtonItemType) => a.i - b.i)
       );
-      console.log(itemsButtons);
 
       setButtonsInfo({
         total: itemsButtons.length,
@@ -414,6 +413,8 @@ const MainPage = () => {
   // };
 
   const initialLoad = async () => {
+    console.log(5555);
+
     await loadMulti();
     await loadData();
     // await loadCom();
@@ -537,6 +538,13 @@ const MainPage = () => {
 
     updateHandler();
     console.log(data, lastButton);
+  }, []);
+
+  useEffect(() => {
+    setInterval(() => {
+      initialLoad();
+      SelectMonth(piker);
+    }, 5000);
   }, []);
 
   useEffect(() => {
@@ -1001,7 +1009,7 @@ const MainPage = () => {
                   <p>pL: {cpData.pL}</p>
                   <p>rO: {cpData.round}</p>
                   <p>mG: {cpData.marg}</p>
-                 
+
                   <p>
                     Wb: {cpData.salesWb} | Oz: {cpData.salesOz} | Ya:{" "}
                     {cpData.salesYa} | Av: {cpData.salesAv} | Mm:{" "}
@@ -1198,7 +1206,11 @@ const MainPage = () => {
         )}
       </Container>
       {openBttnModal && (
-        <ModalSearchRes bttns={bttnsIndex} closeModule={setOpenBttnModal} setTub={setCurrentTab}/>
+        <ModalSearchRes
+          bttns={bttnsIndex}
+          closeModule={setOpenBttnModal}
+          setTub={setCurrentTab}
+        />
       )}
     </AuthCheck>
   );
