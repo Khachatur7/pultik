@@ -188,13 +188,13 @@ body {
   }
 }
 
-
 .btn .w_sign {
   position: absolute;
   bottom: -5px;
   right: -5px;
   transform: rotate(-45deg);
-  path{
+
+  path {
     stroke: #7ee41f;
     fill: #7ee41f;
   }
@@ -275,7 +275,7 @@ body {
   position: absolute;
   right: 9%;
   top: 0%;
-  font-size: 18px;
+  font-size: 27px;
   line-height: 121%;
 }
 
@@ -1595,8 +1595,7 @@ body {
 body {
   width: 100vw;
   height: 100vh;
-  background: 
-    #7ee41f ;
+  background: #7ee41f;
 }
 
 .container {
@@ -1742,15 +1741,17 @@ body {
   .popup {
     width: 70%;
   }
+
   .text_cp {
     top: -85px;
-    left: 67.5%
+    left: 67.5%;
   }
 
   .btn__changing {
     margin-left: 0;
   }
-  .input_search_bttns .search_logo{
+
+  .input_search_bttns .search_logo {
     top: 28%;
   }
 }
@@ -2880,6 +2881,41 @@ body {
   transition: 0.5s ease;
 }
 
+.came_from_modale {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0) 10%,
+    rgba(0, 0, 0, 0) 40%,
+    rgb(255, 255, 255) 40%,
+    rgb(255, 255, 255) 50%,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 0) 70%,
+    rgb(255, 255, 255) 70%,
+    rgb(255, 255, 255) 80%,
+    rgba(0, 0, 0, 0) 80%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  background-position: right;
+  background-size: 300%;
+  transition: 0.9s ease-in;
+  z-index: 1000;
+  animation: came_from_modale 0.4s ease-in forwards;
+}
+
+@keyframes came_from_modale {
+  from {
+  }
+
+  to {
+    background-position: left;
+  }
+}
+
 .logout_btn {
   display: flex;
   align-items: center;
@@ -2920,6 +2956,7 @@ body {
   justify-content: start;
   gap: 7px;
   margin-top: -40px;
+
   .section_field {
     width: 100%;
     display: flex;
@@ -2928,10 +2965,12 @@ body {
     justify-content: start;
     gap: 7px;
     padding: 10px;
+
     label {
       font-size: 24px;
       font-weight: 500;
     }
+
     .section_field_inputs {
       width: 100%;
       display: flex;
@@ -2939,6 +2978,7 @@ body {
       justify-content: start;
       gap: 10px;
       font-size: 27px;
+
       .key_field,
       .name_field {
         width: 25%;
@@ -2950,6 +2990,7 @@ body {
         justify-content: space-between;
         align-items: center;
         padding: 0px 15px 2px 15px;
+
         .key_input,
         .name_input {
           width: 99%;
@@ -2958,6 +2999,7 @@ body {
           font-size: 23px;
           outline: none;
         }
+
         span {
           font-size: 27px;
         }
@@ -2973,6 +3015,7 @@ body {
       justify-content: space-between;
       align-items: center;
       padding: 3px;
+
       .data_input {
         width: 99%;
         height: 100%;
@@ -2983,6 +3026,7 @@ body {
         outline: none;
         resize: none;
       }
+
       .lt {
         height: 100%;
         display: flex;
@@ -2990,6 +3034,7 @@ body {
         justify-content: start;
         padding-top: 5px;
       }
+
       .rt {
         height: 100%;
         display: flex;
@@ -2999,6 +3044,7 @@ body {
       }
     }
   }
+
   .send_name_bttn,
   .change_data_bttn {
     padding: 12px 27px;

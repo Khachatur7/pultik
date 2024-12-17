@@ -1,14 +1,21 @@
 import closeImg from "@/images/close-svgrepo-com.svg";
 import { ButtonItemType } from "@/types/common";
+import { useNavigate } from "react-router-dom";
 
 interface ModalBttns {
   bttns: ButtonItemType[];
   closeModule: React.Dispatch<React.SetStateAction<boolean>>;
+  setTub: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const ModalSearchRes: React.FC<ModalBttns> = ({ bttns, closeModule }) => {
-  const DetermineBackgroundColor = (bttn: ButtonItemType) => {
+const ModalSearchRes: React.FC<ModalBttns> = ({
+  bttns,
+  closeModule,
+  setTub,
+}) => {
+  const navigate = useNavigate();
 
+  const DetermineBackgroundColor = (bttn: ButtonItemType) => {
     if (!bttn.fStocks) {
       return "button-gradient";
     }
@@ -34,6 +41,13 @@ const ModalSearchRes: React.FC<ModalBttns> = ({ bttns, closeModule }) => {
     }
   };
 
+  const GoToBttn = (ind: number) => {
+    localStorage.setItem("bttn-from-modale", JSON.stringify(ind));
+    const pageNumber = Math.ceil(ind / 52);
+    navigate(`/${pageNumber}`);
+    setTub(pageNumber);
+  };
+
   return (
     <div className="bttns_modal_res">
       <div className="close_bttns_modal" onClick={() => closeModule(false)}>
@@ -43,10 +57,9 @@ const ModalSearchRes: React.FC<ModalBttns> = ({ bttns, closeModule }) => {
         {bttns.map((el) => {
           return (
             <div
-              className={`bttn_index ${
-                DetermineBackgroundColor(el) 
-              }`}
+              className={`bttn_index ${DetermineBackgroundColor(el)}`}
               key={el._id}
+              onClick={() => GoToBttn(el.i)}
             >
               {el.i}. {el.fullName}
             </div>

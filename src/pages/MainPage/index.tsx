@@ -20,7 +20,7 @@ import eyeImage from "@/images/eyePng.png";
 import roiImage from "@/images/roi.png";
 import recycling from "@/images/recycling.svg";
 import searchLogo from "@/images/search_1.svg";
-import newP from "@/images/new.jpg"
+import newP from "@/images/new.jpg";
 import { InputTypes, ButtonItemType, LastButtonType } from "@/types/common";
 import { minusButtons, plusButtons } from "@/common";
 import MainPageFexp from "./MainPageFexp";
@@ -125,7 +125,7 @@ const MainPage = () => {
     fixedExp: number;
     quart: number;
     priceIndex: string;
-    middlePercent:string
+    middlePercent: string;
   } | null>(null);
   const [returnMode, setReturnMode] = useState(false);
   const [buttonsInfo, setButtonsInfo] = useState<ButtonsInfo>({
@@ -139,7 +139,6 @@ const MainPage = () => {
     stroyNumber: 0,
     telAvailable: 0,
     stroyAvailable: 0,
-    
   });
   const [lastButton, setLastButton] = useState<LastButtonType | null>(null);
   const [firstValue, setFirstValue] = useState("0");
@@ -290,7 +289,6 @@ const MainPage = () => {
     }
   };
   const loadData = async () => {
-    
     try {
       const res = await axios.post("/api/getData", {
         user: localStorage.getItem("pultik-user-login"),
@@ -364,7 +362,7 @@ const MainPage = () => {
         itemsButtons.sort((a: ButtonItemType, b: ButtonItemType) => a.i - b.i)
       );
       console.log(itemsButtons);
-      
+
       setButtonsInfo({
         total: itemsButtons.length,
         grey: greyButtons,
@@ -426,8 +424,8 @@ const MainPage = () => {
     setFirstValue("0");
     setSecondValue("0");
     setBoostValue("0");
-    setBttnSearcher("")
-    setNotSearchYet(true)
+    setBttnSearcher("");
+    setNotSearchYet(true);
   };
 
   const timerHandler = async () => {
@@ -750,11 +748,11 @@ const MainPage = () => {
                 <img src={eyeImage} alt="box-image" className="w-16" />
               </Link>
               <Link
-              to={"/new"}
-              className={`btn btn__changing-item flex items-center justify-center`}
-            >
-              <img src={newP} alt="box-image" style={{width:"80px"}} />
-            </Link>
+                to={"/new"}
+                className={`btn btn__changing-item flex items-center justify-center`}
+              >
+                <img src={newP} alt="box-image" style={{ width: "80px" }} />
+              </Link>
             </div>
           </>
         )}
@@ -1202,7 +1200,7 @@ const MainPage = () => {
         )}
       </Container>
       {openBttnModal && (
-        <ModalSearchRes bttns={bttnsIndex} closeModule={setOpenBttnModal} />
+        <ModalSearchRes bttns={bttnsIndex} closeModule={setOpenBttnModal} setTub={setCurrentTab}/>
       )}
     </AuthCheck>
   );
