@@ -1735,7 +1735,7 @@ body {
 @media screen and (max-width: 2800px) {
   .btn__wrapper {
     display: grid;
-    grid-template-columns: repeat(6, minmax(200px, 1fr));
+    grid-template-columns: repeat(8, minmax(200px, 1fr));
   }
 
   .popup {
@@ -1743,12 +1743,15 @@ body {
   }
 
   .text_cp {
-    top: -85px;
-    left: 67.5%;
+    top: 15px;
+    left: 63%;
   }
 
   .btn__changing {
     margin-left: 0;
+  }
+  .btn__cont{
+    height: 75px;
   }
 
   .input_search_bttns .search_logo {

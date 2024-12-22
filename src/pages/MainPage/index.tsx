@@ -27,6 +27,7 @@ import MainPageFexp from "./MainPageFexp";
 import ZeroModesInfo from "./ZeroModesInfo";
 import { infoBlockItems } from "@/store/useBotsStore";
 import ModalSearchRes from "@/components/ModaleSearchRes";
+// import ChartComponent from "../ChartsPage/ChartComponent";
 
 const tabs = [
   {
@@ -59,7 +60,7 @@ const tabs = [
   },
 ];
 
-const itemsPerPage = 52;
+const itemsPerPage = 72;
 const pages = 9;
 
 const totalButtons = itemsPerPage * pages;
@@ -297,7 +298,7 @@ const MainPage = () => {
       if (!res.data) {
         throw Error();
       }
-      
+
       const resData = res.data.countedStocks;
 
       const itemsButtons = resData.filter(
@@ -361,7 +362,7 @@ const MainPage = () => {
       setItems(
         itemsButtons.sort((a: ButtonItemType, b: ButtonItemType) => a.i - b.i)
       );
-      console.log(res.data)
+      console.log(res.data);
       setButtonsInfo({
         total: itemsButtons.length,
         grey: greyButtons,
@@ -959,8 +960,14 @@ const MainPage = () => {
                   </Button>
                 )
               )}
+              {/* <ChartComponent
+                label=""
+                labels={null}
+                data={null}
+                totalPages={0}
+                isMedian={undefined}
+              /> */}
             </div>
-
             <div className="mat__wrapper">
               {minusButtons.map(
                 (button) =>
@@ -998,7 +1005,6 @@ const MainPage = () => {
               </div>
             )}
             <MainPageFexp />
-
             <div className="relative text_cp">
               {cpData ? (
                 <>
