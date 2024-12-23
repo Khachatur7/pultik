@@ -271,6 +271,14 @@ body {
   width: 100%;
 }
 
+.main_chart{
+  width: 1000px;
+  height: 170px;
+  position: absolute;
+  top: 25%;
+  left: 20%;
+}
+
 .text_cp {
   position: absolute;
   right: 9%;
@@ -1745,6 +1753,8 @@ body {
   .text_cp {
     top: 15px;
     left: 63%;
+    font-size: 31px;
+
   }
 
   .btn__changing {

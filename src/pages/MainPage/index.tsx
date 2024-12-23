@@ -27,6 +27,7 @@ import MainPageFexp from "./MainPageFexp";
 import ZeroModesInfo from "./ZeroModesInfo";
 import { infoBlockItems } from "@/store/useBotsStore";
 import ModalSearchRes from "@/components/ModaleSearchRes";
+import MyChart from "@/components/Chart";
 // import ChartComponent from "../ChartsPage/ChartComponent";
 
 const tabs = [
@@ -1004,6 +1005,20 @@ const MainPage = () => {
                 </span>
               </div>
             )}
+<div className="main_chart">
+<MyChart data={{
+    labels: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь'],
+    datasets: [
+      {
+        label: 'Продажи',
+        data: [10, 15, 20, 18, 25, 30],
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1,
+      },
+    ],
+  }}/>
+</div>
             <MainPageFexp />
             <div className="relative text_cp">
               {cpData ? (
