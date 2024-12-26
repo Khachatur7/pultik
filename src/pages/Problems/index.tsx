@@ -21,7 +21,7 @@ const ProblemsPage = () => {
       });
 
       if (res.status == 200) {
-        setProblems(res.data.problemsDb.reverse());
+        setProblems(res.data.problemsDb);
       }
 
       console.log(res.data.problemsDb);
@@ -33,15 +33,18 @@ const ProblemsPage = () => {
   const createProblem = async () => {
     if (text) {
       try {
-        const res = await axios.post("/sendProblemsData", {
-          user: localStorage.getItem("pultik-user-login"),
-          text: text,
-        });
+        const res = await axios.post<{ succses: boolean; text: string }>(
+          "/sendProblemsData",
+          {
+            user: localStorage.getItem("pultik-user-login"),
+            text: text,
+          }
+        );
 
-        if (res.status==200) {
-            GetProblems()
+        if (res.status == 200) {
+          GetProblems();
+          alert(res.data.text);
         }
-        console.log(res.data);
       } catch (error) {
         throw new Error(`ошибка при отправке данных`);
       }
@@ -61,7 +64,7 @@ const ProblemsPage = () => {
               {problems.map((p, ind) => {
                 return (
                   <div className="problem" key={p._id}>
-                    <span>{ind + 1}.</span> 
+                    <span>{ind + 1}.</span>
                     {p.problem}
                   </div>
                 );
