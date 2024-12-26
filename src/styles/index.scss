@@ -580,12 +580,13 @@ body {
     padding: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
-    gap: 20px;
+    padding-top: 50px;
+    gap: 170px;
     .problems_list {
       width: 80%;
-      height: 500px;
+      height: 700px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
@@ -600,8 +601,10 @@ body {
         display: flex;
         justify-content: start;
         align-items: start;
+        gap: 12px;
         font-size: 28px;
-        span{
+        border-radius: 20px;
+        span {
           font-weight: 600;
         }
       }
@@ -616,13 +619,22 @@ body {
         flex: 1;
         padding: 20px 25px;
         font-size: 29px;
+        border-radius: 20px;
 
       }
       .post_problem__btn {
         padding: 20px 25px;
-        font-size: 29px;
-        background: #0a0a0a;
+        background: #4a4a4a;
+        border: none;
         color: #fff;
+        font-size: 29px;
+        border-radius: 20px;
+        transition: 0.5s ease;
+        cursor: pointer;
+      }
+      .post_problem__btn:hover {
+        background-color: #fff !important;
+        color: #2d2d2d;
       }
     }
   }

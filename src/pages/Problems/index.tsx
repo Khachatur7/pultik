@@ -38,6 +38,9 @@ const ProblemsPage = () => {
           text: text,
         });
 
+        if (res.status==200) {
+            GetProblems()
+        }
         console.log(res.data);
       } catch (error) {
         throw new Error(`ошибка при отправке данных`);
@@ -58,7 +61,7 @@ const ProblemsPage = () => {
               {problems.map((p, ind) => {
                 return (
                   <div className="problem" key={p._id}>
-                    <span>{ind + 1}.</span>
+                    <span>{ind + 1}.</span> 
                     {p.problem}
                   </div>
                 );
