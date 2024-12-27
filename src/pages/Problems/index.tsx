@@ -43,6 +43,7 @@ const ProblemsPage = () => {
 
         if (res.status == 200) {
           GetProblems();
+          setText("")
           alert(res.data.text);
         }
       } catch (error) {

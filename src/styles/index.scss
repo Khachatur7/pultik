@@ -1747,8 +1747,8 @@ body {
   position: absolute;
   top: 15%;
   right: 5%;
-  width: 7px;
-  height: 7px;
+  width: 10px;
+  height: 10px;
   border-radius: 15px;
   background: #fff;
   cursor: pointer;
@@ -2988,15 +2988,19 @@ body {
   background-size: 300%;
   transition: 0.9s ease-in;
   z-index: 1000;
-  animation: came_from_modale 0.4s ease-in forwards;
+  animation: came_from_modale 0.6s ease-in forwards;
 }
 
 @keyframes came_from_modale {
-  from {
+  0% {
   }
 
-  to {
+  90% {
     background-position: left;
+  }
+  100%{
+    background-position: left;
+    z-index: -1;
   }
 }
 

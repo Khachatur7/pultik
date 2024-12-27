@@ -43,7 +43,7 @@ const ModalSearchRes: React.FC<ModalBttns> = ({
 
   const GoToBttn = (ind: number) => {
     localStorage.setItem("bttn-from-modale", JSON.stringify(ind));
-    const pageNumber = Math.ceil(ind / 52);
+    const pageNumber = Math.ceil(ind / 72);
     navigate(`/${pageNumber}`);
     setTub(pageNumber);
   };

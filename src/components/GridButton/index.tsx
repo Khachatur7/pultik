@@ -78,7 +78,7 @@ const GridButton: React.FC<Props> = ({
   const [currentPrice, setCurrentPrice] = useState(price);
   const [currentPriceFixed, setCurrentPriceFixed] = useState(price);
   // const [boost, setBoost] = useState(boostInitial);
-  const cameFromModale = localStorage.getItem("bttn-from-modale");
+  const cameFromModale = localStorage.getItem("bttn-from-modale") || "0"
   const [cpValue, setCpValue] = useState(0);
   const [xaltura, setXaltura] = useState(
     JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem(`${sku}`)))) ||
@@ -262,12 +262,12 @@ const GridButton: React.FC<Props> = ({
 
   useEffect(() => {
     if (cameFromModale) {
-      localStorage.removeItem("bttn-from-modale");
+        localStorage.removeItem("bttn-from-modale");
     }
   }, []);
 
   useEffect(() => {
-   setFStocksValue(fStocks)
+    setFStocksValue(fStocks);
   }, [fStocks]);
   return (
     <div className="btn__cont">
@@ -276,9 +276,7 @@ const GridButton: React.FC<Props> = ({
         onClick={getPrice}
         disabled={isDisabled}
       >
-        {cameFromModale && +cameFromModale == i && (
-          <div className="came_from_modale"></div>
-        )}
+        {+cameFromModale == i && <div className="came_from_modale"></div>}
         {wStocks && wStocks > 0 ? (
           <div className="w_sign">
             <svg
