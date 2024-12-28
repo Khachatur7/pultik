@@ -16,7 +16,7 @@ interface ChartOptions {
   responsive: boolean;
 }
 
-const MyChart: React.FC<{ data: ChartData; options?: ChartOptions }> = ({
+const LineChart: React.FC<{ data: ChartData; options?: ChartOptions }> = ({
   data,
 }) => {
   const chartRef = useRef<HTMLCanvasElement>(null);
@@ -41,7 +41,7 @@ const MyChart: React.FC<{ data: ChartData; options?: ChartOptions }> = ({
                 display: false,
               },
               ticks: {
-                display: false, // Удаляем метки оси X
+                display: false,
               },
             },
             y: {
@@ -49,7 +49,7 @@ const MyChart: React.FC<{ data: ChartData; options?: ChartOptions }> = ({
                 display: false,
               },
               ticks: {
-                display: false, // Удаляем метки оси Y
+                display: false,
               },
             },
           },
@@ -57,8 +57,8 @@ const MyChart: React.FC<{ data: ChartData; options?: ChartOptions }> = ({
       });
     }
     return chartInstance.current;
-  }, [data]); // Зависимость от data
-  console.log(createChart);
+  }, [data]);
+  createChart
   useEffect(() => {
     return () => {
       chartInstance.current?.destroy();
@@ -68,4 +68,4 @@ const MyChart: React.FC<{ data: ChartData; options?: ChartOptions }> = ({
   return <canvas style={{ height: "200px", width: "100%" }} ref={chartRef} />;
 };
 
-export default MyChart;
+export default LineChart;

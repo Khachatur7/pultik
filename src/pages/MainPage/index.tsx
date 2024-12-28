@@ -27,8 +27,22 @@ import MainPageFexp from "./MainPageFexp";
 import ZeroModesInfo from "./ZeroModesInfo";
 import { infoBlockItems } from "@/store/useBotsStore";
 import ModalSearchRes from "@/components/ModaleSearchRes";
-import MyChart from "@/components/Chart";
+import LineChart from "@/components/Chart";
+import { addDays } from "date-fns";
 // import ChartComponent from "../ChartsPage/ChartComponent";
+
+interface IChart {
+  aS: number;
+  aSp: number;
+  date: string;
+  dayMargin: string;
+  middleDayPer?: string;
+  oneStockPrice: number;
+  ordersNum: number;
+  roiMonth: string;
+  todayMm: string;
+  _id: string;
+}
 
 const tabs = [
   {
@@ -107,6 +121,8 @@ const MainPage = () => {
   const [multiTwo, setMultiTwo] = useState<MultiType | null>(null);
   const [items, setItems] = useState<ButtonItemType[] | null>(null);
   const [copy, setCopy] = useState(false);
+  const [xData, setXData] = useState<string[]>([]);
+  const [yData, setYData] = useState<number[]>([]);
   // const [tomorrowShip, setTomorrowShip] = useState<TomorrowShipType | null>(
   //     null
   // );
@@ -363,7 +379,6 @@ const MainPage = () => {
       setItems(
         itemsButtons.sort((a: ButtonItemType, b: ButtonItemType) => a.i - b.i)
       );
-      console.log(res.data);
       setButtonsInfo({
         total: itemsButtons.length,
         grey: greyButtons,
@@ -480,6 +495,54 @@ const MainPage = () => {
     }
   };
 
+  const getChartData = async () => {
+    try {
+      const res = await axios.post<{ result: IChart[] }>("/stocksData", {
+        user: localStorage.getItem("pultik-user-login"),
+      });
+      const date: Date = new Date();
+      let x: string[] = [];
+      const y: number[] = [];
+      if (res.status == 200) {
+        const intiialDay = date.getDate();
+        const intiialDonth = date.getMonth() + 1;
+        const intiialDear = date.getFullYear();
+        let fullDate = `${intiialDay < 10 ? `0${intiialDay}` : intiialDay}.${
+          intiialDonth < 10 ? `0${intiialDonth}` : intiialDonth
+        }.${intiialDear}`;
+        res.data.result.map((el, ind) => {
+          if (fullDate == el.date) {
+            const newDate = addDays(date, ind);
+            const day = newDate.getDate();
+            const month = newDate.getMonth() + 1;
+            const year = newDate.getFullYear();
+            fullDate = `${day < 10 ? `0${day}` : day}.${
+              month < 10 ? `0${month}` : month
+            }.${year}`;
+            x.push(el.date);
+            y.push(el.middleDayPer ? +el.middleDayPer : +"0");
+            if (res.data.result.length - 1 == ind && x.length < 90) {
+              Array.from({ length: 90 - x.length }, (_, i) => {
+                const xDate = addDays(newDate, i);
+                const day = xDate.getDate();
+                const month = xDate.getMonth() + 1;
+                const year = xDate.getFullYear();
+                fullDate = `${day < 10 ? `0${day}` : day}.${
+                  month < 10 ? `0${month}` : month
+                }.${year}`;
+                x.push(fullDate);
+              });
+            }
+          }
+        });
+        setYData(y.concat(Array(90 - y.length).fill(0)));
+        setXData(x);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getHttp = async () => {
     try {
       const res = await axios.get("/test");
@@ -505,8 +568,6 @@ const MainPage = () => {
   const SearchBttns = () => {
     const res: ButtonItemType[] = [];
     items?.map((bttn) => {
-      console.log(items);
-
       if (
         bttn.fullName?.toLowerCase().includes(bttnSearcher.trim().toLowerCase())
       ) {
@@ -548,6 +609,9 @@ const MainPage = () => {
   }, []);
 
   useEffect(() => {
+    getChartData();
+  }, []);
+  useEffect(() => {
     timerHandler();
   }, [firstValue, secondValue, boostValue]);
 
@@ -588,6 +652,8 @@ const MainPage = () => {
       SearchBttns();
     }
   }, [bttnSearcher]);
+
+  console.log(xData, yData);
 
   return (
     <AuthCheck>
@@ -759,7 +825,11 @@ const MainPage = () => {
                 to={"/problems"}
                 className={`btn btn__changing-item flex items-center justify-center`}
               >
-                <img src={problemsP} alt="box-image" style={{ width: "80px" }} />
+                <img
+                  src={problemsP}
+                  alt="box-image"
+                  style={{ width: "80px" }}
+                />
               </Link>
             </div>
           </>
@@ -1005,20 +1075,25 @@ const MainPage = () => {
                 </span>
               </div>
             )}
-<div className="main_chart">
-<MyChart data={{
-    labels: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь'],
-    datasets: [
-      {
-        label: 'Продажи',
-        data: [10, 15, 20, 18, 25, 30],
-        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-        borderColor: 'rgba(54, 162, 235, 1)',
-        borderWidth: 1,
-      },
-    ],
-  }}/>
-</div>
+            {xData.length>0 && yData.length>0 && (
+              <div className="main_chart">
+                <LineChart
+                  data={{
+                    labels: xData,
+                    datasets: [
+                      {
+                        label: "title",
+                        data: yData,
+                        backgroundColor: "rgba(54, 162, 235, 0.2)",
+                        borderColor: "rgba(54, 162, 235, 1)",
+                        borderWidth: 1,
+                      },
+                    ],
+                  }}
+                />
+              </div>
+            )}
+
             <MainPageFexp />
             <div className="relative text_cp">
               {cpData ? (
