@@ -28,7 +28,7 @@ import ZeroModesInfo from "./ZeroModesInfo";
 import { infoBlockItems } from "@/store/useBotsStore";
 import ModalSearchRes from "@/components/ModaleSearchRes";
 import LineChart from "@/components/Chart";
-import { addDays } from "date-fns";
+import { addDays, isAfter, parseISO } from "date-fns";
 // import ChartComponent from "../ChartsPage/ChartComponent";
 
 interface IChart {
@@ -112,6 +112,7 @@ export type LastEventType = "price" | "stocks" | null;
 
 const MainPage = () => {
   // const bots = useBotsStore((state) => state.bots);
+  const storageData = localStorage.getItem("initial-date");
   const [bots, setBots] = useState<IBots[] | null>(null);
   const [http, setHttp] = useState<string | null>(null);
   const [timeLeft, setTimeLeft] = useState(24);
@@ -500,16 +501,20 @@ const MainPage = () => {
       const res = await axios.post<{ result: IChart[] }>("/stocksData", {
         user: localStorage.getItem("pultik-user-login"),
       });
-      const date: Date = new Date();
       let x: string[] = [];
       const y: number[] = [];
+      const storageDate = localStorage.getItem("initial-date");
+      let date: Date = new Date();
+      if (storageDate) {
+        date = new Date(JSON.parse(storageDate));
+      }
       if (res.status == 200) {
-        const intiialDay = date.getDate();
-        const intiialDonth = date.getMonth() + 1;
-        const intiialDear = date.getFullYear();
-        let fullDate = `${intiialDay < 10 ? `0${intiialDay}` : intiialDay}.${
-          intiialDonth < 10 ? `0${intiialDonth}` : intiialDonth
-        }.${intiialDear}`;
+        const day = date.getDate();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+        let fullDate = `${day < 10 ? `0${day}` : day}.${
+          month < 10 ? `0${month}` : month
+        }.${year}`;
         res.data.result.map((el, ind) => {
           if (fullDate == el.date) {
             const newDate = addDays(date, ind);
@@ -553,6 +558,40 @@ const MainPage = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const checkInitialDate = () => {
+    if (storageData) {
+      
+      if (check90DaysPassed(storageData)) {
+        const newDate = addDays(new Date(storageData), 1);
+        sendNewInitalDate(newDate);
+      } else {
+        getChartData();
+      }
+    } else if (!storageData) {
+      sendNewInitalDate();
+    }
+  };
+
+  const sendNewInitalDate = (newDate?: Date) => {
+
+    const date = newDate ? newDate : new Date();
+    const initialDay = date.getDate()-1;
+    const initialDonth = date.getMonth() + 1;
+    const initialDear = date.getFullYear();
+    let fullDate = `${initialDear}-${
+      initialDonth < 10 ? `0${initialDonth}` : initialDonth
+    }-${initialDay < 10 ? `0${initialDay}` : initialDay}`;
+    localStorage.setItem("initial-date", JSON.stringify(fullDate));
+    getChartData();
+  };
+
+  const check90DaysPassed = (dateString: string): boolean => {
+    const initialDate = parseISO(dateString);
+    const ninetyDaysLater = addDays(initialDate, 90);
+    const currentDate = new Date();
+    return isAfter(currentDate, ninetyDaysLater);
   };
 
   const selectHandle = (e: MouseEvent) => {
@@ -599,6 +638,7 @@ const MainPage = () => {
 
     updateHandler();
     console.log(data, lastButton);
+    checkInitialDate();
   }, []);
 
   useEffect(() => {
@@ -1075,7 +1115,7 @@ const MainPage = () => {
                 </span>
               </div>
             )}
-            {xData.length>0 && yData.length>0 && (
+            {xData.length > 0 && yData.length > 0 && (
               <div className="main_chart">
                 <LineChart
                   data={{

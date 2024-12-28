@@ -2684,6 +2684,7 @@ body {
         bottom: -70%;
       }
     }
+   
   }
 
   .mat__container {
@@ -2702,6 +2703,12 @@ body {
   .popup {
     width: 70%;
   }
+  .main_chart {
+    width: 370px;
+    height: 100px;
+    top: 50%;
+    left: 0%;
+}
 }
 
 @media screen and (max-width: 480px) {
@@ -2880,6 +2887,7 @@ body {
     top: 0;
     left: 5px;
     margin: 5px 0px;
+    margin-bottom: 120px;
   }
 
   .toggle_comp_list {
@@ -2945,8 +2953,8 @@ body {
 
   .selected_month {
     position: relative;
-    top: -750px;
-    right: -15px;
+    top: -670px;
+    right: -65px;
   }
 
   .p_list .toggle_comp_list {
