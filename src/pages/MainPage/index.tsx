@@ -1082,7 +1082,7 @@ const MainPage = () => {
                     labels: xData,
                     datasets: [
                       {
-                        label: "title",
+                        label: "hideTitle",
                         data: yData,
                         backgroundColor: "rgba(54, 162, 235, 0.2)",
                         borderColor: "rgba(54, 162, 235, 1)",
