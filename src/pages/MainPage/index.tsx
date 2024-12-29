@@ -512,34 +512,40 @@ const MainPage = () => {
         const day = date.getDate();
         const month = date.getMonth() + 1;
         const year = date.getFullYear();
+        let countDay = 1;
         let fullDate = `${day < 10 ? `0${day}` : day}.${
           month < 10 ? `0${month}` : month
         }.${year}`;
+
         res.data.result.map((el, ind) => {
           if (fullDate == el.date) {
-            const newDate = addDays(date, ind);
+            const newDate = addDays(date, countDay);
+            countDay++;
             const day = newDate.getDate();
             const month = newDate.getMonth() + 1;
             const year = newDate.getFullYear();
             fullDate = `${day < 10 ? `0${day}` : day}.${
               month < 10 ? `0${month}` : month
             }.${year}`;
+
             x.push(el.date);
             y.push(el.middleDayPer ? +el.middleDayPer : +"0");
-            if (res.data.result.length - 1 == ind && x.length < 90) {
-              Array.from({ length: 90 - x.length }, (_, i) => {
-                const xDate = addDays(newDate, i);
-                const day = xDate.getDate();
-                const month = xDate.getMonth() + 1;
-                const year = xDate.getFullYear();
-                fullDate = `${day < 10 ? `0${day}` : day}.${
-                  month < 10 ? `0${month}` : month
-                }.${year}`;
-                x.push(fullDate);
-              });
-            }
+          }
+
+          if (res.data.result.length - 1 == ind && x.length < 90) {
+            Array.from({ length: 90 - x.length }, (_, i) => {
+              const xDate = addDays(date, i + 1);
+              const day = xDate.getDate();
+              const month = xDate.getMonth() + 1;
+              const year = xDate.getFullYear();
+              fullDate = `${day < 10 ? `0${day}` : day}.${
+                month < 10 ? `0${month}` : month
+              }.${year}`;
+              x.push(fullDate);
+            });
           }
         });
+
         setYData(y.concat(Array(90 - y.length).fill(0)));
         setXData(x);
       }
@@ -562,7 +568,6 @@ const MainPage = () => {
 
   const checkInitialDate = () => {
     if (storageData) {
-      
       if (check90DaysPassed(storageData)) {
         const newDate = addDays(new Date(storageData), 1);
         sendNewInitalDate(newDate);
@@ -570,14 +575,14 @@ const MainPage = () => {
         getChartData();
       }
     } else if (!storageData) {
-      sendNewInitalDate();
+      const initialDate = new Date("2024-12-28");
+      sendNewInitalDate(initialDate);
     }
   };
 
   const sendNewInitalDate = (newDate?: Date) => {
-
     const date = newDate ? newDate : new Date();
-    const initialDay = date.getDate()-1;
+    const initialDay = date.getDate();
     const initialDonth = date.getMonth() + 1;
     const initialDear = date.getFullYear();
     let fullDate = `${initialDear}-${
@@ -692,8 +697,6 @@ const MainPage = () => {
       SearchBttns();
     }
   }, [bttnSearcher]);
-
-  console.log(xData, yData);
 
   return (
     <AuthCheck>
