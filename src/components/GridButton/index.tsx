@@ -78,7 +78,7 @@ const GridButton: React.FC<Props> = ({
   const [currentPrice, setCurrentPrice] = useState(price);
   const [currentPriceFixed, setCurrentPriceFixed] = useState(price);
   // const [boost, setBoost] = useState(boostInitial);
-  const cameFromModale = localStorage.getItem("bttn-from-modale") || "0"
+  const cameFromModale = localStorage.getItem("bttn-from-modale") || "0";
   const [cpValue, setCpValue] = useState(0);
   const [xaltura, setXaltura] = useState(
     JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem(`${sku}`)))) ||
@@ -116,9 +116,8 @@ const GridButton: React.FC<Props> = ({
       setIsDisabled(true);
 
       const res = await axios.post(`/dbReq`, {
-        name: tel,
-        int2: firstValue,
-        int1: secondValue,
+        sku: sku,
+        persent: firstValue,
         bool: boolValue,
         boost: boostValue,
         user: localStorage.getItem("pultik-user-login"),
@@ -262,7 +261,7 @@ const GridButton: React.FC<Props> = ({
 
   useEffect(() => {
     if (cameFromModale) {
-        localStorage.removeItem("bttn-from-modale");
+      localStorage.removeItem("bttn-from-modale");
     }
   }, []);
 
