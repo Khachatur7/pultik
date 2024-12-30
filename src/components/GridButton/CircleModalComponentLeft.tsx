@@ -32,7 +32,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
   setCopy,
   setXalturaParent,
 }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [isActive, setIsActive] = useState(false);
   const [exitHover, setExitHover] = useState(false);
   const [price, setPrice] = useState(basePrice.toString());
@@ -152,12 +152,17 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
 
   const EditBttn = () => {
     localStorage.setItem("i", JSON.stringify(index));
-    navigate("/create-button")
+    console.log(index);
+    navigate("/create-button");
   };
 
   useEffect(() => {
     setPrice(basePrice.toString());
   }, [basePrice]);
+
+  useEffect(() => {
+    setIndex(ind);
+  }, [ind]);
 
   return (
     <div
@@ -265,7 +270,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
               border: "1px solid #000",
               borderRadius: "5px",
               padding: "1px 0px",
-              width:"95%",
+              width: "95%",
             }}
           >
             <span>Edit</span>

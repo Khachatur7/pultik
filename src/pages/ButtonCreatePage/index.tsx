@@ -224,7 +224,7 @@ const ButtonCreatePage = () => {
   useEffect(() => {
     if (i) {
       postNameRequest();
-      localStorage.removeItem("i");
+      
     }
     loadComList();
   }, []);
