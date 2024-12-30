@@ -152,7 +152,6 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
 
   const EditBttn = () => {
     localStorage.setItem("i", JSON.stringify(index));
-    console.log(index);
     navigate("/create-button");
   };
 
