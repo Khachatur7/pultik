@@ -258,6 +258,27 @@ body {
   }
 }
 
+.cp_loading {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.cp_loading div{
+  animation: cp_loading 1.5s ease infinite forwards; 
+}
+
+@keyframes cp_loading {
+  from{
+    transform: rotateZ(0deg)
+  }
+  to{
+    transform: rotateZ(360deg)
+  }
+}
+
 .def_arrow {
   margin-top: -20px;
 }
@@ -620,7 +641,6 @@ body {
         padding: 20px 25px;
         font-size: 29px;
         border-radius: 20px;
-
       }
       .post_problem__btn {
         padding: 20px 25px;
@@ -2684,7 +2704,6 @@ body {
         bottom: -70%;
       }
     }
-   
   }
 
   .mat__container {
@@ -2708,7 +2727,7 @@ body {
     height: 100px;
     top: 50%;
     left: 0%;
-}
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -3006,7 +3025,7 @@ body {
   90% {
     background-position: left;
   }
-  100%{
+  100% {
     background-position: left;
     z-index: -1;
   }
