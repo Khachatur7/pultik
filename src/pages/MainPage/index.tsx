@@ -299,6 +299,7 @@ const MainPage = () => {
       if (res.status !== 200) {
         throw Error();
       }
+      
       localStorage.setItem("piker", numb);
       setCpData(res.data);
       setPiker(numb);
@@ -307,6 +308,7 @@ const MainPage = () => {
       console.log(error);
     }
   };
+
   const loadData = async () => {
     try {
       const res = await axios.post("/api/getData", {
@@ -649,7 +651,7 @@ const MainPage = () => {
   useEffect(() => {
     setInterval(() => {
       initialLoad();
-      SelectMonth(piker);
+      SelectMonth(localStorage.getItem("piker") || "01");
     }, 5000);
   }, []);
 
@@ -1156,7 +1158,7 @@ const MainPage = () => {
                   <p>
                     Quartal: {cpData.quart} | Price index: {cpData.priceIndex}
                   </p>
-                  <p>user: {localStorage.getItem("pultik-user-login")}</p>
+                  <p>uS: {localStorage.getItem("pultik-user-login")}</p>
                 </>
               ) : (
                 <></>
