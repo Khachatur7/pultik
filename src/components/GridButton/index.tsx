@@ -93,6 +93,8 @@ const GridButton: React.FC<Props> = ({
   // const [fStocksValueChanged, setFStocksValueChanged] = useState(false);
 
   const getPrice = async () => {
+    console.log(5555);
+
     if (isDisabled) {
       console.log(isUpdated);
       return;
@@ -114,7 +116,6 @@ const GridButton: React.FC<Props> = ({
 
     try {
       setIsDisabled(true);
-
       const res = await axios.post(`/dbReq`, {
         sku: sku,
         persent: firstValue,
@@ -131,6 +132,7 @@ const GridButton: React.FC<Props> = ({
 
       const { info, cP } = resData;
 
+      setIsDisabled(false);
       setCurrentPrice(resData.basePriceCounted);
       setCurrentPriceFixed(resData.basePrice);
       setIsUpdated(true);

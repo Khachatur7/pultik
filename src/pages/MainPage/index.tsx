@@ -135,7 +135,7 @@ const MainPage = () => {
     eurRub: string;
     customs: string;
     round: string;
-    marg: string;
+    marg: string | number;
     salesWb: number;
     salesYa: number;
     salesOz: number;

@@ -18,7 +18,6 @@ const ButtonCreatePage = () => {
   const navigate = useNavigate();
   const [number, setNumber] = useState("");
   const [name, setName] = useState("");
-  // const [fullName, setFullName] = useState("");
   const [remainder, setRemainder] = useState("1");
   const [basePrice, setBasePrice] = useState("000");
   const [sku, setSku] = useState("");
@@ -224,10 +223,19 @@ const ButtonCreatePage = () => {
   useEffect(() => {
     if (i) {
       postNameRequest();
-      
+      localStorage.removeItem("i");
     }
     loadComList();
   }, []);
+
+  useEffect(() => {
+   const comListTimer = setInterval(() => {
+      loadComList()
+    }, 5000);
+
+    return () => clearInterval(comListTimer);
+  }, []);
+
   return (
     <AuthCheck>
       <Container>
