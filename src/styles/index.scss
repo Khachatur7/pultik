@@ -188,6 +188,10 @@ body {
   }
 }
 
+.fullname {
+  font-size: 14px;
+}
+
 .btn .w_sign {
   position: absolute;
   bottom: -5px;
@@ -266,16 +270,16 @@ body {
   font-weight: 700;
 }
 
-.cp_loading div{
-  animation: cp_loading 1.5s ease infinite forwards; 
+.cp_loading div {
+  animation: cp_loading 1.5s ease infinite forwards;
 }
 
 @keyframes cp_loading {
-  from{
-    transform: rotateZ(0deg)
+  from {
+    transform: rotateZ(0deg);
   }
-  to{
-    transform: rotateZ(360deg)
+  to {
+    transform: rotateZ(360deg);
   }
 }
 

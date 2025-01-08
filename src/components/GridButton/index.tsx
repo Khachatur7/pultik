@@ -293,18 +293,35 @@ const GridButton: React.FC<Props> = ({
         )}
         <span>{`${i && h ? `{${i}. ` : i ? `${i}. ` : ""}`}</span>
         {fullName ? (
-          <span className={`underline ${xaltura ? "xaltura" : ""}`}>
-            {fullName}
-          </span>
+         
+            <span
+              className={`underline ${xaltura ? "xaltura" : ""} ${fullName.length>20?"fullname":""}`}
+            >
+              {fullName}
+            </span>
         ) : (
           index + 1
         )}
-        <p  style={{display:"flex",alignItems:"center",justifyContent:"center",gap:"8px"}}>
+        <p
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "8px",
+          }}
+        >
           {`${!isNaN(stockValue) ? ` S ${stockValue}` : ""} ||`}{" "}
-          <span>{`w ${wStocks || 0} | `}</span>
+          {/* <span>{`w ${wStocks || 0} | `}</span> */}
           <span className="underline">{`F ${fStocksValue || 0}`}</span>{" "}
           {cpValue ? (
-            <div style={{display:"flex",alignItems:"center",justifyContent:"start",gap:"8px"}}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "start",
+                gap: "8px",
+              }}
+            >
               <span> | cP: </span>
               <span className="cp_loading">
                 {cpValue.toString().includes("?") ? (
@@ -327,7 +344,6 @@ const GridButton: React.FC<Props> = ({
                 ) : (
                   cpValue
                 )}{" "}
-                
               </span>
               <span>{percent ? `(${percent})` : ""}</span>
             </div>
