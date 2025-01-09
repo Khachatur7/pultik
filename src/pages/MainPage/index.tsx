@@ -124,6 +124,8 @@ const MainPage = () => {
   const [copy, setCopy] = useState(false);
   const [xData, setXData] = useState<string[]>([]);
   const [yData, setYData] = useState<number[]>([]);
+  const [ordersYData, setOrdersYData] = useState<number[]>([]);
+
   // const [tomorrowShip, setTomorrowShip] = useState<TomorrowShipType | null>(
   //     null
   // );
@@ -504,7 +506,9 @@ const MainPage = () => {
         user: localStorage.getItem("pultik-user-login"),
       });
       let x: string[] = [];
-      const y: number[] = [];
+      const ordersNumY: number[] = [];
+      const precentY: number[] = [];
+
       const storageDate = localStorage.getItem("initial-date");
       let date: Date = new Date();
       if (storageDate) {
@@ -521,6 +525,8 @@ const MainPage = () => {
 
         res.data.result.map((el, ind) => {
           if (fullDate == el.date) {
+            console.log(el);
+            
             const newDate = addDays(date, countDay);
             countDay++;
             const day = newDate.getDate();
@@ -531,7 +537,8 @@ const MainPage = () => {
             }.${year}`;
 
             x.push(el.date);
-            y.push(el.middleDayPer ? +el.middleDayPer : +"0");
+            precentY.push(el.middleDayPer ? +el.middleDayPer : +"0");
+            ordersNumY.push(el.ordersNum)
           }
 
           if (res.data.result.length - 1 == ind && x.length < 90) {
@@ -547,8 +554,9 @@ const MainPage = () => {
             });
           }
         });
-
-        setYData(y.concat(Array(90 - y.length).fill(0)));
+        
+        setOrdersYData(ordersNumY.concat(Array(90 - ordersNumY.length).fill(0)))
+        setYData(precentY.concat(Array(90 - precentY.length).fill(0)));
         setXData(x);
       }
     } catch (error) {
@@ -1133,6 +1141,13 @@ const MainPage = () => {
                         borderColor: "rgba(54, 162, 235, 1)",
                         borderWidth: 1,
                       },
+                      {
+                        label: "hideTitle",
+                        data: ordersYData,
+                        backgroundColor: " rgba(235, 54, 54, 0.2)",
+                        borderColor: " rgba(235, 54, 54, 1)",
+                        borderWidth: 1,
+                      },
                     ],
                   }}
                 />
@@ -1165,7 +1180,7 @@ const MainPage = () => {
               )}
             </div>
 
-            <div className="w-[100vw] flex items-center justify-center gap-[10px] bots_list overflow-auto">
+            <div className="w-[100vw] flex items-center justify-center gap-[10px] bots_list overflow-auto" style={{marginTop:"30px"}}>
               {/* Если данные получены */}
               {http &&
                 infoBlockItems
