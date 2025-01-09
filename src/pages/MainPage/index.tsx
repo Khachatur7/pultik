@@ -301,7 +301,7 @@ const MainPage = () => {
       if (res.status !== 200) {
         throw Error();
       }
-      
+
       localStorage.setItem("piker", numb);
       setCpData(res.data);
       setPiker(numb);
@@ -522,12 +522,11 @@ const MainPage = () => {
         let fullDate = `${day < 10 ? `0${day}` : day}.${
           month < 10 ? `0${month}` : month
         }.${year}`;
-
+        let newDate = date;
         res.data.result.map((el, ind) => {
           if (fullDate == el.date) {
             console.log(el);
-            
-            const newDate = addDays(date, countDay);
+            newDate = addDays(date, countDay);
             countDay++;
             const day = newDate.getDate();
             const month = newDate.getMonth() + 1;
@@ -538,12 +537,12 @@ const MainPage = () => {
 
             x.push(el.date);
             precentY.push(el.middleDayPer ? +el.middleDayPer : +"0");
-            ordersNumY.push(el.ordersNum)
+            ordersNumY.push(el.ordersNum);
           }
 
           if (res.data.result.length - 1 == ind && x.length < 90) {
             Array.from({ length: 90 - x.length }, (_, i) => {
-              const xDate = addDays(date, i + 1);
+              const xDate = addDays(newDate, i);
               const day = xDate.getDate();
               const month = xDate.getMonth() + 1;
               const year = xDate.getFullYear();
@@ -554,8 +553,10 @@ const MainPage = () => {
             });
           }
         });
-        
-        setOrdersYData(ordersNumY.concat(Array(90 - ordersNumY.length).fill(0)))
+
+        setOrdersYData(
+          ordersNumY.concat(Array(90 - ordersNumY.length).fill(0))
+        );
         setYData(precentY.concat(Array(90 - precentY.length).fill(0)));
         setXData(x);
       }
@@ -1130,6 +1131,7 @@ const MainPage = () => {
             )}
             {xData.length > 0 && yData.length > 0 && (
               <div className="main_chart">
+                <div className="relative w-full h-full">
                 <LineChart
                   data={{
                     labels: xData,
@@ -1141,6 +1143,13 @@ const MainPage = () => {
                         borderColor: "rgba(54, 162, 235, 1)",
                         borderWidth: 1,
                       },
+                    ],
+                  }}
+                />
+                <LineChart
+                  data={{
+                    labels: xData,
+                    datasets: [
                       {
                         label: "hideTitle",
                         data: ordersYData,
@@ -1151,9 +1160,9 @@ const MainPage = () => {
                     ],
                   }}
                 />
+                </div>
               </div>
             )}
-
             <MainPageFexp />
             <div className="relative text_cp">
               {cpData ? (
@@ -1180,7 +1189,10 @@ const MainPage = () => {
               )}
             </div>
 
-            <div className="w-[100vw] flex items-center justify-center gap-[10px] bots_list overflow-auto" style={{marginTop:"30px"}}>
+            <div
+              className="w-[100vw] flex items-center justify-center gap-[10px] bots_list overflow-auto"
+              style={{ marginTop: "30px" }}
+            >
               {/* Если данные получены */}
               {http &&
                 infoBlockItems

@@ -58,14 +58,14 @@ const LineChart: React.FC<{ data: ChartData; options?: ChartOptions }> = ({
     }
     return chartInstance.current;
   }, [data]);
-  createChart
+  createChart;
   useEffect(() => {
     return () => {
       chartInstance.current?.destroy();
     };
   }, []);
 
-  return <canvas style={{ height: "100%", width: "100%" }} ref={chartRef} />;
+  return <canvas style={{ height: "100%", width: "100%",position:"absolute",top:"0",left:"0" }} ref={chartRef} />;
 };
 
 export default LineChart;
