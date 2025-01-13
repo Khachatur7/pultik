@@ -68,6 +68,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
     const post = await axios.post("/changeIndex", {
       old: ind,
       new: index,
+      user: localStorage.getItem("pultik-user-login"),
     });
 
     if (post.status == 200) {
