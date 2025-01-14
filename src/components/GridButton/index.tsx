@@ -45,7 +45,7 @@ interface Props {
   copy: boolean;
   setCopy: React.Dispatch<React.SetStateAction<boolean>>;
   wStocks?: number;
-  hideModales?:boolean
+  hideModales?: boolean;
 }
 
 const GridButton: React.FC<Props> = ({
@@ -75,7 +75,6 @@ const GridButton: React.FC<Props> = ({
   copy,
   setCopy,
   wStocks,
-  hideModales
 }) => {
   const [currentPrice, setCurrentPrice] = useState(price);
   const [currentPriceFixed, setCurrentPriceFixed] = useState(price);
@@ -126,7 +125,6 @@ const GridButton: React.FC<Props> = ({
       if (!res.data) {
         throw Error();
       }
-      console.log(res.data);
       const resData = res.data;
       const { info, cP } = resData;
       setCurrentPrice(resData.basePriceCounted);
@@ -295,12 +293,13 @@ const GridButton: React.FC<Props> = ({
         )}
         <span>{`${i && h ? `{${i}. ` : i ? `${i}. ` : ""}`}</span>
         {fullName ? (
-         
-            <span
-              className={`underline ${xaltura ? "xaltura" : ""} ${fullName.length>20?"fullname":""}`}
-            >
-              {fullName}
-            </span>
+          <span
+            className={`underline ${xaltura ? "xaltura" : ""} ${
+              fullName.length > 20 ? "fullname" : ""
+            }`}
+          >
+            {fullName}
+          </span>
         ) : (
           index + 1
         )}
@@ -353,31 +352,28 @@ const GridButton: React.FC<Props> = ({
             ""
           )}
         </p>
-          {
-            !hideModales && <>
-                 <CircleModalComponent
-          ozonPrice={basePrices.ozon}
-          wbPrice={basePrices.wb}
-          avitoPrice={basePrices.avito}
-          yandexPrice={basePrices.ya}
-          yandexEPrice={basePrices.yaE}
-          mmPrice={basePrices.mega}
-          price={currentPrice}
-        />
-        <CircleModalComponentLeft
-          ind={i}
-          comValue={comValue}
-          boolValue={boolValue}
-          sku={sku}
-          basePrice={currentPriceFixed}
-          wBar={wBar}
-          returnMode={returnMode}
-          copy={copy}
-          setCopy={setCopy}
-          setXalturaParent={setXaltura}
-        />
-        <CircleModalComponentBottomLeft cust={cust} /></>
-          }
+            <CircleModalComponent
+              ozonPrice={basePrices.ozon}
+              wbPrice={basePrices.wb}
+              avitoPrice={basePrices.avito}
+              yandexPrice={basePrices.ya}
+              yandexEPrice={basePrices.yaE}
+              mmPrice={basePrices.mega}
+              price={currentPrice}
+            />
+            <CircleModalComponentLeft
+              ind={i}
+              comValue={comValue}
+              boolValue={boolValue}
+              sku={sku}
+              basePrice={currentPriceFixed}
+              wBar={wBar}
+              returnMode={returnMode}
+              copy={copy}
+              setCopy={setCopy}
+              setXalturaParent={setXaltura}
+            />
+            <CircleModalComponentBottomLeft cust={cust} />
       </button>
     </div>
   );
