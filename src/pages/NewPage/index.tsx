@@ -31,7 +31,24 @@ const NewPage = () => {
     }
   };
 
-  console.log(items);
+  const setWright = async (el: ReadButton) => {
+    console.log(55555);
+    
+    try {
+      const res = await axios.post("/gWright", {
+        p: el.p == 0 ? 1 : 0,
+        _id: el._id,
+        user: localStorage.getItem("pultik-user-login"),
+      });
+
+      if (!res.data) {
+        throw Error();
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const stockValueHandler = (p: number) => {
     switch (p) {
@@ -58,17 +75,18 @@ const NewPage = () => {
             items?.length > 0 &&
             items.map((el) => {
               return (
-                <div className="btn__cont">
+                <div className="btn__cont" key={el._id}>
                   <button
                     className={`btn _hover ${stockValueHandler(el.p)}`}
-                    // onClick={getPrice}
-                    // disabled={isDisabled}
+                    onClick={() => setWright(el)}
                   >
-                    <p style={{fontSize:"21px"}}>
+                    <p style={{ fontSize: "21px" }}>
                       {" "}
-                      {el.date} | {el.g} | {el.r} 
+                      {el.date} | {el.g} | {el.r}
                     </p>
-                    <p style={{fontWeight:"700",fontSize:"22px"}}>{el.sum}</p>
+                    <p style={{ fontWeight: "700", fontSize: "22px" }}>
+                      {el.sum}
+                    </p>
                   </button>
                 </div>
               );
