@@ -17,7 +17,9 @@ const NewPage = () => {
 
   const loadData = async () => {
     try {
-      const res = await axios.get("/gRead");
+      const res = await axios.post("/gRead",{
+        user: localStorage.getItem("pultik-user-login"),
+      });
 
       if (!res.data) {
         throw Error();
