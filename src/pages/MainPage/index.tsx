@@ -13,6 +13,7 @@ import axios from "@/axios";
 import { MultiType } from "@/components/GridButton/CircleModalComponent";
 import { dataFilterHandler } from "@/handlers";
 import { Link, useParams } from "react-router-dom";
+import runnerImage from "@/images/runner.png";
 import boxImage from "@/images/boxX.png";
 import addImage from "@/images/add.png";
 import chartPageImage from "@/images/chart-page-icon.png";
@@ -723,7 +724,13 @@ const MainPage = () => {
                 }`}
                 onClick={() => SetStates(item)}
               >
-                {item.value}
+                {item.value == 5 ? (
+                  <img src={recycling} alt="" style={{ width: "45px" }} />
+                ) : item.value == 4 ? (
+                  <img src={runnerImage} alt="" style={{ width: "65px" }} />
+                ) : (
+                  item.value
+                )}
               </button>
             ))}
             <button
@@ -821,6 +828,8 @@ const MainPage = () => {
                 >
                   {item.value == 5 ? (
                     <img src={recycling} alt="" style={{ width: "45px" }} />
+                  ) : item.value == 4 ? (
+                    <img src={runnerImage} alt="" style={{ width: "65px" }} />
                   ) : (
                     item.value
                   )}
