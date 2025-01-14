@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { useBotsStore } from "./store";
 import { BotItem } from "./store/useBotsStore";
 import ProblemsPage from "./pages/Problems";
+import NewPage from "./pages/NewPage";
 
 const routes: RouteProps[] = [
   {
@@ -51,6 +52,10 @@ const routes: RouteProps[] = [
   {
     path: "/problems",
     element: <ProblemsPage />,
+  },
+  {
+    path: "/new",
+    element: <NewPage />,
   },
 ];
 

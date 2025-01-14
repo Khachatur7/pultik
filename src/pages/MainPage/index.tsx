@@ -21,6 +21,7 @@ import roiImage from "@/images/roi.png";
 import recycling from "@/images/recycling.svg";
 import searchLogo from "@/images/search_1.svg";
 import problemsP from "@/images/new.jpg";
+import houseImage from "@/images/house.png";
 import { InputTypes, ButtonItemType, LastButtonType } from "@/types/common";
 import { minusButtons, plusButtons } from "@/common";
 import MainPageFexp from "./MainPageFexp";
@@ -785,6 +786,12 @@ const MainPage = () => {
             >
               <img src={problemsP} alt="box-image" className="w-16" />
             </Link>
+            <Link
+              to={"/new"}
+              className={`btn btn__changing-item flex items-center justify-center`}
+            >
+              <img src={houseImage} alt="box-image" className="w-16" />
+            </Link>
           </div>
         </>
       )}
@@ -884,6 +891,12 @@ const MainPage = () => {
                   alt="box-image"
                   style={{ width: "80px" }}
                 />
+              </Link>
+              <Link
+                to={"/new"}
+                className={`btn btn__changing-item flex items-center justify-center`}
+              >
+                <img src={houseImage} alt="box-image" className="w-12" />
               </Link>
             </div>
           </>
@@ -1132,34 +1145,34 @@ const MainPage = () => {
             {xData.length > 0 && yData.length > 0 && (
               <div className="main_chart">
                 <div className="relative w-full h-full">
-                <LineChart
-                  data={{
-                    labels: xData,
-                    datasets: [
-                      {
-                        label: "hideTitle",
-                        data: yData,
-                        backgroundColor: "rgba(54, 162, 235, 0.2)",
-                        borderColor: "rgba(54, 162, 235, 1)",
-                        borderWidth: 1,
-                      },
-                    ],
-                  }}
-                />
-                <LineChart
-                  data={{
-                    labels: xData,
-                    datasets: [
-                      {
-                        label: "hideTitle",
-                        data: ordersYData,
-                        backgroundColor: " rgba(235, 54, 54, 0.2)",
-                        borderColor: " rgba(235, 54, 54, 1)",
-                        borderWidth: 1,
-                      },
-                    ],
-                  }}
-                />
+                  <LineChart
+                    data={{
+                      labels: xData,
+                      datasets: [
+                        {
+                          label: "hideTitle",
+                          data: yData,
+                          backgroundColor: "rgba(54, 162, 235, 0.2)",
+                          borderColor: "rgba(54, 162, 235, 1)",
+                          borderWidth: 1,
+                        },
+                      ],
+                    }}
+                  />
+                  <LineChart
+                    data={{
+                      labels: xData,
+                      datasets: [
+                        {
+                          label: "hideTitle",
+                          data: ordersYData,
+                          backgroundColor: " rgba(235, 54, 54, 0.2)",
+                          borderColor: " rgba(235, 54, 54, 1)",
+                          borderWidth: 1,
+                        },
+                      ],
+                    }}
+                  />
                 </div>
               </div>
             )}

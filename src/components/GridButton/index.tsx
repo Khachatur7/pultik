@@ -45,6 +45,7 @@ interface Props {
   copy: boolean;
   setCopy: React.Dispatch<React.SetStateAction<boolean>>;
   wStocks?: number;
+  hideModales?:boolean
 }
 
 const GridButton: React.FC<Props> = ({
@@ -74,6 +75,7 @@ const GridButton: React.FC<Props> = ({
   copy,
   setCopy,
   wStocks,
+  hideModales
 }) => {
   const [currentPrice, setCurrentPrice] = useState(price);
   const [currentPriceFixed, setCurrentPriceFixed] = useState(price);
@@ -351,7 +353,9 @@ const GridButton: React.FC<Props> = ({
             ""
           )}
         </p>
-        <CircleModalComponent
+          {
+            !hideModales && <>
+                 <CircleModalComponent
           ozonPrice={basePrices.ozon}
           wbPrice={basePrices.wb}
           avitoPrice={basePrices.avito}
@@ -372,7 +376,8 @@ const GridButton: React.FC<Props> = ({
           setCopy={setCopy}
           setXalturaParent={setXaltura}
         />
-        <CircleModalComponentBottomLeft cust={cust} />
+        <CircleModalComponentBottomLeft cust={cust} /></>
+          }
       </button>
     </div>
   );
