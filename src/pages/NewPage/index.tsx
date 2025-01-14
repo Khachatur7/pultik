@@ -32,7 +32,6 @@ const NewPage = () => {
   };
 
   const setWright = async (el: ReadButton) => {
-    console.log(55555);
     
     try {
       const res = await axios.post("/gWright", {
@@ -45,6 +44,9 @@ const NewPage = () => {
         throw Error();
       }
 
+      alert(res.data.message)
+      loadData()
+       
     } catch (error) {
       console.log(error);
     }
