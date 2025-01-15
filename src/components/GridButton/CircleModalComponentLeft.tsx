@@ -65,6 +65,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
     }
   };
 
+
   const postNewBttnIndex = async () => {
     const post = await axios.post("/changeIndex", {
       old: ind,

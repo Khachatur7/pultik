@@ -29,7 +29,19 @@ const ProblemsPage = () => {
       throw new Error(`ошибка при получении данных`);
     }
   };
+  const onlyEnglish = (
+    event: string,
+    setState: React.Dispatch<React.SetStateAction<string>>
+  ) => {
+    const value = event;
+    const englishOnly = /^[a-zA-Z]*$/.test(value);
 
+    if (englishOnly) {
+      setState(value);
+    } else {
+      setState(value.replace(/[^a-zA-Z]/g, ""));
+    }
+  };
   const createProblem = async () => {
     if (text) {
       try {
@@ -75,7 +87,7 @@ const ProblemsPage = () => {
               <input
                 type="text"
                 value={text}
-                onChange={(e) => setText(e.target.value)}
+                onChange={(e) =>onlyEnglish(e.target.value,setText)}
               />
               <button className="post_problem__btn" onClick={createProblem}>
                 Добавить

@@ -188,7 +188,19 @@ const ButtonCreatePage = () => {
       }
     });
   };
+  const onlyEnglish = (
+    event: string,
+    setState: React.Dispatch<React.SetStateAction<string>>
+  ) => {
+    const value = event;
+    const englishOnly = /^[a-zA-Z]*$/.test(value);
 
+    if (englishOnly) {
+      setState(value);
+    } else {
+      setState(value.replace(/[^a-zA-Z]/g, ""));
+    }
+  };
   const toggleNameValueType = () => {
     if (nameFieldType == "string") {
       setNameFieldType("number");
@@ -270,7 +282,7 @@ const ButtonCreatePage = () => {
                 className="create_page_item"
                 type="text"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) =>onlyEnglish(e.target.value,setName)}
                 style={{ marginTop: 0 }}
               />
             </div>
@@ -308,7 +320,7 @@ const ButtonCreatePage = () => {
                 className="create_page_item"
                 type="text"
                 value={sku}
-                onChange={(e) => setSku(e.target.value)}
+                onChange={(e) => onlyEnglish(e.target.value,setSku)}
                 style={{ marginTop: 0 }}
               />
             </div>
@@ -328,7 +340,7 @@ const ButtonCreatePage = () => {
                 className="create_page_item"
                 type="text"
                 value={vart}
-                onChange={(e) => setVart(e.target.value)}
+                onChange={(e) => onlyEnglish(e.target.value,setVart)}
                 style={{ marginTop: 0 }}
               />
             </div>
@@ -339,7 +351,7 @@ const ButtonCreatePage = () => {
                 className="create_page_item"
                 type="text"
                 value={wBar}
-                onChange={(e) => setWBar(e.target.value)}
+                onChange={(e) => onlyEnglish(e.target.value,setWBar)}
                 style={{ marginTop: 0 }}
               />
             </div>
@@ -349,7 +361,7 @@ const ButtonCreatePage = () => {
                 className="create_page_item"
                 type="text"
                 value={aaid}
-                onChange={(e) => setAaid(e.target.value)}
+                onChange={(e) => onlyEnglish(e.target.value,setAaid)}
                 style={{ marginTop: 0 }}
               />
             </div>
@@ -488,7 +500,7 @@ const ButtonCreatePage = () => {
                     id="key_input"
                     name="key_input"
                     value={keyField}
-                    onChange={(e) => setKeyField(e.target.value)}
+                    onChange={(e) => onlyEnglish(e.target.value,setKeyField)}
                   />
                 </div>
                 :
@@ -523,7 +535,7 @@ const ButtonCreatePage = () => {
                   id="data_input"
                   name="data_input"
                   value={dataField}
-                  onChange={(e) => setDataField(e.target.value)}
+                  onChange={(e) => onlyEnglish(e.target.value,setDataField )}
                 />
                 <div className="rt">
                   <span>{rT}</span>

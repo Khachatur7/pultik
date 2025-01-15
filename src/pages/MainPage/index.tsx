@@ -78,7 +78,6 @@ const tabs = [
 
 const itemsPerPage = 72;
 const pages = 9;
-
 const totalButtons = itemsPerPage * pages;
 
 const buttonsArray = [...Array(totalButtons)];
@@ -181,6 +180,8 @@ const MainPage = () => {
   const [notSearchYet, setNotSearchYet] = useState(true);
   const [openBttnModal, setOpenBttnModal] = useState(false);
   const [bottomLeftModale, setBottomLeftModale] = useState("");
+  const [answers, setAnswers] = useState<string[]>([]);
+
   const plusHandler = (value: number, input?: InputTypes) => {
     if (input === 1) {
       setSecondValue((prev) => (Number(prev) + value).toString());
@@ -213,6 +214,40 @@ const MainPage = () => {
     }
 
     setFirstValue((prev) => (Number(prev) - value).toString());
+  };
+
+  const onlyEnglish = (
+    event: string,
+    setState: React.Dispatch<React.SetStateAction<string>>
+  ) => {
+    const value = event;
+    const englishOnly = /^[a-zA-Z]*$/.test(value);
+
+    if (englishOnly) {
+      setState(value);
+    } else {
+      setState(value.replace(/[^a-zA-Z]/g, ""));
+    }
+  };
+
+  const getPhrases = async () => {
+    try {
+      const res = await axios.get("/gPhrases");
+
+      if (!res.data) {
+        throw Error();
+      }
+
+      const answersArr: string[] = [];
+      const answers = res.data.answer[0];
+      const keys = Object.keys(answers);
+      keys.map((k) => {
+        answersArr.push(answers[k]);
+      });
+      setAnswers(answersArr);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const loadMulti = async () => {
@@ -458,7 +493,6 @@ const MainPage = () => {
         let newDate = date;
         res.data.result.map((el, ind) => {
           if (fullDate == el.date) {
-            console.log(el);
             newDate = addDays(date, countDay);
             countDay++;
             const day = newDate.getDate();
@@ -588,6 +622,7 @@ const MainPage = () => {
     updateHandler();
     console.log(data, lastButton);
     checkInitialDate();
+    getPhrases();
   }, []);
 
   useEffect(() => {
@@ -765,6 +800,11 @@ const MainPage = () => {
             >
               <ArrowSVG fill="#000" />
             </button>
+            {
+              answers.map(a=>{
+                return <p>{a}</p>
+              })
+            }
           </div>
         </div>
       )}
@@ -1004,7 +1044,9 @@ const MainPage = () => {
                     className="searcher_input"
                     placeholder="Search"
                     value={bttnSearcher}
-                    onChange={(e) => setBttnSearcher(e.target.value)}
+                    onChange={(e) =>
+                      onlyEnglish(e.target.value, setBttnSearcher)
+                    }
                   />
                   <div
                     className="search_logo"
@@ -1061,7 +1103,7 @@ const MainPage = () => {
                   className="searcher_input"
                   placeholder="Search"
                   value={bttnSearcher}
-                  onChange={(e) => setBttnSearcher(e.target.value)}
+                  onChange={(e) => onlyEnglish(e.target.value, setBttnSearcher)}
                 />
                 <div
                   className="search_logo"
