@@ -763,7 +763,7 @@ const MainPage = () => {
                 )
               }
             >
-              <ArrowSVG fill="#000" width="60px" />
+              <ArrowSVG fill="#000" />
             </button>
           </div>
         </div>
