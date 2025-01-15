@@ -180,7 +180,7 @@ const MainPage = () => {
   const [bttnsIndex, setBttnsIndex] = useState<ButtonItemType[]>([]);
   const [notSearchYet, setNotSearchYet] = useState(true);
   const [openBttnModal, setOpenBttnModal] = useState(false);
-  const [bottomLeftModale, setBottomLeftModale] = useState(false);
+  const [bottomLeftModale, setBottomLeftModale] = useState("");
   const plusHandler = (value: number, input?: InputTypes) => {
     if (input === 1) {
       setSecondValue((prev) => (Number(prev) + value).toString());
@@ -744,17 +744,24 @@ const MainPage = () => {
           })}
         </ul>
       )}
-
       <>
         <div
           className={`bottom_left_modale ${
-            bottomLeftModale ? "open_bottom_modale" : ""
+            bottomLeftModale == "closed"
+              ? "open_bottom_modale"
+              : bottomLeftModale == "opened"
+              ? "close_bottom_modale"
+              : ""
           }`}
         >
           <div className="content">
             <button
               className="modale_bttn"
-              onClick={() => setBottomLeftModale(!bottomLeftModale)}
+              onClick={() =>
+                setBottomLeftModale(
+                  bottomLeftModale == "closed" ? "opened" : "closed"
+                )
+              }
             >
               <ArrowSVG fill="#000" width="60px" />
             </button>

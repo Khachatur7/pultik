@@ -330,7 +330,6 @@ body {
   transform: translateY(100%);
   transition: 1s ease;
   border-top-right-radius: 25px;
-  
   svg{
     transition: 1s ease;
     transform: rotate(180deg);
@@ -363,6 +362,19 @@ body {
   }
 }
 
+.close_bottom_modale{
+  animation: close_bottom_modale 1s ease forwards;
+}
+
+@keyframes close_bottom_modale {
+  from {
+    transform: translateY(0%);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
 .open_bottom_modale {
   animation: open_bottom_modale 1s ease forwards;
   svg{
@@ -376,7 +388,6 @@ body {
   }
   to {
     transform: translateY(0%);
-   
   }
 }
 
