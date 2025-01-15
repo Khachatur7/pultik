@@ -756,7 +756,7 @@ const MainPage = () => {
               className="modale_bttn"
               onClick={() => setBottomLeftModale(!bottomLeftModale)}
             >
-              <ArrowSVG fill="#000" width="80px" />
+              <ArrowSVG fill="#000" width="60px" />
             </button>
           </div>
         </div>
