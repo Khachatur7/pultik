@@ -31,8 +31,7 @@ import { infoBlockItems } from "@/store/useBotsStore";
 import ModalSearchRes from "@/components/ModaleSearchRes";
 import LineChart from "@/components/Chart";
 import { addDays, isAfter, parseISO } from "date-fns";
-// import ChartComponent from "../ChartsPage/ChartComponent";
-
+import ArrowSVG from "@/components/ArrowSVG";
 interface IChart {
   aS: number;
   aSp: number;
@@ -97,13 +96,6 @@ interface ButtonsInfo {
   stroyAvailable: number;
 }
 
-// interface TomorrowShipType {
-//     mm: string;
-//     oz: string;
-//     wb: string;
-//     ya: string;
-// }
-
 interface IBots {
   _id: string;
   mon: string;
@@ -113,7 +105,6 @@ interface IBots {
 export type LastEventType = "price" | "stocks" | null;
 
 const MainPage = () => {
-  // const bots = useBotsStore((state) => state.bots);
   const storageData = localStorage.getItem("initial-date");
   const [bots, setBots] = useState<IBots[] | null>(null);
   const [http, setHttp] = useState<string | null>(null);
@@ -127,11 +118,6 @@ const MainPage = () => {
   const [xData, setXData] = useState<string[]>([]);
   const [yData, setYData] = useState<number[]>([]);
   const [ordersYData, setOrdersYData] = useState<number[]>([]);
-
-  // const [tomorrowShip, setTomorrowShip] = useState<TomorrowShipType | null>(
-  //     null
-  // );
-  // const [cp, setCp] = useState<MultiType | null>(null);
   const [cpData, setCpData] = useState<{
     cP: string;
     eX: string;
@@ -194,6 +180,7 @@ const MainPage = () => {
   const [bttnsIndex, setBttnsIndex] = useState<ButtonItemType[]>([]);
   const [notSearchYet, setNotSearchYet] = useState(true);
   const [openBttnModal, setOpenBttnModal] = useState(false);
+  const [bottomLeftModale, setBottomLeftModale] = useState(false);
   const plusHandler = (value: number, input?: InputTypes) => {
     if (input === 1) {
       setSecondValue((prev) => (Number(prev) + value).toString());
@@ -238,7 +225,6 @@ const MainPage = () => {
 
       setMulti(res.data.multi);
       setMultiTwo(res.data.multi2);
-      // setCp(res.data.multi3);
     } catch (error) {
       setMulti(null);
     }
@@ -272,26 +258,6 @@ const MainPage = () => {
       window.removeEventListener("popstate", changeTab);
     };
   }, []);
-
-  // const allPricesMinus = async () => {
-
-  //   try {
-  //     const res = await axios.post("/allPrices", {
-  //       user: localStorage.getItem("pultik-user-login"),
-  //       priceChange:
-  //         +`${firstValue.replace("-", "")}` === 0
-  //           ? "0"
-  //           : `-${firstValue.replace("-", "")}`,
-  //     });
-
-  //     if (res.status == 200) {
-  //       console.log(555);
-
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const SelectMonth = async (numb: string) => {
     try {
@@ -403,44 +369,9 @@ const MainPage = () => {
       setMultiTwo(null);
     }
   };
-
-  // const loadCom = async () => {
-  //     try {
-  //         const res = await axios.post<TomorrowShipType>("/tomorrowShip");
-
-  //         if (res.status !== 200) {
-  //             throw Error();
-  //         }
-
-  //         // setTomorrowShip(res.data);
-  //     } catch (error) {
-  //         // setTomorrowShip(null);
-  //     }
-  // };
-
-  // const loadCp = async () => {
-  //   console.log(555);
-
-  //   try {
-  //     const res = await axios.get("/getCpData");
-
-  //    console.log(res.data);
-
-  //     if (res.status !== 200) {
-  //       throw Error();
-  //     }
-
-  //     setCpData(res.data);
-  //   } catch (error) {
-  //     setCpData(null);
-  //   }
-  // };
-
   const initialLoad = async () => {
     await loadMulti();
     await loadData();
-    // await loadCom();
-    // await loadCp();
   };
 
   const resetInputs = () => {
@@ -813,6 +744,23 @@ const MainPage = () => {
           })}
         </ul>
       )}
+
+      <>
+        <div
+          className={`bottom_left_modale ${
+            bottomLeftModale ? "open_bottom_modale" : ""
+          }`}
+        >
+          <div className="content">
+            <button
+              className="modale_bttn"
+              onClick={() => setBottomLeftModale(!bottomLeftModale)}
+            >
+              <ArrowSVG fill="#000" width="80px" />
+            </button>
+          </div>
+        </div>
+      </>
       <Container>
         {window.innerWidth > 600 && (
           <>
@@ -1065,31 +1013,7 @@ const MainPage = () => {
                   </span>
                 </div>
               )}
-              {/*  <input
-                type="text"
-                placeholder="Изменение остатка"
-                value={`${secondValue} S`}
-                onChange={(e) => {
-                  const value = e.target.value
-                    .split(" ")
-                    .join("")
-                    .replace("S", "");
-                  setSecondValue(value ? Number(value).toString() : "");
-                  setLastEvent("stocks");
-                }}
-              />
-              <input
-                type="text"
-                placeholder="Изменение boost"
-                value={`${boostValue} B`}
-                onChange={(e) => {
-                  const value = e.target.value
-                    .split(" ")
-                    .join("")
-                    .replace("B", "");
-                  setBoostValue(value);
-                }}
-              /> */}
+
               <Button onClick={resetInputs} text="Reset" />
             </div>
             <div className="mat__wrapper">
@@ -1107,13 +1031,6 @@ const MainPage = () => {
                   </Button>
                 )
               )}
-              {/* <ChartComponent
-                label=""
-                labels={null}
-                data={null}
-                totalPages={0}
-                isMedian={undefined}
-              /> */}
             </div>
             <div className="mat__wrapper">
               {minusButtons.map(

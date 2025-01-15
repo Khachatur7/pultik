@@ -2,7 +2,7 @@
 @import "./tailwind.css";
 
 body {
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .handlecopy_information {
@@ -318,6 +318,62 @@ body {
   margin-left: 30px;
   margin-top: 10px;
   font-family: "Times New Roman", sans-serif;
+}
+
+.bottom_left_modale {
+  width: 900px;
+  height: 700px;
+  position: absolute;
+  bottom: 0;
+  left: 183px;
+  z-index: 1111;
+  transform: translateY(100%);
+  transition: 1s ease;
+  svg{
+    transition: 1s ease;
+    transform: rotate(180deg);
+  }
+  .content {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: #fff;
+
+    .modale_bttn {
+      padding: 10px 70px;
+      position: absolute;
+      top: -100px;
+      left: 0;
+      background: #fff;
+      transition: 0.4s ease-in;
+      path {
+        transition: 0.4s ease-in;
+      }
+    }
+    .modale_bttn:hover {
+      background: #000;
+      path {
+        fill: #fff;
+      }
+    }
+  }
+}
+
+.open_bottom_modale {
+  animation: open_bottom_modale 1s ease forwards;
+  svg{
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes open_bottom_modale {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0%);
+   
+  }
 }
 
 .popup,
