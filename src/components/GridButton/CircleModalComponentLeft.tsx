@@ -18,11 +18,11 @@ interface CircleModalComponentLeftProps {
   ind: number;
   setCopy: React.Dispatch<React.SetStateAction<boolean>>;
   setXalturaParent: React.Dispatch<any>;
+  fullName:string
 }
 
 const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
   comValue,
-  boolValue,
   sku,
   basePrice,
   wBar,
@@ -31,6 +31,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
   ind,
   setCopy,
   setXalturaParent,
+  fullName
 }) => {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState(false);
@@ -189,9 +190,25 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
             </button>
           </div>
           <p className="popup__el">{comValue ? `com: ${comValue}` : "..."}</p>
-          <p className="popup__el">{`bool: ${
-            boolValue ? boolValue : "..."
-          }`}</p>
+          <p className="popup__el !flex !items-center gap-[5px]">
+            {fullName}
+            <span onClick={() => handleCopy(fullName)}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+                <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+              </svg>
+            </span>
+          </p>
           <p className="popup__el !flex !items-center gap-[5px]">
             {sku}
             <span onClick={() => handleCopy(sku)}>

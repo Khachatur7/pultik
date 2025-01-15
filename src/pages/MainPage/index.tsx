@@ -744,7 +744,7 @@ const MainPage = () => {
           })}
         </ul>
       )}
-      <>
+      {window.innerWidth > 450 && (
         <div
           className={`bottom_left_modale ${
             bottomLeftModale == "closed"
@@ -767,7 +767,7 @@ const MainPage = () => {
             </button>
           </div>
         </div>
-      </>
+      )}
       <Container>
         {window.innerWidth > 600 && (
           <>
@@ -1240,6 +1240,11 @@ const MainPage = () => {
             </div>
           </div>
         </div>
+        {window.innerWidth < 450 && (
+          <div className={`bottom_left_modale_mob`}>
+            <div className="content"></div>
+          </div>
+        )}
         <LabelText />
         <div className="absolute top-[40px] right-[10px] flex items-center justify-center flex-col p_list">
           <p className="w-[60px] h-[60px] flex justify-center items-center mb-[20px] text-2xl border-black border-[1px] border-solid rounded-md">
