@@ -3,6 +3,7 @@ import { AuthCheck, Container, ToggleComponent } from "@/components";
 import { toast } from "react-toastify";
 import axios from "@/axios";
 import { createPortal } from "react-dom";
+import { transliterationMap } from "@/common";
 // import { useNavigate } from 'react-router-dom';
 
 // interface OrderInfoType {
@@ -241,17 +242,19 @@ const ButtonCreatePage = () => {
       console.log("Error!");
     }
   };
-  const onlyEnglish = (
-    event: string,
+ const onlyEnglish = (
+    value: string,
     setState: React.Dispatch<React.SetStateAction<string>>
   ) => {
-    const value = event;
-    const englishOnly = /^[a-zA-Z]*$/.test(value);
-
-    if (englishOnly) {
-      setState(value);
+   const symb = value[value.length-1]
+   const transliterationKeys = Object.keys(transliterationMap)
+    
+    if (transliterationKeys.includes(symb)) {
+      const resVal = value.slice(0,value.length-1) + transliterationMap[symb] 
+      
+      setState(resVal);
     } else {
-      setState(value.replace(/[^a-zA-Z]/g, ""));
+      setState(value);
     }
   };
   const getFexpInfo = async () => {

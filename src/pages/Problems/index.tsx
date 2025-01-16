@@ -1,6 +1,7 @@
 import { AuthCheck, Container } from "@/components";
 import axios from "@/axios";
 import { useEffect, useState } from "react";
+import { transliterationMap } from "@/common";
 
 interface Problems {
   problemsDb: Problem[];
@@ -30,18 +31,20 @@ const ProblemsPage = () => {
     }
   };
   const onlyEnglish = (
-    event: string,
-    setState: React.Dispatch<React.SetStateAction<string>>
-  ) => {
-    const value = event;
-    const englishOnly = /^[a-zA-Z]*$/.test(value);
-
-    if (englishOnly) {
-      setState(value);
-    } else {
-      setState(value.replace(/[^a-zA-Z]/g, ""));
-    }
-  };
+     value: string,
+     setState: React.Dispatch<React.SetStateAction<string>>
+   ) => {
+    const symb = value[value.length-1]
+    const transliterationKeys = Object.keys(transliterationMap)
+     
+     if (transliterationKeys.includes(symb)) {
+       const resVal = value.slice(0,value.length-1) + transliterationMap[symb] 
+       
+       setState(resVal);
+     } else {
+       setState(value);
+     }
+   };
   const createProblem = async () => {
     if (text) {
       try {

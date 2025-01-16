@@ -24,7 +24,7 @@ import searchLogo from "@/images/search_1.svg";
 import problemsP from "@/images/new.jpg";
 import houseImage from "@/images/house.png";
 import { InputTypes, ButtonItemType, LastButtonType } from "@/types/common";
-import { minusButtons, plusButtons } from "@/common";
+import { minusButtons, plusButtons, transliterationMap } from "@/common";
 import MainPageFexp from "./MainPageFexp";
 import ZeroModesInfo from "./ZeroModesInfo";
 import { infoBlockItems } from "@/store/useBotsStore";
@@ -217,16 +217,18 @@ const MainPage = () => {
   };
 
   const onlyEnglish = (
-    event: string,
+    value: string,
     setState: React.Dispatch<React.SetStateAction<string>>
   ) => {
-    const value = event;
-    const englishOnly = /^[a-zA-Z]*$/.test(value);
-
-    if (englishOnly) {
-      setState(value);
+   const symb = value[value.length-1]
+   const transliterationKeys = Object.keys(transliterationMap)
+    
+    if (transliterationKeys.includes(symb)) {
+      const resVal = value.slice(0,value.length-1) + transliterationMap[symb] 
+      
+      setState(resVal);
     } else {
-      setState(value.replace(/[^a-zA-Z]/g, ""));
+      setState(value);
     }
   };
 
@@ -586,6 +588,16 @@ const MainPage = () => {
       window.removeEventListener("click", selectHandle);
     }
   };
+  const handleCopy = (textToCopy: string) => {
+    navigator.clipboard
+      .writeText(textToCopy)
+      .then(() => {
+        setCopy(!copy);
+      })
+      .catch((err) => {
+        console.error("Ошибка при копировании текста: ", err);
+      });
+  };
 
   const SearchBttns = () => {
     const res: ButtonItemType[] = [];
@@ -622,7 +634,6 @@ const MainPage = () => {
     updateHandler();
     console.log(data, lastButton);
     checkInitialDate();
-    getPhrases();
   }, []);
 
   useEffect(() => {
@@ -676,6 +687,11 @@ const MainPage = () => {
       SearchBttns();
     }
   }, [bttnSearcher]);
+
+// для одного рендеринга
+  useEffect(()=>{
+    getPhrases();
+  },[])
 
   return (
     <AuthCheck>
@@ -800,11 +816,30 @@ const MainPage = () => {
             >
               <ArrowSVG fill="#000" />
             </button>
-            {
-              answers.map(a=>{
-                return <p>{a}</p>
-              })
-            }
+            {answers.slice(0, 4).map((a, ind) => {
+              return (
+                <div className="answer">
+                  {ind + 1}. {a}
+                  <span onClick={() => handleCopy(a)}>
+                    <svg
+                      style={{ marginBottom: "10px", cursor: "pointer" }}
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+                      <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+                    </svg>
+                  </span>
+                </div>
+              );
+            })}
           </div>
         </div>
       )}
