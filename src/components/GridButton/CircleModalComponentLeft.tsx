@@ -192,7 +192,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
           </div>
           <p className="popup__el">{comValue ? `com: ${comValue}` : "..."}</p>
           <p className="popup__el !flex !items-center gap-[5px]">
-            {fullName}
+          Name: {fullName}
             <span onClick={() => handleCopy(fullName)}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -211,7 +211,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
             </span>
           </p>
           <p className="popup__el !flex !items-center gap-[5px]">
-            {sku}
+          Sku: {sku}
             <span onClick={() => handleCopy(sku)}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"

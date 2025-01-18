@@ -1214,7 +1214,7 @@ const MainPage = () => {
 
             <div
               className="w-[100vw] flex items-center justify-center gap-[10px] bots_list overflow-auto"
-              style={{ marginTop: "30px" }}
+              style={{ marginTop: "15px" }}
             >
               {/* Если данные получены */}
               {http &&

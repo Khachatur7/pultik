@@ -120,7 +120,7 @@ const ButtonCreatePage = () => {
     try {
       setLoading(true);
 
-      const res = await axios.post("watchOrder", {
+      const res = await axios.post("/watchOrder", {
         orderId: orderId,
         user: localStorage.getItem("pultik-user-login"),
       });
@@ -348,6 +348,8 @@ const ButtonCreatePage = () => {
               <p>cP: {modalData.cP}</p>
               <p>Quant: {modalData.quant}</p>
               <p>Marginality: {modalData.marginality}</p>
+              <p>sku: {modalData.sku}</p>
+
             </div>
           </div>,
           document.body
