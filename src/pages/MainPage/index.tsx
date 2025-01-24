@@ -220,12 +220,13 @@ const MainPage = () => {
     value: string,
     setState: React.Dispatch<React.SetStateAction<string>>
   ) => {
-   const symb = value[value.length-1]
-   const transliterationKeys = Object.keys(transliterationMap)
-    
+    const symb = value[value.length - 1];
+    const transliterationKeys = Object.keys(transliterationMap);
+
     if (transliterationKeys.includes(symb)) {
-      const resVal = value.slice(0,value.length-1) + transliterationMap[symb] 
-      
+      const resVal =
+        value.slice(0, value.length - 1) + transliterationMap[symb];
+
       setState(resVal);
     } else {
       setState(value);
@@ -589,14 +590,26 @@ const MainPage = () => {
     }
   };
   const handleCopy = (textToCopy: string) => {
-    navigator.clipboard
-      .writeText(textToCopy)
-      .then(() => {
-        setCopy(!copy);
-      })
-      .catch((err) => {
-        console.error("Ошибка при копировании текста: ", err);
-      });
+    if (/^[0-9\s]*$/.test(textToCopy)) {
+      const resText = textToCopy.replace(/\s/g, "");
+      navigator.clipboard
+        .writeText(resText)
+        .then(() => {
+          setCopy(!copy);
+        })
+        .catch((err) => {
+          console.error("Ошибка при копировании текста: ", err);
+        });
+    } else {
+      navigator.clipboard
+        .writeText(textToCopy)
+        .then(() => {
+          setCopy(!copy);
+        })
+        .catch((err) => {
+          console.error("Ошибка при копировании текста: ", err);
+        });
+    }
   };
 
   const SearchBttns = () => {
@@ -688,10 +701,10 @@ const MainPage = () => {
     }
   }, [bttnSearcher]);
 
-// для одного рендеринга
-  useEffect(()=>{
+  // для одного рендеринга
+  useEffect(() => {
     getPhrases();
-  },[])
+  }, []);
 
   return (
     <AuthCheck>
@@ -816,27 +829,89 @@ const MainPage = () => {
             >
               <ArrowSVG fill="#000" />
             </button>
-            {answers.slice(0, 4).map((a, ind) => {
+            {answers.slice(0, 5).map((a, ind) => {
+              const count = Math.ceil(a.length / 35);
+
               return (
                 <div className="answer">
-                  {ind + 1}. {a}
-                  <span onClick={() => handleCopy(a)}>
-                    <svg
-                      style={{ marginBottom: "10px", cursor: "pointer" }}
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
-                      <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
-                    </svg>
-                  </span>
+                  {count > 1 ? (
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      {[...Array(count).keys()].map((c) => {
+                        if (c+1 < count) {
+                          return (
+                            <span>
+                              {ind + 1}. {a.substring(35*c, 35*(c+1))}
+                            </span>
+                          );
+                        }
+                        else {
+                         return <span
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            gap: "7px",
+                          }}
+                        >
+                          {a.substring(35*c, 35*(c+1))}
+                          <span onClick={() => handleCopy(a)}>
+                            <svg
+                              style={{ marginTop: "5px", cursor: "pointer" }}
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <rect
+                                width="14"
+                                height="14"
+                                x="8"
+                                y="8"
+                                rx="2"
+                                ry="2"
+                              />
+                              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+                            </svg>
+                          </span>
+                        </span>
+                        }
+                      })}
+                     
+                    </div>
+                  ) : (
+                    <>
+                      {ind + 1}. {a}
+                      <span onClick={() => handleCopy(a)}>
+                        <svg
+                          style={{ marginBottom: "12px", cursor: "pointer" }}
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <rect
+                            width="14"
+                            height="14"
+                            x="8"
+                            y="8"
+                            rx="2"
+                            ry="2"
+                          />
+                          <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+                        </svg>
+                      </span>
+                    </>
+                  )}
                 </div>
               );
             })}

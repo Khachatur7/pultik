@@ -198,7 +198,7 @@ const GridButton: React.FC<Props> = ({
     }
 
     if (fStocks >= 4) {
-      return "grid_bttn_green";
+      return "grid_bttn_blue";
     } else if (fStocks < 0) {
       return "grid_bttn_black";
     }
@@ -211,7 +211,7 @@ const GridButton: React.FC<Props> = ({
         return "grid_bttn_yellow";
 
       case 3:
-        return "grid_bttn_blue";
+        return "grid_bttn_green";
 
       default:
         return "";
