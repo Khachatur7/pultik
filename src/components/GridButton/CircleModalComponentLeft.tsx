@@ -18,7 +18,7 @@ interface CircleModalComponentLeftProps {
   ind: number;
   setCopy: React.Dispatch<React.SetStateAction<boolean>>;
   setXalturaParent: React.Dispatch<any>;
-  fullName:string
+  fullName: string;
 }
 
 const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
@@ -31,7 +31,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
   ind,
   setCopy,
   setXalturaParent,
-  fullName
+  fullName,
 }) => {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState(false);
@@ -65,7 +65,22 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
     }
   };
 
+  const cPrice = async () => {
+    try {
+      const res = await axios.post("/cPrice", {
+        price: Number(price),
+        sku,
+        user: localStorage.getItem("pultik-user-login"),
+      });
 
+      if (res.status==200) {
+      alert(res.data.message)
+      }
+
+    } catch (error) {
+      console.log("Не удалось изменить цену");
+    }
+  };
   const postNewBttnIndex = async () => {
     const post = await axios.post("/changeIndex", {
       old: ind,
@@ -192,7 +207,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
           </div>
           <p className="popup__el">{comValue ? `com: ${comValue}` : "..."}</p>
           <p className="popup__el !flex !items-center gap-[5px]">
-          Name: {fullName}
+            Name: {fullName}
             <span onClick={() => handleCopy(fullName)}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -211,7 +226,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
             </span>
           </p>
           <p className="popup__el !flex !items-center gap-[5px]">
-          Sku: {sku}
+            Sku: {sku}
             <span onClick={() => handleCopy(sku)}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -239,17 +254,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
             />
             <button
               className="border-solid border-[1px] border-black"
-              onClick={() => {
-                axios
-                  .post("/cPrice", {
-                    price: Number(price),
-                    sku,
-                    user: localStorage.getItem("pultik-user-login"),
-                  })
-                  .then(() => {
-                    toast.success("Цена изменена");
-                  });
-              }}
+              onClick={cPrice}
             >
               Ok
             </button>
