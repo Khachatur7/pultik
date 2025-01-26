@@ -16,24 +16,25 @@ import { transliterationMap } from "@/common";
 // }
 
 const ButtonCreatePage = () => {
+  
   const navigate = useNavigate();
-  const [number, setNumber] = useState("");
+  // const [number, setNumber] = useState("");
   const [name, setName] = useState("");
-  const [remainder, setRemainder] = useState("1");
+  // const [remainder, setRemainder] = useState("1");
   const [basePrice, setBasePrice] = useState("000");
   const [sku, setSku] = useState("");
   const [aaid, setAaid] = useState("0");
   const [vart, setVart] = useState("0");
   const [wBar, setWBar] = useState("0");
-  const [oName, setOName] = useState("1");
+  // const [oName, setOName] = useState("1");
   const [type, setType] = useState<string>("tel");
   const [typesList, setTypesList] = useState<string[]>();
-  const [cust, setCust] = useState("0");
+  // const [cust, setCust] = useState("0");
   const [loading, setLoading] = useState(false);
   const [v, setV] = useState("15");
   const [s, setS] = useState("35");
   const [g, setG] = useState("25");
-  const [h, setH] = useState(false);
+  // const [h, setH] = useState(false);
   const lS = "{";
   const rS = "}";
   const lT = "[";
@@ -53,28 +54,28 @@ const ButtonCreatePage = () => {
       return;
     }
 
-    if (!number.trim() || isNaN(Number(number))) {
-      return toast.warning("Введите номер");
-    }
+    // if (!number.trim() || isNaN(Number(number))) {
+    //   return toast.warning("Введите номер");
+    // }
 
     if (!name.trim()) {
-      return toast.warning("Введите название");
+      return alert("Поле 'название в БД' не может быть пустым");
     }
 
     // if (!fullName.trim()) {
     //   return toast.warning("Введите полное название кнопки");
     // }
 
-    if (!remainder.trim()) {
-      return toast.warning("Введите остаток");
-    }
+    // if (!remainder.trim()) {
+    //   return toast.warning("Введите остаток");
+    // }
 
-    if (!basePrice.trim() || isNaN(Number(basePrice))) {
-      return toast.warning("Введите цену");
+    if (+basePrice<=0 || isNaN(Number(basePrice))) {
+      return alert("Базовая цена должна быть больше 0");
     }
 
     if (!sku.trim()) {
-      return toast.warning("Введите ЯСКУ и ОСКУ");
+      return alert("Поле 'Яску, Оску и Мску' не может быть пустым");
     }
 
     if (!aaid.trim()) {
@@ -89,9 +90,9 @@ const ButtonCreatePage = () => {
       return toast.warning("Введите ВБар");
     }
 
-    if (!oName.trim()) {
-      return toast.warning("Введите ОИмя");
-    }
+    // if (!oName.trim()) {
+    //   return toast.warning("Введите ОИмя");
+    // }
 
     try {
       setLoading(true);
@@ -99,13 +100,13 @@ const ButtonCreatePage = () => {
       //     const res = await axios.post(`/cCom/${number}/${name}/${fullName}/${remainder}/${basePrice}/${sku}/${oName}/${vart}/${wBar}/${aaid}/${type}/${bool}`, {
 
       const res = await axios.post(`/cCom/`, {
-        number: number,
+        // number: number,
         name: name,
         // fullName: fullName,
-        remainder: remainder,
+        // remainder: remainder,
         basePrice: basePrice,
         sku: sku,
-        oName: oName,
+        // oName: oName,
         vart: vart,
         wBar: wBar,
         aaid: aaid,
@@ -113,8 +114,8 @@ const ButtonCreatePage = () => {
         s: Number(s),
         v: Number(v),
         g: Number(g),
-        h: h,
-        cust,
+        // h: h,
+        // cust,
         user: localStorage.getItem("pultik-user-login"),
       });
 
@@ -254,12 +255,12 @@ const ButtonCreatePage = () => {
   return (
     <AuthCheck>
       <Container>
-        <div className="flex flex-col w-full">
+        <div className="flex flex-col w-full create_page">
           <form
             className="input__wrapper input__login"
             onSubmit={submitHandler}
           >
-            <div className="form_field">
+            {/* <div className="form_field">
               <span className="text-2xl">Номер кнопки</span>
               <input
                 className="create_page_item"
@@ -278,7 +279,7 @@ const ButtonCreatePage = () => {
                 }}
                 style={{ marginTop: 0 }}
               />
-            </div>
+            </div> */}
             <div className="form_field">
               <span className="text-2xl">Название в БД</span>
               <input
@@ -297,7 +298,7 @@ const ButtonCreatePage = () => {
               onChange={(e) => setFullName(e.target.value)}
               style={{ marginTop: 0 }}
             /> */}
-            <div className="form_field">
+            {/* <div className="form_field">
               <span className="text-2xl">Продав. остаток</span>
               <input
                 className="create_page_item"
@@ -306,7 +307,7 @@ const ButtonCreatePage = () => {
                 onChange={(e) => setRemainder(e.target.value)}
                 style={{ marginTop: 0 }}
               />
-            </div>
+            </div> */}
             <div className="form_field">
               <span className="text-2xl">Базовая цена</span>
               <input
@@ -327,7 +328,7 @@ const ButtonCreatePage = () => {
                 style={{ marginTop: 0 }}
               />
             </div>
-            <div className="form_field">
+            {/* <div className="form_field">
               <span className="text-2xl">Фактич. остаток</span>
               <input
                 className="create_page_item"
@@ -336,7 +337,7 @@ const ButtonCreatePage = () => {
                 onChange={(e) => setOName(e.target.value)}
                 style={{ marginTop: 0 }}
               />
-            </div>
+            </div> */}
             <div className="form_field">
               <span className="text-2xl">Варт</span>
               <input
@@ -384,7 +385,7 @@ const ButtonCreatePage = () => {
                   })}
               </select>
             </div>
-            <div className="form_field">
+            {/* <div className="form_field">
               <span className="text-2xl">Там. налог</span>
               <input
                 className="create_page_item"
@@ -393,8 +394,8 @@ const ButtonCreatePage = () => {
                 onChange={(e) => setCust(e.target.value)}
                 style={{ marginTop: 0 }}
               />
-            </div>
-            <div className="form_field">
+            </div> */}
+            {/* <div className="form_field">
               <span className="text-2xl">Пустой</span>
               <select
                 className={"h-[55px] rounded-[12px] text-2xl create_page_item"}
@@ -403,7 +404,7 @@ const ButtonCreatePage = () => {
                 <option value="false">false</option>
                 <option value="true">true</option>
               </select>
-            </div>
+            </div> */}
             <div className="form_field">
               <span className="text-2xl">ШВГ</span>
               <div className="grid grid-cols-3 gap-1">
@@ -438,7 +439,7 @@ const ButtonCreatePage = () => {
               className="btn create_page_item form_bttn"
               disabled={loading}
             >
-              Создать
+              Создать актив
             </button>
             {/* {(window.innerWidth <= 2200 && window.innerWidth >= 2140) ||
               (window.innerWidth <= 1930 && window.innerWidth >= 1795) ||

@@ -27,7 +27,7 @@ useEffect(()=>{
 
   return (
     <p className={s.labelText}>
-        pultik.me, version: {version}        
+        Система управления активами pultik.me, version: {version}        
     </p>
   )
 }

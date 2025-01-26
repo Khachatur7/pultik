@@ -33,6 +33,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
   setXalturaParent,
   fullName,
 }) => {
+  
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState(false);
   const [exitHover, setExitHover] = useState(false);

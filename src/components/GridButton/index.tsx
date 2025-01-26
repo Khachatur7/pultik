@@ -76,6 +76,7 @@ const GridButton: React.FC<Props> = ({
   setCopy,
   wStocks,
 }) => {
+  
   const [currentPrice, setCurrentPrice] = useState(price);
   const [currentPriceFixed, setCurrentPriceFixed] = useState(price);
   // const [boost, setBoost] = useState(boostInitial);

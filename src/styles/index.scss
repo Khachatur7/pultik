@@ -746,6 +746,11 @@ body {
   }
 }
 
+.create_page .input__wrapper{
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)) !important;
+  gap: 10px;
+}
+
 @media (max-width: 2700px) and (min-width: 2350px) {
   .save_sell_btn {
     font-size: 23px;
