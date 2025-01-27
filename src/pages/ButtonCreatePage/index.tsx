@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { AuthCheck, Container, ToggleComponent } from "@/components";
 import { toast } from "react-toastify";
 import axios from "@/axios";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { transliterationMap } from "@/common";
 
 // interface ITypeList {
@@ -17,7 +17,7 @@ import { transliterationMap } from "@/common";
 
 const ButtonCreatePage = () => {
   
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   // const [number, setNumber] = useState("");
   const [name, setName] = useState("");
   // const [remainder, setRemainder] = useState("1");
@@ -118,15 +118,12 @@ const ButtonCreatePage = () => {
         // cust,
         user: localStorage.getItem("pultik-user-login"),
       });
+      alert(res.data.message);
 
-      if (res.status !== 200 || !res.data || !res.data.complete) {
-        throw Error();
-      }
-
-      alert(res.data.complete);
-
-      navigate("/");
+      // navigate("/");
     } catch (error) {
+      console.log(error);
+      
       toast.error("Не удалось создать кнопку");
     } finally {
       setLoading(false);

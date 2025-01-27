@@ -14,7 +14,8 @@ const LabelText: React.FC = () => {
     
      if (res.data) {
       setVersion(res.data.version);
-      
+      console.log(res.data.version);
+
      }
     } catch (error) {
       
