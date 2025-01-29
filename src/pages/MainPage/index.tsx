@@ -832,7 +832,7 @@ const MainPage = () => {
             >
               <ArrowSVG fill="#000" />
             </button>
-            {answers.slice(0, 5).map((a, ind) => {
+            {answers.slice(0, 7).map((a, ind) => {
               const count = Math.ceil(a.length / 35);
 
               return (
