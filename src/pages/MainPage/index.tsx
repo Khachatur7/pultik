@@ -14,6 +14,7 @@ import { MultiType } from "@/components/GridButton/CircleModalComponent";
 import { dataFilterHandler } from "@/handlers";
 import { Link, useParams } from "react-router-dom";
 import runnerImage from "@/images/runner.png";
+import walkingManImage from "@/images/walking_man.png";
 import boxImage from "@/images/boxX.png";
 import addImage from "@/images/add.png";
 import chartPageImage from "@/images/chart-page-icon.png";
@@ -719,9 +720,9 @@ const MainPage = () => {
                 }`}
                 onClick={() => SetStates(item)}
               >
-                {item.value == 5 ? (
-                  <img src={runnerImage} alt="" style={{ width: "45px" }} />
-                ) : item.value == 4 ? (
+                {item.value == 1 || item.value == 2 ? (
+                  <img src={walkingManImage} alt="" style={{ width: "45px" }} />
+                ) : item.value == 3 || item.value == 4 || item.value == 5 ? (
                   <img src={runnerImage} alt="" style={{ width: "65px" }} />
                 ) : item.value == 7 ? (
                   <img src={recycling} alt="" style={{ width: "45px" }} />
@@ -936,13 +937,19 @@ const MainPage = () => {
                   key={item.id}
                   onClick={() => setCurrentTab(item.value)}
                 >
-                  {item.value == 5 ? (
-                    <img src={runnerImage} alt="" style={{ width: "65px" }} />
-                  ) : item.value == 4 ? (
+                  {item.value == 1 || item.value == 2 ? (
+                    <img
+                      src={walkingManImage}
+                      alt=""
+                      style={{ width: "45px" }}
+                    />
+                  ) : item.value == 3 || item.value == 4 || item.value == 5 ? (
                     <img src={runnerImage} alt="" style={{ width: "65px" }} />
                   ) : item.value == 7 ? (
                     <img src={recycling} alt="" style={{ width: "45px" }} />
-                  ) : item.value}
+                  ) : (
+                    item.value
+                  )}
                 </Link>
               ))}
               <Link
