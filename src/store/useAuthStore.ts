@@ -21,7 +21,6 @@ const useAuthStore = create<AuthStore>((set, get) => ({
             const res = await axios.post<{ authToken: string }>("/login", {
                 email,
                 password,
-                
             });
 
             if (!res.data) {

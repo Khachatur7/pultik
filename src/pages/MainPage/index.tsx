@@ -135,6 +135,7 @@ const MainPage = () => {
     quart: number;
     priceIndex: string;
     middlePercent: string;
+    minPer:string;
   } | null>(null);
   const [returnMode, setReturnMode] = useState(false);
   const [buttonsInfo, setButtonsInfo] = useState<ButtonsInfo>({
@@ -299,6 +300,8 @@ const MainPage = () => {
   }, []);
 
   const SelectMonth = async (numb: string) => {
+    console.log(333333);
+    
     try {
       const res = await axios.post("/getCpData", {
         month: numb,
@@ -591,8 +594,8 @@ const MainPage = () => {
     }
   };
   const handleCopy = (textToCopy: string) => {
-    if (/^[0-9\s]*$/.test(textToCopy)) {
-      const resText = textToCopy.replace(/\s/g, "");
+    if (/^[0-9 ()\s]+$/.test(textToCopy)) {
+      const resText = textToCopy.replace(/[\s()]/g, "")
       navigator.clipboard
         .writeText(resText)
         .then(() => {
@@ -832,7 +835,7 @@ const MainPage = () => {
             >
               <ArrowSVG fill="#000" />
             </button>
-            {answers.slice(0, 7).map((a, ind) => {
+            {answers.slice(0, 8).map((a, ind) => {
               const count = Math.ceil(a.length / 35);
 
               return (
@@ -1290,9 +1293,11 @@ const MainPage = () => {
                   </p>
                   <p>fE/m: {cpData.fixedExp} Rub</p>
                   <p>
-                    Quartal: {cpData.quart} | Price index: {cpData.priceIndex}
+                    Quartal: {cpData.quart} | Price index: {cpData.priceIndex.split(',')[0]} , {cpData.priceIndex.split(',')[1]} , {cpData.priceIndex.split(',')[2]}
                   </p>
                   <p>uS: {localStorage.getItem("pultik-user-login")}</p>
+                  <p>{cpData.priceIndex.split(',')[3]}</p>
+                  <p>{cpData.minPer}</p>
                 </>
               ) : (
                 <></>
