@@ -172,8 +172,22 @@ body {
 
 .print_img{
   position: absolute;
-  width: 60px;
-  transform: translateX(35px) translateY(-5px);
+  width: 70px;
+  transform: translateX(35px) translateY(-10px);
+  z-index: 11;
+}
+
+.stroy_img{
+  position: absolute;
+  width: 65px;
+  transform: translateX(35px) translateY(-1px);
+  z-index: 11;
+}
+
+.tel_img{
+  position: absolute;
+  width: 65px;
+  transform: translateX(35px) translateY(-1px);
   z-index: 11;
 }
 

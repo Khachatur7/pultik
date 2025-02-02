@@ -9,6 +9,9 @@ import { LastButtonType } from "@/types/common";
 import { LastEventType } from "@/pages/MainPage";
 import CircleModalComponentBottomLeft from "./CircleModalComponentBottomLeft";
 import printImage from "@/images/print.svg"
+import stroyImage from "@/images/stroy.svg"
+import telImage from "@/images/tel.svg"
+
 interface Props {
   tel: string;
   index: number;
@@ -274,6 +277,9 @@ const GridButton: React.FC<Props> = ({
       >
         {+cameFromModale == i && <div className="came_from_modale"></div>}
         {comValue=="print" && <img src={printImage} alt="" className="print_img"/>}
+        {comValue=="stroy" && <img src={stroyImage} alt="" className="stroy_img"/>}
+        {comValue=="tel" && <img src={telImage} alt="" className="tel_img"/>}
+
         {wStocks && wStocks > 0 ? (
           <div className="w_sign">
             <svg
@@ -293,7 +299,7 @@ const GridButton: React.FC<Props> = ({
         ) : (
           ""
         )}
-        <span style={{ marginLeft:`${comValue=="print"?"50px":"0"}`}}>{`${i && h ? `{${i}. ` : i ? `${i}. ` : ""}`}</span>
+        <span style={{ marginLeft:`${comValue=="print" || comValue=="stroy" || comValue=="tel"?"50px":"0"}`}}>{`${i && h ? `{${i}. ` : i ? `${i}. ` : ""}`}</span>
         {fullName ? (
           <span
             className={`underline ${xaltura ? "xaltura" : ""} ${
@@ -311,7 +317,7 @@ const GridButton: React.FC<Props> = ({
             alignItems: "center",
             justifyContent: "center",
             gap: "8px",
-            marginLeft:`${comValue=="print"?"50px":"0"}`
+            marginLeft:`${comValue=="print" || comValue=="stroy" || comValue=="tel"?"50px":"0"}`
           }}
         >
           {`${!isNaN(stockValue) ? ` S ${stockValue}` : ""} ||`}{" "}
