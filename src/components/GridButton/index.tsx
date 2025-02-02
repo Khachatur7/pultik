@@ -273,7 +273,7 @@ const GridButton: React.FC<Props> = ({
         disabled={isDisabled}
       >
         {+cameFromModale == i && <div className="came_from_modale"></div>}
-        <img src={printImage} alt="" className="print_img"/>
+        {comValue=="print" && <img src={printImage} alt="" className="print_img"/>}
         {wStocks && wStocks > 0 ? (
           <div className="w_sign">
             <svg
@@ -293,7 +293,7 @@ const GridButton: React.FC<Props> = ({
         ) : (
           ""
         )}
-        <span style={{ marginLeft:`${comValue!="print"?"50px":"0"}`}}>{`${i && h ? `{${i}. ` : i ? `${i}. ` : ""}`}</span>
+        <span style={{ marginLeft:`${comValue=="print"?"50px":"0"}`}}>{`${i && h ? `{${i}. ` : i ? `${i}. ` : ""}`}</span>
         {fullName ? (
           <span
             className={`underline ${xaltura ? "xaltura" : ""} ${
@@ -311,7 +311,7 @@ const GridButton: React.FC<Props> = ({
             alignItems: "center",
             justifyContent: "center",
             gap: "8px",
-            marginLeft:`${comValue!="print"?"50px":"0"}`
+            marginLeft:`${comValue=="print"?"50px":"0"}`
           }}
         >
           {`${!isNaN(stockValue) ? ` S ${stockValue}` : ""} ||`}{" "}
