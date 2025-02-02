@@ -170,6 +170,13 @@ body {
   }
 }
 
+.print_img{
+  position: absolute;
+  width: 60px;
+  transform: translateX(35px) translateY(-5px);
+  z-index: 11;
+}
+
 .btn {
   position: relative;
   width: 100%;

@@ -1,3 +1,3 @@
-type ComValueType = "tel" | "stroy";
+type ComValueType = "tel" | "stroy" | "print";
 
 export default ComValueType;
