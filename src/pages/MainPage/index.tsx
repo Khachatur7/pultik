@@ -1297,7 +1297,7 @@ const MainPage = () => {
                   </p>
                   <p>uS: {localStorage.getItem("pultik-user-login")}</p>
                   <p>{cpData.priceIndex.split(',')[3]}</p>
-                  <p>{cpData.minPer}</p>
+                  <p>mP: {cpData.minPer} %</p>
                 </>
               ) : (
                 <></>
