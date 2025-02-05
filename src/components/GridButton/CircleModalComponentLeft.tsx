@@ -6,6 +6,7 @@ import ToggleComponent from "../ToggleComponent";
 import { adminLogin } from "@/store/adminLogin";
 import PopupExit from "../PopupExit.tsx";
 import { useNavigate } from "react-router-dom";
+import upDownImage from "@/images/upDown.png"
 
 interface CircleModalComponentLeftProps {
   comValue?: ComValueType;
@@ -288,17 +289,19 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
             </button>
           </div>
           <ToggleComponent onClick={Xaltura} isOpened={xaltura} />
+          <div style={{display:"flex",width:"100%",alignItems:"center",justifyContent:"center",gap:"5px"}}>
           <button
             onClick={EditBttn}
-            style={{
-              border: "1px solid #000",
-              borderRadius: "5px",
-              padding: "1px 0px",
-              width: "95%",
-            }}
+            className="left_bttn"
           >
             <span>Edit</span>
           </button>
+          <button
+            className="left_bttn"
+          >
+           <img src={upDownImage} alt="upDownImage" />
+          </button>
+          </div>
         </>
       ) : (
         <></>

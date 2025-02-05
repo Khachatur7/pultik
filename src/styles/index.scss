@@ -170,19 +170,33 @@ body {
   }
 }
 
-.print_img{
+.left_bttn {
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 1px 0px;
+  width: 45%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    width: 45%;
+  }
+}
+
+.print_img {
   position: absolute;
   width: 67px;
   transform: translateX(35px) translateY(0px);
 }
 
-.stroy_img{
+.stroy_img {
   position: absolute;
   width: 64px;
   transform: translateX(35px) translateY(-1px);
 }
 
-.tel_img{
+.tel_img {
   position: absolute;
   width: 64px;
   transform: translateX(35px) translateY(-1px);
@@ -372,7 +386,7 @@ body {
         transition: 0.4s ease-in;
       }
     }
-    .answer{
+    .answer {
       width: 100%;
       display: flex;
       align-items: end;
@@ -764,7 +778,7 @@ body {
   }
 }
 
-.create_page .input__wrapper{
+.create_page .input__wrapper {
   grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)) !important;
   gap: 10px;
 }

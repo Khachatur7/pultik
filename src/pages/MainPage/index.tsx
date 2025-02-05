@@ -24,6 +24,7 @@ import recycling from "@/images/recycling.svg";
 import searchLogo from "@/images/search_1.svg";
 import problemsP from "@/images/new.jpg";
 import houseImage from "@/images/house.png";
+import upDownImage from "@/images/upDown.png"
 import { InputTypes, ButtonItemType, LastButtonType } from "@/types/common";
 import { minusButtons, plusButtons, transliterationMap } from "@/common";
 import MainPageFexp from "./MainPageFexp";
@@ -135,7 +136,7 @@ const MainPage = () => {
     quart: number;
     priceIndex: string;
     middlePercent: string;
-    minPer:string;
+    minPer: string;
   } | null>(null);
   const [returnMode, setReturnMode] = useState(false);
   const [buttonsInfo, setButtonsInfo] = useState<ButtonsInfo>({
@@ -301,7 +302,7 @@ const MainPage = () => {
 
   const SelectMonth = async (numb: string) => {
     console.log(333333);
-    
+
     try {
       const res = await axios.post("/getCpData", {
         month: numb,
@@ -494,9 +495,8 @@ const MainPage = () => {
         const month = date.getMonth() + 1;
         const year = date.getFullYear();
         let countDay = 1;
-        let fullDate = `${day < 10 ? `0${day}` : day}.${
-          month < 10 ? `0${month}` : month
-        }.${year}`;
+        let fullDate = `${day < 10 ? `0${day}` : day}.${month < 10 ? `0${month}` : month
+          }.${year}`;
         let newDate = date;
         res.data.result.map((el, ind) => {
           if (fullDate == el.date) {
@@ -505,9 +505,8 @@ const MainPage = () => {
             const day = newDate.getDate();
             const month = newDate.getMonth() + 1;
             const year = newDate.getFullYear();
-            fullDate = `${day < 10 ? `0${day}` : day}.${
-              month < 10 ? `0${month}` : month
-            }.${year}`;
+            fullDate = `${day < 10 ? `0${day}` : day}.${month < 10 ? `0${month}` : month
+              }.${year}`;
 
             x.push(el.date);
             precentY.push(el.middleDayPer ? +el.middleDayPer : +"0");
@@ -520,9 +519,8 @@ const MainPage = () => {
               const day = xDate.getDate();
               const month = xDate.getMonth() + 1;
               const year = xDate.getFullYear();
-              fullDate = `${day < 10 ? `0${day}` : day}.${
-                month < 10 ? `0${month}` : month
-              }.${year}`;
+              fullDate = `${day < 10 ? `0${day}` : day}.${month < 10 ? `0${month}` : month
+                }.${year}`;
               x.push(fullDate);
             });
           }
@@ -570,9 +568,8 @@ const MainPage = () => {
     const initialDay = date.getDate();
     const initialDonth = date.getMonth() + 1;
     const initialDear = date.getFullYear();
-    let fullDate = `${initialDear}-${
-      initialDonth < 10 ? `0${initialDonth}` : initialDonth
-    }-${initialDay < 10 ? `0${initialDay}` : initialDay}`;
+    let fullDate = `${initialDear}-${initialDonth < 10 ? `0${initialDonth}` : initialDonth
+      }-${initialDay < 10 ? `0${initialDay}` : initialDay}`;
     localStorage.setItem("initial-date", JSON.stringify(fullDate));
     getChartData();
   };
@@ -718,16 +715,17 @@ const MainPage = () => {
             {tabs.map((item) => (
               <button
                 key={item.id}
-                className={`btn btn__changing-item${
-                  currentTab === item.value ? " active" : ""
-                }`}
+                className={`btn btn__changing-item${currentTab === item.value ? " active" : ""
+                  }`}
                 onClick={() => SetStates(item)}
               >
                 {item.value == 1 || item.value == 2 ? (
                   <img src={walkingManImage} alt="" style={{ width: "45px" }} />
-                ) : item.value == 3 || item.value == 4 || item.value == 5 ? (
+                ) : item.value == 3 ? (
+                  <img src={upDownImage} alt="" style={{ width: "45px" }} />
+                ) : item.value == 4 || item.value == 5 || item.value == 6 ? (
                   <img src={runnerImage} alt="" style={{ width: "65px" }} />
-                ) : item.value == 7 ? (
+                ) : item.value == 8 ? (
                   <img src={recycling} alt="" style={{ width: "45px" }} />
                 ) : (
                   item.value
@@ -735,9 +733,8 @@ const MainPage = () => {
               </button>
             ))}
             <button
-              className={`btn btn__changing-item${
-                currentTab === 8 ? " active" : ""
-              }`}
+              className={`btn btn__changing-item${currentTab === 8 ? " active" : ""
+                }`}
               onClick={() => setCurrentTab(8)}
             >
               <svg
@@ -816,13 +813,12 @@ const MainPage = () => {
       )}
       {window.innerWidth > 450 && (
         <div
-          className={`bottom_left_modale ${
-            bottomLeftModale == "closed"
+          className={`bottom_left_modale ${bottomLeftModale == "closed"
               ? "open_bottom_modale"
               : bottomLeftModale == "opened"
-              ? "close_bottom_modale"
-              : ""
-          }`}
+                ? "close_bottom_modale"
+                : ""
+            }`}
         >
           <div className="content">
             <button
@@ -934,9 +930,8 @@ const MainPage = () => {
               {tabs.map((item) => (
                 <Link
                   to={`/${item.value}`}
-                  className={`btn btn__changing-item flex items-center justify-center${
-                    currentTab === item.value ? " active" : ""
-                  }`}
+                  className={`btn btn__changing-item flex items-center justify-center${currentTab === item.value ? " active" : ""
+                    }`}
                   key={item.id}
                   onClick={() => setCurrentTab(item.value)}
                 >
@@ -946,9 +941,11 @@ const MainPage = () => {
                       alt=""
                       style={{ width: "45px" }}
                     />
-                  ) : item.value == 3 || item.value == 4 || item.value == 5 ? (
+                  ) : item.value == 3 ? (
+                    <img src={upDownImage} alt="" style={{ width: "45px" }} />
+                  ) : item.value == 4 || item.value == 5 || item.value == 6 ? (
                     <img src={runnerImage} alt="" style={{ width: "65px" }} />
-                  ) : item.value == 7 ? (
+                  ) : item.value == 8 ? (
                     <img src={recycling} alt="" style={{ width: "45px" }} />
                   ) : (
                     item.value
@@ -957,9 +954,8 @@ const MainPage = () => {
               ))}
               <Link
                 to={`/${8}`}
-                className={`btn btn__changing-item flex items-center justify-center${
-                  currentTab === 8 ? " active" : ""
-                }`}
+                className={`btn btn__changing-item flex items-center justify-center${currentTab === 8 ? " active" : ""
+                  }`}
                 key={8}
                 onClick={() => setCurrentTab(8)}
               >
@@ -1461,12 +1457,12 @@ const MainPage = () => {
                   +piker <= 3
                     ? "red"
                     : +piker <= 6
-                    ? "blue"
-                    : +piker <= 9
-                    ? "orange"
-                    : +piker <= 12
-                    ? "green"
-                    : ""
+                      ? "blue"
+                      : +piker <= 9
+                        ? "orange"
+                        : +piker <= 12
+                          ? "green"
+                          : ""
                 }
               >
                 {+piker}
