@@ -6,7 +6,7 @@ import ToggleComponent from "../ToggleComponent";
 import { adminLogin } from "@/store/adminLogin";
 import PopupExit from "../PopupExit.tsx";
 import { useNavigate } from "react-router-dom";
-import upDownImage from "@/images/upDown.png"
+
 
 interface CircleModalComponentLeftProps {
   comValue?: ComValueType;
@@ -34,7 +34,6 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
   setXalturaParent,
   fullName,
 }) => {
-  
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState(false);
   const [exitHover, setExitHover] = useState(false);
@@ -75,10 +74,9 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
         user: localStorage.getItem("pultik-user-login"),
       });
 
-      if (res.status==200) {
-      alert(res.data.message)
+      if (res.status == 200) {
+        alert(res.data.message);
       }
-
     } catch (error) {
       console.log("Не удалось изменить цену");
     }
@@ -201,10 +199,10 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
               className="max-w-[75px] outline-none border-solid border-black border-[1px]"
             />
             <button
-              className="modal_comp_left_i_bttn"
+              className="modal_comp_left_i_bttn ok_bttn"
               onClick={postNewBttnIndex}
             >
-              Ok
+              ok
             </button>
           </div>
           <p className="popup__el">{comValue ? `com: ${comValue}` : "..."}</p>
@@ -217,7 +215,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
                 height="24"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="currentColor"
+                stroke="#777777"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -236,7 +234,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
                 height="24"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="currentColor"
+                stroke="#777777"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -255,10 +253,10 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
               className="max-w-[85px] outline-none border-solid border-black border-[1px]"
             />
             <button
-              className="border-solid border-[1px] border-black"
+              className="border-solid border-[1px] border-black ok_bttn"
               onClick={cPrice}
             >
-              Ok
+              ok
             </button>
           </div>
           <p className="popup__el !flex !items-center gap-[5px]">
@@ -270,7 +268,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
                 height="24"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="currentColor"
+                stroke="#777777"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -281,26 +279,76 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
             </span>
           </p>
           <div className="retrun_bttns">
-            <button className="return_bttn" onClick={ReturnModePlus}>
-              <span className="bttn_plus text-4xl"> +</span>
+            <button className="return_bttn bttn_plus" onClick={ReturnModePlus}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="30"
+                height="30"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="#000"
+                  fill-rule="evenodd"
+                  d="M12 5.25a.75.75 0 0 1 .75.75v5.25H18a.75.75 0 0 1 0 1.5h-5.25V18a.75.75 0 0 1-1.5 0v-5.25H6a.75.75 0 0 1 0-1.5h5.25V6a.75.75 0 0 1 .75-.75Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
             </button>
-            <button className="return_bttn" onClick={ReturnModeMinus}>
-              <span className="bttn_minus text-4xl"> −</span>
+            <button
+              className="return_bttn bttn_minus"
+              onClick={ReturnModeMinus}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="30"
+                height="30"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="#000"
+                  fill-rule="evenodd"
+                  d="M5.25 12a.75.75 0 0 1 .75-.75h12a.75.75 0 0 1 0 1.5H6a.75.75 0 0 1-.75-.75Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
             </button>
           </div>
           <ToggleComponent onClick={Xaltura} isOpened={xaltura} />
-          <div style={{display:"flex",width:"100%",alignItems:"center",justifyContent:"center",gap:"5px"}}>
-          <button
-            onClick={EditBttn}
-            className="left_bttn"
-          >
-            <span>Edit</span>
-          </button>
-          <button
-            className="left_bttn"
-          >
-           <img src={upDownImage} alt="upDownImage" />
-          </button>
+          <div className="edit_bttns">
+            <button onClick={EditBttn} className="edit_bttn">
+              <span>Edit</span>
+            </button>
+            <button className="edit_bttn">
+              <svg
+                version="1.0"
+                xmlns="http://www.w3.org/2000/svg"
+                width="35px"
+                height="35px"
+                viewBox="0 0 1043.000000 866.000000"
+                preserveAspectRatio="xMidYMid meet"
+              >
+                <g
+                  transform="translate(0.000000,866.000000) scale(0.100000,-0.100000)"
+                  fill="#000000"
+                  stroke="none"
+                >
+                  <path
+                    d="M3110 5185 c0 -2314 -3 -2905 -12 -2905 -7 0 -307 294 -665 652
+l-653 653 -285 -285 c-157 -157 -285 -289 -285 -295 0 -5 519 -529 1153 -1163
+l1153 -1153 1149 1151 c633 633 1151 1156 1153 1163 1 6 -126 140 -283 297
+l-285 285 -658 -658 c-361 -361 -660 -657 -665 -657 -4 0 -7 1310 -7 2910 l0
+2910 -405 0 -405 0 0 -2905z"
+                  />
+                  <path
+                    d="M5937 6892 c-631 -631 -1147 -1151 -1147 -1157 0 -5 128 -138 285
+-295 l285 -286 658 658 c361 362 660 658 664 658 5 0 8 -1305 8 -2900 l0
+-2900 405 0 405 0 0 2894 c0 1592 4 2897 9 2900 4 3 301 -289 660 -649 358
+-360 655 -655 659 -655 11 0 572 564 572 575 0 12 -2292 2305 -2305 2305 -5 0
+-526 -516 -1158 -1148z"
+                  />
+                </g>
+              </svg>
+            </button>
           </div>
         </>
       ) : (

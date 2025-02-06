@@ -13,14 +13,11 @@ import axios from "@/axios";
 import { MultiType } from "@/components/GridButton/CircleModalComponent";
 import { dataFilterHandler } from "@/handlers";
 import { Link, useParams } from "react-router-dom";
-import runnerImage from "@/images/runner.png";
-import walkingManImage from "@/images/walking_man.png";
 import boxImage from "@/images/boxX.png";
 import addImage from "@/images/add.png";
 import chartPageImage from "@/images/chart-page-icon.png";
 import eyeImage from "@/images/eyePng.png";
 import roiImage from "@/images/roi.png";
-import recycling from "@/images/recycling.svg";
 import searchLogo from "@/images/search_1.svg";
 import problemsP from "@/images/new.jpg";
 import houseImage from "@/images/house.png";
@@ -33,7 +30,11 @@ import { infoBlockItems } from "@/store/useBotsStore";
 import ModalSearchRes from "@/components/ModaleSearchRes";
 import LineChart from "@/components/Chart";
 import { addDays, isAfter, parseISO } from "date-fns";
-import ArrowSVG from "@/components/ArrowSVG";
+import ArrowSVG from "@/components/SVGcomponents/ArrowSVG";
+import RunnerSVG from "@/components/SVGcomponents/RunnerSVG";
+import WalkingManSVG from "@/components/SVGcomponents/WalkingManSVG";
+import RecyclingSVG from "@/components/SVGcomponents/RecyclingSVG";
+import TrashSVG from "@/components/SVGcomponents/TrashSVG";
 interface IChart {
   aS: number;
   aSp: number;
@@ -720,50 +721,47 @@ const MainPage = () => {
       {openChangingMenu && (
         <>
           <div id="btn__changing_mobile">
-            {tabs.map((item) => (
-              <button
-                key={item.id}
-                className={`btn btn__changing-item${
-                  currentTab === item.value ? " active" : ""
-                }`}
-                onClick={() => (item.value != "upDown" ? SetStates(item) : "")}
-              >
-                {item.value == 1 || item.value == 2 ? (
-                  <img src={walkingManImage} alt="" style={{ width: "45px" }} />
-                ) : item.value == "upDown" ? (
-                  <img src={upDownImage} alt="" style={{ width: "45px" }} />
-                ) : item.value == 3 || item.value == 4 || item.value == 5 ? (
-                  <img src={runnerImage} alt="" style={{ width: "65px" }} />
-                ) : item.value == 7 ? (
-                  <img src={recycling} alt="" style={{ width: "45px" }} />
-                ) : (
-                  item.value
-                )}
-              </button>
-            ))}
+            {tabs.map((item) =>
+              item.value == "upDown" ? (
+                <img src={upDownImage} alt="" style={{ width: "45px" }} />
+              ) : (
+                <button
+                  key={item.id}
+                  className={`btn btn__changing-item${
+                    currentTab === item.value ? " active" : ""
+                  }`}
+                  onClick={() => SetStates(item)}
+                >
+                  {item.value == 1 || item.value == 2 ? (
+                    <WalkingManSVG
+                      fill={currentTab != item.value ? "#000" : "#fff"}
+                    />
+                  ) : item.value == 3 || item.value == 4 || item.value == 5 ? (
+                    <RunnerSVG
+                      fill={currentTab != item.value ? "#000" : "#fff"}
+                      width="65px"
+                    />
+                  ) : item.value == 7 ? (
+                    <RecyclingSVG
+                      fill={currentTab != item.value ? "#000" : "#fff"}
+                      width="45px"
+                    />
+                  ) : (
+                    item.value
+                  )}
+                </button>
+              )
+            )}
             <button
               className={`btn btn__changing-item${
                 currentTab === 8 ? " active" : ""
               }`}
               onClick={() => setCurrentTab(8)}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="36"
-                height="36"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M3 6h18" />
-                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                <line x1="10" x2="10" y1="11" y2="17" />
-                <line x1="14" x2="14" y1="11" y2="17" />
-              </svg>
+              <TrashSVG
+                strokeColor={currentTab !== 8 ? "#000" : "#fff"}
+                width="37px"
+              />
             </button>
             <Link
               to={"/save-sell"}
@@ -938,59 +936,55 @@ const MainPage = () => {
         {window.innerWidth > 600 && (
           <>
             <div className="btn__changing flex items-center justify-center">
-              {tabs.map((item) => (
-                <Link
-                  to={`/${item.value}`}
-                  className={`btn btn__changing-item flex items-center justify-center${
-                    currentTab === item.value ? " active" : ""
-                  }`}
-                  key={item.id}
-                  onClick={() =>
-                    item.value != "upDown" ? setCurrentTab(+item.value) : ""
-                  }
-                >
-                  {item.value == 1 || item.value == 2 ? (
-                    <img
-                      src={walkingManImage}
-                      alt=""
-                      style={{ width: "45px" }}
-                    />
-                  ) : item.value == "upDown" ? (
-                    <img src={upDownImage} alt="" style={{ width: "45px" }} />
-                  ) : item.value == 3 || item.value == 4 || item.value == 5 ? (
-                    <img src={runnerImage} alt="" style={{ width: "65px" }} />
-                  ) : item.value == 7 ? (
-                    <img src={recycling} alt="" style={{ width: "45px" }} />
-                  ) : (
-                    item.value
-                  )}
-                </Link>
-              ))}
+              {tabs.map((item) =>
+                item.value == "upDown" ? (
+                  <img src={upDownImage} alt="" style={{ width: "45px" }} />
+                ) : (
+                  <Link
+                    to={`/${item.value}`}
+                    className={`btn black_svg btn__changing-item flex items-center justify-center${
+                      currentTab === item.value ? " active" : ""
+                    }`}
+                    key={item.id}
+                    onClick={() =>
+                      item.value != "upDown" ? setCurrentTab(+item.value) : ""
+                    }
+                  >
+                    {item.value == 1 || item.value == 2 ? (
+                      <WalkingManSVG
+                        fill={currentTab != item.value ? "#000" : "#fff"}
+                        width="45px"
+                      />
+                    ) : item.value == 3 ||
+                      item.value == 4 ||
+                      item.value == 5 ? (
+                      <RunnerSVG
+                        fill={currentTab != item.value ? "#000" : "#fff"}
+                        width="65px"
+                      />
+                    ) : item.value == 7 ? (
+                      <RecyclingSVG
+                        fill={currentTab != item.value ? "#000" : "#fff"}
+                        width="45px"
+                      />
+                    ) : (
+                      item.value
+                    )}
+                  </Link>
+                )
+              )}
               <Link
                 to={`/${8}`}
-                className={`btn btn__changing-item flex items-center justify-center${
+                className={`btn black_svg_stroke btn__changing-item flex items-center justify-center${
                   currentTab === 8 ? " active" : ""
                 }`}
                 key={8}
                 onClick={() => setCurrentTab(8)}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="36"
-                  height="36"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M3 6h18" />
-                  <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                  <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                  <line x1="10" x2="10" y1="11" y2="17" />
-                  <line x1="14" x2="14" y1="11" y2="17" />
-                </svg>
+               <TrashSVG
+                strokeColor={currentTab !== 8 ? "#000" : "#fff"}
+                width="37px"
+              />
               </Link>
               <Link
                 to={"/save-sell"}
