@@ -54,7 +54,7 @@ const ButtonCreatePage = () => {
   const [salesInfo, setSalesInfo] = useState<ModalDataType[] | null>(null);
   const [fexpInfo, setFexpInfo] = useState<FexpItemType[] | null>(null);
   const [ctaxInfo, setCtaxInfo] = useState<FexpItemType[] | null>(null);
-
+  const [isShiped, setIsShiped] = useState<ModalDataType[] | null>(null);
   const [shipSku, setShipSku] = useState("");
   const [shipPrice, setShipPrice] = useState("");
   const [shipAmount, setShipAmount] = useState("");
@@ -83,7 +83,6 @@ const ButtonCreatePage = () => {
       }
 
       alert(res.data.complete);
-      // navigate("/");
     } catch (error) {
       toast.error("Ошибка удаления заказа");
     } finally {
@@ -230,28 +229,34 @@ const ButtonCreatePage = () => {
         throw Error();
       }
 
-      const arr = [];
+      const salesArr = [];
+      const shipedArr = [];
 
       for (let i = res.data.data.length - 1; i >= 0; i--) {
         const item = res.data.data[i];
-        arr.push(item);
+        salesArr.push(item);
+        if (item.isShipped) {
+          shipedArr.push(item);
+        }
       }
 
-      setSalesInfo(arr);
+      setSalesInfo(salesArr);
+      setIsShiped(shipedArr);
     } catch (error) {
       console.log("Error!");
     }
   };
- const onlyEnglish = (
+  const onlyEnglish = (
     value: string,
     setState: React.Dispatch<React.SetStateAction<string>>
   ) => {
-   const symb = value[value.length-1]
-   const transliterationKeys = Object.keys(transliterationMap)
-    
+    const symb = value[value.length - 1];
+    const transliterationKeys = Object.keys(transliterationMap);
+
     if (transliterationKeys.includes(symb)) {
-      const resVal = value.slice(0,value.length-1) + transliterationMap[symb] 
-      
+      const resVal =
+        value.slice(0, value.length - 1) + transliterationMap[symb];
+
       setState(resVal);
     } else {
       setState(value);
@@ -349,7 +354,6 @@ const ButtonCreatePage = () => {
               <p>Quant: {modalData.quant}</p>
               <p>Marginality: {modalData.marginality}</p>
               <p>sku: {modalData.sku}</p>
-
             </div>
           </div>,
           document.body
@@ -488,7 +492,7 @@ const ButtonCreatePage = () => {
                   type="text"
                   value={shipNumber}
                   onChange={(e) => {
-                    onlyEnglish(e.target.value,setShipNumber)
+                    onlyEnglish(e.target.value, setShipNumber);
                   }}
                 />
               </div>
@@ -501,7 +505,40 @@ const ButtonCreatePage = () => {
               </button>
             </form>
 
-            <div className="bottom-[20px]  right-[20px] flex gap-3 info_parent w-[100vw] h-[60vh]">
+            <div className="bottom-[20px]  right-[20px] flex gap-3 info_parent w-[100vw] h-[70vh]">
+              {isShiped && isShiped.length ? (
+                <div className="w-[23%] p-[10px] h-[100%] overflow-auto flex flex-col gap-[20px] ctax_column">
+                  <h2 className="font-bold text-4xl info_title">
+                    Доставлены до ПВЗ:
+                  </h2>
+                  <div className="overflow-auto flex flex-col gap-[20px]">
+                    {isShiped.map((el, index) => (
+                      <div
+                        key={index}
+                        className="bg-white rounded-sm p-[10px] text-2xl"
+                      >
+                        <p>#{index + 1}</p>
+                        <p>Market: {el.market}</p>
+                        <p>Order id: {el.orderId}</p>
+                        <p>Type: {el.type}</p>
+                        <p>Date: {el.date}</p>
+                        <p>Time: {el.time}</p>
+                        <p>Day: {el.day}</p>
+                        <p>Commodites: {el.commodites}</p>
+                        <p>Shipment date: {el.shipmentDate}</p>
+                        <p>Full price: {el.fullPrice}</p>
+                        <p>Marginality price: {el.marginalityPrice}</p>
+                        <p>Clean profit: {el.cP}</p>
+                        <p>Marginality: {el.marginality}</p>
+                        <p>Quant: {el.quant}</p>
+                        <p>sku: {el.sku}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <></>
+              )}
               {ctaxInfo && ctaxInfo.length ? (
                 <div className="w-[23%] p-[10px] h-[100%] overflow-auto flex flex-col gap-[20px] ctax_column">
                   <h2 className="font-bold text-4xl info_title">

@@ -1099,8 +1099,6 @@ const MainPage = () => {
                     );
 
                     if (!elements.length) {
-                      console.log(elements);
-                      
                       return (
                         <div className="btn__cont" key={index}>
                           <button className="btn _hover">{itemIndex}</button>
