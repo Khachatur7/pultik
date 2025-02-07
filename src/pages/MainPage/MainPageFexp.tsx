@@ -78,7 +78,7 @@ const MainPageFexp = () => {
   };
 
   return (
-    <div className="flex justify-start items-center gap-4 mt-3 main_page_fexp">
+    <div className="flex justify-start items-center gap-6 mt-3 main_page_fexp">
       <ToggleComponent
         onClick={() =>
           localStorage.getItem("pultik-user-login") == adminLogin
@@ -88,7 +88,7 @@ const MainPageFexp = () => {
         isOpened={isActive}
         className={"mt-4"}
       />
-      <form className="input__wrapper flex gap-4" onSubmit={submit}>
+      <form className="additional_expense" onSubmit={submit}>
         <input
           type="number"
           placeholder="Сумма"
