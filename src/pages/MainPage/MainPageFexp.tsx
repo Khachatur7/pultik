@@ -3,12 +3,31 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "@/axios";
 import { adminLogin } from "@/store/adminLogin";
+import { transliterationMap } from "@/common";
 
 const MainPageFexp = () => {
   const [isActive, setIsActive] = useState(false);
   const [loading, setLoading] = useState(false);
   const [sum, setSum] = useState("");
   const [expence, setExpence] = useState("");
+  const [number, setNumber] = useState("");
+
+  const onlyEnglish = (
+    value: string,
+    setState: React.Dispatch<React.SetStateAction<string>>
+  ) => {
+    const symb = value[value.length - 1];
+    const transliterationKeys = Object.keys(transliterationMap);
+
+    if (transliterationKeys.includes(symb)) {
+      const resVal =
+        value.slice(0, value.length - 1) + transliterationMap[symb];
+
+      setState(resVal);
+    } else {
+      setState(value);
+    }
+  };
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,8 +58,27 @@ const MainPageFexp = () => {
     }
   };
 
+  const postNumber = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const res = await axios.post("/printLbl", {
+        message: number,
+        user: localStorage.getItem("pultik-user-login"),
+      });
+
+      if (res.status == 200) {
+        console.log(res.data);
+
+        alert(res.data.message);
+      }
+    } catch (error) {
+      alert("Не удалось отправить данные");
+    }
+  };
+
   return (
-    <div className="flex items-center gap-4 mt-3 main_page_fexp">
+    <div className="flex justify-start items-center gap-4 mt-3 main_page_fexp">
       <ToggleComponent
         onClick={() =>
           localStorage.getItem("pultik-user-login") == adminLogin
@@ -63,7 +101,7 @@ const MainPageFexp = () => {
           type="text"
           placeholder="Расход"
           value={expence}
-          onChange={(e) => setExpence(e.target.value)}
+          onChange={(e) => onlyEnglish(e.target.value,setExpence)}
           disabled={!isActive}
           style={{ marginTop: 0, height: "auto" }}
         />
@@ -73,6 +111,17 @@ const MainPageFexp = () => {
           disabled={loading || !isActive}
         >
           Доб. расход
+        </button>
+      </form>
+      <form className="number_form" onSubmit={postNumber} >
+        <input
+          type="text"
+          placeholder="Номер"
+          value={number}
+          onChange={(e) =>onlyEnglish(e.target.value,setNumber)}
+        />
+        <button type="submit" className="btn !w-[250px] disabled:opacity-30">
+          Отгрузить
         </button>
       </form>
     </div>

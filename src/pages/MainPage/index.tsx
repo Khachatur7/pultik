@@ -306,7 +306,6 @@ const MainPage = () => {
   }, []);
 
   const SelectMonth = async (numb: string) => {
-    console.log(333333);
 
     try {
       const res = await axios.post("/getCpData", {
