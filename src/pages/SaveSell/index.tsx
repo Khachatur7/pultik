@@ -507,7 +507,7 @@ const ButtonCreatePage = () => {
 
             <div className="bottom-[20px]  right-[20px] flex gap-3 info_parent w-[100vw] h-[70vh]">
               {isShiped && isShiped.length ? (
-                <div className="w-[23%] p-[10px] h-[100%] overflow-auto flex flex-col gap-[20px] ctax_column">
+                <div className="w-[25%] p-[10px] h-[100%] overflow-auto flex flex-col gap-[20px] ctax_column">
                   <h2 className="font-bold text-4xl info_title">
                     Доставлены до ПВЗ:
                   </h2>
@@ -540,7 +540,7 @@ const ButtonCreatePage = () => {
                 <></>
               )}
               {ctaxInfo && ctaxInfo.length ? (
-                <div className="w-[23%] p-[10px] h-[100%] overflow-auto flex flex-col gap-[20px] ctax_column">
+                <div className="w-[25%] p-[10px] h-[100%] overflow-auto flex flex-col gap-[20px] ctax_column">
                   <h2 className="font-bold text-4xl info_title">
                     Таможен. налоги:
                   </h2>
@@ -562,7 +562,7 @@ const ButtonCreatePage = () => {
                 <></>
               )}
               {fexpInfo && fexpInfo.length ? (
-                <div className="w-[23%] p-[10px] h-[100%] overflow-auto flex flex-col gap-[20px] fexp_column">
+                <div className="w-[25%] p-[10px] h-[100%] overflow-auto flex flex-col gap-[20px] fexp_column">
                   <h2 className="font-bold text-4xl info_title">
                     Факт. издержки:
                   </h2>
@@ -584,7 +584,7 @@ const ButtonCreatePage = () => {
                 <></>
               )}
               {salesInfo && salesInfo.length ? (
-                <div className="w-[23%] p-[10px] h-[100%] overflow-auto flex flex-col gap-[20px] sales_column">
+                <div className="w-[25%] p-[10px] h-[100%] overflow-auto flex flex-col gap-[20px] sales_column">
                   <h2 className="font-bold text-4xl info_title">
                     База продаж:
                   </h2>
