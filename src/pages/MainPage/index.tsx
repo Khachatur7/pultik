@@ -396,9 +396,11 @@ const MainPage = () => {
       }
 
       setData(resData);
+
       setItems(
         itemsButtons.sort((a: ButtonItemType, b: ButtonItemType) => a.i - b.i)
       );
+      
       setButtonsInfo({
         total: itemsButtons.length,
         grey: greyButtons,
@@ -1097,6 +1099,8 @@ const MainPage = () => {
                     );
 
                     if (!elements.length) {
+                      console.log(elements);
+                      
                       return (
                         <div className="btn__cont" key={index}>
                           <button className="btn _hover">{itemIndex}</button>

@@ -6,7 +6,8 @@ import ToggleComponent from "../ToggleComponent";
 import { adminLogin } from "@/store/adminLogin";
 import PopupExit from "../PopupExit.tsx";
 import { useNavigate } from "react-router-dom";
-
+import ButtonItemType from "@/types/common/ButtonItemType.ts";
+import dataFilterHandler from "@/handlers/dataFilterHandler.ts";
 
 interface CircleModalComponentLeftProps {
   comValue?: ComValueType;
@@ -49,7 +50,8 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
       setIsActive(true);
     }
   }
-
+  const itemsPerPage = 77;
+  const bttnArray = [...Array(itemsPerPage * 9)];
   if (ind > index && firstRender) {
     setIndex(ind);
   }
@@ -81,19 +83,57 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
       console.log("Не удалось изменить цену");
     }
   };
-  const postNewBttnIndex = async () => {
+  const postNewBttnIndex = async (newInd?: number) => {
+    console.log(newInd);
+    
     const post = await axios.post("/changeIndex", {
       old: ind,
-      new: index,
+      new: newInd ? newInd : index,
       user: localStorage.getItem("pultik-user-login"),
     });
 
     if (post.status == 200) {
+      if (newInd) {
+        alert(`Актив был перенесен на кнопку ${newInd} такой то`);
+      }
       setTimeout(() => {
         location.reload();
       }, 500);
     }
   };
+
+  const changeArea = async () => {
+    try {
+      const res = await axios.post("/api/getData", {
+        user: localStorage.getItem("pultik-user-login"),
+      });
+
+      if (!res.data) {
+        throw Error();
+      }
+
+      const resData = res.data.countedStocks;
+      const items = resData.filter(
+        (el: ButtonItemType) => !dataFilterHandler(el._id) && !isNaN(el.i)
+      );
+      let areaChanged = false;
+      const firstIndex: number = index >= 155 ? 1 : 155;
+      const lastIndex: number = index >= 155 ? 154 : 386;
+      bttnArray.slice(firstIndex, lastIndex).map((_, bttnInd: number) => {
+        const itemIndex = bttnInd + firstIndex;
+
+        const elements = items.filter(
+          (el: ButtonItemType) => el.i === itemIndex
+        );
+
+        if (elements.length == 0 && !areaChanged) {
+          areaChanged = true;
+          postNewBttnIndex(itemIndex);
+        }
+      });
+    } catch (error) {}
+  };
+
   async function ReturnModePlus() {
     if (!returnMode) {
       return alert("Pежим возврата выключен. Активируйте режим возврата!");
@@ -200,7 +240,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
             />
             <button
               className="modal_comp_left_i_bttn ok_bttn"
-              onClick={postNewBttnIndex}
+              onClick={() => postNewBttnIndex()}
             >
               ok
             </button>
@@ -318,7 +358,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
             <button onClick={EditBttn} className="edit_bttn">
               <span>Edit</span>
             </button>
-            <button className="edit_bttn">
+            <button className="edit_bttn" onClick={changeArea}>
               <svg
                 version="1.0"
                 xmlns="http://www.w3.org/2000/svg"
