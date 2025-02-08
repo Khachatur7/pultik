@@ -506,6 +506,7 @@ const MainPage = () => {
         }.${year}`;
         let newDate = date;
         res.data.result.map((el, ind) => {
+
           if (fullDate == el.date) {
             newDate = addDays(date, countDay);
             countDay++;
@@ -515,7 +516,6 @@ const MainPage = () => {
             fullDate = `${day < 10 ? `0${day}` : day}.${
               month < 10 ? `0${month}` : month
             }.${year}`;
-
             x.push(el.date);
             precentY.push(el.middleDayPer ? +el.middleDayPer : +"0");
             ordersNumY.push(el.ordersNum);
@@ -538,6 +538,7 @@ const MainPage = () => {
         setOrdersYData(
           ordersNumY.concat(Array(90 - ordersNumY.length).fill(0))
         );
+        
         setYData(precentY.concat(Array(90 - precentY.length).fill(0)));
         setXData(x);
       }
@@ -545,6 +546,7 @@ const MainPage = () => {
       console.log(error);
     }
   };
+
 
   const getHttp = async () => {
     try {

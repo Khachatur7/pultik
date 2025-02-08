@@ -196,11 +196,17 @@ body {
   width: 64px;
   transform: translateX(35px) translateY(-1px);
 }
-
+.fep_img,
 .tel_img {
   position: absolute;
   width: 64px;
   transform: translateX(35px) translateY(-1px);
+}
+
+.scan_img{
+  position: absolute;
+  width: 58px;
+  transform: translateX(35px) translateY(3px);
 }
 
 .btn {
