@@ -311,7 +311,11 @@ const GridButton: React.FC<Props> = ({
         <span
           style={{
             marginLeft: `${
-              comValue == "print" || comValue == "stroy" || comValue == "tel"
+              comValue == "print" ||
+              comValue == "stroy" ||
+              comValue == "tel" ||
+              comValue == "fep" ||
+              comValue == "scan"
                 ? "50px"
                 : "0"
             }`,
