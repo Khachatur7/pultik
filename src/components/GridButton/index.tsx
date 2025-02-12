@@ -339,7 +339,11 @@ const GridButton: React.FC<Props> = ({
             justifyContent: "center",
             gap: "8px",
             marginLeft: `${
-              comValue == "print" || comValue == "stroy" || comValue == "tel"
+              comValue == "print" ||
+              comValue == "stroy" ||
+              comValue == "tel" ||
+              comValue == "fep" ||
+              comValue == "scan"
                 ? "50px"
                 : "0"
             }`,
