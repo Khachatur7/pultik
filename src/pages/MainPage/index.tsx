@@ -306,7 +306,6 @@ const MainPage = () => {
   }, []);
 
   const SelectMonth = async (numb: string) => {
-
     try {
       const res = await axios.post("/getCpData", {
         month: numb,
@@ -400,7 +399,7 @@ const MainPage = () => {
       setItems(
         itemsButtons.sort((a: ButtonItemType, b: ButtonItemType) => a.i - b.i)
       );
-      
+
       setButtonsInfo({
         total: itemsButtons.length,
         grey: greyButtons,
@@ -506,7 +505,6 @@ const MainPage = () => {
         }.${year}`;
         let newDate = date;
         res.data.result.map((el, ind) => {
-
           if (fullDate == el.date) {
             newDate = addDays(date, countDay);
             countDay++;
@@ -538,7 +536,7 @@ const MainPage = () => {
         setOrdersYData(
           ordersNumY.concat(Array(90 - ordersNumY.length).fill(0))
         );
-        
+
         setYData(precentY.concat(Array(90 - precentY.length).fill(0)));
         setXData(x);
       }
@@ -546,7 +544,6 @@ const MainPage = () => {
       console.log(error);
     }
   };
-
 
   const getHttp = async () => {
     try {
@@ -984,10 +981,10 @@ const MainPage = () => {
                 key={8}
                 onClick={() => setCurrentTab(8)}
               >
-               <TrashSVG
-                strokeColor={currentTab !== 8 ? "#000" : "#fff"}
-                width="37px"
-              />
+                <TrashSVG
+                  strokeColor={currentTab !== 8 ? "#000" : "#fff"}
+                  width="37px"
+                />
               </Link>
               <Link
                 to={"/save-sell"}
