@@ -840,7 +840,7 @@ const MainPage = () => {
             >
               <ArrowSVG fill="#000" />
             </button>
-            {answers.slice(0, 8).map((a, ind) => {
+            {answers.slice(0, 9).map((a, ind) => {
               const count = Math.ceil(a.length / 35);
 
               return (
@@ -851,7 +851,8 @@ const MainPage = () => {
                         if (c + 1 < count) {
                           return (
                             <span>
-                              {ind + 1}. {a.substring(35 * c, 35 * (c + 1))}
+
+                              {ind + 1}. {ind==8?a.substring(33 * c, 33 * (c + 1)):a.substring(35 * c, 35 * (c + 1))}
                             </span>
                           );
                         } else {
@@ -864,7 +865,7 @@ const MainPage = () => {
                                 gap: "7px",
                               }}
                             >
-                              {a.substring(35 * c, 35 * (c + 1))}
+                              {ind==8?a.substring(33 * c, 33 * (c + 1)):a.substring(35 * c, 35 * (c + 1))}
                               <span onClick={() => handleCopy(a)}>
                                 <svg
                                   style={{
