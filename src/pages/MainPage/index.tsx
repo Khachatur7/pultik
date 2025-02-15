@@ -851,8 +851,10 @@ const MainPage = () => {
                         if (c + 1 < count) {
                           return (
                             <span>
-
-                              {ind + 1}. {ind==8?a.substring(33 * c, 33 * (c + 1)):a.substring(35 * c, 35 * (c + 1))}
+                              {ind + 1}.{" "}
+                              {ind == 8
+                                ? a.substring(41 * c, 41 * (c + 1))
+                                : a.substring(35 * c, 35 * (c + 1))}
                             </span>
                           );
                         } else {
@@ -865,7 +867,9 @@ const MainPage = () => {
                                 gap: "7px",
                               }}
                             >
-                              {ind==8?a.substring(33 * c, 33 * (c + 1)):a.substring(35 * c, 35 * (c + 1))}
+                              {ind == 8
+                                ? a.substring(41 * c, 41 * (c + 1))
+                                : a.substring(35 * c, 35 * (c + 1))}
                               <span onClick={() => handleCopy(a)}>
                                 <svg
                                   style={{
