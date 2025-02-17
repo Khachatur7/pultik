@@ -723,7 +723,7 @@ const MainPage = () => {
     if (!(bttnSearcher == "")) {
       SearchBttns();
     }
-  }, [bttnSearcher]);
+  }, [bttnSearcher,searchByWhatButtons]);
 
   // для одного рендеринга
   useEffect(() => {
