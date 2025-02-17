@@ -203,7 +203,7 @@ body {
   transform: translateX(35px) translateY(-1px);
 }
 
-.scan_img{
+.scan_img {
   position: absolute;
   width: 58px;
   transform: translateX(35px) translateY(3px);
@@ -721,10 +721,9 @@ body {
     font-size: 27px;
   }
   input:disabled {
-    opacity: .3;
+    opacity: 0.3;
   }
 }
-
 
 .save_sell_btn {
   width: 100%;
@@ -763,6 +762,32 @@ body {
 
   .btn {
     padding: 3px 0px;
+  }
+}
+
+.search_by_what_bttns {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  border-radius: 20px;
+  border: 1px solid black;
+  background: #fff;
+  transition: 0.4s ease;
+  overflow: hidden;
+  .button {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #000;
+    transition: 0.4s ease;
+    font-size: 24px;
+  }
+  .active-s-button {
+    color: #fff;
+    background: #000;
   }
 }
 

@@ -184,6 +184,8 @@ const MainPage = () => {
     "12",
   ];
   const [bttnSearcher, setBttnSearcher] = useState("");
+  const searchByWhatButtons = ["Имя", "Sku"];
+  const [searchByWhat, setSearchByWhat] = useState(searchByWhatButtons[0]);
   const [bttnsIndex, setBttnsIndex] = useState<ButtonItemType[]>([]);
   const [notSearchYet, setNotSearchYet] = useState(true);
   const [openBttnModal, setOpenBttnModal] = useState(false);
@@ -624,13 +626,25 @@ const MainPage = () => {
 
   const SearchBttns = () => {
     const res: ButtonItemType[] = [];
-    items?.map((bttn) => {
-      if (
-        bttn.fullName?.toLowerCase().includes(bttnSearcher.trim().toLowerCase())
-      ) {
-        res.push(bttn);
-      }
-    });
+    if (searchByWhat == "Sku") {
+      items?.map((bttn) => {
+        if (
+          bttn.sku?.toLowerCase().includes(bttnSearcher.trim().toLowerCase())
+        ) {
+          res.push(bttn);
+        }
+      });
+    } else if (searchByWhat == "Имя") {
+      items?.map((bttn) => {
+        if (
+          bttn.fullName
+            ?.toLowerCase()
+            .includes(bttnSearcher.trim().toLowerCase())
+        ) {
+          res.push(bttn);
+        }
+      });
+    }
     setBttnsIndex(res);
 
     if (notSearchYet) {
@@ -1172,6 +1186,21 @@ const MainPage = () => {
                   setLastEvent("price");
                 }}
               />
+              <div className="search_by_what_bttns">
+                {searchByWhatButtons.map((b) => {
+                  return (
+                    <div
+                      className={`button ${
+                        searchByWhat == b ? "active-s-button" : ""
+                      }`}
+                      onClick={() => setSearchByWhat(b)}
+                    >
+                      {" "}
+                      <span>{b}</span>
+                    </div>
+                  );
+                })}
+              </div>
               {window.innerWidth > 400 && (
                 <div className="input_search_bttns">
                   <input
@@ -1233,6 +1262,16 @@ const MainPage = () => {
             </div>
             {window.innerWidth <= 400 && (
               <div className="input_search_bttns">
+                <div className="search_by_what_bttns">
+                  <div className="button">
+                    {" "}
+                    <span>Sku</span>
+                  </div>
+                  <div className="button">
+                    {" "}
+                    <span>Имя</span>
+                  </div>
+                </div>
                 <input
                   type="text"
                   className="searcher_input"
@@ -1310,7 +1349,7 @@ const MainPage = () => {
                   </p>
                   <p>uS: {localStorage.getItem("pultik-user-login")}</p>
                   <p>{cpData.priceIndex.split(",")[3]}</p>
-                  <p>mP: {cpData.minPer} %</p>
+                  <p>mP: {cpData.minPer}</p>
                 </>
               ) : (
                 <></>
