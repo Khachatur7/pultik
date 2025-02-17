@@ -6,12 +6,14 @@ interface ModalBttns {
   bttns: ButtonItemType[];
   closeModule: React.Dispatch<React.SetStateAction<boolean>>;
   setTub: React.Dispatch<React.SetStateAction<number>>;
+  byWhat: string;
 }
 
 const ModalSearchRes: React.FC<ModalBttns> = ({
   bttns,
   closeModule,
   setTub,
+  byWhat,
 }) => {
   const navigate = useNavigate();
 
@@ -21,7 +23,7 @@ const ModalSearchRes: React.FC<ModalBttns> = ({
     }
 
     if (bttn.fStocks >= 4) {
-      return "green";
+      return byWhat == "Имя" ? "green" : "blue";
     } else if (bttn.fStocks < 0) {
       return "black";
     }
@@ -34,7 +36,7 @@ const ModalSearchRes: React.FC<ModalBttns> = ({
         return "yellow";
 
       case 3:
-        return "blue";
+        return byWhat == "Имя" ? "blue" : "green";
 
       default:
         return "";

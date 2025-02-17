@@ -723,7 +723,7 @@ const MainPage = () => {
     if (!(bttnSearcher == "")) {
       SearchBttns();
     }
-  }, [bttnSearcher,searchByWhatButtons]);
+  }, [bttnSearcher,searchByWhat]);
 
   // для одного рендеринга
   useEffect(() => {
@@ -1548,6 +1548,7 @@ const MainPage = () => {
           bttns={bttnsIndex}
           closeModule={setOpenBttnModal}
           setTub={setCurrentTab}
+          byWhat={searchByWhat}
         />
       )}
     </AuthCheck>
