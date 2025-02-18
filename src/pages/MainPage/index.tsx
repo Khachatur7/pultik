@@ -142,6 +142,7 @@ const MainPage = () => {
     priceIndex: string;
     middlePercent: string;
     minPer: string;
+    lS:string
   } | null>(null);
   const [returnMode, setReturnMode] = useState(false);
   const [buttonsInfo, setButtonsInfo] = useState<ButtonsInfo>({
@@ -1348,7 +1349,7 @@ const MainPage = () => {
                     {cpData.priceIndex.split(",")[2]}
                   </p>
                   <p>uS: {localStorage.getItem("pultik-user-login")}</p>
-                  <p>{cpData.priceIndex.split(",")[3]}</p>
+                  <p>{cpData.priceIndex.split(",")[3]} | {cpData.lS}</p>
                   <p>mP: {cpData.minPer}</p>
                 </>
               ) : (
