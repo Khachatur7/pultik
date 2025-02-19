@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import {
   Container,
   LabelText,
@@ -112,9 +112,10 @@ export type LastEventType = "price" | "stocks" | null;
 
 const MainPage = () => {
   const storageData = localStorage.getItem("initial-date");
+  const [firstRender, setFirstRender] = useState<boolean>(true);
   const [bots, setBots] = useState<IBots[] | null>(null);
   const [http, setHttp] = useState<string | null>(null);
-  const [timeLeft, setTimeLeft] = useState(24);
+  const [timeLeft, setTimeLeft] = useState(30);
   const [openChangingMenu, setOpenChangingMenu] = useState<boolean>(false);
   const [data, setData] = useState<ButtonItemType[] | null>(null);
   const [multi, setMulti] = useState<MultiType | null>(null);
@@ -163,7 +164,6 @@ const MainPage = () => {
   const [boostValue, setBoostValue] = useState("0");
   const { id } = useParams();
   const [currentTab, setCurrentTab] = useState(id ? +id : 1);
-  const timerInterval = useRef<null | number | any>(null);
   const [lastEvent, setLastEvent] = useState<LastEventType>(null);
   const [monitoring, setMonitoring] = useState(false);
   const [piker, setPiker] = useState<string>(
@@ -435,26 +435,6 @@ const MainPage = () => {
     setNumber("");
   };
 
-  const timerHandler = async () => {
-    if (
-      (!Number(firstValue) && !Number(secondValue) && !Number(boostValue)) ||
-      timeLeft < 0
-    ) {
-      return setTimeLeft(0);
-    }
-
-    if (timerInterval.current) {
-      clearInterval(timerInterval.current);
-      timerInterval.current = null;
-    }
-
-    setTimeLeft(24);
-
-    timerInterval.current = setInterval(() => {
-      setTimeLeft((prev) => prev - 1);
-    }, 1000);
-  };
-
   const buttonTextHandler = (inputType: InputTypes | undefined) => {
     if (inputType === 2) {
       return "S";
@@ -686,24 +666,6 @@ const MainPage = () => {
   useEffect(() => {
     getChartData();
   }, []);
-  useEffect(() => {
-    timerHandler();
-  }, [firstValue, secondValue, boostValue]);
-
-  useEffect(() => {
-    if (timeLeft < 0) {
-      setTimeLeft(0);
-
-      if (timerInterval.current) {
-        clearInterval(timerInterval.current);
-        timerInterval.current = null;
-      }
-    }
-
-    if (timeLeft <= 0) {
-      resetInputs();
-    }
-  }, [timeLeft]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -731,7 +693,29 @@ const MainPage = () => {
   // для одного рендеринга
   useEffect(() => {
     getPhrases();
+    setFirstRender(false);
   }, []);
+
+  useEffect(() => {
+    if (timeLeft < 30) {
+      setTimeLeft(30);
+    }
+  }, [firstValue, secondValue, bttnSearcher, number, boostValue]);
+
+  useEffect(() => {
+    const inputsTimer = setTimeout(() => {
+      setTimeLeft(timeLeft - 1);
+    }, 1000);
+
+    if (timeLeft <= 0) {
+      resetInputs();
+      setTimeLeft(30);
+      clearTimeout(inputsTimer);
+    } else if (!firstRender && timeLeft == 30) {
+      clearTimeout(inputsTimer);
+      setTimeLeft(timeLeft - 1);
+    }
+  }, [timeLeft]);
 
   return (
     <AuthCheck>
