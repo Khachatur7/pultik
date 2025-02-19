@@ -142,7 +142,7 @@ const MainPage = () => {
     priceIndex: string;
     middlePercent: string;
     minPer: string;
-    lS:string
+    lS: string;
   } | null>(null);
   const [returnMode, setReturnMode] = useState(false);
   const [buttonsInfo, setButtonsInfo] = useState<ButtonsInfo>({
@@ -185,6 +185,7 @@ const MainPage = () => {
     "12",
   ];
   const [bttnSearcher, setBttnSearcher] = useState("");
+  const [number, setNumber] = useState("");
   const searchByWhatButtons = ["Имя", "Sku"];
   const [searchByWhat, setSearchByWhat] = useState(searchByWhatButtons[0]);
   const [bttnsIndex, setBttnsIndex] = useState<ButtonItemType[]>([]);
@@ -431,6 +432,7 @@ const MainPage = () => {
     setBoostValue("0");
     setBttnSearcher("");
     setNotSearchYet(true);
+    setNumber("");
   };
 
   const timerHandler = async () => {
@@ -724,7 +726,7 @@ const MainPage = () => {
     if (!(bttnSearcher == "")) {
       SearchBttns();
     }
-  }, [bttnSearcher,searchByWhat]);
+  }, [bttnSearcher, searchByWhat]);
 
   // для одного рендеринга
   useEffect(() => {
@@ -1326,7 +1328,7 @@ const MainPage = () => {
                 </div>
               </div>
             )}
-            <MainPageFexp />
+            <MainPageFexp number={number} setNumber={setNumber} />
             <div className="relative text_cp">
               {cpData ? (
                 <>
@@ -1349,7 +1351,9 @@ const MainPage = () => {
                     {cpData.priceIndex.split(",")[2]}
                   </p>
                   <p>uS: {localStorage.getItem("pultik-user-login")}</p>
-                  <p>{cpData.priceIndex.split(",")[3]} | {cpData.lS}</p>
+                  <p>
+                    {cpData.priceIndex.split(",")[3]} | {cpData.lS}
+                  </p>
                   <p>mP: {cpData.minPer}</p>
                 </>
               ) : (

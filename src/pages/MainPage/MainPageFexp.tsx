@@ -1,16 +1,15 @@
 import { ToggleComponent } from "@/components";
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "@/axios";
 import { adminLogin } from "@/store/adminLogin";
 import { transliterationMap } from "@/common";
 
-const MainPageFexp = () => {
+const MainPageFexp:FC<{number: string,setNumber: React.Dispatch<React.SetStateAction<string>>}> = ({number,setNumber}) => {
   const [isActive, setIsActive] = useState(false);
   const [loading, setLoading] = useState(false);
   const [sum, setSum] = useState("");
   const [expence, setExpence] = useState("");
-  const [number, setNumber] = useState("");
 
   const onlyEnglish = (
     value: string,
