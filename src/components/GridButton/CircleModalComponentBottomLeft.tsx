@@ -3,11 +3,12 @@ import PopupExit from "../PopupExit.tsx";
 
 interface CircleModalComponentBottomLeftProps {
   cust?: number;
+  edited?:string
 }
 
 const CircleModalComponentBottomLeft: React.FC<
   CircleModalComponentBottomLeftProps
-> = ({ cust }) => {
+> = ({ cust,edited }) => {
   const [isActive, setIsActive] = useState(false);
   const [exitHover, setExitHover] = useState(false);
   function onMouseOver() {
@@ -30,7 +31,7 @@ const CircleModalComponentBottomLeft: React.FC<
       {isActive ? (
         <>
           <p className="popup__el">cust: {cust || 0}</p>
-          <p className="popup__el">...</p>
+          <p className="popup__el">edited: {edited || 0}</p>
           <p className="popup__el">...</p>
           <p className="popup__el">...</p>
           <p className="popup__el">...</p>

@@ -52,7 +52,7 @@ const ModalSearchRes: React.FC<ModalBttns> = ({
 
   return (
     <div className="bttns_modal_res">
-      <div style={{textAlign:"center"}}>Поиск по параметру: {byWhat}</div>
+      <div style={{ textAlign: "center" }}>Поиск по параметру: {byWhat}</div>
       <div className="close_bttns_modal" onClick={() => closeModule(false)}>
         <img src={closeImg} alt="" />
       </div>
@@ -64,7 +64,8 @@ const ModalSearchRes: React.FC<ModalBttns> = ({
               key={el._id}
               onClick={() => GoToBttn(el.i)}
             >
-              {el.i}. {el.fullName}
+              {el.i}. {el.fullName} | {el.percent || "0"} % |{" "}
+              {el.basePrice || "000"} {el.edited ? `| ${el.edited}` : ""}
             </div>
           );
         })}

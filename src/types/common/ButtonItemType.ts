@@ -27,6 +27,7 @@ interface ButtonItemType {
     cP: number;
     cust?: number;
     h?:boolean | undefined
+    edited?:string
 }
 
 export default ButtonItemType;

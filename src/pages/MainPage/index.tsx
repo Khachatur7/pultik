@@ -1170,6 +1170,7 @@ const MainPage = () => {
                         copy={copy}
                         setCopy={setCopy}
                         wStocks={el.wStocks}
+                        edited={el.edited}
                       />
                     );
                   })}
