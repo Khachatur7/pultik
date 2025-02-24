@@ -788,13 +788,13 @@ const MainPage = () => {
               to={"/save-sell"}
               className={`btn btn__changing-item flex items-center justify-center`}
             >
-              <img src={addImage} alt="box-image" className="w-12" />
+              <img src={boxImage} alt="box-image" className="w-12" />
             </Link>
             <Link
               to={"/create-button"}
               className={`btn btn__changing-item flex items-center justify-center`}
             >
-              <img src={boxImage} alt="box-image" className="w-12" />
+              <img src={addImage} alt="box-image" className="w-12" />
             </Link>
             <Link
               to={"/charts"}
@@ -1016,13 +1016,13 @@ const MainPage = () => {
                 to={"/save-sell"}
                 className={`btn btn__changing-item flex items-center justify-center`}
               >
-                <img src={addImage} alt="box-image" className="w-12" />
+                <img src={boxImage} alt="box-image" className="w-12" />
               </Link>
               <Link
                 to={"/create-button"}
                 className={`btn btn__changing-item flex items-center justify-center`}
               >
-                <img src={boxImage} alt="box-image" className="w-12" />
+                <img src={addImage} alt="box-image" className="w-12" />
               </Link>
               <Link
                 to={"/charts"}
