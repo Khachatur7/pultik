@@ -81,10 +81,38 @@ const tabs = [
     id: nanoid(),
     value: 7,
   },
+  {
+    id: nanoid(),
+    value: 8,
+  },
+  {
+    id: nanoid(),
+    value: 9,
+  },
+  {
+    id: nanoid(),
+    value: 10,
+  },
+  {
+    id: nanoid(),
+    value: 11,
+  },
+  {
+    id: nanoid(),
+    value: 12,
+  },
+  {
+    id: nanoid(),
+    value: 13,
+  },
+  {
+    id: nanoid(),
+    value: 14,
+  },
 ];
 
 const itemsPerPage = 77;
-const pages = 9;
+const pages = 16;
 const totalButtons = itemsPerPage * pages;
 
 const buttonsArray = [...Array(totalButtons)];
@@ -756,13 +784,23 @@ const MainPage = () => {
                   {item.value == 1 || item.value == 2 ? (
                     <WalkingManSVG
                       fill={currentTab != item.value ? "#000" : "#fff"}
+                      width="40px"
                     />
-                  ) : item.value == 3 || item.value == 4 || item.value == 5 ? (
+                  ) : item.value == 3 ||
+                    item.value == 4 ||
+                    item.value == 5 ||
+                    item.value == 6 ||
+                    item.value == 7 ||
+                    item.value == 8 ||
+                    item.value == 9 ||
+                    item.value == 10 ||
+                    item.value == 11 ||
+                    item.value == 12 ? (
                     <RunnerSVG
                       fill={currentTab != item.value ? "#000" : "#fff"}
                       width="65px"
                     />
-                  ) : item.value == 7 ? (
+                  ) : item.value == 14 ? (
                     <RecyclingSVG
                       fill={currentTab != item.value ? "#000" : "#fff"}
                       width="45px"
@@ -775,12 +813,12 @@ const MainPage = () => {
             )}
             <button
               className={`btn btn__changing-item${
-                currentTab === 8 ? " active" : ""
+                currentTab === 15 ? " active" : ""
               }`}
-              onClick={() => setCurrentTab(8)}
+              onClick={() => setCurrentTab(15)}
             >
               <TrashSVG
-                strokeColor={currentTab !== 8 ? "#000" : "#fff"}
+                strokeColor={currentTab !== 15 ? "#000" : "#fff"}
                 width="37px"
               />
             </button>
@@ -961,14 +999,14 @@ const MainPage = () => {
       <Container>
         {window.innerWidth > 600 && (
           <>
-            <div className="btn__changing flex items-center justify-center">
+            <div className="btn__changing flex items-center justify-center tabs">
               {tabs.map((item) =>
                 item.value == "upDown" ? (
-                  <img src={upDownImage} alt="" style={{ width: "45px" }} />
+                  <img src={upDownImage} alt="" style={{ width: "35px" }} />
                 ) : (
                   <Link
                     to={`/${item.value}`}
-                    className={`btn black_svg btn__changing-item flex items-center justify-center${
+                    className={`btns-page-btn btn black_svg btn__changing-item flex items-center justify-center${
                       currentTab === item.value ? " active" : ""
                     }`}
                     key={item.id}
@@ -983,12 +1021,19 @@ const MainPage = () => {
                       />
                     ) : item.value == 3 ||
                       item.value == 4 ||
-                      item.value == 5 ? (
+                      item.value == 5 ||
+                      item.value == 6 ||
+                      item.value == 7 ||
+                      item.value == 8 ||
+                      item.value == 9 ||
+                      item.value == 10 ||
+                      item.value == 11 ||
+                      item.value == 12 ? (
                       <RunnerSVG
                         fill={currentTab != item.value ? "#000" : "#fff"}
                         width="65px"
                       />
-                    ) : item.value == 7 ? (
+                    ) : item.value == 14 ? (
                       <RecyclingSVG
                         fill={currentTab != item.value ? "#000" : "#fff"}
                         width="45px"
@@ -996,19 +1041,23 @@ const MainPage = () => {
                     ) : (
                       item.value
                     )}
+                    <div className="bttns-count">
+                      с {((+item.value - 1) * itemsPerPage)+1} по {" "}
+                      {+item.value * itemsPerPage}
+                    </div>
                   </Link>
                 )
               )}
               <Link
-                to={`/${8}`}
+                to={`/${15}`}
                 className={`btn black_svg_stroke btn__changing-item flex items-center justify-center${
-                  currentTab === 8 ? " active" : ""
+                  currentTab === 15 ? " active" : ""
                 }`}
-                key={8}
-                onClick={() => setCurrentTab(8)}
+                key={15}
+                onClick={() => setCurrentTab(15)}
               >
                 <TrashSVG
-                  strokeColor={currentTab !== 8 ? "#000" : "#fff"}
+                  strokeColor={currentTab !== 15 ? "#000" : "#fff"}
                   width="37px"
                 />
               </Link>
@@ -1350,9 +1399,8 @@ const MainPage = () => {
                   </p>
                   <p>fE/m: {cpData.fixedExp} Rub</p>
                   <p>
-                    Quartal: {cpData.quart} | Price index:{" "}
-                    {cpData.priceIndex.split(",")[0]} ,{" "}
-                    {cpData.priceIndex.split(",")[1]} ,{" "}
+                    Quartal: {cpData.quart} |
+                    {cpData.priceIndex.split(",")[1].split("|")[1]} ,{" "}
                     {cpData.priceIndex.split(",")[2]}
                   </p>
                   <p>uS: {localStorage.getItem("pultik-user-login")}</p>

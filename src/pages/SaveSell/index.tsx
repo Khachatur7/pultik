@@ -48,17 +48,17 @@ interface FexpItemType {
 
 const ButtonCreatePage = () => {
   const [orderId, setOrderId] = useState("");
-  const [sku, setSku] = useState("");
-  const [isOpened, setIsOpened] = useState(false);
+  // const [sku, setSku] = useState(""); 
+  // const [isOpened, setIsOpened] = useState(false); 
   const [loading, setLoading] = useState(false);
   const [salesInfo, setSalesInfo] = useState<ModalDataType[] | null>(null);
   const [fexpInfo, setFexpInfo] = useState<FexpItemType[] | null>(null);
   const [ctaxInfo, setCtaxInfo] = useState<FexpItemType[] | null>(null);
   const [isShiped, setIsShiped] = useState<ModalDataType[] | null>(null);
-  const [shipSku, setShipSku] = useState("");
-  const [shipPrice, setShipPrice] = useState("");
-  const [shipAmount, setShipAmount] = useState("");
-  const [shipNumber, setShipNumber] = useState("");
+  // const [shipSku, setShipSku] = useState(""); 
+  // const [shipPrice, setShipPrice] = useState(""); 
+  // const [shipAmount, setShipAmount] = useState(""); 
+  // const [shipNumber, setShipNumber] = useState(""); 
   const [modalData, setModalData] = useState<ModalDataType | null>(null);
   const [countFStocks, setCountFStocks] = useState(false);
 
@@ -144,80 +144,80 @@ const ButtonCreatePage = () => {
     }
   };
 
-  const returnHandler = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // const returnHandler = async (e: React.FormEvent) => {
+  //   e.preventDefault();
 
-    if (loading) {
-      return;
-    }
+  //   if (loading) {
+  //     return;
+  //   }
 
-    try {
-      setLoading(true);
+  //   try {
+  //     setLoading(true);
 
-      if (!sku.trim()) {
-        return toast.error("Введите значение");
-      }
+  //     if (!sku.trim()) {
+  //       return toast.error("Введите значение");
+  //     }
 
-      const res = await axios.post(`/returnCom`, {
-        text: sku,
-        user: localStorage.getItem("pultik-user-login"),
-      });
+  //     const res = await axios.post(`/returnCom`, {
+  //       text: sku,
+  //       user: localStorage.getItem("pultik-user-login"),
+  //     });
 
-      if (res.status !== 200 || !res.data || !res.data.complete) {
-        throw Error();
-      }
+  //     if (res.status !== 200 || !res.data || !res.data.complete) {
+  //       throw Error();
+  //     }
 
-      alert(res.data.complete);
-      // navigate("/");
-    } catch (error) {
-      toast.error("Ошибка отправления запроса");
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     alert(res.data.complete);
+  //     // navigate("/");
+  //   } catch (error) {
+  //     toast.error("Ошибка отправления запроса");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
-  const createShip = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // const createShip = async (e: React.FormEvent) => {
+  //   e.preventDefault();
 
-    if (!shipSku.trim()) {
-      return toast.error("Введите sku");
-    }
+  //   if (!shipSku.trim()) {
+  //     return toast.error("Введите sku");
+  //   }
 
-    if (!shipPrice.trim()) {
-      return toast.error("Введите цену");
-    }
+  //   if (!shipPrice.trim()) {
+  //     return toast.error("Введите цену");
+  //   }
 
-    if (!shipAmount.trim()) {
-      return toast.error("Введите количество");
-    }
+  //   if (!shipAmount.trim()) {
+  //     return toast.error("Введите количество");
+  //   }
 
-    if (!shipNumber.trim()) {
-      return toast.error("Введите номер");
-    }
+  //   if (!shipNumber.trim()) {
+  //     return toast.error("Введите номер");
+  //   }
 
-    try {
-      setLoading(true);
+  //   try {
+  //     setLoading(true);
 
-      const res = await axios.post(`/cCargo`, {
-        sku: shipSku,
-        price: shipPrice,
-        quant: shipAmount,
-        number: shipNumber,
-        user: localStorage.getItem("pultik-user-login"),
-      });
+  //     const res = await axios.post(`/cCargo`, {
+  //       sku: shipSku,
+  //       price: shipPrice,
+  //       quant: shipAmount,
+  //       number: shipNumber,
+  //       user: localStorage.getItem("pultik-user-login"),
+  //     });
 
-      if (res.status !== 200 || !res.data || !res.data.answer) {
-        throw Error();
-      }
+  //     if (res.status !== 200 || !res.data || !res.data.answer) {
+  //       throw Error();
+  //     }
 
-      toast.success("Поставка успешно создана");
-      alert(res.data.answer);
-    } catch (error) {
-      toast.error("Ошибка создания поставки");
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     toast.success("Поставка успешно создана");
+  //     alert(res.data.answer);
+  //   } catch (error) {
+  //     toast.error("Ошибка создания поставки");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const getSalesInfo = async () => {
     try {
@@ -410,7 +410,7 @@ const ButtonCreatePage = () => {
                 </button>
               </div>
             </form>
-            <div className="flex items-center gap-[20px]">
+            {/* <div className="flex items-center gap-[20px]">
               <ToggleComponent
                 onClick={() => setIsOpened(!isOpened)}
                 isOpened={isOpened}
@@ -503,7 +503,7 @@ const ButtonCreatePage = () => {
               >
                 Создать поставку
               </button>
-            </form>
+            </form> */}
 
             <div className="bottom-[20px]  right-[20px] flex gap-3 info_parent w-[100vw] h-[70vh]">
               {isShiped && isShiped.length ? (
