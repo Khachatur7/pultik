@@ -1042,8 +1042,8 @@ const MainPage = () => {
                       item.value
                     )}
                     <div className="bttns-count">
-                      с {((+item.value - 1) * itemsPerPage)+1} по {" "}
-                      {+item.value * itemsPerPage}
+                      <span>с {(+item.value - 1) * itemsPerPage + 1} </span>
+                      <span>по {+item.value * itemsPerPage}</span>
                     </div>
                   </Link>
                 )
