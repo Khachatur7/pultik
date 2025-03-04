@@ -1045,7 +1045,6 @@ const MainPage = () => {
                     )}
                     <div className="bttns-count">
                       <span> {(+item.value - 1) * itemsPerPage + 1} </span>
-                      <span>-</span>
                       <span> {+item.value * itemsPerPage}</span>
                     </div>
                   </Link>
