@@ -795,7 +795,8 @@ const MainPage = () => {
                     item.value == 9 ||
                     item.value == 10 ||
                     item.value == 11 ||
-                    item.value == 12 ? (
+                    item.value == 12 ||
+                    item.value == 13 ? (
                     <RunnerSVG
                       fill={currentTab != item.value ? "#000" : "#fff"}
                       width="65px"
@@ -1028,7 +1029,8 @@ const MainPage = () => {
                       item.value == 9 ||
                       item.value == 10 ||
                       item.value == 11 ||
-                      item.value == 12 ? (
+                      item.value == 12 ||
+                      item.value == 13 ? (
                       <RunnerSVG
                         fill={currentTab != item.value ? "#000" : "#fff"}
                         width="65px"
