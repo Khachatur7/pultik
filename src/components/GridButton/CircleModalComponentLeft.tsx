@@ -117,7 +117,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
       );
       let areaChanged = false;
       const firstIndex: number = index >= 155 ? 1 : 155;
-      const lastIndex: number = index >= 155 ? 154 : 386;
+      const lastIndex: number = index >= 155 ? 154 : 1002;
       bttnArray.slice(firstIndex, lastIndex).map((_, bttnInd: number) => {
         const itemIndex = bttnInd + firstIndex;
 
