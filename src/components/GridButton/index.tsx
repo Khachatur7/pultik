@@ -13,6 +13,7 @@ import stroyImage from "@/images/stroy.svg";
 import telImage from "@/images/tel.svg";
 import fepImage from "@/images/fep.svg";
 import scanImage from "@/images/scan.svg";
+import miscImage from "@/images/misc.svg";
 
 interface Props {
   tel: string;
@@ -51,7 +52,7 @@ interface Props {
   setCopy: React.Dispatch<React.SetStateAction<boolean>>;
   wStocks?: number;
   hideModales?: boolean;
-  edited?:string
+  edited?: string;
 }
 
 const GridButton: React.FC<Props> = ({
@@ -81,8 +82,7 @@ const GridButton: React.FC<Props> = ({
   copy,
   setCopy,
   wStocks,
-  edited
-
+  edited,
 }) => {
   const [currentPrice, setCurrentPrice] = useState(price);
   const [currentPriceFixed, setCurrentPriceFixed] = useState(price);
@@ -291,7 +291,9 @@ const GridButton: React.FC<Props> = ({
         {comValue == "scan" && (
           <img src={scanImage} alt="" className="scan_img" />
         )}
-
+          {comValue == "misc" && (
+          <img src={miscImage} alt="" className="misc_img" />
+        )}
         {wStocks && wStocks > 0 ? (
           <div className="w_sign">
             <svg
@@ -318,7 +320,7 @@ const GridButton: React.FC<Props> = ({
               comValue == "stroy" ||
               comValue == "tel" ||
               comValue == "fep" ||
-              comValue == "scan"
+              comValue == "scan" || comValue == "misc"
                 ? "50px"
                 : "0"
             }`,
@@ -346,7 +348,8 @@ const GridButton: React.FC<Props> = ({
               comValue == "stroy" ||
               comValue == "tel" ||
               comValue == "fep" ||
-              comValue == "scan"
+              comValue == "scan"||
+              comValue == "misc"
                 ? "50px"
                 : "0"
             }`,
@@ -415,7 +418,7 @@ const GridButton: React.FC<Props> = ({
           setXalturaParent={setXaltura}
           fullName={fullName}
         />
-        <CircleModalComponentBottomLeft cust={cust} edited={edited}/>
+        <CircleModalComponentBottomLeft cust={cust} edited={edited} />
       </button>
     </div>
   );
