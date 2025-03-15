@@ -1304,6 +1304,7 @@ const MainPage = () => {
                 )
               )}
             </div>
+
             <div className="mat__wrapper">
               {minusButtons.map(
                 (button) =>
@@ -1384,6 +1385,22 @@ const MainPage = () => {
                 </div>
               </div>
             )}
+
+            <div className="inputs_column">
+              <div className="field">
+                <span>Del:</span> <input type="text" />
+              </div>
+              <div className="field">
+                <span>Ag:</span> <input type="text" />
+              </div>
+              <div className="field">
+                <span>Pr:</span> <input type="text" />
+              </div>
+              <div className="field">
+                <span>Oth:</span> <input type="text" />
+              </div>
+            </div>
+
             <MainPageFexp number={number} setNumber={setNumber} />
             <div className="relative text_cp">
               {cpData ? (
@@ -1415,7 +1432,6 @@ const MainPage = () => {
                 <></>
               )}
             </div>
-
             <div
               className="w-[100vw] flex items-center justify-center gap-[10px] bots_list overflow-auto"
               style={{ marginTop: "15px" }}

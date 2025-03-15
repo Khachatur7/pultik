@@ -203,7 +203,7 @@ body {
   transform: translateX(35px) translateY(-1px);
 }
 
-.misc_img{
+.misc_img {
   position: absolute;
   width: 65px;
   transform: translateX(35px) translateY(2px);
@@ -316,6 +316,42 @@ body {
     &:focus {
       border: 2px solid #2d2d2d;
       opacity: 1;
+    }
+  }
+}
+
+.inputs_column {
+  width: 300px;
+  position: absolute;
+  top: 5%;
+  left: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  gap: 12px;
+  .field {
+    width: 100%;
+    font-size: 32px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    input {
+      width: 75%;
+      height: 80px;
+      border: none;
+      border-radius: 25px;
+      transition: 0.5s ease;
+      outline: none;
+      padding-left: 10px;
+    font-size: 23px;
+    font-weight: 400;
+
+      &:focus {
+        border: 2px solid #2d2d2d;
+        opacity: 1;
+      }
     }
   }
 }
