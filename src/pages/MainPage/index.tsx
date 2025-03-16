@@ -605,12 +605,14 @@ const MainPage = () => {
       });
 
       if (res.status == 200) {
-       setDeleteField(res.data.massage[0].toString())
-       setAgentsField(res.data.massage[1].toString())
-       setPromoField(res.data.massage[2].toString())
-       setOtherField(res.data.massage[3].toString())
+        setDeleteField(res.data.massage[0].toString());
+        setAgentsField(res.data.massage[1].toString());
+        setPromoField(res.data.massage[2].toString());
+        setOtherField(res.data.massage[3].toString());
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(`Не удалось получить данные с роута "/priceData"`);
+    }
   };
 
   const checkInitialDate = () => {
@@ -706,6 +708,19 @@ const MainPage = () => {
     }
   };
 
+  const SetFieldValue = async () => {
+    try {
+      const res = await axios.post("/priceDataChange", {
+        user: localStorage.getItem("pultik-user-login"),
+        massage: [deleteField, agentsField, promoField, otherField],
+      });
+      if (res.status == 200) {
+        console.log(res);
+      }
+    } catch (error) {
+      console.log(`Не удалось поменять данные: ${error}`);
+    }
+  };
   useEffect(() => {
     initialLoad();
     SelectMonth(localStorage.getItem("piker") || "01");
@@ -784,6 +799,10 @@ const MainPage = () => {
   useEffect(() => {
     timerHandler();
   }, [firstValue, secondValue, boostValue, bttnSearcher, number]);
+
+  useEffect(() => {
+    SetFieldValue();
+  }, [deleteField, agentsField, promoField, otherField]);
 
   return (
     <AuthCheck>
@@ -1417,7 +1436,6 @@ const MainPage = () => {
                       ? setDeleteField(e.target.value)
                       : ""
                   }
-                  
                 />
               </div>
               <div className="field">
@@ -1430,7 +1448,6 @@ const MainPage = () => {
                       ? setAgentsField(e.target.value)
                       : ""
                   }
-                  
                 />
               </div>
               <div className="field">
@@ -1443,7 +1460,6 @@ const MainPage = () => {
                       ? setPromoField(e.target.value)
                       : ""
                   }
-                  
                 />
               </div>
               <div className="field">
@@ -1452,11 +1468,10 @@ const MainPage = () => {
                   type="text"
                   value={otherField}
                   onChange={(e) =>
-                    (/^\d*([.,]?\d*)?$/.test(e.target.value))
+                    /^\d*([.,]?\d*)?$/.test(e.target.value)
                       ? setOtherField(e.target.value)
                       : ""
                   }
-                  
                 />
               </div>
             </div>
