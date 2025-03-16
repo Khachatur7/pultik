@@ -716,6 +716,7 @@ const MainPage = () => {
       });
       if (res.status == 200) {
         console.log(res);
+        alert('Данные полей обновились!')
       }
     } catch (error) {
       console.log(`Не удалось поменять данные: ${error}`);
@@ -800,9 +801,9 @@ const MainPage = () => {
     timerHandler();
   }, [firstValue, secondValue, boostValue, bttnSearcher, number]);
 
-  useEffect(() => {
-    SetFieldValue();
-  }, [deleteField, agentsField, promoField, otherField]);
+  // useEffect(() => {
+  //   SetFieldValue();
+  // }, [deleteField, agentsField, promoField, otherField]);
 
   return (
     <AuthCheck>
@@ -1437,6 +1438,7 @@ const MainPage = () => {
                       : ""
                   }
                 />
+              <div className="bttn" onClick={SetFieldValue}>enter</div>
               </div>
               <div className="field">
                 <span>Ag:</span>{" "}

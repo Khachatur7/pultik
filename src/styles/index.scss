@@ -354,6 +354,29 @@ body {
         opacity: 1;
       }
     }
+    .bttn{
+      width: 78px;
+      height: 68px;
+      border: 1px solid #2d2d2d;
+      background: #2d2d2d;
+      color: #fff;
+      border-radius: 20px;
+      position: absolute;
+      top: 6px;
+      right: 5px;  
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 23px;
+      cursor: pointer;
+      transition: .3s ease;
+      &:hover {
+        background: #fff;
+        color: #2d2d2d;
+  
+      }
+    }
+   
   }
 }
 
