@@ -221,6 +221,10 @@ const MainPage = () => {
   const [openBttnModal, setOpenBttnModal] = useState(false);
   const [bottomLeftModale, setBottomLeftModale] = useState("");
   const [answers, setAnswers] = useState<string[]>([]);
+  const [deleteField, setDeleteField] = useState("");
+  const [agentsField, setAgentsField] = useState("");
+  const [promoField, setPromoField] = useState("");
+  const [otherField, setOtherField] = useState("");
 
   const plusHandler = (value: number, input?: InputTypes) => {
     if (input === 1) {
@@ -594,6 +598,21 @@ const MainPage = () => {
     }
   };
 
+  const getPrices = async () => {
+    try {
+      const res = await axios.post<{ massage: number[] }>("/priceData", {
+        user: localStorage.getItem("pultik-user-login"),
+      });
+
+      if (res.status == 200) {
+       setDeleteField(res.data.massage[0].toString())
+       setAgentsField(res.data.massage[1].toString())
+       setPromoField(res.data.massage[2].toString())
+       setOtherField(res.data.massage[3].toString())
+      }
+    } catch (error) {}
+  };
+
   const checkInitialDate = () => {
     if (storageData) {
       if (check90DaysPassed(storageData)) {
@@ -760,6 +779,7 @@ const MainPage = () => {
   // для одного рендеринга
   useEffect(() => {
     getPhrases();
+    getPrices();
   }, []);
   useEffect(() => {
     timerHandler();
@@ -1388,16 +1408,56 @@ const MainPage = () => {
 
             <div className="inputs_column">
               <div className="field">
-                <span>Del:</span> <input type="text" />
+                <span>Del:</span>{" "}
+                <input
+                  type="text"
+                  value={deleteField}
+                  onChange={(e) =>
+                    /^\d*([.,]?\d*)?$/.test(e.target.value)
+                      ? setDeleteField(e.target.value)
+                      : ""
+                  }
+                  
+                />
               </div>
               <div className="field">
-                <span>Ag:</span> <input type="text" />
+                <span>Ag:</span>{" "}
+                <input
+                  type="text"
+                  value={agentsField}
+                  onChange={(e) =>
+                    /^\d*([.,]?\d*)?$/.test(e.target.value)
+                      ? setAgentsField(e.target.value)
+                      : ""
+                  }
+                  
+                />
               </div>
               <div className="field">
-                <span>Pr:</span> <input type="text" />
+                <span>Pr:</span>{" "}
+                <input
+                  type="text"
+                  value={promoField}
+                  onChange={(e) =>
+                    /^\d*([.,]?\d*)?$/.test(e.target.value)
+                      ? setPromoField(e.target.value)
+                      : ""
+                  }
+                  
+                />
               </div>
               <div className="field">
-                <span>Oth:</span> <input type="text" />
+                <span>Oth:</span>{" "}
+                <input
+                  type="text"
+                  value={otherField}
+                  onChange={(e) =>
+                    (/^\d*([.,]?\d*)?$/.test(e.target.value))
+                      ? setOtherField(e.target.value)
+                      : ""
+                  }
+                  
+                />
               </div>
             </div>
 
