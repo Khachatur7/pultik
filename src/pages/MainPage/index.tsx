@@ -1438,7 +1438,7 @@ const MainPage = () => {
                       : ""
                   }
                 />
-              <div className="bttn" onClick={SetFieldValue}>enter</div>
+              <div className="bttn" onClick={SetFieldValue}>OK</div>
               </div>
               <div className="field">
                 <span>Ag:</span>{" "}
