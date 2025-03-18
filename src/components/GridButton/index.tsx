@@ -291,7 +291,7 @@ const GridButton: React.FC<Props> = ({
         {comValue == "scan" && (
           <img src={scanImage} alt="" className="scan_img" />
         )}
-          {comValue == "misc" && (
+        {comValue == "misc" && (
           <img src={miscImage} alt="" className="misc_img" />
         )}
         {wStocks && wStocks > 0 ? (
@@ -320,7 +320,8 @@ const GridButton: React.FC<Props> = ({
               comValue == "stroy" ||
               comValue == "tel" ||
               comValue == "fep" ||
-              comValue == "scan" || comValue == "misc"
+              comValue == "scan" ||
+              comValue == "misc"
                 ? "50px"
                 : "0"
             }`,
@@ -332,7 +333,9 @@ const GridButton: React.FC<Props> = ({
               fullName.length > 20 ? "fullname" : ""
             }`}
           >
-            {fullName}
+            {fullName.length > 25
+              ? fullName.substring(0, 24) + "..."
+              : fullName}
           </span>
         ) : (
           index + 1
@@ -348,7 +351,7 @@ const GridButton: React.FC<Props> = ({
               comValue == "stroy" ||
               comValue == "tel" ||
               comValue == "fep" ||
-              comValue == "scan"||
+              comValue == "scan" ||
               comValue == "misc"
                 ? "50px"
                 : "0"
