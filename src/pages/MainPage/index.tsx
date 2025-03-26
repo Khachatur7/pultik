@@ -1515,7 +1515,23 @@ const MainPage = () => {
                     {cpData.priceIndex.split(",")[3]} | {cpData.lS}
                   </p>
                   <p>mP: {cpData.minPer}</p>
-                  <p>ozDelSum: {delSum[0]} Rub | ozInDelSum: {delSum[1]} Rub</p>
+                  <p>
+                    ozDelSum:{" "}
+                    {delSum[0]
+                      .toString()
+                      .replace(
+                        /(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g,
+                        "$1" + " "
+                      )}{" "}
+                    Rub | ozInDelSum:{" "}
+                    {delSum[1]
+                      .toString()
+                      .replace(
+                        /(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g,
+                        "$1" + " "
+                      )}{" "}
+                    Rub
+                  </p>
                 </>
               ) : (
                 <></>
