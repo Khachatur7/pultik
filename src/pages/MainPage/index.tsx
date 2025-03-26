@@ -225,7 +225,7 @@ const MainPage = () => {
   const [agentsField, setAgentsField] = useState("");
   const [promoField, setPromoField] = useState("");
   const [otherField, setOtherField] = useState("");
-
+  const [delSum, setDelSum] = useState<number[]>([]);
   const plusHandler = (value: number, input?: InputTypes) => {
     if (input === 1) {
       setSecondValue((prev) => (Number(prev) + value).toString());
@@ -707,7 +707,16 @@ const MainPage = () => {
       setNotSearchYet(false);
     }
   };
-
+  const GetDelSum = async () => {
+    try {
+      const res = await axios.post<{ message: number[] }>("/getDelInDelSum");
+      if (res.status == 200) {
+        setDelSum(res.data.message);
+      }
+    } catch (error) {
+      console.log(`Не удалось поменять данные: ${error}`);
+    }
+  };
   const SetFieldValue = async () => {
     try {
       const res = await axios.post("/priceDataChange", {
@@ -715,8 +724,7 @@ const MainPage = () => {
         massage: [deleteField, agentsField, promoField, otherField],
       });
       if (res.status == 200) {
-        console.log(res);
-        alert('Данные полей обновились!')
+        alert("Данные полей обновились!");
       }
     } catch (error) {
       console.log(`Не удалось поменять данные: ${error}`);
@@ -796,6 +804,7 @@ const MainPage = () => {
   useEffect(() => {
     getPhrases();
     getPrices();
+    GetDelSum();
   }, []);
   useEffect(() => {
     timerHandler();
@@ -1438,7 +1447,9 @@ const MainPage = () => {
                       : ""
                   }
                 />
-              <div className="bttn" onClick={SetFieldValue}>OK</div>
+                <div className="bttn" onClick={SetFieldValue}>
+                  OK
+                </div>
               </div>
               <div className="field">
                 <span>Ag:</span>{" "}
@@ -1504,6 +1515,7 @@ const MainPage = () => {
                     {cpData.priceIndex.split(",")[3]} | {cpData.lS}
                   </p>
                   <p>mP: {cpData.minPer}</p>
+                  <p>ozDelSum: {delSum[0]} Rub | ozInDelSum: {delSum[1]} Rub</p>
                 </>
               ) : (
                 <></>
