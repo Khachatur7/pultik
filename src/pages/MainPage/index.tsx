@@ -225,6 +225,8 @@ const MainPage = () => {
   const [agentsField, setAgentsField] = useState("");
   const [promoField, setPromoField] = useState("");
   const [otherField, setOtherField] = useState("");
+  const [actField, setActField] = useState("");
+  const [pasField, setPasField] = useState("");
   const [delSum, setDelSum] = useState<number[]>([]);
   const plusHandler = (value: number, input?: InputTypes) => {
     if (input === 1) {
@@ -600,7 +602,10 @@ const MainPage = () => {
 
   const getPrices = async () => {
     try {
-      const res = await axios.post<{ massage: number[] }>("/priceData", {
+      const res = await axios.post<{
+        massage: number[];
+        massage2: { act: number; pas: number };
+      }>("/priceData", {
         user: localStorage.getItem("pultik-user-login"),
       });
 
@@ -609,6 +614,8 @@ const MainPage = () => {
         setAgentsField(res.data.massage[1].toString());
         setPromoField(res.data.massage[2].toString());
         setOtherField(res.data.massage[3].toString());
+        setActField(res.data.massage2.act.toString());
+        setPasField(res.data.massage2.pas.toString());
       }
     } catch (error) {
       console.log(`Не удалось получить данные с роута "/priceData"`);
@@ -722,6 +729,7 @@ const MainPage = () => {
       const res = await axios.post("/priceDataChange", {
         user: localStorage.getItem("pultik-user-login"),
         massage: [deleteField, agentsField, promoField, otherField],
+        massage2: { act: +actField, pas: +pasField },
       });
       if (res.status == 200) {
         alert("Данные полей обновились!");
@@ -1486,6 +1494,36 @@ const MainPage = () => {
                       : ""
                   }
                 />
+              </div>
+              <div className="field">
+                <span>Act:</span>{" "}
+                <input
+                  type="text"
+                  value={actField}
+                  onChange={(e) =>
+                    /^\d*([.,]?\d*)?$/.test(e.target.value)
+                      ? setActField(e.target.value)
+                      : ""
+                  }
+                />
+                <div className="bttn" onClick={SetFieldValue}>
+                  OK
+                </div>
+              </div>
+              <div className="field">
+                <span>Pas:</span>{" "}
+                <input
+                  type="text"
+                  value={pasField}
+                  onChange={(e) =>
+                    /^\d*([.,]?\d*)?$/.test(e.target.value)
+                      ? setPasField(e.target.value)
+                      : ""
+                  }
+                />
+                <div className="bttn" onClick={SetFieldValue}>
+                  OK
+                </div>
               </div>
             </div>
 
