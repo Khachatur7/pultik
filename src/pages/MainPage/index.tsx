@@ -1287,6 +1287,7 @@ const MainPage = () => {
               <></>
             )}
           </div>
+          {window.innerWidth > 400 && <Link to={"/d-page"}><button className="d_bttn">D</button></Link>}
           <div className="mat__container">
             <div className="input__wrapper">
               <input
@@ -1317,6 +1318,7 @@ const MainPage = () => {
                   );
                 })}
               </div>
+
               {window.innerWidth > 400 && (
                 <div className="input_search_bttns">
                   <input
