@@ -1287,7 +1287,14 @@ const MainPage = () => {
               <></>
             )}
           </div>
-          {window.innerWidth > 400 && <Link to={"/d-page"}><button className="d_bttn">D</button></Link>}
+          {window.innerWidth > 400 && (
+            <Link
+              to={"/d-page"}
+              className="btn btn__changing-item flex items-center justify-center d_bttn"
+            >
+              D
+            </Link>
+          )}
           <div className="mat__container">
             <div className="input__wrapper">
               <input

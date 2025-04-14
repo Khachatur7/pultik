@@ -1122,14 +1122,20 @@ body {
 
 .d_bttn {
   position: absolute;
-  bottom: 0px;
-  right: 180px;
-  padding: 5px 15px;
-  background: #fff;
-  border-radius: 5px 5px 0px 0px;
+  bottom: 30px;
+  right: 170px;
+  width: 150px !important;
+  height: 60px !important;
+  background: #ffffffc0;
+  border-radius: 15px;
   color: #000;
   font-weight: 600;
   font-size: 29px;
+  z-index: 11111;
+}
+
+.d_bttn:hover{
+  color: #000 !important;
 }
 
 .d_page {
