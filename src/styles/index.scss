@@ -1122,10 +1122,10 @@ body {
 
 .d_bttn {
   position: absolute;
-  bottom: 30px;
-  right: 170px;
-  width: 150px !important;
-  height: 60px !important;
+  bottom: 7px;
+  right: 150px;
+  width: 170px !important;
+  height: 65px !important;
   background: #ffffffc0;
   border-radius: 15px;
   color: #000;
@@ -1148,6 +1148,7 @@ body {
 }
 
 .first_container {
+  position: relative;
   width: 100%;
   display: flex;
   justify-content: start;
@@ -1157,6 +1158,12 @@ body {
   .index {
     font-size: 55px;
   }
+  label{
+    position: absolute;
+    bottom: -55px;
+    left: 65px;
+    font-size: 39px;
+  }
   .btns_one {
     display: flex;
     justify-content: start;
@@ -1164,39 +1171,40 @@ body {
     gap: 15px;
     font-size: 40px;
     .bttn {
-      padding: 9px 25px;
+      padding: 18px 25px;
       background: #fff;
       border-radius: 10px;
       transition: 0.45s ease;
+      path{
+      transition: 0.45s ease;
+      }
     }
   }
   .fields {
     display: flex;
     justify-content: start;
     align-items: center;
-
     gap: 15px;
     .inpt {
       width: 210px;
       font-size: 35px;
       font-weight: 500;
-      padding: 15px 14px 15px 10px;
+      padding: 11px 14px 11px 10px;
       border-radius: 15px;
     }
-    .inpt:first-child {
+    .frst {
       width: 390px;
     }
+    
   }
   .bttns_list {
-    width: 420px;
     display: flex;
     justify-content: start;
     align-items: start;
-    flex-wrap: wrap;
     gap: 20px;
     .bttn {
       width: 90px;
-      height: 85px;
+      height: 75px;
       background: #2d2d2d;
       color: #fff;
       border-radius: 15px;
@@ -1211,7 +1219,7 @@ body {
     gap: 15px;
     .bttn {
       width: 90px;
-      height: 85px;
+      height: 75px;
       background: #fff;
       color: #464646;
       border-radius: 10px;
@@ -1225,6 +1233,9 @@ body {
   .bttn:hover {
     background: #000;
     color: #fff;
+    path{
+      fill: #fff;
+    }
   }
 }
 
