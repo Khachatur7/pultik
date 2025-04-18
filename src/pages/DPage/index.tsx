@@ -28,7 +28,7 @@ const DPage = () => {
 
   useEffect(() => {
     getDecrs();
-  }, []);
+  }, [dLines]);
   return (
     <AuthCheck>
       <div className="d_page">
