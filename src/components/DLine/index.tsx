@@ -1,18 +1,25 @@
 import { transliterationMap } from "@/common";
-import axios from "axios";
+import axios from "@/axios";
 import { useState } from "react";
 
 interface DLine {
-  dLines: number[];
-  setDLines: React.Dispatch<React.SetStateAction<number[]>>;
-  index: number;
+  dLines: Decr[];
+  dLine: Decr;
+  setDLines: React.Dispatch<React.SetStateAction<Decr[]>>;
 }
 
-const DLine: React.FC<DLine> = ({ dLines, setDLines, index }) => {
-  const [price, setPrice] = useState("");
-  const [decr, setDecr] = useState("");
-  const [avitoId, setAvitoId] = useState("");
+interface Decr {
+  avitoId: string;
+  decr: string;
+  price: string;
+  step: string;
+}
 
+const DLine: React.FC<DLine> = ({ dLines, setDLines, dLine }) => {
+  const [price, setPrice] = useState(dLine.price);
+  const [step, setStep] = useState(dLine.step);
+  const [avitoId, setAvitoId] = useState(dLine.avitoId);
+  const index = dLine.decr.substring(dLine.decr.length - 1, dLine.decr.length);
   const OnlyNumberChange = (
     text: string,
     setState: React.Dispatch<React.SetStateAction<string>>
@@ -45,10 +52,18 @@ const DLine: React.FC<DLine> = ({ dLines, setDLines, index }) => {
         newInd: dLines.length,
         avId: avitoId,
         price: price,
-        decr: decr,
+        decr: step,
       });
+
+      const newDecr: Decr = {
+        decr: `decr${dLines.length}`,
+        step: "",
+        price: "",
+        avitoId: "",
+      };
+
       if (res.status == 200) {
-        setDLines([...dLines, dLines.length]);
+        setDLines([...dLines, newDecr]);
       }
     } catch (error) {
       console.log("Не удалось добавить новый 'decr'");
@@ -61,7 +76,7 @@ const DLine: React.FC<DLine> = ({ dLines, setDLines, index }) => {
         index: index,
       });
       if (res.status == 200) {
-        setDLines(dLines.filter((l) => l != index));
+        setDLines(dLines.filter((d) => d.decr != dLine.decr));
       }
     } catch (error) {
       console.log(`Не удалось удалить decr №${index}`);
@@ -70,7 +85,7 @@ const DLine: React.FC<DLine> = ({ dLines, setDLines, index }) => {
 
   return (
     <div className="d_container">
-      <span className="index">{index + 1}.</span>
+      <span className="index">{index}.</span>
       <div className="btns_one">
         <button className="bttn">
           <svg width="40px" height="40px" viewBox="-1 0 12 12" version="1.1">
@@ -138,9 +153,9 @@ const DLine: React.FC<DLine> = ({ dLines, setDLines, index }) => {
         <input
           type="text"
           className="inpt"
-          placeholder="Decr"
-          value={decr}
-          onChange={(e) => OnlyNumberChange(e.target.value, setDecr)}
+          placeholder="Step"
+          value={step}
+          onChange={(e) => OnlyNumberChange(e.target.value, setStep)}
         />
       </div>
       <div className="bttns_list">
