@@ -19,7 +19,7 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
   const [price, setPrice] = useState(dLine.price);
   const [step, setStep] = useState(dLine.step);
   const [avitoId, setAvitoId] = useState(dLine.avitoId);
-  const index = dLine.decr.substring(dLine.decr.length - 1, dLine.decr.length);
+  const index = dLine.decr.match(/\d+/)
   const OnlyNumberChange = (
     text: string,
     setState: React.Dispatch<React.SetStateAction<string>>
