@@ -56,8 +56,9 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
       });
 
       if (res.status == 200) {
-        setUpdate(true)
+        // setUpdate(true)
         // setDLines([...dLines, newDecr]);
+        location.reload()
       }
     } catch (error) {
       console.log("Не удалось добавить новый 'decr'");
