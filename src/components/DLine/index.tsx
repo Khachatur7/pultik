@@ -2,12 +2,12 @@ import { transliterationMap } from "@/common";
 import { useState } from "react";
 
 interface DLine {
-  dLines: number;
-  setDLines: React.Dispatch<React.SetStateAction<number>>;
-  index:number
+  dLines: number[];
+  setDLines: React.Dispatch<React.SetStateAction<number[]>>;
+  index: number;
 }
 
-const DLine: React.FC<DLine> = ({ dLines, setDLines,index }) => {
+const DLine: React.FC<DLine> = ({ dLines, setDLines, index }) => {
   const [price, setPrice] = useState("");
   const [decr, setDecr] = useState("");
   const [avitoId, setAvitoId] = useState("");
@@ -36,9 +36,10 @@ const DLine: React.FC<DLine> = ({ dLines, setDLines,index }) => {
       setState(value);
     }
   };
+
   return (
     <div className="d_container">
-      <span className="index">{index}.</span>
+      <span className="index">{index+1}.</span>
       <div className="btns_one">
         <button className="bttn">
           <svg width="40px" height="40px" viewBox="-1 0 12 12" version="1.1">
@@ -119,12 +120,17 @@ const DLine: React.FC<DLine> = ({ dLines, setDLines,index }) => {
         )}
       </div>
       <div className="p_m_bttns">
-        <button className="bttn" onClick={() => setDLines(dLines + 1)}>
+        <button
+          className="bttn"
+          onClick={() => setDLines([...dLines, dLines.length])}
+        >
           +
         </button>
         <button
           className="bttn"
-          onClick={() => (dLines > 1 ? setDLines(dLines - 1) : 0)}
+          onClick={() =>
+            dLines.length > 1 ? setDLines(dLines.filter((l) => l != index)) : 0
+          }
         >
           -
         </button>
