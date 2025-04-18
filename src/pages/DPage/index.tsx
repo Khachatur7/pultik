@@ -12,7 +12,7 @@ interface Decr {
 
 const DPage = () => {
   const [dLines, setDLines] = useState<Decr[]>([]);
-
+  const [update,setUpdate] = useState(false)
   const getDecrs = async () => {
     try {
       const res = await axios.post("/readDecr", {
@@ -27,13 +27,16 @@ const DPage = () => {
   };
 
   useEffect(() => {
-    getDecrs();
-  }, [dLines]);
+    getDecrs()
+  }, [update]);
+
+  console.log(555);
+  
   return (
     <AuthCheck>
       <div className="d_page">
         {dLines.map((d) => {
-          return <DLine dLines={dLines} dLine={d} setDLines={setDLines} />;
+          return <DLine dLines={dLines} dLine={d} setUpdate={setUpdate} />;
         })}
       </div>
     </AuthCheck>

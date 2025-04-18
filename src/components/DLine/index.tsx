@@ -5,7 +5,7 @@ import { useState } from "react";
 interface DLine {
   dLines: Decr[];
   dLine: Decr;
-  setDLines: React.Dispatch<React.SetStateAction<Decr[]>>;
+  setUpdate: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 interface Decr {
@@ -15,7 +15,7 @@ interface Decr {
   step: string;
 }
 
-const DLine: React.FC<DLine> = ({ dLines, setDLines, dLine }) => {
+const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
   const [price, setPrice] = useState(dLine.price);
   const [step, setStep] = useState(dLine.step);
   const [avitoId, setAvitoId] = useState(dLine.avitoId);
@@ -55,15 +55,9 @@ const DLine: React.FC<DLine> = ({ dLines, setDLines, dLine }) => {
         decr: step,
       });
 
-      const newDecr: Decr = {
-        decr: `decr${dLines.length}`,
-        step: "",
-        price: "",
-        avitoId: "",
-      };
-
       if (res.status == 200) {
-        setDLines([...dLines, newDecr]);
+        setUpdate(true)
+        // setDLines([...dLines, newDecr]);
       }
     } catch (error) {
       console.log("Не удалось добавить новый 'decr'");
@@ -76,7 +70,8 @@ const DLine: React.FC<DLine> = ({ dLines, setDLines, dLine }) => {
         index: index,
       });
       if (res.status == 200) {
-        setDLines(dLines.filter((d) => d.decr != dLine.decr));
+        setUpdate(true)
+        // setDLines(dLines.filter((d) => d.decr != dLine.decr));
       }
     } catch (error) {
       console.log(`Не удалось удалить decr №${index}`);
