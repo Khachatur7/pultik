@@ -1,4 +1,5 @@
 import { transliterationMap } from "@/common";
+import axios from "axios";
 import { useState } from "react";
 
 interface DLine {
@@ -37,9 +38,39 @@ const DLine: React.FC<DLine> = ({ dLines, setDLines, index }) => {
     }
   };
 
+  const addDecr = async () => {
+    try {
+      const res = await axios.post("/createDecr", {
+        user: localStorage.getItem("pultik-user-login"),
+        newInd: dLines.length,
+        avId: avitoId,
+        price: price,
+        decr: decr,
+      });
+      if (res.status == 200) {
+        setDLines([...dLines, dLines.length]);
+      }
+    } catch (error) {
+      console.log("Не удалось добавить новый 'decr'");
+    }
+  };
+  const deleteDecr = async () => {
+    try {
+      const res = await axios.post("/deleteDecr", {
+        user: localStorage.getItem("pultik-user-login"),
+        index: index,
+      });
+      if (res.status == 200) {
+        setDLines(dLines.filter((l) => l != index));
+      }
+    } catch (error) {
+      console.log(`Не удалось удалить decr №${index}`);
+    }
+  };
+
   return (
     <div className="d_container">
-      <span className="index">{index+1}.</span>
+      <span className="index">{index + 1}.</span>
       <div className="btns_one">
         <button className="bttn">
           <svg width="40px" height="40px" viewBox="-1 0 12 12" version="1.1">
@@ -120,17 +151,12 @@ const DLine: React.FC<DLine> = ({ dLines, setDLines, index }) => {
         )}
       </div>
       <div className="p_m_bttns">
-        <button
-          className="bttn"
-          onClick={() => setDLines([...dLines, dLines.length])}
-        >
+        <button className="bttn" onClick={addDecr}>
           +
         </button>
         <button
           className="bttn"
-          onClick={() =>
-            dLines.length > 1 ? setDLines(dLines.filter((l) => l != index)) : 0
-          }
+          onClick={() => (dLines.length > 1 ? deleteDecr() : 0)}
         >
           -
         </button>
