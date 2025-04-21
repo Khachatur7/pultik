@@ -1058,9 +1058,14 @@ const MainPage = () => {
         {window.innerWidth > 600 && (
           <>
             <div className="btn__changing flex items-center justify-center tabs">
-              {tabs.map((item,ind) =>
+              {tabs.map((item, ind) =>
                 item.value == "upDown" ? (
-                  <img src={upDownImage} alt="" style={{ width: "35px" }} key={ind*10} />
+                  <img
+                    src={upDownImage}
+                    alt=""
+                    style={{ width: "35px" }}
+                    key={ind * 10}
+                  />
                 ) : (
                   <Link
                     to={`/${item.value}`}
@@ -1467,6 +1472,58 @@ const MainPage = () => {
                 <div className="bttn" onClick={SetFieldValue}>
                   OK
                 </div>
+                <div className="change_count">
+                  <div
+                    className="change_count_bttn"
+                    onClick={() =>
+                      +deleteField > 0
+                        ? setDeleteField(
+                            (+deleteField - 0.1).toFixed(1)?.toString()
+                          )
+                        : 0
+                    }
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="m6 10l6 6l6-6"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div
+                    className="change_count_bttn"
+                    onClick={() =>
+                      setDeleteField(
+                        (+deleteField + 0.1).toFixed(1)?.toString()
+                      )
+                    }
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="m4 15l8-8l8 8"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
               </div>
               <div className="field">
                 <span>Ag:</span>{" "}
@@ -1479,6 +1536,58 @@ const MainPage = () => {
                       : ""
                   }
                 />
+                <div className="change_count">
+                  <div
+                    className="change_count_bttn"
+                    onClick={() =>
+                      +agentsField > 0
+                        ? setAgentsField(
+                            (+agentsField - 0.1).toFixed(1)?.toString()
+                          )
+                        : 0
+                    }
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="m6 10l6 6l6-6"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div
+                    className="change_count_bttn"
+                    onClick={() =>
+                      setAgentsField(
+                        (+agentsField + 0.1).toFixed(1)?.toString()
+                      )
+                    }
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="m4 15l8-8l8 8"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
               </div>
               <div className="field">
                 <span>Pr:</span>{" "}
@@ -1490,7 +1599,57 @@ const MainPage = () => {
                       ? setPromoField(e.target.value)
                       : ""
                   }
-                />
+                />{" "}
+                <div className="change_count">
+                  <div
+                    className="change_count_bttn"
+                    onClick={() =>
+                      +promoField > 0
+                        ? setPromoField(
+                            (+promoField - 0.1).toFixed(1)?.toString()
+                          )
+                        : 0
+                    }
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="m6 10l6 6l6-6"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div
+                    className="change_count_bttn"
+                    onClick={() =>
+                      setPromoField((+promoField + 0.1).toFixed(1)?.toString())
+                    }
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="m4 15l8-8l8 8"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
               </div>
               <div className="field">
                 <span>Oth:</span>{" "}
@@ -1502,7 +1661,57 @@ const MainPage = () => {
                       ? setOtherField(e.target.value)
                       : ""
                   }
-                />
+                />{" "}
+                <div className="change_count">
+                  <div
+                    className="change_count_bttn"
+                    onClick={() =>
+                      +otherField > 0
+                        ? setOtherField(
+                            (+otherField - 0.1).toFixed(1)?.toString()
+                          )
+                        : 0
+                    }
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="m6 10l6 6l6-6"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div
+                    className="change_count_bttn"
+                    onClick={() =>
+                      setOtherField((+otherField + 0.1).toFixed(1)?.toString())
+                    }
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="m4 15l8-8l8 8"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
               </div>
               <div className="field">
                 <span>Act:</span>{" "}

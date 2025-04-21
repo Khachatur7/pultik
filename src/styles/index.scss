@@ -330,7 +330,11 @@ body {
   align-items: center;
   justify-content: start;
   gap: 12px;
+  span{
+    user-select:none;
+  }
   .field {
+    position: relative;
     width: 100%;
     font-size: 32px;
     font-weight: 500;
@@ -354,6 +358,38 @@ body {
         opacity: 1;
       }
     }
+    .change_count {
+      position: absolute;
+      width: 70px;
+      height: 38px;
+      top: 6px;
+      right: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: start;
+      gap: 5px;
+      .change_count_bttn {
+        width: 32px;
+        height: 36px;
+        background: #2d2d2d;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.45s ease;
+        border: 1px solid #2d2d2d;
+        path {
+          stroke: #fff;
+          transition: 0.45s ease;
+        }
+      }
+      .change_count_bttn:hover {
+        background: #fff;
+        path {
+          stroke: #2d2d2d;
+        }
+      }
+    }
     .bttn {
       width: 58px;
       height: 38px;
@@ -363,7 +399,7 @@ body {
       border-radius: 15px;
       position: absolute;
       top: 6px;
-      right: 8px;
+      right: 80px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1134,7 +1170,7 @@ body {
   z-index: 11111;
 }
 
-.d_bttn:hover{
+.d_bttn:hover {
   color: #000 !important;
 }
 
@@ -1161,7 +1197,7 @@ body {
   .index {
     font-size: 55px;
   }
-  label{
+  label {
     position: absolute;
     bottom: -55px;
     left: 65px;
@@ -1178,8 +1214,8 @@ body {
       background: #fff;
       border-radius: 10px;
       transition: 0.45s ease;
-      path{
-      transition: 0.45s ease;
+      path {
+        transition: 0.45s ease;
       }
     }
   }
@@ -1204,7 +1240,6 @@ body {
       left: 280px;
       top: 90px;
     }
-    
   }
   .bttns_list {
     display: flex;
@@ -1242,7 +1277,7 @@ body {
   .bttn:hover {
     background: #000;
     color: #fff;
-    path{
+    path {
       fill: #fff;
     }
   }
