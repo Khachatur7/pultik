@@ -1058,9 +1058,9 @@ const MainPage = () => {
         {window.innerWidth > 600 && (
           <>
             <div className="btn__changing flex items-center justify-center tabs">
-              {tabs.map((item) =>
+              {tabs.map((item,ind) =>
                 item.value == "upDown" ? (
-                  <img src={upDownImage} alt="" style={{ width: "35px" }} />
+                  <img src={upDownImage} alt="" style={{ width: "35px" }} key={ind*10} />
                 ) : (
                   <Link
                     to={`/${item.value}`}
@@ -1318,6 +1318,7 @@ const MainPage = () => {
                         searchByWhat == b ? "active-s-button" : ""
                       }`}
                       onClick={() => setSearchByWhat(b)}
+                      key={b}
                     >
                       {" "}
                       <span>{b}</span>
@@ -1565,14 +1566,14 @@ const MainPage = () => {
                   <p>
                     ozDelSum:{" "}
                     {delSum[0]
-                      .toString()
+                      ?.toString()
                       .replace(
                         /(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g,
                         "$1" + " "
                       )}{" "}
                     Rub | ozInDelSum:{" "}
                     {delSum[1]
-                      .toString()
+                      ?.toString()
                       .replace(
                         /(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g,
                         "$1" + " "

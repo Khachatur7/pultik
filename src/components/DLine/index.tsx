@@ -5,7 +5,7 @@ import { useState } from "react";
 interface DLine {
   dLines: Decr[];
   dLine: Decr;
-  setUpdate: React.Dispatch<React.SetStateAction<boolean>>
+  setUpdate: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface Decr {
@@ -19,7 +19,7 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
   const [price, setPrice] = useState(dLine.price);
   const [step, setStep] = useState(dLine.step);
   const [avitoId, setAvitoId] = useState(dLine.avitoId);
-  const index = dLine.decr.match(/\d+/)
+  const index = dLine.decr.match(/\d+/);
   const OnlyNumberChange = (
     text: string,
     setState: React.Dispatch<React.SetStateAction<string>>
@@ -58,7 +58,7 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
       if (res.status == 200) {
         // setUpdate(true)
         // setDLines([...dLines, newDecr]);
-        location.reload()
+        location.reload();
       }
     } catch (error) {
       console.log("Не удалось добавить новый 'decr'");
@@ -71,7 +71,7 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
         index: index,
       });
       if (res.status == 200) {
-        setUpdate(true)
+        setUpdate(true);
         // setDLines(dLines.filter((d) => d.decr != dLine.decr));
       }
     } catch (error) {
@@ -79,11 +79,43 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
     }
   };
 
+  const startDecr = async () => {
+    try {
+      const res = await axios.post("/startDecr", {
+        user: localStorage.getItem("pultik-user-login"),
+        index: index,
+        avId: avitoId,
+        price: price,
+        decr: step,
+      });
+      console.log(444);
+
+      if (res.status == 200) {
+        setUpdate(true);
+      }
+    } catch (error) {
+      console.log(`Не удалось включить decr №${index}`);
+    }
+  };
+  const stopDecr = async () => {
+    try {
+      const res = await axios.post("/stopDecr", {
+        user: localStorage.getItem("pultik-user-login"),
+        index: index,
+      });
+      if (res.status == 200) {
+        setUpdate(true);
+      }
+    } catch (error) {
+      console.log(`Не удалось остановить decr №${index}`);
+    }
+  };
+
   return (
     <div className="d_container">
       <span className="index">{index}.</span>
       <div className="btns_one">
-        <button className="bttn">
+        <button className="bttn" onClick={startDecr}>
           <svg width="40px" height="40px" viewBox="-1 0 12 12" version="1.1">
             <g
               id="Page-1"
@@ -107,7 +139,7 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
             </g>
           </svg>
         </button>
-        <button className="bttn">
+        <button className="bttn" onClick={stopDecr}>
           <svg width="40px" height="40px" viewBox="0 0 28 28" version="1.1">
             <g
               id="Page-1"
