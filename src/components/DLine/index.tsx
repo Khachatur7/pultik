@@ -88,11 +88,10 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
         user: localStorage.getItem("pultik-user-login"),
         index: index,
         avId: avitoId,
+        avId2:avitoIdTwo,
         price: price,
         decr: step,
       });
-      console.log(444);
-
       if (res.status == 200) {
         setUpdate(true);
       }
