@@ -5,6 +5,7 @@ import axios from "@/axios";
 
 interface Decr {
   avitoId: string;
+  avitoId2: string;
   decr: string;
   price: string;
   step: string;
@@ -19,6 +20,7 @@ const DPage = () => {
         user: localStorage.getItem("pultik-user-login"),
       });
       if (res.status == 200) {
+        console.log(res.data.massage);
         setDLines(res.data.massage);
       }
     } catch (error) {
@@ -30,8 +32,6 @@ const DPage = () => {
     getDecrs()
   }, [update]);
 
-  console.log(555);
-  
   return (
     <AuthCheck>
       <div className="d_page">

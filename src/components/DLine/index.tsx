@@ -10,6 +10,7 @@ interface DLine {
 
 interface Decr {
   avitoId: string;
+  avitoId2: string;
   decr: string;
   price: string;
   step: string;
@@ -19,6 +20,8 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
   const [price, setPrice] = useState(dLine.price);
   const [step, setStep] = useState(dLine.step);
   const [avitoId, setAvitoId] = useState(dLine.avitoId);
+  const [avitoIdTwo, setAvitoIdTwo] = useState(dLine.avitoId2);
+
   const index = dLine.decr.match(/\d+/);
   const OnlyNumberChange = (
     text: string,
@@ -166,7 +169,7 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
         <label>Label</label>
         <input
           type="text"
-          className="inpt frst"
+          className="inpt avito_id"
           placeholder="AvitoId"
           value={avitoId}
           onChange={(e) => onlyEnglish(e.target.value, setAvitoId)}
@@ -184,6 +187,13 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
           placeholder="Step"
           value={step}
           onChange={(e) => OnlyNumberChange(e.target.value, setStep)}
+        />
+        <input
+          type="text"
+          className="inpt avito_id_two"
+          placeholder="AvitoId2"
+          value={avitoIdTwo}
+          onChange={(e) => onlyEnglish(e.target.value, setAvitoIdTwo)}
         />
       </div>
       <div className="bttns_list">

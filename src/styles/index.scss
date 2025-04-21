@@ -363,7 +363,7 @@ body {
       border-radius: 15px;
       position: absolute;
       top: 6px;
-      right: 5px;
+      right: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1147,7 +1147,7 @@ body {
   justify-content: start;
   align-items: center;
   overflow-y: auto;
-  gap: 60px;
+  gap: 110px;
 }
 
 .d_container {
@@ -1195,8 +1195,14 @@ body {
       padding: 11px 14px 11px 10px;
       border-radius: 15px;
     }
-    .frst {
+    .avito_id,
+    .avito_id_two {
       width: 390px;
+    }
+    .avito_id_two {
+      position: absolute;
+      left: 280px;
+      top: 90px;
     }
     
   }

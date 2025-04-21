@@ -1452,7 +1452,6 @@ const MainPage = () => {
                 </div>
               </div>
             )}
-
             <div className="inputs_column">
               <div className="field">
                 <span>Del:</span>{" "}
@@ -1516,9 +1515,9 @@ const MainPage = () => {
                       : ""
                   }
                 />
-                <div className="bttn" onClick={SetFieldValue}>
+                {/* <div className="bttn" onClick={SetFieldValue}>
                   OK
-                </div>
+                </div> */}
               </div>
               <div className="field">
                 <span>Pas:</span>{" "}
@@ -1531,9 +1530,9 @@ const MainPage = () => {
                       : ""
                   }
                 />
-                <div className="bttn" onClick={SetFieldValue}>
+                {/* <div className="bttn" onClick={SetFieldValue}>
                   OK
-                </div>
+                </div> */}
               </div>
             </div>
 
