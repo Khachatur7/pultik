@@ -14,6 +14,7 @@ interface Decr {
   decr: string;
   price: string;
   step: string;
+  hours: number[];
 }
 
 const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
@@ -21,6 +22,7 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
   const [step, setStep] = useState(dLine.step);
   const [avitoId, setAvitoId] = useState(dLine.avitoId);
   const [avitoIdTwo, setAvitoIdTwo] = useState(dLine.avitoId2);
+  const [hours, setHours] = useState<number[]>(dLine.hours);
 
   const index = dLine.decr.match(/\d+/);
   const OnlyNumberChange = (
@@ -59,8 +61,6 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
       });
 
       if (res.status == 200) {
-        // setUpdate(true)
-        // setDLines([...dLines, newDecr]);
         location.reload();
       }
     } catch (error) {
@@ -75,7 +75,6 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
       });
       if (res.status == 200) {
         setUpdate(true);
-        // setDLines(dLines.filter((d) => d.decr != dLine.decr));
       }
     } catch (error) {
       console.log(`Не удалось удалить decr №${index}`);
@@ -88,7 +87,7 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
         user: localStorage.getItem("pultik-user-login"),
         index: index,
         avId: avitoId,
-        avId2:avitoIdTwo,
+        avId2: avitoIdTwo,
         price: price,
         decr: step,
       });
@@ -110,6 +109,14 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
       }
     } catch (error) {
       console.log(`Не удалось остановить decr №${index}`);
+    }
+  };
+
+  const ChangeHours = (num: number) => {
+    if (hours.includes(num)) {
+      setHours([...hours.filter((h) => h != num)]);
+    } else if (!hours.includes(num)) {
+      setHours([...hours, num]);
     }
   };
 
@@ -198,7 +205,14 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
       <div className="bttns_list">
         {[9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24].map(
           (num) => {
-            return <button className="bttn">{num}</button>;
+            return (
+              <button
+                className={`bttn ${hours.includes(num) ? "active" : ""}`}
+                onClick={() => ChangeHours(num)}
+              >
+                {num}
+              </button>
+            );
           }
         )}
       </div>

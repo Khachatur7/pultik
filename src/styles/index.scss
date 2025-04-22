@@ -330,8 +330,8 @@ body {
   align-items: center;
   justify-content: start;
   gap: 12px;
-  span{
-    user-select:none;
+  span {
+    user-select: none;
   }
   .field {
     position: relative;
@@ -1254,6 +1254,13 @@ body {
       border-radius: 15px;
       font-size: 45px;
       transition: 0.45s ease;
+      box-shadow: inset 2px 2px 13px #2d2d2d00, inset -2px -2px 13px #2d2d2d00;
+    }
+    .active {
+      background: #fff;
+      color: #2d2d2d;
+      transition: 1s ease;
+      box-shadow: inset 2px 2px 13px #2d2d2d, inset -2px -2px 13px #2d2d2d;
     }
   }
   .p_m_bttns {
@@ -1277,8 +1284,19 @@ body {
   .bttn:hover {
     background: #000;
     color: #fff;
+    box-shadow: inset 2px 2px 13px #2d2d2d00, inset -2px -2px 13px #2d2d2d00;
+
     path {
       fill: #fff;
+    }
+  }
+  .active:hover {
+    background: #fff !important;
+    color: #000 !important;
+    box-shadow: inset 2px 2px 13px #2d2d2d00, inset -2px -2px 13px #2d2d2d00 !important;
+
+    path {
+      fill: #000 !important;
     }
   }
 }

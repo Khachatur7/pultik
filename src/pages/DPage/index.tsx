@@ -9,11 +9,12 @@ interface Decr {
   decr: string;
   price: string;
   step: string;
+  hours: number[];
 }
 
 const DPage = () => {
   const [dLines, setDLines] = useState<Decr[]>([]);
-  const [update,setUpdate] = useState(false)
+  const [update, setUpdate] = useState(false);
   const getDecrs = async () => {
     try {
       const res = await axios.post("/readDecr", {
@@ -29,14 +30,21 @@ const DPage = () => {
   };
 
   useEffect(() => {
-    getDecrs()
+    getDecrs();
   }, [update]);
 
   return (
     <AuthCheck>
       <div className="d_page">
         {dLines.map((d) => {
-          return <DLine dLines={dLines} dLine={d} setUpdate={setUpdate} />;
+          return (
+            <DLine
+              key={d.decr}
+              dLines={dLines}
+              dLine={d}
+              setUpdate={setUpdate}
+            />
+          );
         })}
       </div>
     </AuthCheck>
