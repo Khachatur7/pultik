@@ -203,7 +203,7 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
         />
       </div>
       <div className="bttns_list">
-        {[9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24].map(
+        {[9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 0].map(
           (num) => {
             return (
               <button
