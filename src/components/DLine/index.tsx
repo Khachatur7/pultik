@@ -88,6 +88,7 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
         index: index,
         avId: avitoId,
         avId2: avitoIdTwo,
+        hours: hours.sort((a, b) => a - b),
         price: price,
         decr: step,
       });
