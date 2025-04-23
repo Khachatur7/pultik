@@ -575,12 +575,18 @@ const MainPage = () => {
             });
           }
         });
-
-        setOrdersYData(
-          ordersNumY.concat(Array(90 - ordersNumY.length).fill(0))
-        );
-
-        setYData(precentY.concat(Array(90 - precentY.length).fill(0)));
+        if (ordersNumY.length < 90) {
+          setOrdersYData(
+            ordersNumY.concat(Array(90 - ordersNumY.length).fill(0))
+          );
+        } else {
+          setOrdersYData(ordersNumY);
+        }
+        if (precentY.length < 90) {
+          setYData(precentY.concat(Array(90 - precentY.length).fill(0)));
+        } else {
+          setYData(precentY);
+        }
         setXData(x);
       }
     } catch (error) {
@@ -967,7 +973,7 @@ const MainPage = () => {
                       {[...Array(count).keys()].map((c) => {
                         if (c + 1 < count) {
                           return (
-                            <span>
+                            <span key={c}>
                               {ind + 1}.{" "}
                               {ind == 8
                                 ? a.substring(41 * c, 41 * (c + 1))
@@ -983,6 +989,7 @@ const MainPage = () => {
                                 alignItems: "center",
                                 gap: "7px",
                               }}
+                              key={c}
                             >
                               {ind == 8
                                 ? a.substring(41 * c, 41 * (c + 1))
