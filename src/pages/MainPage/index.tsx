@@ -1340,29 +1340,52 @@ const MainPage = () => {
               </div>
 
               {window.innerWidth > 400 && (
-                <div className="input_search_bttns">
-                  <input
-                    type="text"
-                    className="searcher_input"
-                    placeholder="Search"
-                    value={bttnSearcher}
-                    onChange={(e) =>
-                      onlyEnglish(e.target.value, setBttnSearcher)
-                    }
-                  />
+                <>
+                  <div className="input_search_bttns">
+                    <input
+                      type="text"
+                      className="searcher_input"
+                      placeholder="Search"
+                      value={bttnSearcher}
+                      onChange={(e) =>
+                        onlyEnglish(e.target.value, setBttnSearcher)
+                      }
+                    />
+                    {bttnSearcher.length > 0 && (
+                      <div
+                        className="reset_text"
+                        onClick={() => setBttnSearcher("")}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="40"
+                          height="40"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            fill="none"
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeWidth="2"
+                            d="M20 20L4 4m16 0L4 20"
+                          />
+                        </svg>
+                      </div>
+                    )}
+                    <span className="bttns_search_res">
+                      {!notSearchYet &&
+                        bttnsIndex.length > 0 &&
+                        bttnsIndex.length}
+                      {!notSearchYet && bttnsIndex.length == 0 && "Not found"}
+                    </span>
+                  </div>
                   <div
                     className="search_logo"
                     onClick={() => setOpenBttnModal(true)}
                   >
                     <img src={searchLogo} alt="search_logo" />
                   </div>
-                  <span className="bttns_search_res">
-                    {!notSearchYet &&
-                      bttnsIndex.length > 0 &&
-                      bttnsIndex.length}
-                    {!notSearchYet && bttnsIndex.length == 0 && "Not found"}
-                  </span>
-                </div>
+                </>
               )}
 
               <Button onClick={resetInputs} text="Reset" />
@@ -1400,35 +1423,64 @@ const MainPage = () => {
               )}
             </div>
             {window.innerWidth <= 400 && (
-              <div className="input_search_bttns">
-                <div className="search_by_what_bttns">
-                  <div className="button">
-                    {" "}
-                    <span>Sku</span>
+              <>
+                {" "}
+                <div className="input_search_bttns">
+                  <div className="search_by_what_bttns">
+                    <div className="button">
+                      {" "}
+                      <span>Sku</span>
+                    </div>
+                    <div className="button">
+                      {" "}
+                      <span>Имя</span>
+                    </div>
                   </div>
-                  <div className="button">
-                    {" "}
-                    <span>Имя</span>
-                  </div>
+                  <input
+                    type="text"
+                    className="searcher_input"
+                    placeholder="Search"
+                    value={bttnSearcher}
+                    onChange={(e) =>
+                      onlyEnglish(e.target.value, setBttnSearcher)
+                    }
+                  />
+                  {bttnSearcher.length > 0 && (
+                    <div
+                      className="reset_text"
+                      onClick={() => setBttnSearcher("")}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="40"
+                        height="40"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          fill="none"
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeWidth="2"
+                          d="M20 20L4 4m16 0L4 20"
+                        />
+                      </svg>
+                    </div>
+                  )}
+
+                  <span className="bttns_search_res">
+                    {!notSearchYet &&
+                      bttnsIndex.length > 0 &&
+                      bttnsIndex.length}
+                    {!notSearchYet && bttnsIndex.length == 0 && "Not found"}
+                  </span>
                 </div>
-                <input
-                  type="text"
-                  className="searcher_input"
-                  placeholder="Search"
-                  value={bttnSearcher}
-                  onChange={(e) => onlyEnglish(e.target.value, setBttnSearcher)}
-                />
                 <div
                   className="search_logo"
                   onClick={() => setOpenBttnModal(true)}
                 >
                   <img src={searchLogo} alt="search_logo" />
                 </div>
-                <span className="bttns_search_res">
-                  {!notSearchYet && bttnsIndex.length > 0 && bttnsIndex.length}
-                  {!notSearchYet && bttnsIndex.length == 0 && "Not found"}
-                </span>
-              </div>
+              </>
             )}
             {xData.length > 0 && yData.length > 0 && (
               <div className="main_chart">

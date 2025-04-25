@@ -64,7 +64,16 @@ const ModalSearchRes: React.FC<ModalBttns> = ({
               key={el._id}
               onClick={() => GoToBttn(el.i)}
             >
-              {el.i}. {el.fullName} | {el.percent || "0"} % |{" "}
+              {el.i}. {el.fullName && (
+          <span
+            className={`underline ${
+              el.fullName.length > 20 ? "fullname" : ""
+            }`}
+          >
+            {el.fullName.length > 20
+              ? el.fullName.substring(0, 19) + "..."
+              : el.fullName}
+          </span>)} | {el.percent || "0"} % |{" "}
               {el.basePrice || "000"} {el.edited ? `| ${el.edited}` : ""}
             </div>
           );
