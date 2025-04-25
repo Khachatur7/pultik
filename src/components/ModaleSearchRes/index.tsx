@@ -1,5 +1,6 @@
 import closeImg from "@/images/close-svgrepo-com.svg";
 import { ButtonItemType } from "@/types/common";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface ModalBttns {
@@ -16,7 +17,7 @@ const ModalSearchRes: React.FC<ModalBttns> = ({
   byWhat,
 }) => {
   const navigate = useNavigate();
-
+  const [width, setWidth] = useState(0);
   const DetermineBackgroundColor = (bttn: ButtonItemType) => {
     if (!bttn.fStocks) {
       return "button-gradient";
@@ -50,8 +51,25 @@ const ModalSearchRes: React.FC<ModalBttns> = ({
     setTub(pageNumber);
   };
 
+  const CalcModaleWidth = () => {
+    bttns.map((b) => {
+      if (b.fullName.length > 25 && width == 0) {
+        setWidth(b.fullName.length);
+      } else if (b.fullName.length > 25 && width <= b.fullName.length) {
+        setWidth(b.fullName.length);
+      }
+    });
+  };
+
+  useEffect(() => {
+    CalcModaleWidth();
+  }, []);
+
   return (
-    <div className="bttns_modal_res">
+    <div
+      className="bttns_modal_res"
+      style={{ width: `${width != 0 ? width * 4 : 700}px` }}
+    >
       <div style={{ textAlign: "center" }}>Поиск по параметру: {byWhat}</div>
       <div className="close_bttns_modal" onClick={() => closeModule(false)}>
         <img src={closeImg} alt="" />
@@ -64,16 +82,7 @@ const ModalSearchRes: React.FC<ModalBttns> = ({
               key={el._id}
               onClick={() => GoToBttn(el.i)}
             >
-              {el.i}. {el.fullName && (
-          <span
-            className={`underline ${
-              el.fullName.length > 20 ? "fullname" : ""
-            }`}
-          >
-            {el.fullName.length > 20
-              ? el.fullName.substring(0, 19) + "..."
-              : el.fullName}
-          </span>)} | {el.percent || "0"} % |{" "}
+              {el.i}. {el.fullName} | {el.percent || "0"} % |{" "}
               {el.basePrice || "000"} {el.edited ? `| ${el.edited}` : ""}
             </div>
           );
