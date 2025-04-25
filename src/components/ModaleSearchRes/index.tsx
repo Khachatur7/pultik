@@ -68,7 +68,7 @@ const ModalSearchRes: React.FC<ModalBttns> = ({
   return (
     <div
       className="bttns_modal_res"
-      style={{ width: `${width != 0 ? width * 4 : 700}px` }}
+      style={{ width: `${width != 0 ? width * 18 : 700}px` }}
     >
       <div style={{ textAlign: "center" }}>Поиск по параметру: {byWhat}</div>
       <div className="close_bttns_modal" onClick={() => closeModule(false)}>

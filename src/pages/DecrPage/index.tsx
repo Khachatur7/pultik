@@ -12,7 +12,7 @@ interface Decr {
   hours: number[];
 }
 
-const DPage = () => {
+const DecrPage = () => {
   const [dLines, setDLines] = useState<Decr[]>([]);
   const [update, setUpdate] = useState(false);
   const getDecrs = async () => {
@@ -35,7 +35,7 @@ const DPage = () => {
 
   return (
     <AuthCheck>
-      <div className="d_page">
+      <div className="decr_page">
         {dLines.map((d) => {
           return (
             <DLine
@@ -51,4 +51,4 @@ const DPage = () => {
   );
 };
 
-export default DPage;
+export default DecrPage;

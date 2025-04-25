@@ -19,6 +19,7 @@ interface Decr {
 
 const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
   const [price, setPrice] = useState(dLine.price);
+  const steps = [25, 50, 75, 100];
   const [step, setStep] = useState(dLine.step);
   const [avitoId, setAvitoId] = useState(dLine.avitoId);
   const [avitoIdTwo, setAvitoIdTwo] = useState(dLine.avitoId2);
@@ -121,6 +122,11 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
     }
   };
 
+  const ChangeStep = (step: string) => {
+    setStep(step);
+    startDecr();
+  };
+
   return (
     <div className="d_container">
       <span className="index">{index}.</span>
@@ -188,13 +194,20 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
           value={price}
           onChange={(e) => OnlyNumberChange(e.target.value, setPrice)}
         />
-        <input
-          type="text"
-          className="inpt"
-          placeholder="Step"
+        <select
+          className="step_select"
+          onChange={(e) => ChangeStep(e.target.value)}
           value={step}
-          onChange={(e) => OnlyNumberChange(e.target.value, setStep)}
-        />
+        >
+          {steps &&
+            steps.map((step) => {
+              return (
+                <option key={step} value={step}>
+                  {step}
+                </option>
+              );
+            })}
+        </select>
         <input
           type="text"
           className="inpt avito_id_two"

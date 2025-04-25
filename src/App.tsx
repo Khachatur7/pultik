@@ -14,7 +14,7 @@ import { useBotsStore } from "./store";
 import { BotItem } from "./store/useBotsStore";
 import ProblemsPage from "./pages/Problems";
 import NewPage from "./pages/NewPage";
-import DPage from "./pages/DPage";
+import DPage from "./pages/DecrPage";
 
 const routes: RouteProps[] = [
   {
