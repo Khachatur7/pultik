@@ -169,10 +169,10 @@ const MainPage = () => {
     quart: number;
     priceIndex: string;
     middlePercent: string;
+    middlePercent2:string;
     minPer: string;
     lS: string;
   } | null>(null);
-  const [minusPercent,setMinusPercent] = useState("")
   const [returnMode, setReturnMode] = useState(false);
   const [buttonsInfo, setButtonsInfo] = useState<ButtonsInfo>({
     total: 0,
@@ -330,6 +330,22 @@ const MainPage = () => {
     }
   };
 
+  const allPrices2 = async () => {
+    try {
+      const res = await axios.post("/allPrices2", {
+        user: localStorage.getItem("pultik-user-login"),
+        priceChange: firstValue,
+      });
+
+      if (res.status == 200) {
+        alert(res.data.text);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
   const changeTab = () => {
     setCurrentTab(
       +location.pathname.substring(1, location.pathname.length) || 1
@@ -361,16 +377,6 @@ const MainPage = () => {
       setSelectOpened(false);
     } catch (error) {
       console.log(error);
-    }
-  };
-
-  const Get = async () => {
-    try {
-      const res = await axios.post("/allPrices2");
-      setMinusPercent(res.data.text)
-      console.log(res.data);
-    } catch (error) {
-      console.log("error");
     }
   };
 
@@ -830,7 +836,7 @@ const MainPage = () => {
     getPhrases();
     getPrices();
     GetDelSum();
-    Get();
+
   }, []);
 
   useEffect(() => {
@@ -1423,8 +1429,8 @@ const MainPage = () => {
             <div className="mat__wrapper">
               {minusButtons.map((button) =>
                 button.value == 1 && button.input == 2 ? (
-                  <Button key={button.id} onClick={allPrices}>
-                    <span>{minusPercent || 0}</span>
+                  <Button key={button.id} onClick={allPrices2}>
+                   <span>{cpData?.middlePercent2 || 0}</span>
                   </Button>
                 ) : (
                   <Button
