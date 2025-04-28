@@ -169,10 +169,11 @@ const MainPage = () => {
     quart: number;
     priceIndex: string;
     middlePercent: string;
-    middlePercent2:string;
+    middlePercent2: string;
     minPer: string;
     lS: string;
   } | null>(null);
+  const [priceCountWaiting, setPriceCountWaiting] = useState("");
   const [returnMode, setReturnMode] = useState(false);
   const [buttonsInfo, setButtonsInfo] = useState<ButtonsInfo>({
     total: 0,
@@ -344,7 +345,6 @@ const MainPage = () => {
       console.log(error);
     }
   };
-
 
   const changeTab = () => {
     setCurrentTab(
@@ -761,6 +761,16 @@ const MainPage = () => {
       console.log(`Не удалось поменять данные: ${error}`);
     }
   };
+
+  const GetPriceCountWaiting = async () => {
+    try {
+      const res = await axios.post("/priceCountWaiting");
+      setPriceCountWaiting(res.data.massage);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     initialLoad();
     SelectMonth(localStorage.getItem("piker") || "01");
@@ -836,16 +846,17 @@ const MainPage = () => {
     getPhrases();
     getPrices();
     GetDelSum();
-
   }, []);
 
   useEffect(() => {
     timerHandler();
   }, [firstValue, secondValue, boostValue, bttnSearcher, number]);
 
-  // useEffect(() => {
-  //   SetFieldValue();
-  // }, [deleteField, agentsField, promoField, otherField]);
+  useEffect(() => {
+    setInterval(() => {
+      GetPriceCountWaiting();
+    }, 4000);
+  }, []);
 
   return (
     <AuthCheck>
@@ -1430,7 +1441,7 @@ const MainPage = () => {
               {minusButtons.map((button) =>
                 button.value == 1 && button.input == 2 ? (
                   <Button key={button.id} onClick={allPrices2}>
-                   <span>{cpData?.middlePercent2 || 0}</span>
+                    <span>{cpData?.middlePercent2 || 0}</span>
                   </Button>
                 ) : (
                   <Button
@@ -1504,6 +1515,7 @@ const MainPage = () => {
                 </div>
               </>
             )}
+            <span className="pc">PC: {priceCountWaiting}</span>
             {xData.length > 0 && yData.length > 0 && (
               <div className="main_chart">
                 <div className="relative w-full h-full">
