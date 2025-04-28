@@ -172,6 +172,7 @@ const MainPage = () => {
     minPer: string;
     lS: string;
   } | null>(null);
+  const [minusPercent,setMinusPercent] = useState("")
   const [returnMode, setReturnMode] = useState(false);
   const [buttonsInfo, setButtonsInfo] = useState<ButtonsInfo>({
     total: 0,
@@ -360,6 +361,16 @@ const MainPage = () => {
       setSelectOpened(false);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const Get = async () => {
+    try {
+      const res = await axios.post("/allPrices2");
+      setMinusPercent(res.data.text)
+      console.log(res.data);
+    } catch (error) {
+      console.log("error");
     }
   };
 
@@ -819,7 +830,9 @@ const MainPage = () => {
     getPhrases();
     getPrices();
     GetDelSum();
+    Get();
   }, []);
+
   useEffect(() => {
     timerHandler();
   }, [firstValue, secondValue, boostValue, bttnSearcher, number]);
@@ -1408,18 +1421,21 @@ const MainPage = () => {
             </div>
 
             <div className="mat__wrapper">
-              {minusButtons.map(
-                (button) =>
-                  button.input != 2 && (
-                    <Button
-                      key={button.id}
-                      onClick={() => minusHandler(button.value, button?.input)}
-                    >
-                      <div className="bttn_arrow">
-                        {`-${button.value} ${buttonTextHandler(button.input)}`}
-                      </div>
-                    </Button>
-                  )
+              {minusButtons.map((button) =>
+                button.value == 1 && button.input == 2 ? (
+                  <Button key={button.id} onClick={allPrices}>
+                    <span>{minusPercent || 0}</span>
+                  </Button>
+                ) : (
+                  <Button
+                    key={button.id}
+                    onClick={() => minusHandler(button.value, button?.input)}
+                  >
+                    <div className="bttn_arrow">
+                      {`-${button.value} ${buttonTextHandler(button.input)}`}
+                    </div>
+                  </Button>
+                )
               )}
             </div>
             {window.innerWidth <= 400 && (
@@ -1783,9 +1799,6 @@ const MainPage = () => {
                       : ""
                   }
                 />
-                {/* <div className="bttn" onClick={SetFieldValue}>
-                  OK
-                </div> */}
               </div>
               <div className="field">
                 <span>Pas:</span>{" "}
@@ -1798,9 +1811,6 @@ const MainPage = () => {
                       : ""
                   }
                 />
-                {/* <div className="bttn" onClick={SetFieldValue}>
-                  OK
-                </div> */}
               </div>
             </div>
 
