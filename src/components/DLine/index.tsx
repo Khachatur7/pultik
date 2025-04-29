@@ -15,6 +15,7 @@ interface Decr {
   price: string;
   step: string;
   hours: number[];
+  name:string
 }
 
 const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
@@ -23,6 +24,7 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
   const [step, setStep] = useState(dLine.step);
   const [avitoId, setAvitoId] = useState(dLine.avitoId);
   const [avitoIdTwo, setAvitoIdTwo] = useState(dLine.avitoId2);
+  const [name, setName] = useState(dLine.name);
   const [hours, setHours] = useState<number[]>(dLine.hours);
 
   const index = dLine.decr.match(/\d+/);
@@ -92,6 +94,7 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
         hours: hours.sort((a, b) => a - b),
         price: price,
         decr: step,
+        name:name,
       });
       if (res.status == 200) {
         setUpdate(true);
@@ -214,6 +217,13 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
           placeholder="AvitoId2"
           value={avitoIdTwo}
           onChange={(e) => onlyEnglish(e.target.value, setAvitoIdTwo)}
+        />
+        <input
+          type="text"
+          className="inpt name"
+          placeholder="Name"
+          value={name}
+          onChange={(e) => onlyEnglish(e.target.value, setName)}
         />
       </div>
       <div className="bttns_list">

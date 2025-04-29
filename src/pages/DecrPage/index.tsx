@@ -10,18 +10,19 @@ interface Decr {
   price: string;
   step: string;
   hours: number[];
+  name:string
 }
 
 const DecrPage = () => {
   const [dLines, setDLines] = useState<Decr[]>([]);
   const [update, setUpdate] = useState(false);
+
   const getDecrs = async () => {
     try {
       const res = await axios.post("/readDecr", {
         user: localStorage.getItem("pultik-user-login"),
       });
       if (res.status == 200) {
-        console.log(res.data.massage);
         setDLines(res.data.massage);
       }
     } catch (error) {
