@@ -55,9 +55,10 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
 
   const addDecr = async () => {
     try {
+      const newIndex = dLines[dLines.length - 1].decr.match(/\d+/)?.[0];
       const res = await axios.post("/createDecr", {
         user: localStorage.getItem("pultik-user-login"),
-        newInd: dLines.length,
+        newInd: newIndex ? +newIndex + 1 : 0,
         avId: avitoId,
         price: price,
         decr: step,
