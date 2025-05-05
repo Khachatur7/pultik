@@ -15,7 +15,7 @@ interface Decr {
   price: string;
   step: string;
   hours: number[];
-  name:string
+  name: string;
 }
 
 const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
@@ -58,7 +58,7 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
       const newIndex = dLines[dLines.length - 1].decr.match(/\d+/)?.[0];
       const res = await axios.post("/createDecr", {
         user: localStorage.getItem("pultik-user-login"),
-        newInd: newIndex ? +newIndex + 1 : 0,
+        newInd: newIndex ? +newIndex : 0,
         avId: avitoId,
         price: price,
         decr: step,
@@ -77,8 +77,10 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
         user: localStorage.getItem("pultik-user-login"),
         index: index,
       });
+
       if (res.status == 200) {
         setUpdate(true);
+        location.reload();
       }
     } catch (error) {
       console.log(`Не удалось удалить decr №${index}`);
@@ -95,7 +97,7 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
         hours: hours.sort((a, b) => a - b),
         price: price,
         decr: step,
-        name:name,
+        name: name,
       });
       if (res.status == 200) {
         setUpdate(true);
