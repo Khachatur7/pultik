@@ -15,6 +15,7 @@ import { BotItem } from "./store/useBotsStore";
 import ProblemsPage from "./pages/Problems";
 import NewPage from "./pages/NewPage";
 import DPage from "./pages/DecrPage";
+import TPage from "./pages/TPage";
 
 const routes: RouteProps[] = [
   {
@@ -61,6 +62,10 @@ const routes: RouteProps[] = [
   {
     path: "/d-page",
     element: <DPage />,
+  },
+  {
+    path: "/t-page",
+    element: <TPage />,
   },
 ];
 
