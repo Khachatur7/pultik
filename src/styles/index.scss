@@ -1164,7 +1164,7 @@ body {
   grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)) !important;
   gap: 10px;
 }
-
+.t_bttn,
 .d_bttn {
   position: absolute;
   bottom: 14px;
@@ -1179,6 +1179,10 @@ body {
   z-index: 11111;
 }
 
+.t_bttn{
+  bottom: 62px;
+}
+.t_bttn:hover,
 .d_bttn:hover {
   color: #000 !important;
 }

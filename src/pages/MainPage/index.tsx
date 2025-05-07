@@ -1337,6 +1337,14 @@ const MainPage = () => {
               D
             </Link>
           )}
+          {window.innerWidth > 400 && (
+            <Link
+              to={"/t-page"}
+              className="btn btn__changing-item flex items-center justify-center t_bttn"
+            >
+              T
+            </Link>
+          )}
           <div className="mat__container">
             <div className="input__wrapper">
               <input
