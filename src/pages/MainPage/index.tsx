@@ -1180,34 +1180,6 @@ const MainPage = () => {
               >
                 <img src={chartPageImage} alt="box-image" className="w-12" />
               </Link>
-              <Link
-                to={"/charts2"}
-                className={`btn btn__changing-item flex items-center justify-center`}
-              >
-                <img src={roiImage} alt="roi-image" className="w-12" />
-              </Link>
-              <Link
-                to={"/watch"}
-                className={`btn btn__changing-item flex items-center justify-center`}
-              >
-                <img src={eyeImage} alt="box-image" className="w-16" />
-              </Link>
-              <Link
-                to={"/problems"}
-                className={`btn btn__changing-item flex items-center justify-center`}
-              >
-                <img
-                  src={problemsP}
-                  alt="box-image"
-                  style={{ width: "80px" }}
-                />
-              </Link>
-              <Link
-                to={"/new"}
-                className={`btn btn__changing-item flex items-center justify-center`}
-              >
-                <img src={houseImage} alt="box-image" className="w-12" />
-              </Link>
             </div>
           </>
         )}
@@ -1329,21 +1301,49 @@ const MainPage = () => {
               <></>
             )}
           </div>
-          {window.innerWidth > 400 && (
-            <Link
-              to={"/d-page"}
-              className="btn btn__changing-item flex items-center justify-center d_bttn"
-            >
-              D
-            </Link>
-          )}
-          {window.innerWidth > 400 && (
-            <Link
-              to={"/t-page"}
-              className="btn btn__changing-item flex items-center justify-center t_bttn"
-            >
-              T
-            </Link>
+          {window.innerWidth > 600 && (
+            <div className="right_column_bttn_list">
+              <Link
+                to={"/charts2"}
+                className={`btn btn__changing-item flex items-center justify-center bttn`}
+              >
+                <img src={roiImage} alt="roi-image" className="w-12" />
+              </Link>
+              <Link
+                to={"/watch"}
+                className={`btn btn__changing-item flex items-center justify-center bttn`}
+              >
+                <img src={eyeImage} alt="box-image" className="w-16" />
+              </Link>
+              <Link
+                to={"/problems"}
+                className={`btn btn__changing-item flex items-center justify-center bttn`}
+              >
+                <img
+                  src={problemsP}
+                  alt="box-image"
+                  style={{ width: "80px" }}
+                />
+              </Link>
+              <Link
+                to={"/new"}
+                className={`btn btn__changing-item flex items-center justify-center bttn`}
+              >
+                <img src={houseImage} alt="box-image" className="w-12" />
+              </Link>
+              <Link
+                to={"/t-page"}
+                className="btn btn__changing-item flex items-center justify-center bttn"
+              >
+                T
+              </Link>
+              <Link
+                to={"/d-page"}
+                className="btn btn__changing-item flex items-center justify-center bttn"
+              >
+                D
+              </Link>
+            </div>
           )}
           <div className="mat__container">
             <div className="input__wrapper">

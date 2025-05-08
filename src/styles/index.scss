@@ -1164,27 +1164,30 @@ body {
   grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)) !important;
   gap: 10px;
 }
-.t_bttn,
-.d_bttn {
+
+.right_column_bttn_list{
+  width: 155px !important;
   position: absolute;
   bottom: 14px;
   right: 35px;
-  width: 155px !important;
-  height: 44px !important;
-  background: #ffffffc0;
-  border-radius: 15px;
-  color: #000;
-  font-weight: 600;
-  font-size: 29px;
-  z-index: 11111;
-}
-
-.t_bttn{
-  bottom: 62px;
-}
-.t_bttn:hover,
-.d_bttn:hover {
-  color: #000 !important;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 10px;
+  flex-direction: column; 
+  .bttn{
+    width: 100%;
+    height: 44px !important;
+    background: #ffffffc0;
+    border-radius: 15px;
+    color: #000;
+    font-weight: 600;
+    font-size: 29px;
+    z-index: 11111;
+  }
+  .bttn:hover {
+   color: #000 !important;
+  }
 }
 
 .decr_page {
