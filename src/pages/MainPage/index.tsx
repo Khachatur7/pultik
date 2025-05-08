@@ -1148,12 +1148,13 @@ const MainPage = () => {
                       item.value == 13 ||
                       item.value == 14 ||
                       item.value == 15 ||
-                      item.value == 16? (
+                      item.value == 16 ||
+                      item.value == 17  ? (
                       <RunnerSVG
                         fill={currentTab != item.value ? "#000" : "#fff"}
                         width="65px"
                       />
-                    ) : item.value == 17 ? (
+                    ) : item.value == 18 ? (
                       <RecyclingSVG
                         fill={currentTab != item.value ? "#000" : "#fff"}
                         width="45px"
@@ -1169,15 +1170,15 @@ const MainPage = () => {
                 )
               )}
               <Link
-                to={`/${18}`}
+                to={`/${19}`}
                 className={`btn black_svg_stroke btn__changing-item flex items-center justify-center${
-                  currentTab === 18 ? " active" : ""
+                  currentTab === 19 ? " active" : ""
                 }`}
-                key={18}
-                onClick={() => setCurrentTab(18)}
+                key={19}
+                onClick={() => setCurrentTab(19)}
               >
                 <TrashSVG
-                  strokeColor={currentTab !== 18 ? "#000" : "#fff"}
+                  strokeColor={currentTab !== 19 ? "#000" : "#fff"}
                   width="37px"
                 />
               </Link>
