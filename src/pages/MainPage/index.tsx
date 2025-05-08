@@ -109,10 +109,26 @@ const tabs = [
     id: nanoid(),
     value: 14,
   },
+  {
+    id: nanoid(),
+    value: 15,
+  },
+  {
+    id: nanoid(),
+    value: 16,
+  },
+  {
+    id: nanoid(),
+    value: 17,
+  },
+  {
+    id: nanoid(),
+    value: 18,
+  },
 ];
 
 const itemsPerPage = 77;
-const pages = 16;
+const pages = 18;
 const totalButtons = itemsPerPage * pages;
 
 const buttonsArray = [...Array(totalButtons)];
@@ -1129,12 +1145,15 @@ const MainPage = () => {
                       item.value == 10 ||
                       item.value == 11 ||
                       item.value == 12 ||
-                      item.value == 13 ? (
+                      item.value == 13 ||
+                      item.value == 14 ||
+                      item.value == 15 ||
+                      item.value == 16? (
                       <RunnerSVG
                         fill={currentTab != item.value ? "#000" : "#fff"}
                         width="65px"
                       />
-                    ) : item.value == 14 ? (
+                    ) : item.value == 17 ? (
                       <RecyclingSVG
                         fill={currentTab != item.value ? "#000" : "#fff"}
                         width="45px"
@@ -1150,15 +1169,15 @@ const MainPage = () => {
                 )
               )}
               <Link
-                to={`/${15}`}
+                to={`/${18}`}
                 className={`btn black_svg_stroke btn__changing-item flex items-center justify-center${
-                  currentTab === 15 ? " active" : ""
+                  currentTab === 18 ? " active" : ""
                 }`}
-                key={15}
-                onClick={() => setCurrentTab(15)}
+                key={18}
+                onClick={() => setCurrentTab(18)}
               >
                 <TrashSVG
-                  strokeColor={currentTab !== 15 ? "#000" : "#fff"}
+                  strokeColor={currentTab !== 18 ? "#000" : "#fff"}
                   width="37px"
                 />
               </Link>
