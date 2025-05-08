@@ -1055,7 +1055,7 @@ body {
 
 .tabs .btn {
   width: 95%;
-  height: 70px;
+  height: 67px;
   z-index: 1111;
 }
 
@@ -1955,11 +1955,21 @@ body {
 .btn__changing {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 8px;
   width: 5%;
   align-items: center;
+    .small_bttn{
+     height: 37px;
+     gap: 15px;
+     svg{
+      width: 37px;
+     }
+    div{
+      font-size: 14px !important; 
+      justify-content: center;
+    }
+  }
 }
-
 .mat__wrapper {
   margin-top: 7px;
   display: grid;
@@ -2497,7 +2507,7 @@ body {
 .btn__changing {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   width: 5%;
   align-items: center;
 }

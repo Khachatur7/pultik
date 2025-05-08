@@ -128,7 +128,7 @@ const tabs = [
 ];
 
 const itemsPerPage = 77;
-const pages = 18;
+const pages = 19;
 const totalButtons = itemsPerPage * pages;
 
 const buttonsArray = [...Array(totalButtons)];
@@ -1124,7 +1124,7 @@ const MainPage = () => {
                     to={`/${item.value}`}
                     className={`btns-page-btn btn black_svg btn__changing-item flex items-center justify-center${
                       currentTab === item.value ? " active" : ""
-                    }`}
+                    } ${item.value == 18? "small_bttn":""}`}
                     key={item.id}
                     onClick={() =>
                       item.value != "upDown" ? setCurrentTab(+item.value) : ""
