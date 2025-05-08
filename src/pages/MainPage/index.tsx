@@ -245,6 +245,7 @@ const MainPage = () => {
   const [otherField, setOtherField] = useState("");
   const [actField, setActField] = useState("");
   const [pasField, setPasField] = useState("");
+  const [fieldsCount, setFieldsCount] = useState(0);
   const [delSum, setDelSum] = useState<number[]>([]);
   const plusHandler = (value: number, input?: InputTypes) => {
     if (input === 1) {
@@ -655,6 +656,15 @@ const MainPage = () => {
         setOtherField(res.data.massage[3].toString());
         setActField(res.data.massage2.act.toString());
         setPasField(res.data.massage2.pas.toString());
+        const allPrices = (
+          +res.data.massage[0] +
+          +res.data.massage[1] +
+          +res.data.massage[2] +
+          +res.data.massage[3] +
+          +res.data.massage2.act +
+          +res.data.massage2.pas
+        ).toFixed(2);
+        setFieldsCount(+allPrices);
       }
     } catch (error) {
       console.log(`Не удалось получить данные с роута "/priceData"`);
@@ -1124,7 +1134,7 @@ const MainPage = () => {
                     to={`/${item.value}`}
                     className={`btns-page-btn btn black_svg btn__changing-item flex items-center justify-center${
                       currentTab === item.value ? " active" : ""
-                    } ${item.value == 18? "small_bttn":""}`}
+                    } ${item.value == 18 ? "small_bttn" : ""}`}
                     key={item.id}
                     onClick={() =>
                       item.value != "upDown" ? setCurrentTab(+item.value) : ""
@@ -1149,7 +1159,7 @@ const MainPage = () => {
                       item.value == 14 ||
                       item.value == 15 ||
                       item.value == 16 ||
-                      item.value == 17  ? (
+                      item.value == 17 ? (
                       <RunnerSVG
                         fill={currentTab != item.value ? "#000" : "#fff"}
                         width="65px"
@@ -1579,6 +1589,7 @@ const MainPage = () => {
               </div>
             )}
             <div className="inputs_column">
+             
               <div className="field">
                 <span>Del:</span>{" "}
                 <input
@@ -1858,6 +1869,7 @@ const MainPage = () => {
                   }
                 />
               </div>
+               <div className="all_price">{fieldsCount}</div>
             </div>
 
             <MainPageFexp number={number} setNumber={setNumber} />
