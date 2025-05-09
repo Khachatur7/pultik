@@ -660,9 +660,7 @@ const MainPage = () => {
           +res.data.massage[0] +
           +res.data.massage[1] +
           +res.data.massage[2] +
-          +res.data.massage[3] +
-          +res.data.massage2.act +
-          +res.data.massage2.pas
+          +res.data.massage[3]
         ).toFixed(2);
         setFieldsCount(+allPrices);
       }
