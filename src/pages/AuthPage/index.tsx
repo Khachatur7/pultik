@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Container } from "@/components";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/store";
 import CloseEye from "../../images/close-eye.svg";
 import Eye from "../../images/eye.svg";
+import axios from "axios";
 
 const AuthPage = () => {
   const navigate = useNavigate();
@@ -48,6 +49,40 @@ const AuthPage = () => {
       setLoading(false);
     }
   };
+
+  const getMessages = async () => {
+    try {
+      const res = await axios.post("/massages");
+      const messagesLength = localStorage.getItem("messages");
+      if (res.data) {
+        if (!messagesLength) {
+          localStorage.setItem(
+            "messages",
+            JSON.stringify(res.data.massage.length)
+          );
+        } else if (+messagesLength > res.data.massage.length) {
+          const audio = new Audio("src/message1.mp3");
+          audio.play().catch((error) => {
+            console.error("Ошибка воспроизведения звука:", error);
+          });
+          localStorage.setItem(
+            "messages",
+            JSON.stringify(res.data.massage.length)
+          );
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    const checkNewMessages = setInterval(() => {
+      getMessages();
+    }, 2000);
+
+    return () => clearInterval(checkNewMessages);
+  }, []);
 
   return (
     <Container>

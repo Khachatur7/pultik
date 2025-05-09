@@ -882,6 +882,42 @@ const MainPage = () => {
     }, 4000);
   }, []);
 
+  const getMessages = async () => {
+    try {
+      const res = await axios.post("/massages");
+      const messagesLength = localStorage.getItem("messages");
+      console.log(res.data.massage.length);
+      
+      if (res.data) {
+        if (!messagesLength) {
+          localStorage.setItem(
+            "messages",
+            JSON.stringify(res.data.massage.length)
+          );
+        } else if (+messagesLength < res.data.massage.length) {
+          const audio = new Audio("src/message1.mp3");
+          audio.play().catch((error) => {
+            console.error("Ошибка воспроизведения звука:", error);
+          });
+          localStorage.setItem(
+            "messages",
+            JSON.stringify(res.data.massage.length)
+          );
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    const checkNewMessages = setInterval(() => {
+      getMessages();
+    }, 2000);
+
+    return () => clearInterval(checkNewMessages);
+  }, []);
+  
   return (
     <AuthCheck>
       {openChangingMenu && (
@@ -1587,7 +1623,6 @@ const MainPage = () => {
               </div>
             )}
             <div className="inputs_column">
-             
               <div className="field">
                 <span>Del:</span>{" "}
                 <input
@@ -1867,7 +1902,7 @@ const MainPage = () => {
                   }
                 />
               </div>
-               <div className="all_price">{fieldsCount}</div>
+              <div className="all_price">{fieldsCount}</div>
             </div>
 
             <MainPageFexp number={number} setNumber={setNumber} />

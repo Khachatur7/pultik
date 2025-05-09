@@ -1,26 +1,55 @@
 import { InfoBlockParser } from "@/components";
 import { infoBlockItems } from "@/store/useBotsStore";
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const WatchPage = () => {
   const [bots, setBots] = useState();
   const navigate = useNavigate();
-const LogOut = () => {
-  console.log(5555);
-  
-  localStorage.removeItem("pultik-user-login");
-  localStorage.removeItem("pultik-token-key");
-  navigate("/auth");
+  const LogOut = () => {
+    localStorage.removeItem("pultik-user-login");
+    localStorage.removeItem("pultik-token-key");
+    navigate("/auth");
+  };
+  const getMessages = async () => {
+    try {
+      const res = await axios.post("/massages");
+      const messagesLength = localStorage.getItem("messages");
+      if (res.data) {
+        if (!messagesLength) {
+          localStorage.setItem(
+            "messages",
+            JSON.stringify(res.data.massage.length)
+          );
+        } else if (+messagesLength > res.data.massage.length) {
+          const audio = new Audio("src/message1.mp3");
+          audio.play().catch((error) => {
+            console.error("Ошибка воспроизведения звука:", error);
+          });
+          localStorage.setItem(
+            "messages",
+            JSON.stringify(res.data.massage.length)
+          );
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-}
+  useEffect(() => {
+    const checkNewMessages = setInterval(() => {
+      getMessages();
+    }, 2000);
 
+    return () => clearInterval(checkNewMessages);
+  }, []);
   useEffect(() => {
     fetch("https://hjklhkjlhkljhpjhkhddhgfdghfdgfcycffgh.ru:2999/pultikMon")
       .then((res) => res.json())
       .then((res) => setBots(res.answer));
   }, []);
-
 
   return (
     <div className="flex items-start justify-center gap-12 px-10 pt-16 h-full watch_page_list">
@@ -72,7 +101,6 @@ const LogOut = () => {
           viewBox="0 0 512 512"
           xmlns="http://www.w3.org/2000/svg"
         >
-          
           <path
             d="M304,336v40a40,40,0,0,1-40,40H104a40,40,0,0,1-40-40V136a40,40,0,0,1,40-40H256c22.09,0,48,17.91,48,40v40"
             style={{

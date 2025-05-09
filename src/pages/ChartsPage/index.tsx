@@ -8,13 +8,9 @@ const ChartsPage = () => {
 
     const [dates, setDates] = useState<string[] | null>(null);
     const [totalPages, setTotalPages] = useState(1);
-
     const [dayMargin, setDayMargin] = useState<number[] | null>(null);
-
     const [ordersNum, setOrdersNum] = useState<number[] | null>(null);
-
     const [chartDataLeft, setChartDataLeft] = useState<number[] | null>(null);
-    
     const [chartDataRight, setChartDataRight] = useState<number[] | null>(null);
 
     const getChartData = async () => {
@@ -71,7 +67,40 @@ const ChartsPage = () => {
         }
 
     }
+  const getMessages = async () => {
+    try {
+      const res = await axios.post("/massages");
+      const messagesLength = localStorage.getItem("messages");
+      if (res.data) {
+        if (!messagesLength) {
+          localStorage.setItem(
+            "messages",
+            JSON.stringify(res.data.massage.length)
+          );
+        } else if (+messagesLength > res.data.massage.length) {
+          const audio = new Audio("src/message1.mp3");
+          audio.play().catch((error) => {
+            console.error("Ошибка воспроизведения звука:", error);
+          });
+          localStorage.setItem(
+            "messages",
+            JSON.stringify(res.data.massage.length)
+          );
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  useEffect(() => {
+    const checkNewMessages = setInterval(() => {
+      getMessages();
+    }, 2000);
+
+    return () => clearInterval(checkNewMessages);
+  }, []);
+  
     useEffect(() => {
         getChartData();
     }, []);

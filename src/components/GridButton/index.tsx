@@ -129,6 +129,7 @@ const GridButton: React.FC<Props> = ({
         boost: boostValue,
         user: localStorage.getItem("pultik-user-login"),
       });
+console.log("WORKING");
 
       if (!res.data) {
         throw Error();

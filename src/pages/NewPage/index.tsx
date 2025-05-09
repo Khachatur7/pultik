@@ -17,7 +17,7 @@ const NewPage = () => {
 
   const loadData = async () => {
     try {
-      const res = await axios.post("/gRead",{
+      const res = await axios.post("/gRead", {
         user: localStorage.getItem("pultik-user-login"),
       });
 
@@ -34,7 +34,6 @@ const NewPage = () => {
   };
 
   const setWright = async (el: ReadButton) => {
-    
     try {
       const res = await axios.post("/gWright", {
         p: el.p == 0 ? 1 : 0,
@@ -46,9 +45,8 @@ const NewPage = () => {
         throw Error();
       }
 
-      alert(res.data.message)
-      loadData()
-       
+      alert(res.data.message);
+      loadData();
     } catch (error) {
       console.log(error);
     }
@@ -66,6 +64,41 @@ const NewPage = () => {
         return "";
     }
   };
+
+  const getMessages = async () => {
+    try {
+      const res = await axios.post("/massages");
+      const messagesLength = localStorage.getItem("messages");
+      if (res.data) {
+        if (!messagesLength) {
+          localStorage.setItem(
+            "messages",
+            JSON.stringify(res.data.massage.length)
+          );
+        } else if (+messagesLength > res.data.massage.length) {
+          const audio = new Audio("src/message1.mp3");
+          audio.play().catch((error) => {
+            console.error("Ошибка воспроизведения звука:", error);
+          });
+          localStorage.setItem(
+            "messages",
+            JSON.stringify(res.data.massage.length)
+          );
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    const checkNewMessages = setInterval(() => {
+      getMessages();
+    }, 2000);
+
+    return () => clearInterval(checkNewMessages);
+  }, []);
+
   useEffect(() => {
     loadData();
   }, []);
