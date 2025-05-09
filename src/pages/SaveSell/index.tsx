@@ -48,19 +48,21 @@ interface FexpItemType {
 
 const ButtonCreatePage = () => {
   const [orderId, setOrderId] = useState("");
-  // const [sku, setSku] = useState(""); 
-  // const [isOpened, setIsOpened] = useState(false); 
+  // const [sku, setSku] = useState("");
+  // const [isOpened, setIsOpened] = useState(false);
   const [loading, setLoading] = useState(false);
   const [salesInfo, setSalesInfo] = useState<ModalDataType[] | null>(null);
   const [fexpInfo, setFexpInfo] = useState<FexpItemType[] | null>(null);
   const [ctaxInfo, setCtaxInfo] = useState<FexpItemType[] | null>(null);
   const [isShiped, setIsShiped] = useState<ModalDataType[] | null>(null);
-  // const [shipSku, setShipSku] = useState(""); 
-  // const [shipPrice, setShipPrice] = useState(""); 
-  // const [shipAmount, setShipAmount] = useState(""); 
-  // const [shipNumber, setShipNumber] = useState(""); 
+  // const [shipSku, setShipSku] = useState("");
+  // const [shipPrice, setShipPrice] = useState("");
+  // const [shipAmount, setShipAmount] = useState("");
+  // const [shipNumber, setShipNumber] = useState("");
   const [modalData, setModalData] = useState<ModalDataType | null>(null);
   const [countFStocks, setCountFStocks] = useState(false);
+  const readMessages = localStorage.getItem("read-messages");
+  const allMessages = localStorage.getItem("messages");
 
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -340,6 +342,20 @@ const ButtonCreatePage = () => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    const checkNewMessagesCount = setInterval(() => {
+      if (allMessages && readMessages) {
+        if (+allMessages > +readMessages) {
+          const audio = new Audio("src/piii.mp3");
+          audio.play().catch((error) => {
+            console.error("Ошибка воспроизведения звука:", error);
+          });
+        }
+      }
+    }, 5000);
+    return () => clearInterval(checkNewMessagesCount);
+  }, []);
 
   useEffect(() => {
     const checkNewMessages = setInterval(() => {

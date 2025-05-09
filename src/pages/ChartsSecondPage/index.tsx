@@ -7,7 +7,8 @@ const ChartsPage = () => {
   const [dates, setDates] = useState<string[] | null>(null);
   const [totalPages, setTotalPages] = useState(1);
   const [roiMonth, setRoiMonth] = useState<number[] | null>(null);
-
+  const readMessages = localStorage.getItem("read-messages");
+  const allMessages = localStorage.getItem("messages");
   const [todayMm, setTodayMm] = useState<number[] | null>(null);
   const [todayMmDates, setTodayMmDates] = useState<string[] | null>(null);
   const [todayMmTotalPages, setTodayMmTotalPages] = useState(1);
@@ -100,6 +101,21 @@ const ChartsPage = () => {
 
     return () => clearInterval(checkNewMessages);
   }, []);
+
+  useEffect(() => {
+    const checkNewMessagesCount = setInterval(() => {
+      if (allMessages && readMessages) {
+        if (+allMessages > +readMessages) {
+          const audio = new Audio("src/piii.mp3");
+          audio.play().catch((error) => {
+            console.error("Ошибка воспроизведения звука:", error);
+          });
+        }
+      }
+    }, 5000);
+    return () => clearInterval(checkNewMessagesCount);
+  }, []);
+
   useEffect(() => {
     getChartData();
   }, []);

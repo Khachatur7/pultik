@@ -14,6 +14,8 @@ interface ReadButton {
 
 const NewPage = () => {
   const [items, setItems] = useState<ReadButton[] | null>(null);
+  const readMessages = localStorage.getItem("read-messages");
+  const allMessages = localStorage.getItem("messages");
 
   const loadData = async () => {
     try {
@@ -69,6 +71,7 @@ const NewPage = () => {
     try {
       const res = await axios.post("/massages");
       const messagesLength = localStorage.getItem("messages");
+
       if (res.data) {
         if (!messagesLength) {
           localStorage.setItem(
@@ -97,6 +100,21 @@ const NewPage = () => {
     }, 2000);
 
     return () => clearInterval(checkNewMessages);
+  }, []);
+
+  useEffect(() => {
+    const checkNewMessagesCount = setInterval(() => {
+      if (allMessages && readMessages) {
+        if (+allMessages > +readMessages) {
+          const audio = new Audio("src/piii.mp3");
+          audio.play().catch((error) => {
+            console.error("Ошибка воспроизведения звука:", error);
+          });
+        }
+      }
+      
+    }, 5000);
+    return () => clearInterval(checkNewMessagesCount);
   }, []);
 
   useEffect(() => {

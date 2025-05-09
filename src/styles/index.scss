@@ -408,7 +408,10 @@ body {
   }
   .not_read_messages{
     top: -390px;
-    left: 180px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 15px;
   }
 }
 

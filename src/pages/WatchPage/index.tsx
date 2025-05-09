@@ -12,6 +12,9 @@ const WatchPage = () => {
     localStorage.removeItem("pultik-token-key");
     navigate("/auth");
   };
+  const readMessages = localStorage.getItem("read-messages");
+  const allMessages = localStorage.getItem("messages");
+
   const getMessages = async () => {
     try {
       const res = await axios.post("/massages");
@@ -45,10 +48,25 @@ const WatchPage = () => {
 
     return () => clearInterval(checkNewMessages);
   }, []);
+  
   useEffect(() => {
     fetch("https://hjklhkjlhkljhpjhkhddhgfdghfdgfcycffgh.ru:2999/pultikMon")
       .then((res) => res.json())
       .then((res) => setBots(res.answer));
+  }, []);
+
+  useEffect(() => {
+    const checkNewMessagesCount = setInterval(() => {
+      if (allMessages && readMessages) {
+        if (+allMessages > +readMessages) {
+          const audio = new Audio("src/piii.mp3");
+          audio.play().catch((error) => {
+            console.error("Ошибка воспроизведения звука:", error);
+          });
+        }
+      }
+    }, 5000);
+    return () => clearInterval(checkNewMessagesCount);
   }, []);
 
   return (

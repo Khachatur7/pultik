@@ -16,7 +16,6 @@ import { transliterationMap } from "@/common";
 // }
 
 const ButtonCreatePage = () => {
-  
   // const navigate = useNavigate();
   // const [number, setNumber] = useState("");
   const [name, setName] = useState("");
@@ -46,6 +45,8 @@ const ButtonCreatePage = () => {
   const [dataField, setDataField] = useState<string>("");
   const [dataCompare, setDataCompare] = useState<string[]>();
   const [changedData, setChangedData] = useState<string>();
+  const readMessages = localStorage.getItem("read-messages");
+  const allMessages = localStorage.getItem("messages");
 
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -70,7 +71,7 @@ const ButtonCreatePage = () => {
     //   return toast.warning("Введите остаток");
     // }
 
-    if (+basePrice<=0 || isNaN(Number(basePrice))) {
+    if (+basePrice <= 0 || isNaN(Number(basePrice))) {
       return alert("Базовая цена должна быть больше 0");
     }
 
@@ -123,7 +124,7 @@ const ButtonCreatePage = () => {
       // navigate("/");
     } catch (error) {
       console.log(error);
-      
+
       toast.error("Не удалось создать кнопку");
     } finally {
       setLoading(false);
@@ -187,21 +188,22 @@ const ButtonCreatePage = () => {
       }
     });
   };
-   const onlyEnglish = (
-      value: string,
-      setState: React.Dispatch<React.SetStateAction<string>>
-    ) => {
-     const symb = value[value.length-1]
-     const transliterationKeys = Object.keys(transliterationMap)
-      
-      if (transliterationKeys.includes(symb)) {
-        const resVal = value.slice(0,value.length-1) + transliterationMap[symb] 
-        
-        setState(resVal);
-      } else {
-        setState(value);
-      }
-    };
+  const onlyEnglish = (
+    value: string,
+    setState: React.Dispatch<React.SetStateAction<string>>
+  ) => {
+    const symb = value[value.length - 1];
+    const transliterationKeys = Object.keys(transliterationMap);
+
+    if (transliterationKeys.includes(symb)) {
+      const resVal =
+        value.slice(0, value.length - 1) + transliterationMap[symb];
+
+      setState(resVal);
+    } else {
+      setState(value);
+    }
+  };
   const toggleNameValueType = () => {
     if (nameFieldType == "string") {
       setNameFieldType("number");
@@ -226,7 +228,7 @@ const ButtonCreatePage = () => {
       setTypesList(loadListArr);
     } catch (error) {}
   };
-  
+
   const getMessages = async () => {
     try {
       const res = await axios.post("/massages");
@@ -268,13 +270,12 @@ const ButtonCreatePage = () => {
   }, []);
 
   useEffect(() => {
-   const comListTimer = setInterval(() => {
-      loadComList()
+    const comListTimer = setInterval(() => {
+      loadComList();
     }, 5000);
 
     return () => clearInterval(comListTimer);
   }, []);
-
 
   useEffect(() => {
     const checkNewMessages = setInterval(() => {
@@ -282,6 +283,20 @@ const ButtonCreatePage = () => {
     }, 2000);
 
     return () => clearInterval(checkNewMessages);
+  }, []);
+
+  useEffect(() => {
+    const checkNewMessagesCount = setInterval(() => {
+      if (allMessages && readMessages) {
+        if (+allMessages > +readMessages) {
+          const audio = new Audio("src/piii.mp3");
+          audio.play().catch((error) => {
+            console.error("Ошибка воспроизведения звука:", error);
+          });
+        }
+      }
+    }, 5000);
+    return () => clearInterval(checkNewMessagesCount);
   }, []);
 
   return (
@@ -318,7 +333,7 @@ const ButtonCreatePage = () => {
                 className="create_page_item"
                 type="text"
                 value={name}
-                onChange={(e) =>onlyEnglish(e.target.value,setName)}
+                onChange={(e) => onlyEnglish(e.target.value, setName)}
                 style={{ marginTop: 0 }}
               />
             </div>
@@ -356,7 +371,7 @@ const ButtonCreatePage = () => {
                 className="create_page_item"
                 type="text"
                 value={sku}
-                onChange={(e) => onlyEnglish(e.target.value,setSku)}
+                onChange={(e) => onlyEnglish(e.target.value, setSku)}
                 style={{ marginTop: 0 }}
               />
             </div>
@@ -376,7 +391,7 @@ const ButtonCreatePage = () => {
                 className="create_page_item"
                 type="text"
                 value={vart}
-                onChange={(e) => onlyEnglish(e.target.value,setVart)}
+                onChange={(e) => onlyEnglish(e.target.value, setVart)}
                 style={{ marginTop: 0 }}
               />
             </div>
@@ -387,7 +402,7 @@ const ButtonCreatePage = () => {
                 className="create_page_item"
                 type="text"
                 value={wBar}
-                onChange={(e) => onlyEnglish(e.target.value,setWBar)}
+                onChange={(e) => onlyEnglish(e.target.value, setWBar)}
                 style={{ marginTop: 0 }}
               />
             </div>
@@ -397,7 +412,7 @@ const ButtonCreatePage = () => {
                 className="create_page_item"
                 type="text"
                 value={aaid}
-                onChange={(e) => onlyEnglish(e.target.value,setAaid)}
+                onChange={(e) => onlyEnglish(e.target.value, setAaid)}
                 style={{ marginTop: 0 }}
               />
             </div>
@@ -536,7 +551,7 @@ const ButtonCreatePage = () => {
                     id="key_input"
                     name="key_input"
                     value={keyField}
-                    onChange={(e) => onlyEnglish(e.target.value,setKeyField)}
+                    onChange={(e) => onlyEnglish(e.target.value, setKeyField)}
                   />
                 </div>
                 :
@@ -571,7 +586,7 @@ const ButtonCreatePage = () => {
                   id="data_input"
                   name="data_input"
                   value={dataField}
-                  onChange={(e) => onlyEnglish(e.target.value,setDataField )}
+                  onChange={(e) => onlyEnglish(e.target.value, setDataField)}
                 />
                 <div className="rt">
                   <span>{rT}</span>

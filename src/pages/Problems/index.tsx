@@ -15,6 +15,9 @@ interface Problem {
 const ProblemsPage = () => {
   const [problems, setProblems] = useState<Problem[]>([]);
   const [text, setText] = useState<string>("");
+  const readMessages = localStorage.getItem("read-messages");
+  const allMessages = localStorage.getItem("messages");
+
   const GetProblems = async () => {
     try {
       const res = await axios.post<Problems>("/getProblemsData", {
@@ -31,20 +34,21 @@ const ProblemsPage = () => {
     }
   };
   const onlyEnglish = (
-     value: string,
-     setState: React.Dispatch<React.SetStateAction<string>>
-   ) => {
-    const symb = value[value.length-1]
-    const transliterationKeys = Object.keys(transliterationMap)
-     
-     if (transliterationKeys.includes(symb)) {
-       const resVal = value.slice(0,value.length-1) + transliterationMap[symb] 
-       
-       setState(resVal);
-     } else {
-       setState(value);
-     }
-   };
+    value: string,
+    setState: React.Dispatch<React.SetStateAction<string>>
+  ) => {
+    const symb = value[value.length - 1];
+    const transliterationKeys = Object.keys(transliterationMap);
+
+    if (transliterationKeys.includes(symb)) {
+      const resVal =
+        value.slice(0, value.length - 1) + transliterationMap[symb];
+
+      setState(resVal);
+    } else {
+      setState(value);
+    }
+  };
   const createProblem = async () => {
     if (text) {
       try {
@@ -58,7 +62,7 @@ const ProblemsPage = () => {
 
         if (res.status == 200) {
           GetProblems();
-          setText("")
+          setText("");
           alert(res.data.text);
         }
       } catch (error) {
@@ -71,6 +75,7 @@ const ProblemsPage = () => {
     try {
       const res = await axios.post("/massages");
       const messagesLength = localStorage.getItem("messages");
+
       if (res.data) {
         if (!messagesLength) {
           localStorage.setItem(
@@ -102,6 +107,21 @@ const ProblemsPage = () => {
   }, []);
 
   useEffect(() => {
+    const checkNewMessagesCount = setInterval(() => {
+      if (allMessages && readMessages) {
+        if (+allMessages > +readMessages) {
+          const audio = new Audio("src/piii.mp3");
+          audio.play().catch((error) => {
+            console.error("Ошибка воспроизведения звука:", error);
+          });
+        }
+      }
+      
+    }, 5000);
+    return () => clearInterval(checkNewMessagesCount);
+  }, []);
+
+  useEffect(() => {
     GetProblems();
   }, []);
 
@@ -124,7 +144,7 @@ const ProblemsPage = () => {
               <input
                 type="text"
                 value={text}
-                onChange={(e) =>onlyEnglish(e.target.value,setText)}
+                onChange={(e) => onlyEnglish(e.target.value, setText)}
               />
               <button className="post_problem__btn" onClick={createProblem}>
                 Добавить

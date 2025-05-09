@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Container } from "@/components";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/store";
 import CloseEye from "../../images/close-eye.svg";
 import Eye from "../../images/eye.svg";
-import axios from "axios";
 
 const AuthPage = () => {
   const navigate = useNavigate();
@@ -50,40 +49,6 @@ const AuthPage = () => {
     }
   };
 
-  const getMessages = async () => {
-    try {
-      const res = await axios.post("/massages");
-      const messagesLength = localStorage.getItem("messages");
-      if (res.data) {
-        if (!messagesLength) {
-          localStorage.setItem(
-            "messages",
-            JSON.stringify(res.data.massage.length)
-          );
-        } else if (+messagesLength < res.data.massage.length) {
-          const audio = new Audio("src/message1.mp3");
-          audio.play().catch((error) => {
-            console.error("Ошибка воспроизведения звука:", error);
-          });
-          localStorage.setItem(
-            "messages",
-            JSON.stringify(res.data.massage.length)
-          );
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    const checkNewMessages = setInterval(() => {
-      getMessages();
-    }, 2000);
-
-    return () => clearInterval(checkNewMessages);
-  }, []);
-
   return (
     <Container>
       <div className="w-full flex flex-col">
@@ -108,7 +73,7 @@ const AuthPage = () => {
               />
               <div className="password">
                 <input
-                  type={showPassword?"text":"password"}
+                  type={showPassword ? "text" : "password"}
                   placeholder="Пароль"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -116,12 +81,18 @@ const AuthPage = () => {
                 />
 
                 {!showPassword && (
-                  <div className="close_eye" onClick={()=>setShowPassword(!showPassword)}>
+                  <div
+                    className="close_eye"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
                     <img src={CloseEye} alt="" />
                   </div>
                 )}
                 {showPassword && (
-                  <div className="eye" onClick={()=>setShowPassword(!showPassword)}>
+                  <div
+                    className="eye"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
                     <img src={Eye} alt="" />
                   </div>
                 )}
