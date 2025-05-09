@@ -246,6 +246,8 @@ const MainPage = () => {
   const [actField, setActField] = useState("");
   const [pasField, setPasField] = useState("");
   const [fieldsCount, setFieldsCount] = useState(0);
+  const readMessages = localStorage.getItem("read-messages");
+  const allMessages = localStorage.getItem("messages");
   const [delSum, setDelSum] = useState<number[]>([]);
   const plusHandler = (value: number, input?: InputTypes) => {
     if (input === 1) {
@@ -886,8 +888,7 @@ const MainPage = () => {
     try {
       const res = await axios.post("/massages");
       const messagesLength = localStorage.getItem("messages");
-      console.log(res.data.massage.length);
-      
+
       if (res.data) {
         if (!messagesLength) {
           localStorage.setItem(
@@ -917,7 +918,7 @@ const MainPage = () => {
 
     return () => clearInterval(checkNewMessages);
   }, []);
-  
+
   return (
     <AuthCheck>
       {openChangingMenu && (
@@ -1903,6 +1904,9 @@ const MainPage = () => {
                 />
               </div>
               <div className="all_price">{fieldsCount}</div>
+              <div className="not_read_messages">
+                {allMessages && readMessages ? +allMessages - +readMessages : 0}
+              </div>
             </div>
 
             <MainPageFexp number={number} setNumber={setNumber} />

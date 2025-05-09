@@ -77,7 +77,7 @@ const ChartsPage = () => {
             "messages",
             JSON.stringify(res.data.massage.length)
           );
-        } else if (+messagesLength > res.data.massage.length) {
+        } else if (+messagesLength < res.data.massage.length) {
           const audio = new Audio("src/message1.mp3");
           audio.play().catch((error) => {
             console.error("Ошибка воспроизведения звука:", error);
