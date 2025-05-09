@@ -895,6 +895,10 @@ const MainPage = () => {
             "messages",
             JSON.stringify(res.data.massage.length)
           );
+          localStorage.setItem(
+            "read-messages",
+            JSON.stringify(res.data.massage.length)
+          );
         } else if (+messagesLength < res.data.massage.length) {
           const audio = new Audio("src/message1.mp3");
           audio.play().catch((error) => {
