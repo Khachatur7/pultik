@@ -890,7 +890,7 @@ const MainPage = () => {
       const messagesLength = localStorage.getItem("messages");
 
       if (res.data) {
-        if (!messagesLength) {
+        if (!messagesLength || !readMessages) {
           localStorage.setItem(
             "messages",
             JSON.stringify(res.data.massage.length)
