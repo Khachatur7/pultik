@@ -92,7 +92,7 @@ const ChartsPage = () => {
   useEffect(() => {
     const checkNewMessages = setInterval(() => {
       getMessages();
-    }, 2000);
+    }, 5000);
 
     return () => clearInterval(checkNewMessages);
   }, []);
@@ -110,7 +110,7 @@ const ChartsPage = () => {
     }, 5000);
     return () => clearInterval(checkNewMessagesCount);
   }, []);
-  
+
   useEffect(() => {
     getChartData();
   }, []);

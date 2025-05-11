@@ -280,7 +280,7 @@ const ButtonCreatePage = () => {
   useEffect(() => {
     const checkNewMessages = setInterval(() => {
       getMessages();
-    }, 2000);
+ }, 5000);
 
     return () => clearInterval(checkNewMessages);
   }, []);
@@ -295,7 +295,7 @@ const ButtonCreatePage = () => {
           });
         }
       }
-    }, 5000);
+  }, 5000);
     return () => clearInterval(checkNewMessagesCount);
   }, []);
 

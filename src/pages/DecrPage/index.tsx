@@ -74,7 +74,7 @@ const DecrPage = () => {
   useEffect(() => {
     const checkNewMessages = setInterval(() => {
       getMessages();
-    }, 2000);
+ }, 5000);
 
     return () => clearInterval(checkNewMessages);
   }, []);
