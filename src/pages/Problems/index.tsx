@@ -83,7 +83,7 @@ const ProblemsPage = () => {
             JSON.stringify(res.data.massage.length)
           );
         } else if (+messagesLength < res.data.massage.length) {
-          const audio = new Audio("src/message1.mp3");
+         const audio = new Audio("/new-message.mp3");
           audio.play().catch((error) => {
             console.error("Ошибка воспроизведения звука:", error);
           });
@@ -110,7 +110,7 @@ const ProblemsPage = () => {
     const checkNewMessagesCount = setInterval(() => {
       if (allMessages && readMessages) {
         if (+allMessages > +readMessages) {
-          const audio = new Audio("src/piii.mp3");
+          const audio = new Audio("/piii.mp3");
           audio.play().catch((error) => {
             console.error("Ошибка воспроизведения звука:", error);
           });

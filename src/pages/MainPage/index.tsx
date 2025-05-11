@@ -900,7 +900,7 @@ const MainPage = () => {
             JSON.stringify(res.data.massage.length)
           );
         } else if (+messagesLength < res.data.massage.length) {
-          const audio = new Audio("/message1.mp3");
+          const audio = new Audio("/new-message.mp3");
           audio.play().catch((error) => {
             console.error("Ошибка воспроизведения звука:", error);
           });
