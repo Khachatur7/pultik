@@ -125,12 +125,63 @@ const tabs = [
     id: nanoid(),
     value: 18,
   },
+    {
+    id: nanoid(),
+    value: 19,
+  },
+    {
+    id: nanoid(),
+    value: 20,
+  },
+    {
+    id: nanoid(),
+    value: 21,
+  },
+    {
+    id: nanoid(),
+    value: 22,
+  },
+    {
+    id: nanoid(),
+    value: 23,
+  },
+    {
+    id: nanoid(),
+    value: 24,
+  },
+    {
+    id: nanoid(),
+    value: 25,
+  },
+    {
+    id: nanoid(),
+    value: 26,
+  },
+    {
+    id: nanoid(),
+    value: 27,
+  },
+    {
+    id: nanoid(),
+    value: 28,
+  },
+    {
+    id: nanoid(),
+    value: 29,
+  },
+    {
+    id: nanoid(),
+    value: 30,
+  },
+    {
+    id: nanoid(),
+    value: 31,
+  },
 ];
 
 const itemsPerPage = 77;
-const pages = 19;
+const pages = tabs.length;
 const totalButtons = itemsPerPage * pages;
-
 const buttonsArray = [...Array(totalButtons)];
 
 interface ButtonsInfo {
@@ -1173,7 +1224,7 @@ const MainPage = () => {
       <Container>
         {window.innerWidth > 600 && (
           <>
-            <div className="btn__changing flex items-center justify-center tabs">
+            <div className="btn__changing tabs">
               {tabs.map((item, ind) =>
                 item.value == "upDown" ? (
                   <img
@@ -1185,9 +1236,7 @@ const MainPage = () => {
                 ) : (
                   <Link
                     to={`/${item.value}`}
-                    className={`btns-page-btn btn black_svg btn__changing-item flex items-center justify-center${
-                      currentTab === item.value ? " active" : ""
-                    } ${item.value == 18 ? "small_bttn" : ""}`}
+                    className={`btns-page-btn btn black_svg btn__changing-item flex items-center justify-center`}
                     key={item.id}
                     onClick={() =>
                       item.value != "upDown" ? setCurrentTab(+item.value) : ""
@@ -1198,32 +1247,16 @@ const MainPage = () => {
                         fill={currentTab != item.value ? "#000" : "#fff"}
                         width="45px"
                       />
-                    ) : item.value == 3 ||
-                      item.value == 4 ||
-                      item.value == 5 ||
-                      item.value == 6 ||
-                      item.value == 7 ||
-                      item.value == 8 ||
-                      item.value == 9 ||
-                      item.value == 10 ||
-                      item.value == 11 ||
-                      item.value == 12 ||
-                      item.value == 13 ||
-                      item.value == 14 ||
-                      item.value == 15 ||
-                      item.value == 16 ||
-                      item.value == 17 ? (
-                      <RunnerSVG
-                        fill={currentTab != item.value ? "#000" : "#fff"}
-                        width="65px"
-                      />
-                    ) : item.value == 18 ? (
+                    ) : item.value == 31 ? (
                       <RecyclingSVG
                         fill={currentTab != item.value ? "#000" : "#fff"}
                         width="45px"
                       />
                     ) : (
-                      item.value
+                      <RunnerSVG
+                        fill={currentTab != item.value ? "#000" : "#fff"}
+                        width="65px"
+                      />
                     )}
                     <div className="bttns-count">
                       <span> {(+item.value - 1) * itemsPerPage + 1} </span>
@@ -1233,15 +1266,15 @@ const MainPage = () => {
                 )
               )}
               <Link
-                to={`/${19}`}
+                to={`/${pages}`}
                 className={`btn black_svg_stroke btn__changing-item flex items-center justify-center${
-                  currentTab === 19 ? " active" : ""
+                  currentTab === pages ? " active" : ""
                 }`}
-                key={19}
-                onClick={() => setCurrentTab(19)}
+                key={pages}
+                onClick={() => setCurrentTab(pages)}
               >
                 <TrashSVG
-                  strokeColor={currentTab !== 19 ? "#000" : "#fff"}
+                  strokeColor={currentTab !== pages ? "#000" : "#fff"}
                   width="37px"
                 />
               </Link>

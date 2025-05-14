@@ -2051,25 +2051,16 @@ body {
 }
 
 .btn__changing {
+  width: 5%;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  width: 5%;
   align-items: center;
+  overflow-y: auto;
+}
 
-  .small_bttn {
-    height: 37px;
-    gap: 15px;
-
-    svg {
-      width: 37px;
-    }
-
-    div {
-      font-size: 14px !important;
-      justify-content: center;
-    }
-  }
+.btn__changing::-webkit-scrollbar{
+ width: 0;
 }
 
 .mat__wrapper {
