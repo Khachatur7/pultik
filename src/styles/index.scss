@@ -244,16 +244,35 @@ body {
 .black_svg:hover {
   svg,
   path {
-    fill: #000 !important;
+    fill: #000;
   }
 
   color: #000 !important;
+}
+
+.black_svg_stroke{
+    width: 95%;
+    height: 67px;
+    z-index: 1111;
 }
 
 .black_svg_stroke:hover {
   svg,
   path {
     stroke: #000 !important;
+  }
+
+  color: #000 !important;
+}
+
+.trash-bttn {
+  gap: 14px !important;
+}
+
+.trash-bttn:hover {
+  svg,
+  path {
+    fill: none !important;
   }
 
   color: #000 !important;
@@ -398,7 +417,7 @@ body {
       }
     }
   }
-.not_read_messages,
+  .not_read_messages,
   .all_price {
     position: relative;
     top: -380px;
@@ -406,7 +425,7 @@ body {
     font-size: 40px;
     z-index: 1111;
   }
-  .not_read_messages{
+  .not_read_messages {
     top: -390px;
     display: flex;
     justify-content: start;
@@ -784,7 +803,7 @@ body {
   border: 1px solid #000;
   border-radius: 5px;
   padding: 1px 0px;
-  width: 45%;
+  width: 30%;
   height: 40px;
   display: flex;
   align-items: center;
@@ -793,11 +812,11 @@ body {
   transition: 0.4s ease;
 
   svg,
-  path {
+  path,
+   line {
     transition: 0.4s ease;
   }
 }
-
 .ok_bttn:hover,
 .edit_bttn:hover {
   background: #000;
@@ -806,6 +825,14 @@ body {
   svg,
   path {
     fill: #fff;
+  }
+}
+
+.trash-svg:hover {
+  svg,
+  path {
+    stroke: #fff;
+    fill: #000;
   }
 }
 
@@ -1995,7 +2022,6 @@ body {
     right: unset;
     left: 5%;
   }
-
   &.bottom-left {
     right: unset;
     left: 5%;
@@ -2059,8 +2085,8 @@ body {
   overflow-y: auto;
 }
 
-.btn__changing::-webkit-scrollbar{
- width: 0;
+.btn__changing::-webkit-scrollbar {
+  width: 0;
 }
 
 .mat__wrapper {

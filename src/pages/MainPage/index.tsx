@@ -125,57 +125,61 @@ const tabs = [
     id: nanoid(),
     value: 18,
   },
-    {
+  {
     id: nanoid(),
     value: 19,
   },
-    {
+  {
     id: nanoid(),
     value: 20,
   },
-    {
+  {
     id: nanoid(),
     value: 21,
   },
-    {
+  {
     id: nanoid(),
     value: 22,
   },
-    {
+  {
     id: nanoid(),
     value: 23,
   },
-    {
+  {
     id: nanoid(),
     value: 24,
   },
-    {
+  {
     id: nanoid(),
     value: 25,
   },
-    {
+  {
     id: nanoid(),
     value: 26,
   },
-    {
+  {
     id: nanoid(),
     value: 27,
   },
-    {
+  {
     id: nanoid(),
     value: 28,
   },
-    {
+  {
     id: nanoid(),
     value: 29,
   },
-    {
+  {
     id: nanoid(),
     value: 30,
   },
-    {
+  {
     id: nanoid(),
     value: 31,
+  },
+    {
+    id: nanoid(),
+    value: 32,
   },
 ];
 
@@ -1236,7 +1240,9 @@ const MainPage = () => {
                 ) : (
                   <Link
                     to={`/${item.value}`}
-                    className={`btns-page-btn btn black_svg btn__changing-item flex items-center justify-center`}
+                    className={`btns-page-btn btn black_svg btn__changing-item flex items-center justify-center ${
+                      item.value == 31 || item.value == 32 ? "trash-bttn" : ""
+                    }`}
                     key={item.id}
                     onClick={() =>
                       item.value != "upDown" ? setCurrentTab(+item.value) : ""
@@ -1247,9 +1253,9 @@ const MainPage = () => {
                         fill={currentTab != item.value ? "#000" : "#fff"}
                         width="45px"
                       />
-                    ) : item.value == 31 ? (
-                      <RecyclingSVG
-                        fill={currentTab != item.value ? "#000" : "#fff"}
+                    ) : item.value == 31 || item.value == 32 ? (
+                      <TrashSVG
+                        strokeColor={currentTab !== pages ? "#000" : "#fff"}
                         width="45px"
                       />
                     ) : (
@@ -1265,9 +1271,9 @@ const MainPage = () => {
                   </Link>
                 )
               )}
-              <Link
+              {/* <Link
                 to={`/${pages}`}
-                className={`btn black_svg_stroke btn__changing-item flex items-center justify-center${
+                className={`btn black_svg_stroke btn__changing-item${
                   currentTab === pages ? " active" : ""
                 }`}
                 key={pages}
@@ -1277,7 +1283,7 @@ const MainPage = () => {
                   strokeColor={currentTab !== pages ? "#000" : "#fff"}
                   width="37px"
                 />
-              </Link>
+              </Link> */}
               <Link
                 to={"/save-sell"}
                 className={`btn btn__changing-item flex items-center justify-center`}

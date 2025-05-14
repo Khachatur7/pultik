@@ -8,6 +8,7 @@ import PopupExit from "../PopupExit.tsx";
 import { useNavigate } from "react-router-dom";
 import ButtonItemType from "@/types/common/ButtonItemType.ts";
 import dataFilterHandler from "@/handlers/dataFilterHandler.ts";
+import TrashSVG from "../SVGcomponents/TrashSVG/index.tsx";
 
 interface CircleModalComponentLeftProps {
   comValue?: ComValueType;
@@ -84,7 +85,6 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
     }
   };
   const postNewBttnIndex = async (newInd?: number) => {
-    
     const post = await axios.post("/changeIndex", {
       old: ind,
       new: newInd ? newInd : index,
@@ -210,6 +210,21 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
   const EditBttn = () => {
     localStorage.setItem("i", JSON.stringify(index));
     navigate("/create-button");
+  };
+
+  const toGarbage = async () => {
+    try {
+      const res = await axios.post("/toGarbage", {
+        user: localStorage.getItem("pultik-user-login"),
+        i: index,
+      });
+
+      if (res.data) {
+        alert("Действие прошло успешно!");
+      }
+    } catch (error) {
+      alert("Что-то пошло не так :(");
+    }
   };
 
   useEffect(() => {
@@ -387,6 +402,9 @@ l-285 285 -658 -658 c-361 -361 -660 -657 -665 -657 -4 0 -7 1310 -7 2910 l0
                   />
                 </g>
               </svg>
+            </button>
+            <button className="edit_bttn trash-svg" onClick={toGarbage}>
+              <TrashSVG width="28px" />
             </button>
           </div>
         </>
