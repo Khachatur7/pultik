@@ -217,10 +217,12 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
       const res = await axios.post("/toGarbage", {
         user: localStorage.getItem("pultik-user-login"),
         i: index,
+        name: fullName,
+        sku: sku,
       });
 
       if (res.data) {
-        alert("Действие прошло успешно!");
+        alert(res.data.massage);
       }
     } catch (error) {
       alert("Что-то пошло не так :(");
