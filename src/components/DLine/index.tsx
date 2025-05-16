@@ -13,6 +13,7 @@ interface Decr {
   avitoId2: string;
   decr: string;
   price: string;
+  minPrice: string;
   step: string;
   hours: number[];
   name: string;
@@ -25,6 +26,7 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
   const [avitoId, setAvitoId] = useState(dLine.avitoId);
   const [avitoIdTwo, setAvitoIdTwo] = useState(dLine.avitoId2);
   const [name, setName] = useState(dLine.name);
+  const [minPrice, setMinPrice] = useState(dLine.minPrice);
   const [hours, setHours] = useState<number[]>(dLine.hours);
 
   const index = dLine.decr.match(/\d+/);
@@ -227,6 +229,13 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
           placeholder="Name"
           value={name}
           onChange={(e) => onlyEnglish(e.target.value, setName)}
+        />
+        <input
+          type="text"
+          className="inpt min_price"
+          placeholder="minPrice"
+          value={minPrice}
+          onChange={(e) => onlyEnglish(e.target.value, setMinPrice)}
         />
       </div>
       <div className="bttns_list">

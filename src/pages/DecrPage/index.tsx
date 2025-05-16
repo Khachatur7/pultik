@@ -8,6 +8,7 @@ interface Decr {
   avitoId2: string;
   decr: string;
   price: string;
+  minPrice:string;
   step: string;
   hours: number[];
   name: string;
@@ -24,7 +25,7 @@ const DecrPage = () => {
       const res = await axios.post("/readDecr", {
         user: localStorage.getItem("pultik-user-login"),
       });
-      if (res.status == 200) {
+      if (res.status == 200) { 
         setDLines(res.data.massage);
       }
     } catch (error) {
