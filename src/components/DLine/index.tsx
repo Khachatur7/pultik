@@ -63,6 +63,7 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
         newInd: newIndex ? +newIndex : 0,
         avId: avitoId,
         price: price,
+        minPrice:minPrice,
         decr: step,
       });
 
@@ -98,6 +99,7 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
         avId2: avitoIdTwo,
         hours: hours.sort((a, b) => a - b),
         price: price,
+        minPrice:minPrice,
         decr: step,
         name: name,
       });
