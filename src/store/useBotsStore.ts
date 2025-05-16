@@ -50,7 +50,7 @@ export const infoBlockItems = [
     },
     {
         id: nanoid(),
-        text: "Wb bot",
+        text: "Mongo res bot2",
         link: "http://95.165.6.177:9054/test",
         errorText: "Wildberries stocks bot is DOWN!",
         saveField: "wb",
