@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import ButtonItemType from "@/types/common/ButtonItemType.ts";
 import dataFilterHandler from "@/handlers/dataFilterHandler.ts";
 import TrashSVG from "../SVGcomponents/TrashSVG/index.tsx";
+import PrintSVG from "../SVGcomponents/PrintSVG/index.tsx";
 
 interface CircleModalComponentLeftProps {
   comValue?: ComValueType;
@@ -22,6 +23,7 @@ interface CircleModalComponentLeftProps {
   setCopy: React.Dispatch<React.SetStateAction<boolean>>;
   setXalturaParent: React.Dispatch<any>;
   fullName: string;
+  fStocks?: number;
 }
 
 const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
@@ -35,6 +37,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
   setCopy,
   setXalturaParent,
   fullName,
+  fStocks,
 }) => {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState(false);
@@ -101,7 +104,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
     }
   };
 
-  const changeArea = async () => {
+  const ChangeArea = async () => {
     try {
       const res = await axios.post("/api/getData", {
         user: localStorage.getItem("pultik-user-login"),
@@ -117,7 +120,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
       );
       let areaChanged = false;
       const firstIndex: number = index >= 155 ? 1 : 155;
-      const lastIndex: number = index >= 155 ? 154 : 1002;
+      const lastIndex: number = index >= 155 ? 154 : 2310;
       bttnArray.slice(firstIndex, lastIndex).map((_, bttnInd: number) => {
         const itemIndex = bttnInd + firstIndex;
 
@@ -212,13 +215,31 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
     navigate("/create-button");
   };
 
-  const toGarbage = async () => {
+  const ToGarbage = async () => {
     try {
       const res = await axios.post("/toGarbage", {
         user: localStorage.getItem("pultik-user-login"),
         i: index,
         name: fullName,
         sku: sku,
+      });
+
+      if (res.data) {
+        alert(res.data.massage);
+      }
+    } catch (error) {
+      alert("Что-то пошло не так :(");
+    }
+  };
+
+  const PrintInfo = async () => {
+    try {
+      const res = await axios.post("/printInfo", {
+        user: localStorage.getItem("pultik-user-login"),
+        i: index,
+        name: fullName,
+        sku: sku,
+        f: fStocks,
       });
 
       if (res.data) {
@@ -374,7 +395,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
             <button onClick={EditBttn} className="edit_bttn">
               <span>Edit</span>
             </button>
-            <button className="edit_bttn" onClick={changeArea}>
+            <button className="edit_bttn" onClick={ChangeArea}>
               <svg
                 version="1.0"
                 xmlns="http://www.w3.org/2000/svg"
@@ -405,8 +426,13 @@ l-285 285 -658 -658 c-361 -361 -660 -657 -665 -657 -4 0 -7 1310 -7 2910 l0
                 </g>
               </svg>
             </button>
-            <button className="edit_bttn trash-svg" onClick={toGarbage}>
+            <button className="edit_bttn trash-svg" onClick={ToGarbage}>
               <TrashSVG width="28px" />
+            </button>
+          </div>
+          <div className="edit_bttns_two">
+            <button className="edit_bttn" onClick={PrintInfo}>
+              <PrintSVG width="28px" />
             </button>
           </div>
         </>

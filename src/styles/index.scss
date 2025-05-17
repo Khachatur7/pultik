@@ -773,13 +773,21 @@ body {
     transform: translateX(0px);
   }
 }
-
-.edit_bttns {
+.edit_bttns,
+.edit_bttns_two {
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: center;
   gap: 5px;
+}
+
+.edit_bttns_two{
+  justify-content: end;
+  padding-right: 3px;
+  .edit_bttn{
+    width: 31%;
+  }
 }
 
 .ok_bttn {
@@ -803,7 +811,7 @@ body {
   border: 1px solid #000;
   border-radius: 5px;
   padding: 1px 0px;
-  width: 30%;
+  width: 31%;
   height: 40px;
   display: flex;
   align-items: center;

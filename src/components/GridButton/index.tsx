@@ -420,6 +420,7 @@ const GridButton: React.FC<Props> = ({
           setCopy={setCopy}
           setXalturaParent={setXaltura}
           fullName={fullName}
+          fStocks={fStocks}
         />
         <CircleModalComponentBottomLeft cust={cust} edited={edited} />
       </button>
