@@ -119,8 +119,8 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
         (el: ButtonItemType) => !dataFilterHandler(el._id) && !isNaN(el.i)
       );
       let areaChanged = false;
-      const firstIndex: number = index >= 155 ? 1 : 155;
-      const lastIndex: number = index >= 155 ? 154 : 2310;
+      const firstIndex: number = index <= 155 ? 1 : 155;
+      const lastIndex: number = index <= 155 ? 154 : 2310;
       bttnArray.slice(firstIndex, lastIndex).map((_, bttnInd: number) => {
         const itemIndex = bttnInd + firstIndex;
 
