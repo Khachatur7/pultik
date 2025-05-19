@@ -6,8 +6,8 @@ import ToggleComponent from "../ToggleComponent";
 import { adminLogin } from "@/store/adminLogin";
 import PopupExit from "../PopupExit.tsx";
 import { useNavigate } from "react-router-dom";
-import ButtonItemType from "@/types/common/ButtonItemType.ts";
-import dataFilterHandler from "@/handlers/dataFilterHandler.ts";
+// import ButtonItemType from "@/types/common/ButtonItemType.ts";
+// import dataFilterHandler from "@/handlers/dataFilterHandler.ts";
 import TrashSVG from "../SVGcomponents/TrashSVG/index.tsx";
 import PrintSVG from "../SVGcomponents/PrintSVG/index.tsx";
 
@@ -54,8 +54,8 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
       setIsActive(true);
     }
   }
-  const itemsPerPage = 77;
-  const bttnArray = [...Array(itemsPerPage * 9)];
+  // const itemsPerPage = 77;
+  // const bttnArray = [...Array(itemsPerPage * 9)];
   if (ind > index && firstRender) {
     setIndex(ind);
   }
@@ -106,34 +106,37 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
 
   const ChangeArea = async () => {
     try {
-      const res = await axios.post("/api/getData", {
+      const res = await axios.post("/changeCom", {
         user: localStorage.getItem("pultik-user-login"),
+        i:index,
       });
 
-      if (!res.data) {
-        throw Error();
+      if (res.data) {
+    alert(res.data.massage)
       }
 
-      const resData = res.data.countedStocks;
-      const items = resData.filter(
-        (el: ButtonItemType) => !dataFilterHandler(el._id) && !isNaN(el.i)
-      );
-      let areaChanged = false;
-      const firstIndex: number = index <= 155 ? 1 : 155;
-      const lastIndex: number = index <= 155 ? 154 : 2310;
-      bttnArray.slice(firstIndex, lastIndex).map((_, bttnInd: number) => {
-        const itemIndex = bttnInd + firstIndex;
+      // const resData = res.data.countedStocks;
+      // const items = resData.filter(
+      //   (el: ButtonItemType) => !dataFilterHandler(el._id) && !isNaN(el.i)
+      // );
+      // let areaChanged = false;
+      // const firstIndex: number = index <= 155 ? 1 : 155;
+      // const lastIndex: number = index <= 155 ? 154 : 2310;
+      // bttnArray.slice(firstIndex, lastIndex).map((_, bttnInd: number) => {
+      //   const itemIndex = bttnInd + firstIndex;
 
-        const elements = items.filter(
-          (el: ButtonItemType) => el.i === itemIndex
-        );
+      //   const elements = items.filter(
+      //     (el: ButtonItemType) => el.i === itemIndex
+      //   );
 
-        if (elements.length == 0 && !areaChanged) {
-          areaChanged = true;
-          postNewBttnIndex(itemIndex);
-        }
-      });
-    } catch (error) {}
+      //   if (elements.length == 0 && !areaChanged) {
+      //     areaChanged = true;
+      //     postNewBttnIndex(itemIndex);
+      //   }
+      // });
+    } catch (error) {
+      alert("Не удалось поменять местоположение кнопки :(")
+    }
   };
 
   async function ReturnModePlus() {
