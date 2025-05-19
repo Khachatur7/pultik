@@ -17,7 +17,9 @@ const WatchPage = () => {
 
   const getMessages = async () => {
     try {
-      const res = await axios.post("/massages");
+      const res = await axios.post("/massages", {
+        user: localStorage.getItem("pultik-user-login"),
+      });
       const messagesLength = localStorage.getItem("messages");
       if (res.data) {
         if (!messagesLength) {
@@ -26,7 +28,7 @@ const WatchPage = () => {
             JSON.stringify(res.data.massage.length)
           );
         } else if (+messagesLength < res.data.massage.length) {
-         const audio = new Audio("/new-message.mp3");
+          const audio = new Audio("/new-message.mp3");
           audio.play().catch((error) => {
             console.error("Ошибка воспроизведения звука:", error);
           });
@@ -44,11 +46,11 @@ const WatchPage = () => {
   useEffect(() => {
     const checkNewMessages = setInterval(() => {
       getMessages();
- }, 5000);
+    }, 5000);
 
     return () => clearInterval(checkNewMessages);
   }, []);
-  
+
   useEffect(() => {
     fetch("https://hjklhkjlhkljhpjhkhddhgfdghfdgfcycffgh.ru:2999/pultikMon")
       .then((res) => res.json())

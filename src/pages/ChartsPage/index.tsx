@@ -65,7 +65,9 @@ const ChartsPage = () => {
   };
   const getMessages = async () => {
     try {
-      const res = await axios.post("/massages");
+      const res = await axios.post("/massages",{
+        user: localStorage.getItem("pultik-user-login"),
+      });
       const messagesLength = localStorage.getItem("messages");
       if (res.data) {
         if (!messagesLength) {
