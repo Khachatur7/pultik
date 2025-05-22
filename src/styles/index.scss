@@ -250,29 +250,16 @@ body {
   color: #000 !important;
 }
 
-.black_svg_stroke{
-    width: 95%;
-    height: 67px;
-    z-index: 1111;
+.black_svg_stroke {
+  width: 95%;
+  height: 67px;
+  z-index: 1111;
 }
 
 .black_svg_stroke:hover {
   svg,
   path {
     stroke: #000 !important;
-  }
-
-  color: #000 !important;
-}
-
-.trash-bttn {
-  gap: 14px !important;
-}
-
-.trash-bttn:hover {
-  svg,
-  path {
-    fill: none !important;
   }
 
   color: #000 !important;
@@ -782,10 +769,10 @@ body {
   gap: 5px;
 }
 
-.edit_bttns_two{
+.edit_bttns_two {
   justify-content: end;
   padding-right: 3px;
-  .edit_bttn{
+  .edit_bttn {
     width: 31%;
   }
 }
@@ -821,7 +808,7 @@ body {
 
   svg,
   path,
-   line {
+  line {
     transition: 0.4s ease;
   }
 }
@@ -1288,7 +1275,8 @@ body {
   justify-content: start;
   gap: 10px;
   flex-direction: column;
-
+  
+  .trash-bttn,
   .bttn {
     width: 100%;
     height: 44px !important;
@@ -1301,6 +1289,22 @@ body {
   }
 
   .bttn:hover {
+    color: #000 !important;
+  }
+
+  .trash-bttn {
+    gap: 14px !important;
+    .bttns-count{
+    font-size: 20px;
+    }
+  }
+
+  .trash-bttn:hover {
+    svg,
+    path {
+      fill: none !important;
+    }
+
     color: #000 !important;
   }
 }
@@ -1392,7 +1396,7 @@ body {
       left: 690px;
       top: 90px;
     }
-    .min_price{
+    .min_price {
       width: 430px;
       position: absolute;
       left: 1140px;

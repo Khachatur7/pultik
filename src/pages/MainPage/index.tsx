@@ -177,7 +177,7 @@ const tabs = [
     id: nanoid(),
     value: 31,
   },
-    {
+  {
     id: nanoid(),
     value: 32,
   },
@@ -941,7 +941,7 @@ const MainPage = () => {
 
   const getMessages = async () => {
     try {
-      const res = await axios.post("/massages",{
+      const res = await axios.post("/massages", {
         user: localStorage.getItem("pultik-user-login"),
       });
       const messagesLength = localStorage.getItem("messages");
@@ -1242,9 +1242,7 @@ const MainPage = () => {
                 ) : (
                   <Link
                     to={`/${item.value}`}
-                    className={`btns-page-btn btn black_svg btn__changing-item flex items-center justify-center ${
-                      item.value == 31 || item.value == 32 ? "trash-bttn" : ""
-                    }`}
+                    className={`btns-page-btn btn black_svg btn__changing-item flex items-center justify-center`}
                     key={item.id}
                     onClick={() =>
                       item.value != "upDown" ? setCurrentTab(+item.value) : ""
@@ -1253,11 +1251,6 @@ const MainPage = () => {
                     {item.value == 1 || item.value == 2 ? (
                       <WalkingManSVG
                         fill={currentTab != item.value ? "#000" : "#fff"}
-                        width="45px"
-                      />
-                    ) : item.value == 31 || item.value == 32 ? (
-                      <TrashSVG
-                        strokeColor={currentTab !== pages ? "#000" : "#fff"}
                         width="45px"
                       />
                     ) : (
@@ -1273,37 +1266,6 @@ const MainPage = () => {
                   </Link>
                 )
               )}
-              {/* <Link
-                to={`/${pages}`}
-                className={`btn black_svg_stroke btn__changing-item${
-                  currentTab === pages ? " active" : ""
-                }`}
-                key={pages}
-                onClick={() => setCurrentTab(pages)}
-              >
-                <TrashSVG
-                  strokeColor={currentTab !== pages ? "#000" : "#fff"}
-                  width="37px"
-                />
-              </Link> */}
-              <Link
-                to={"/save-sell"}
-                className={`btn btn__changing-item flex items-center justify-center`}
-              >
-                <img src={boxImage} alt="box-image" className="w-12" />
-              </Link>
-              <Link
-                to={"/create-button"}
-                className={`btn btn__changing-item flex items-center justify-center`}
-              >
-                <img src={addImage} alt="box-image" className="w-12" />
-              </Link>
-              <Link
-                to={"/charts"}
-                className={`btn btn__changing-item flex items-center justify-center`}
-              >
-                <img src={chartPageImage} alt="box-image" className="w-12" />
-              </Link>
             </div>
           </>
         )}
@@ -1427,6 +1389,47 @@ const MainPage = () => {
           </div>
           {window.innerWidth > 600 && (
             <div className="right_column_bttn_list">
+              {tabs.map((item) =>
+                item.value == 31 || item.value == 32 ? (
+                  <Link
+                    to={`/${item.value}`}
+                    className={`btns-page-btn btn black_svg btn__changing-item flex items-center justify-center trash-bttn`}
+                    key={item.id}
+                    onClick={() =>
+                      item.value != "upDown" ? setCurrentTab(+item.value) : ""
+                    }
+                  >
+                    <TrashSVG
+                      strokeColor={currentTab !== pages ? "#000" : "#fff"}
+                      width="45px"
+                    />
+                    <div className="bttns-count">
+                      <span> {(+item.value - 1) * itemsPerPage + 1} </span>
+                      <span> {+item.value * itemsPerPage}</span>
+                    </div>
+                  </Link>
+                ) : (
+                  ""
+                )
+              )}
+              <Link
+                to={"/save-sell"}
+                className={`btn btn__changing-item flex items-center justify-center bttn`}
+              >
+                <img src={boxImage} alt="box-image" className="w-12" />
+              </Link>
+              <Link
+                to={"/create-button"}
+                className={`btn btn__changing-item flex items-center justify-center bttn`}
+              >
+                <img src={addImage} alt="box-image" className="w-12" />
+              </Link>
+              <Link
+                to={"/charts"}
+                className={`btn btn__changing-item flex items-center justify-center bttn`}
+              >
+                <img src={chartPageImage} alt="box-image" className="w-12" />
+              </Link>
               <Link
                 to={"/charts2"}
                 className={`btn btn__changing-item flex items-center justify-center bttn`}
