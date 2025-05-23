@@ -173,13 +173,16 @@ const tabs = [
     id: nanoid(),
     value: 30,
   },
+];
+
+const garbageTabs = [
   {
     id: nanoid(),
-    value: 31,
+    value: 1,
   },
   {
     id: nanoid(),
-    value: 32,
+    value: 2,
   },
 ];
 
@@ -454,17 +457,20 @@ const MainPage = () => {
     }
   };
 
-  const loadData = async () => {
+  const loadData = async (garbagePageOrNot: boolean) => {
     try {
-      const res = await axios.post("/api/getData", {
-        user: localStorage.getItem("pultik-user-login"),
-      });
+      const res = await axios.post(
+        garbagePageOrNot ? "/api/getData" : "/getGarbage",
+        {
+          user: localStorage.getItem("pultik-user-login"),
+        }
+      );
 
       if (!res.data) {
         throw Error();
       }
 
-      const resData = res.data.countedStocks;
+      const resData = garbagePageOrNot ? res.data.countedStocks : res.data.data;
 
       const itemsButtons = resData.filter(
         (el: ButtonItemType) => !dataFilterHandler(el._id) && !isNaN(el.i)
@@ -546,9 +552,9 @@ const MainPage = () => {
       setMultiTwo(null);
     }
   };
-  const initialLoad = async () => {
+  const initialLoad = async (garbagePageOrNot: boolean) => {
     await loadMulti();
-    await loadData();
+    await loadData(garbagePageOrNot);
   };
 
   const resetInputs = () => {
@@ -851,38 +857,46 @@ const MainPage = () => {
       console.log(error);
     }
   };
+console.log(items);
 
   useEffect(() => {
-    initialLoad();
-    SelectMonth(localStorage.getItem("piker") || "01");
+    // initialLoad();
+    // SelectMonth(localStorage.getItem("piker") || "01");
 
-    const updateHandler = async () => {
-      while (document.location.pathname === "/") {
-        await new Promise((res) =>
-          setTimeout(() => {
-            res(true);
-          }, 5000)
-        );
+    // const updateHandler = async () => {
+    //   while (document.location.pathname === "/") {
+    //     await new Promise((res) =>
+    //       setTimeout(() => {
+    //         res(true);
+    //       }, 5000)
+    //     );
 
-        await initialLoad();
-      }
-    };
+    //     await initialLoad();
+    //   }
+    // };
 
-    updateHandler();
+    // updateHandler();
     console.log(data, lastButton);
     checkInitialDate();
   }, []);
 
   useEffect(() => {
-    setInterval(() => {
-      initialLoad();
+    const UpdateData = setInterval(() => {
+      console.log(currentTab);
+      initialLoad(currentTab < tabs.length - 1);
       SelectMonth(localStorage.getItem("piker") || "01");
     }, 5000);
-  }, []);
+
+    return () => clearInterval(UpdateData);
+  }, [currentTab]);
 
   useEffect(() => {
     getChartData();
   }, []);
+
+  useEffect(() => {
+    loadData(currentTab < tabs.length - 1);
+  }, [currentTab]);
 
   useEffect(() => {
     if (timeLeft < 0) {
@@ -1320,12 +1334,21 @@ const MainPage = () => {
               <>
                 {buttonsArray
                   .slice(
-                    (currentTab - 1) * itemsPerPage,
-                    currentTab * itemsPerPage
+                    currentTab < tabs.length - 1
+                      ? (currentTab - 1) * itemsPerPage
+                      : currentTab - tabs.length - 2 * itemsPerPage,
+                    currentTab < tabs.length - 1
+                      ? currentTab * itemsPerPage
+                      : currentTab - tabs.length - 1 * itemsPerPage
                   )
                   .map((_, index: number) => {
                     const itemIndex =
-                      index + 1 + (currentTab - 1) * itemsPerPage;
+                      index +
+                      1 +
+                      (currentTab < tabs.length - 1
+                        ? currentTab - 1
+                        : currentTab - (tabs.length - 1) - 1) *
+                        itemsPerPage;
 
                     const elements = items.filter(
                       (el: ButtonItemType) => el.i === itemIndex
@@ -1389,29 +1412,23 @@ const MainPage = () => {
           </div>
           {window.innerWidth > 600 && (
             <div className="right_column_bttn_list">
-              {tabs.map((item) =>
-                item.value == 31 || item.value == 32 ? (
-                  <Link
-                    to={`/${item.value}`}
-                    className={`btns-page-btn btn black_svg btn__changing-item flex items-center justify-center trash-bttn`}
-                    key={item.id}
-                    onClick={() =>
-                      item.value != "upDown" ? setCurrentTab(+item.value) : ""
-                    }
-                  >
-                    <TrashSVG
-                      strokeColor={currentTab !== pages ? "#000" : "#fff"}
-                      width="45px"
-                    />
-                    <div className="bttns-count">
-                      <span> {(+item.value - 1) * itemsPerPage + 1} </span>
-                      <span> {+item.value * itemsPerPage}</span>
-                    </div>
-                  </Link>
-                ) : (
-                  ""
-                )
-              )}
+              {garbageTabs.map((item) => (
+                <Link
+                  to={`/${tabs.length - 1 + +item.value}`}
+                  className={`btns-page-btn btn black_svg btn__changing-item flex items-center justify-center trash-bttn`}
+                  key={item.id}
+                  onClick={() => setCurrentTab(tabs.length - 1 + +item.value)}
+                >
+                  <TrashSVG
+                    strokeColor={currentTab !== tabs.length - 1 + +item.value ? "#000" : "#fff"}
+                    width="45px"
+                  />
+                  <div className="bttns-count">
+                    <span> {(+item.value - 1) * itemsPerPage + 1} </span>
+                    <span> {+item.value * itemsPerPage}</span>
+                  </div>
+                </Link>
+              ))}
               <Link
                 to={"/save-sell"}
                 className={`btn btn__changing-item flex items-center justify-center bttn`}
