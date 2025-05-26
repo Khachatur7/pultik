@@ -164,6 +164,7 @@ const MainPage = () => {
     "11",
     "12",
   ];
+  const [colorsChecked, setColorsChecked] = useState(false);
   const [bttnSearcher, setBttnSearcher] = useState("");
   const [number, setNumber] = useState("");
   const searchByWhatButtons = ["Имя", "Sku"];
@@ -187,7 +188,7 @@ const MainPage = () => {
   const createTabsItems = () => {
     const localTabs: { id: string; value: number | string }[] = [];
     for (let i = 1; i < 131; i++) {
-      if (i == 3) {
+      if (i == 4) {
         localTabs.push({ id: nanoid(), value: "upDown" });
         localTabs.push({ id: nanoid(), value: i });
       } else {
@@ -198,19 +199,27 @@ const MainPage = () => {
   };
 
   const findNavBttnsColor = (index: number) => {
-    const localItems = items?.slice(
+    if (!items || colorsChecked) return "full";
+
+    const localItems = items.slice(
       (index - 1) * itemsPerPage,
       index * itemsPerPage
     );
-    if (localItems?.length == itemsPerPage) {
-      return "full";
-    } else if (localItems?.length != itemsPerPage && localItems?.length != 0) {
-      return "not-full"
-    }
-    else if (localItems?.length == 0){
-      return "empty"
+
+    if (localItems.length === 0) return "empty";
+
+    const hasEmptyElement = buttonsArray
+      .slice((index - 1) * itemsPerPage, index * itemsPerPage)
+      .some((_, ind) => {
+        const itemIndex = ind + 1 + (index - 1) * itemsPerPage;
+        return !items.some((el) => el.i === itemIndex);
+      });
+
+    if (index === tabs.length - 1) {
+      setColorsChecked(true); 
     }
 
+    return hasEmptyElement ? "not-full" : "full";
   };
 
   const plusHandler = (value: number, input?: InputTypes) => {
@@ -1144,22 +1153,16 @@ const MainPage = () => {
                         item.value != "upDown"
                           ? findNavBttnsColor(+item.value)
                           : ""
-                      } ${item.value==currentTab ? "active":""}`}
+                      } ${item.value == currentTab ? "active" : ""}`}
                       key={item.id}
                       onClick={() =>
                         item.value != "upDown" ? setCurrentTab(+item.value) : ""
                       }
                     >
                       {item.value == 1 || item.value == 2 ? (
-                        <WalkingManSVG
-                          fill={"#000"}
-                          width="45px"
-                        />
+                        <WalkingManSVG fill={"#000"} width="45px" />
                       ) : (
-                        <RunnerSVG
-                          fill={"#000"}
-                          width="65px"
-                        />
+                        <RunnerSVG fill={"#000"} width="65px" />
                       )}
                       <div className="bttns-count">
                         <span> {(+item.value - 1) * itemsPerPage + 1} </span>
@@ -1222,10 +1225,10 @@ const MainPage = () => {
               <>
                 {buttonsArray
                   .slice(
-                    currentTab < tabs.length - 1
+                    currentTab < tabs.length
                       ? (currentTab - 1) * itemsPerPage
                       : currentTab - tabs.length - 2 * itemsPerPage,
-                    currentTab < tabs.length - 1
+                    currentTab < tabs.length
                       ? currentTab * itemsPerPage
                       : currentTab - tabs.length - 1 * itemsPerPage
                   )
@@ -1233,7 +1236,7 @@ const MainPage = () => {
                     const itemIndex =
                       index +
                       1 +
-                      (currentTab < tabs.length - 1
+                      (currentTab < tabs.length
                         ? currentTab - 1
                         : currentTab - (tabs.length - 1) - 1) *
                         itemsPerPage;
