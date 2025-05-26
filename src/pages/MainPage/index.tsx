@@ -48,133 +48,6 @@ interface IChart {
   _id: string;
 }
 
-const tabs = [
-  {
-    id: nanoid(),
-    value: 1,
-  },
-  {
-    id: nanoid(),
-    value: 2,
-  },
-  {
-    id: nanoid(),
-    value: "upDown",
-  },
-  {
-    id: nanoid(),
-    value: 3,
-  },
-  {
-    id: nanoid(),
-    value: 4,
-  },
-  {
-    id: nanoid(),
-    value: 5,
-  },
-  {
-    id: nanoid(),
-    value: 6,
-  },
-  {
-    id: nanoid(),
-    value: 7,
-  },
-  {
-    id: nanoid(),
-    value: 8,
-  },
-  {
-    id: nanoid(),
-    value: 9,
-  },
-  {
-    id: nanoid(),
-    value: 10,
-  },
-  {
-    id: nanoid(),
-    value: 11,
-  },
-  {
-    id: nanoid(),
-    value: 12,
-  },
-  {
-    id: nanoid(),
-    value: 13,
-  },
-  {
-    id: nanoid(),
-    value: 14,
-  },
-  {
-    id: nanoid(),
-    value: 15,
-  },
-  {
-    id: nanoid(),
-    value: 16,
-  },
-  {
-    id: nanoid(),
-    value: 17,
-  },
-  {
-    id: nanoid(),
-    value: 18,
-  },
-  {
-    id: nanoid(),
-    value: 19,
-  },
-  {
-    id: nanoid(),
-    value: 20,
-  },
-  {
-    id: nanoid(),
-    value: 21,
-  },
-  {
-    id: nanoid(),
-    value: 22,
-  },
-  {
-    id: nanoid(),
-    value: 23,
-  },
-  {
-    id: nanoid(),
-    value: 24,
-  },
-  {
-    id: nanoid(),
-    value: 25,
-  },
-  {
-    id: nanoid(),
-    value: 26,
-  },
-  {
-    id: nanoid(),
-    value: 27,
-  },
-  {
-    id: nanoid(),
-    value: 28,
-  },
-  {
-    id: nanoid(),
-    value: 29,
-  },
-  {
-    id: nanoid(),
-    value: 30,
-  },
-];
-
 const garbageTabs = [
   {
     id: nanoid(),
@@ -185,11 +58,6 @@ const garbageTabs = [
     value: 2,
   },
 ];
-
-const itemsPerPage = 77;
-const pages = tabs.length;
-const totalButtons = itemsPerPage * pages;
-const buttonsArray = [...Array(totalButtons)];
 
 interface ButtonsInfo {
   total: number;
@@ -213,6 +81,14 @@ interface IBots {
 export type LastEventType = "price" | "stocks" | null;
 
 const MainPage = () => {
+  const [tabs, setTabs] = useState<{ id: string; value: number | string }[]>(
+    []
+  );
+  const itemsPerPage = 77;
+  const pages = tabs.length;
+  const totalButtons = itemsPerPage * pages;
+  const buttonsArray = [...Array(totalButtons)];
+
   const storageData = localStorage.getItem("initial-date");
   const [bots, setBots] = useState<IBots[] | null>(null);
   const [http, setHttp] = useState<string | null>(null);
@@ -307,6 +183,36 @@ const MainPage = () => {
   const readMessages = localStorage.getItem("read-messages");
   const allMessages = localStorage.getItem("messages");
   const [delSum, setDelSum] = useState<number[]>([]);
+
+  const createTabsItems = () => {
+    const localTabs: { id: string; value: number | string }[] = [];
+    for (let i = 1; i < 131; i++) {
+      if (i == 3) {
+        localTabs.push({ id: nanoid(), value: "upDown" });
+        localTabs.push({ id: nanoid(), value: i });
+      } else {
+        localTabs.push({ id: nanoid(), value: i });
+      }
+    }
+    setTabs(localTabs);
+  };
+
+  const findNavBttnsColor = (index: number) => {
+    const localItems = items?.slice(
+      (index - 1) * itemsPerPage,
+      index * itemsPerPage
+    );
+    if (localItems?.length == itemsPerPage) {
+      return "full";
+    } else if (localItems?.length != itemsPerPage && localItems?.length != 0) {
+      return "not-full"
+    }
+    else if (localItems?.length == 0){
+      return "empty"
+    }
+
+  };
+
   const plusHandler = (value: number, input?: InputTypes) => {
     if (input === 1) {
       setSecondValue((prev) => (Number(prev) + value).toString());
@@ -857,45 +763,18 @@ const MainPage = () => {
       console.log(error);
     }
   };
-console.log(items);
-
-  useEffect(() => {
-    // initialLoad();
-    // SelectMonth(localStorage.getItem("piker") || "01");
-
-    // const updateHandler = async () => {
-    //   while (document.location.pathname === "/") {
-    //     await new Promise((res) =>
-    //       setTimeout(() => {
-    //         res(true);
-    //       }, 5000)
-    //     );
-
-    //     await initialLoad();
-    //   }
-    // };
-
-    // updateHandler();
-    console.log(data, lastButton);
-    checkInitialDate();
-  }, []);
 
   useEffect(() => {
     const UpdateData = setInterval(() => {
-      console.log(currentTab);
-      initialLoad(currentTab < tabs.length - 1);
+      initialLoad(items != null ? currentTab < tabs.length - 1 : true);
       SelectMonth(localStorage.getItem("piker") || "01");
-    }, 5000);
+    }, 4000);
 
     return () => clearInterval(UpdateData);
   }, [currentTab]);
 
   useEffect(() => {
-    getChartData();
-  }, []);
-
-  useEffect(() => {
-    loadData(currentTab < tabs.length - 1);
+    loadData(items != null ? currentTab < tabs.length - 1 : true);
   }, [currentTab]);
 
   useEffect(() => {
@@ -941,6 +820,10 @@ console.log(items);
     getPhrases();
     getPrices();
     GetDelSum();
+    createTabsItems();
+    checkInitialDate();
+    getChartData();
+    console.log(data, lastButton);
   }, []);
 
   useEffect(() => {
@@ -1245,41 +1128,46 @@ console.log(items);
         {window.innerWidth > 600 && (
           <>
             <div className="btn__changing tabs">
-              {tabs.map((item, ind) =>
-                item.value == "upDown" ? (
-                  <img
-                    src={upDownImage}
-                    alt=""
-                    style={{ width: "35px" }}
-                    key={ind * 10}
-                  />
-                ) : (
-                  <Link
-                    to={`/${item.value}`}
-                    className={`btns-page-btn btn black_svg btn__changing-item flex items-center justify-center`}
-                    key={item.id}
-                    onClick={() =>
-                      item.value != "upDown" ? setCurrentTab(+item.value) : ""
-                    }
-                  >
-                    {item.value == 1 || item.value == 2 ? (
-                      <WalkingManSVG
-                        fill={currentTab != item.value ? "#000" : "#fff"}
-                        width="45px"
-                      />
-                    ) : (
-                      <RunnerSVG
-                        fill={currentTab != item.value ? "#000" : "#fff"}
-                        width="65px"
-                      />
-                    )}
-                    <div className="bttns-count">
-                      <span> {(+item.value - 1) * itemsPerPage + 1} </span>
-                      <span> {+item.value * itemsPerPage}</span>
-                    </div>
-                  </Link>
-                )
-              )}
+              {items &&
+                tabs.map((item, ind) =>
+                  item.value == "upDown" ? (
+                    <img
+                      src={upDownImage}
+                      alt=""
+                      style={{ width: "35px" }}
+                      key={ind * 10}
+                    />
+                  ) : (
+                    <Link
+                      to={`/${item.value}`}
+                      className={`btns-page-btn btn black_svg btn__changing-item ${
+                        item.value != "upDown"
+                          ? findNavBttnsColor(+item.value)
+                          : ""
+                      } ${item.value==currentTab ? "active":""}`}
+                      key={item.id}
+                      onClick={() =>
+                        item.value != "upDown" ? setCurrentTab(+item.value) : ""
+                      }
+                    >
+                      {item.value == 1 || item.value == 2 ? (
+                        <WalkingManSVG
+                          fill={"#000"}
+                          width="45px"
+                        />
+                      ) : (
+                        <RunnerSVG
+                          fill={"#000"}
+                          width="65px"
+                        />
+                      )}
+                      <div className="bttns-count">
+                        <span> {(+item.value - 1) * itemsPerPage + 1} </span>
+                        <span> {+item.value * itemsPerPage}</span>
+                      </div>
+                    </Link>
+                  )
+                )}
             </div>
           </>
         )}
@@ -1420,7 +1308,11 @@ console.log(items);
                   onClick={() => setCurrentTab(tabs.length - 1 + +item.value)}
                 >
                   <TrashSVG
-                    strokeColor={currentTab !== tabs.length - 1 + +item.value ? "#000" : "#fff"}
+                    strokeColor={
+                      currentTab !== tabs.length - 1 + +item.value
+                        ? "#000"
+                        : "#fff"
+                    }
                     width="45px"
                   />
                   <div className="bttns-count">

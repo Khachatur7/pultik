@@ -1275,7 +1275,7 @@ body {
   justify-content: start;
   gap: 10px;
   flex-direction: column;
-  
+
   .trash-bttn,
   .bttn {
     width: 100%;
@@ -1294,11 +1294,11 @@ body {
 
   .trash-bttn {
     gap: 14px !important;
-    .bttns-count{
-    font-size: 20px;
+    .bttns-count {
+      font-size: 20px;
     }
-    line{
-      transition: .4s ease;
+    line {
+      transition: 0.4s ease;
     }
   }
 
@@ -2085,13 +2085,6 @@ body {
   opacity: 1;
 }
 
-.btn__changing-item.active {
-  background-color: #2d2d2d;
-  color: #fff;
-  box-shadow: inset 4px 4px 12px 0 #0a0a0a;
-  opacity: 1;
-}
-
 .input__wrapper input:focus {
   border: 2px solid #2d2d2d;
   opacity: 1;
@@ -2622,26 +2615,88 @@ body {
   }
 }
 
-.btn__changing-item {
-  background-color: rgba(246, 246, 246, 0.9);
+.empty {
+  background-color: rgb(255, 255, 255);
   color: #2d2d2d;
   transition: 0.3s;
   opacity: 0.5;
 }
 
-.btn__changing-item:hover {
+.empty:hover {
   color: #fff;
   background-color: #2d2d2d;
   opacity: 1;
 }
 
-.btn__changing-item.active {
+.empty.active {
   background-color: #2d2d2d;
   color: #fff;
-  box-shadow: inset 4px 4px 12px 0 #0a0a0a;
   opacity: 1;
+  svg,
+  path {
+    fill: #000000;
+  }
 }
 
+.full {
+  background-color:rgb(114, 114, 114);
+  .bttns-count {
+    color: #fff;
+  }
+}
+
+.full:hover {
+  background-color:rgb(114, 114, 114);
+  .bttns-count {
+    color: #000 !important;
+  }
+  svg,
+  path {
+    fill: #000000 !important;
+  }
+}
+
+.full.active {
+  background-color: rgb(114, 114, 114);
+  .bttns-count {
+    color: #fff;
+  }
+  opacity: 1;
+  svg,
+  path {
+    fill: #fff;
+  }
+}
+
+.not-full {
+  background-color:rgb(189, 189, 189);
+  .bttns-count {
+    color: #000;
+  }
+}
+
+.not-full:hover {
+  background-color: rgb(189, 189, 189);
+  .bttns-count {
+    color: #000 !important;
+  }
+  svg,
+  path {
+    fill: #000000 !important;
+  }
+}
+
+.not-full.active {
+  background-color: rgb(179, 179, 179);
+  .bttns-count {
+    color: #ffffff;
+  }
+  opacity: 1;
+  svg,
+  path {
+    fill: #ffffff;
+  }
+}
 .input__wrapper input:focus {
   border: 2px solid #2d2d2d;
   opacity: 1;
