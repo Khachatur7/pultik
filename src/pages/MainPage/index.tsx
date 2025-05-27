@@ -1159,7 +1159,7 @@ const MainPage = () => {
                         item.value != "upDown" ? setCurrentTab(+item.value) : ""
                       }
                     >
-                      {item.value == 1 || item.value == 2 ? (
+                      {item.value == 1 || item.value == 2 || item.value == 3 ? (
                         <WalkingManSVG fill={"#000"} width="45px" />
                       ) : (
                         <RunnerSVG fill={"#000"} width="65px" />
