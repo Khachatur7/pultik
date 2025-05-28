@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import {
   Container,
   LabelText,
@@ -200,11 +200,15 @@ const MainPage = () => {
 
   const findNavBttnsColor = (index: number) => {
     if (!items || colorsChecked) return "full";
+console.log(555);
 
-    const localItems = items.slice(
-      (index - 1) * itemsPerPage,
-      index * itemsPerPage
-    );
+    const localItems: ButtonItemType[] = [];
+    buttonsArray
+      .slice((index - 1) * itemsPerPage, index * itemsPerPage)
+      .some((_, ind) => {
+        const itemIndex = ind + 1 + (index - 1) * itemsPerPage;
+        items.forEach((el) => (el.i === itemIndex ? localItems.push(el) : ""));
+      });
 
     if (localItems.length === 0) return "empty";
 
@@ -216,7 +220,7 @@ const MainPage = () => {
       });
 
     if (index === tabs.length - 1) {
-      setColorsChecked(true); 
+      setColorsChecked(true);
     }
 
     return hasEmptyElement ? "not-full" : "full";
@@ -777,7 +781,7 @@ const MainPage = () => {
     const UpdateData = setInterval(() => {
       initialLoad(items != null ? currentTab < tabs.length - 1 : true);
       SelectMonth(localStorage.getItem("piker") || "01");
-    }, 4000);
+    }, 5000);
 
     return () => clearInterval(UpdateData);
   }, [currentTab]);
@@ -899,6 +903,10 @@ const MainPage = () => {
     }, 5000);
     return () => clearInterval(checkNewMessagesCount);
   }, []);
+
+  const navButtonClasses = useMemo(() => {
+  return tabs.map((item) => findNavBttnsColor(+item.value));
+}, [tabs, items]);
 
   return (
     <AuthCheck>
@@ -1151,7 +1159,7 @@ const MainPage = () => {
                       to={`/${item.value}`}
                       className={`btns-page-btn btn black_svg btn__changing-item ${
                         item.value != "upDown"
-                          ? findNavBttnsColor(+item.value)
+                          ? navButtonClasses[+item.value]
                           : ""
                       } ${item.value == currentTab ? "active" : ""}`}
                       key={item.id}
