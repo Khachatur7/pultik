@@ -288,7 +288,7 @@ body {
   }
 }
 
-.wb_added{
+.wb_added {
   position: absolute;
   bottom: 7px;
   right: 15px;
@@ -1052,6 +1052,20 @@ body {
     box-shadow: inset -2px -2px 5px 5px #2d2d2d80,
       inset 2px 2px 5px 5px #2d2d2d38, inset 0px 0px 2px 2px #2d2d2d70,
       inset 0px 0px 2px 2px #2d2d2d70;
+  }
+}
+
+.btn__cont {
+  svg,
+  path {
+    transition: 0.4s ease;
+  }
+}
+
+.btn__cont:hover {
+  svg,
+  path {
+    fill: #000;
   }
 }
 
@@ -2645,14 +2659,14 @@ body {
 }
 
 .full {
-  background-color:rgb(114, 114, 114);
+  background-color: rgb(114, 114, 114);
   .bttns-count {
     color: #fff;
   }
 }
 
 .full:hover {
-  background-color:rgb(114, 114, 114);
+  background-color: rgb(114, 114, 114);
   .bttns-count {
     color: #000 !important;
   }
@@ -2675,7 +2689,7 @@ body {
 }
 
 .not-full {
-  background-color:rgb(189, 189, 189);
+  background-color: rgb(189, 189, 189);
   .bttns-count {
     color: #000;
   }
