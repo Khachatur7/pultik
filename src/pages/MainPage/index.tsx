@@ -200,7 +200,6 @@ const MainPage = () => {
 
   const findNavBttnsColor = (index: number) => {
     if (!items || colorsChecked) return "full";
-console.log(555);
 
     const localItems: ButtonItemType[] = [];
     buttonsArray
@@ -210,6 +209,8 @@ console.log(555);
         items.forEach((el) => (el.i === itemIndex ? localItems.push(el) : ""));
       });
 
+      // console.log({a:localItems,as:index});
+      
     if (localItems.length === 0) return "empty";
 
     const hasEmptyElement = buttonsArray
@@ -905,7 +906,9 @@ console.log(555);
   }, []);
 
   const navButtonClasses = useMemo(() => {
-  return tabs.map((item) => findNavBttnsColor(+item.value));
+    console.log(tabs.filter(item=>item.value!="upDown"));
+    
+  return tabs.filter(item=>item.value!="upDown").map((item) => findNavBttnsColor(+item.value-1));
 }, [tabs, items]);
 
   return (
@@ -1157,11 +1160,7 @@ console.log(555);
                   ) : (
                     <Link
                       to={`/${item.value}`}
-                      className={`btns-page-btn btn black_svg btn__changing-item ${
-                        item.value != "upDown"
-                          ? navButtonClasses[+item.value]
-                          : ""
-                      } ${item.value == currentTab ? "active" : ""}`}
+                      className={`btns-page-btn btn black_svg btn__changing-item ${ navButtonClasses[+item.value] } ${item.value == currentTab ? "active" : ""}`}
                       key={item.id}
                       onClick={() =>
                         item.value != "upDown" ? setCurrentTab(+item.value) : ""
