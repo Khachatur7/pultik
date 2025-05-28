@@ -93,7 +93,7 @@ const GridButton: React.FC<Props> = ({
   const [cpValue, setCpValue] = useState(0);
   const [xaltura, setXaltura] = useState(
     JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem(`${sku}`)))) ||
-    false
+      false
   );
   const [isUpdated, setIsUpdated] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -307,14 +307,16 @@ const GridButton: React.FC<Props> = ({
         )}
         <span
           style={{
-            marginLeft: `${comValue && comsValue.includes(comValue) ? "50px" : "0"
-              }`,
+            marginLeft: `${
+              comValue && comsValue.includes(comValue) ? "50px" : "0"
+            }`,
           }}
         >{`${i && h ? `{${i}. ` : i ? `${i}. ` : ""}`}</span>
         {fullName ? (
           <span
-            className={`underline ${xaltura ? "xaltura" : ""} ${fullName.length > 20 ? "fullname" : ""
-              }`}
+            className={`underline ${xaltura ? "xaltura" : ""} ${
+              fullName.length > 20 ? "fullname" : ""
+            }`}
           >
             {fullName.length > 25
               ? fullName.substring(0, 24) + "..."
@@ -329,15 +331,27 @@ const GridButton: React.FC<Props> = ({
             alignItems: "center",
             justifyContent: "center",
             gap: "8px",
-            marginLeft: `${comValue && comsValue.includes(comValue)
-                ? "50px"
-                : "0"
-              }`,
+            marginLeft: `${
+              comValue && comsValue.includes(comValue) ? "50px" : "0"
+            }`,
           }}
         >
           {`${!isNaN(stockValue) ? ` S ${stockValue}` : ""} ||`}{" "}
-          {/* <span>{`w ${wStocks || 0} | `}</span> */}
-          <span className="underline">{`F ${fStocksValue || 0}`}</span>{" "}
+          {i > 231 && fStocksValue? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="25"
+              height="25"
+              viewBox="0 0 512 512"
+            >
+              <path
+                fill="currentColor"
+                d="M390.92 134.626c-49.387 0-83.244 30.982-112.498 69.353l17.338 25.428c26.796-36.776 55.288-65.779 95.16-65.779c45.022-.086 83.494 32.42 90.923 76.825H368.14v29.003h143.121c7.742-73.55-46.25-134.015-120.341-134.83zm-2.642 242.738c50.552.147 96.081-30.55 114.9-77.468h-32.621a93.943 93.943 0 0 1-82.279 48.194c-110.564.107-127.04-206.658-265.304-213.464c-164.338 7.282-163.593 234.817 0 242.738c50.118 0 84.486-31.133 114.2-69.751l-17.495-25.806c-27.237 37.104-56.19 66.29-96.71 66.29c-123.741-6.211-123.741-177.515.005-184.204c109.845-.631 136.617 215.195 265.304 213.471z"
+              />
+            </svg>
+          ) : (
+            <span className="underline">{`F ${fStocksValue || 0}`}</span>
+          )}
           {cpValue ? (
             <div
               style={{
