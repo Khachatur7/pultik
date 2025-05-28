@@ -93,7 +93,7 @@ const GridButton: React.FC<Props> = ({
   const [cpValue, setCpValue] = useState(0);
   const [xaltura, setXaltura] = useState(
     JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem(`${sku}`)))) ||
-      false
+    false
   );
   const [isUpdated, setIsUpdated] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -291,7 +291,7 @@ const GridButton: React.FC<Props> = ({
         ) : (
           ""
         )}
-        {!wbAdded && (
+        {wbAdded && (
           <svg
             className="wb_added"
             xmlns="http://www.w3.org/2000/svg"
@@ -307,16 +307,14 @@ const GridButton: React.FC<Props> = ({
         )}
         <span
           style={{
-            marginLeft: `${
-              comValue && comsValue.includes(comValue) ? "50px" : "0"
-            }`,
+            marginLeft: `${comValue && comsValue.includes(comValue) ? "50px" : "0"
+              }`,
           }}
         >{`${i && h ? `{${i}. ` : i ? `${i}. ` : ""}`}</span>
         {fullName ? (
           <span
-            className={`underline ${xaltura ? "xaltura" : ""} ${
-              fullName.length > 20 ? "fullname" : ""
-            }`}
+            className={`underline ${xaltura ? "xaltura" : ""} ${fullName.length > 20 ? "fullname" : ""
+              }`}
           >
             {fullName.length > 25
               ? fullName.substring(0, 24) + "..."
@@ -331,16 +329,10 @@ const GridButton: React.FC<Props> = ({
             alignItems: "center",
             justifyContent: "center",
             gap: "8px",
-            marginLeft: `${
-              comValue == "print" ||
-              comValue == "stroy" ||
-              comValue == "tel" ||
-              comValue == "fep" ||
-              comValue == "scan" ||
-              comValue == "misc"
+            marginLeft: `${comValue && comsValue.includes(comValue)
                 ? "50px"
                 : "0"
-            }`,
+              }`,
           }}
         >
           {`${!isNaN(stockValue) ? ` S ${stockValue}` : ""} ||`}{" "}
