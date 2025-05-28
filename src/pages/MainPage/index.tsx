@@ -1293,6 +1293,7 @@ const MainPage = () => {
                         setCopy={setCopy}
                         wStocks={el.wStocks}
                         edited={el.edited}
+                        wbAdded={el.wbAdded}
                       />
                     );
                   })}

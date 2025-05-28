@@ -53,6 +53,7 @@ interface Props {
   wStocks?: number;
   hideModales?: boolean;
   edited?: string;
+  wbAdded: boolean | undefined;
 }
 
 const GridButton: React.FC<Props> = ({
@@ -83,6 +84,7 @@ const GridButton: React.FC<Props> = ({
   setCopy,
   wStocks,
   edited,
+  wbAdded,
 }) => {
   const [currentPrice, setCurrentPrice] = useState(price);
   const [currentPriceFixed, setCurrentPriceFixed] = useState(price);
@@ -99,7 +101,7 @@ const GridButton: React.FC<Props> = ({
   const [fStocksValue, setFStocksValue] = useState<number | undefined>(
     fStocks || 0
   );
-  // const [fStocksValueChanged, setFStocksValueChanged] = useState(false);
+  const comsValue: string[] = ["print", "stroy", "tel", "fep", "scan", "misc"];
 
   const getPrice = async () => {
     if (isDisabled) {
@@ -140,11 +142,10 @@ const GridButton: React.FC<Props> = ({
       setIsUpdated(true);
       setStockValue(resData.countedStocks);
       setFStocksValue(resData.fStocks);
-      // setBoost(boost);
       setCpValue(cP);
 
       const getTime = () => {
-        const date = new Date(); // Replace this with your date object
+        const date = new Date();
 
         const options = {
           hour: "numeric",
@@ -226,32 +227,9 @@ const GridButton: React.FC<Props> = ({
     }
   };
 
-  // useEffect(() => {
-  //   if (fStocks != fStocksValue) {
-  //     setFStocksValueChanged(true);
-  //     setFStocksValue(fStocks);
-  //   }
-  //   setTimeout(() => {
-  //     setFStocksValueChanged(false);
-  //   }, 500);
-  // }, [fStocks]);
-
-  // useEffect(() => {
-  //   if (fStocksValueChanged) {
-  //     setTimeout(() => {
-  //       setFStocksValueChanged(false)
-  //     }, 500);
-  //   }
-
-  // }, [fStocksValueChanged]);
-
   useEffect(() => {
     setCpValue(cp);
   }, [cp]);
-
-  // useEffect(() => {
-  //   setBoost(boostInitial);
-  // }, [boostInitial]);
 
   useEffect(() => {
     pricesHandler();
@@ -313,17 +291,24 @@ const GridButton: React.FC<Props> = ({
         ) : (
           ""
         )}
+        {!wbAdded && (
+          <svg
+            className="wb_added"
+            xmlns="http://www.w3.org/2000/svg"
+            width="23"
+            height="23"
+            viewBox="0 0 432 408"
+          >
+            <path
+              fill="currentColor"
+              d="M213 328L81 408l35-150L0 157l153-13L213 3l60 141l154 13l-117 101l35 150z"
+            />
+          </svg>
+        )}
         <span
           style={{
             marginLeft: `${
-              comValue == "print" ||
-              comValue == "stroy" ||
-              comValue == "tel" ||
-              comValue == "fep" ||
-              comValue == "scan" ||
-              comValue == "misc"
-                ? "50px"
-                : "0"
+              comValue && comsValue.includes(comValue) ? "50px" : "0"
             }`,
           }}
         >{`${i && h ? `{${i}. ` : i ? `${i}. ` : ""}`}</span>
