@@ -269,7 +269,7 @@ const ButtonCreatePage = () => {
       });
 
       if (res.status == 200) {
-        alert("Заказ создан!");
+        alert(res.data.massage);
       }
     } catch (error) {
       alert("Что-то пошло не так :(");
