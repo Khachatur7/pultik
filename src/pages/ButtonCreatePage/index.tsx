@@ -272,7 +272,7 @@ const ButtonCreatePage = () => {
         alert("Заказ создан!");
       }
     } catch (error) {
-        alert("Что-то пошло не так :(");
+      alert("Что-то пошло не так :(");
     }
   };
 
@@ -507,7 +507,7 @@ const ButtonCreatePage = () => {
               <span>Изменить</span>
             </button>
           </div>
-
+          <span style={{marginBottom:"10px",fontSize:"25px"}}>Создать заказ Озон вручную:</span>
           <div className="create_order">
             <div className="form_field">
               <input
