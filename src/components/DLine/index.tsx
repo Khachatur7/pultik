@@ -266,7 +266,8 @@ const DLine: React.FC<DLine> = ({ dLines, setUpdate, dLine }) => {
         </button>
       </div>
       <div className="all_hours">
-        {hours.length}
+       <span> {hours.length} </span>
+       <span>({hours.length*+step})</span>
       </div>
     </div>
   );
