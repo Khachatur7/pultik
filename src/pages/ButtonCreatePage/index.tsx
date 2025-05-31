@@ -33,6 +33,9 @@ const ButtonCreatePage = () => {
   const [v, setV] = useState("15");
   const [s, setS] = useState("35");
   const [g, setG] = useState("25");
+  const [number, setNumber] = useState("");
+
+  const [SKUvalue, setSKUvalue] = useState("");
   // const [h, setH] = useState(false);
   const lS = "{";
   const rS = "}";
@@ -231,7 +234,7 @@ const ButtonCreatePage = () => {
 
   const getMessages = async () => {
     try {
-      const res = await axios.post("/massages",{
+      const res = await axios.post("/massages", {
         user: localStorage.getItem("pultik-user-login"),
       });
       const messagesLength = localStorage.getItem("messages");
@@ -254,6 +257,22 @@ const ButtonCreatePage = () => {
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const createOrder = async () => {
+    try {
+      const res = await axios.post("/createOrder", {
+        number: number,
+        sku: SKUvalue,
+        user: localStorage.getItem("pultik-user-login"),
+      });
+
+      if (res.status == 200) {
+        alert("Заказ создан!");
+      }
+    } catch (error) {
+        alert("Что-то пошло не так :(");
     }
   };
 
@@ -282,7 +301,7 @@ const ButtonCreatePage = () => {
   useEffect(() => {
     const checkNewMessages = setInterval(() => {
       getMessages();
- }, 5000);
+    }, 5000);
 
     return () => clearInterval(checkNewMessages);
   }, []);
@@ -297,7 +316,7 @@ const ButtonCreatePage = () => {
           });
         }
       }
-  }, 5000);
+    }, 5000);
     return () => clearInterval(checkNewMessagesCount);
   }, []);
 
@@ -309,26 +328,6 @@ const ButtonCreatePage = () => {
             className="input__wrapper input__login"
             onSubmit={submitHandler}
           >
-            {/* <div className="form_field">
-              <span className="text-2xl">Номер кнопки</span>
-              <input
-                className="create_page_item"
-                type="number"
-                maxLength={3}
-                max={999}
-                value={number}
-                onChange={(e) => {
-                  const value = e.target.value;
-
-                  if (value.length > 3) {
-                    return;
-                  }
-
-                  setNumber(value);
-                }}
-                style={{ marginTop: 0 }}
-              />
-            </div> */}
             <div className="form_field">
               <span className="text-2xl">Название в БД</span>
               <input
@@ -339,24 +338,6 @@ const ButtonCreatePage = () => {
                 style={{ marginTop: 0 }}
               />
             </div>
-            {/* <input
-              className="create_page_item"
-              type="text"
-              placeholder="Полное название"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              style={{ marginTop: 0 }}
-            /> */}
-            {/* <div className="form_field">
-              <span className="text-2xl">Продав. остаток</span>
-              <input
-                className="create_page_item"
-                type="number"
-                value={remainder}
-                onChange={(e) => setRemainder(e.target.value)}
-                style={{ marginTop: 0 }}
-              />
-            </div> */}
             <div className="form_field">
               <span className="text-2xl">Базовая цена</span>
               <input
@@ -377,16 +358,6 @@ const ButtonCreatePage = () => {
                 style={{ marginTop: 0 }}
               />
             </div>
-            {/* <div className="form_field">
-              <span className="text-2xl">Фактич. остаток</span>
-              <input
-                className="create_page_item"
-                type="number"
-                value={oName}
-                onChange={(e) => setOName(e.target.value)}
-                style={{ marginTop: 0 }}
-              />
-            </div> */}
             <div className="form_field">
               <span className="text-2xl">Варт</span>
               <input
@@ -434,26 +405,6 @@ const ButtonCreatePage = () => {
                   })}
               </select>
             </div>
-            {/* <div className="form_field">
-              <span className="text-2xl">Там. налог</span>
-              <input
-                className="create_page_item"
-                type="number"
-                value={cust}
-                onChange={(e) => setCust(e.target.value)}
-                style={{ marginTop: 0 }}
-              />
-            </div> */}
-            {/* <div className="form_field">
-              <span className="text-2xl">Пустой</span>
-              <select
-                className={"h-[55px] rounded-[12px] text-2xl create_page_item"}
-                onChange={(e) => setH(Boolean(e.target.value))}
-              >
-                <option value="false">false</option>
-                <option value="true">true</option>
-              </select>
-            </div> */}
             <div className="form_field">
               <span className="text-2xl">ШВГ</span>
               <div className="grid grid-cols-3 gap-1">
@@ -490,50 +441,7 @@ const ButtonCreatePage = () => {
             >
               Создать актив
             </button>
-            {/* {(window.innerWidth <= 2200 && window.innerWidth >= 2140) ||
-              (window.innerWidth <= 1930 && window.innerWidth >= 1795) ||
-              (window.innerWidth <= 1600 && window.innerWidth >= 1520) ||
-              (window.innerWidth <= 1450 && window.innerWidth >= 1260) ? (
-              <>
-                <button
-                  type="submit"
-                  className="btn create_page_item"
-                  disabled={loading}
-                >
-                  Создать
-                </button>
-                <select
-                  className={
-                    "h-[55px] rounded-[12px] text-2xl create_page_item"
-                  }
-                  onChange={(e) => setH(Boolean(e.target.value))}
-                >
-                  <option value="false">false</option>
-                  <option value="true">true</option>
-                </select>
-              </>
-            ) : (
-              <>
-                <select
-                  className={
-                    "h-[55px] rounded-[12px] text-2xl create_page_item"
-                  }
-                  onChange={(e) => setH(Boolean(e.target.value))}
-                >
-                  <option value="false">false</option>
-                  <option value="true">true</option>
-                </select>
-                <button
-                  type="submit"
-                  className="btn create_page_item"
-                  disabled={loading}
-                >
-                  Создать
-                </button>
-              </>
-            )} */}
           </form>
-
           <p className="relative text-2xl mt-[25px] warning_text">
             !!! Фактический остаток всегда более или равен продаваемому остатку
             !!! Продаваемый остаток не должен быть более двух !!!
@@ -597,6 +505,32 @@ const ButtonCreatePage = () => {
             </div>
             <button className="change_data_bttn" onClick={checkChangedData}>
               <span>Изменить</span>
+            </button>
+          </div>
+
+          <div className="create_order">
+            <div className="form_field">
+              <input
+                className="create_page_item"
+                type="text"
+                value={number}
+                onChange={(e) => onlyEnglish(e.target.value, setNumber)}
+                style={{ marginTop: 0 }}
+                placeholder="Номер заказа"
+              />
+            </div>
+            <div className="form_field">
+              <input
+                className="create_page_item"
+                type="text"
+                value={SKUvalue}
+                onChange={(e) => onlyEnglish(e.target.value, setSKUvalue)}
+                style={{ marginTop: 0 }}
+                placeholder="SKU товара"
+              />
+            </div>
+            <button className="change_data_bttn" onClick={createOrder}>
+              <span>Создать</span>
             </button>
           </div>
         </div>

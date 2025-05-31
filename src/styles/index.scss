@@ -1285,6 +1285,44 @@ body {
   gap: 10px;
 }
 
+.create_order {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 15px;
+  .form_field {
+    width: 400px;
+    height: 55px;
+    input {
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      padding-left: 10px;
+      font-size: 29px;
+    }
+  }
+  .change_data_bttn {
+    padding: 12px 27px;
+    background: #2d2d2d;
+    color: #fff;
+    font-size: 19px;
+    font-weight: 500;
+    border: none;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    transition: 0.5s ease;
+    cursor: pointer;
+  }
+
+  .change_data_bttn:hover {
+    background: #fff;
+    color: #2d2d2d;
+  }
+}
+
 .right_column_bttn_list {
   width: 155px !important;
   position: absolute;
@@ -1470,6 +1508,27 @@ body {
       justify-content: center;
       transition: 0.45s ease;
     }
+  }
+
+  .all_hours {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90px;
+    height: 75px;
+    background: #ffffff;
+    color: #2d2d2d;
+    border-radius: 15px;
+    border: 4px solid #2d2d2d;
+    font-size: 45px;
+    transition: 0.45s ease;
+    cursor: pointer;
+  }
+
+  .all_hours:hover {
+    background: #2d2d2d;
+    color: #ffffff;
+    border-radius: 5px;
   }
 
   .bttn:hover {
