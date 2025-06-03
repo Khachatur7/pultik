@@ -95,6 +95,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
     try {
       const res = await axios.post("/changePlace", {
         place: place,
+        sku,
         user: localStorage.getItem("pultik-user-login"),
       });
 
