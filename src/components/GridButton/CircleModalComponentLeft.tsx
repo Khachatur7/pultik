@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 // import dataFilterHandler from "@/handlers/dataFilterHandler.ts";
 import TrashSVG from "../SVGcomponents/TrashSVG/index.tsx";
 import PrintSVG from "../SVGcomponents/PrintSVG/index.tsx";
+import { transliterationMap } from "@/common/index.ts";
 
 interface CircleModalComponentLeftProps {
   comValue?: ComValueType;
@@ -24,6 +25,7 @@ interface CircleModalComponentLeftProps {
   setXalturaParent: React.Dispatch<any>;
   fullName: string;
   fStocks?: number;
+  btnPlace: string;
 }
 
 const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
@@ -38,11 +40,13 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
   setXalturaParent,
   fullName,
   fStocks,
+  btnPlace,
 }) => {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState(false);
   const [exitHover, setExitHover] = useState(false);
   const [price, setPrice] = useState(basePrice.toString());
+  const [place, setPlace] = useState(btnPlace);
   const [xaltura, setXaltura] = useState(
     JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem(`${sku}`)))) ||
       false
@@ -87,6 +91,20 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
       console.log("Не удалось изменить цену");
     }
   };
+  const changePlace = async () => {
+    try {
+      const res = await axios.post("/changePlace", {
+        place: place,
+        user: localStorage.getItem("pultik-user-login"),
+      });
+
+      if (res.status == 200) {
+        alert(res.data.massage);
+      }
+    } catch (error) {
+      console.log("Не удалось изменить цену");
+    }
+  };
   const postNewBttnIndex = async (newInd?: number) => {
     const post = await axios.post("/changeIndex", {
       old: ind,
@@ -108,11 +126,11 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
     try {
       const res = await axios.post("/changeCom", {
         user: localStorage.getItem("pultik-user-login"),
-        i:index,
+        i: index,
       });
 
       if (res.data) {
-    alert(res.data.massage)
+        alert(res.data.massage);
       }
 
       // const resData = res.data.countedStocks;
@@ -135,7 +153,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
       //   }
       // });
     } catch (error) {
-      alert("Не удалось поменять местоположение кнопки :(")
+      alert("Не удалось поменять местоположение кнопки :(");
     }
   };
 
@@ -253,6 +271,23 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
     }
   };
 
+  const onlyEnglish = (
+    value: string,
+    setState: React.Dispatch<React.SetStateAction<string>>
+  ) => {
+    const symb = value[value.length - 1];
+    const transliterationKeys = Object.keys(transliterationMap);
+
+    if (transliterationKeys.includes(symb)) {
+      const resVal =
+        value.slice(0, value.length - 1) + transliterationMap[symb];
+
+      setState(resVal);
+    } else {
+      setState(value);
+    }
+  };
+
   useEffect(() => {
     setPrice(basePrice.toString());
   }, [basePrice]);
@@ -296,7 +331,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="#777777"
-                strokeWidth="2"
+                strokeWidth="3"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               >
@@ -315,7 +350,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="#777777"
-                strokeWidth="2"
+                strokeWidth="3"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               >
@@ -339,6 +374,21 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
               ok
             </button>
           </div>
+          <div className="flex gap-2">
+            Place
+            <input
+              type="string"
+              value={place}
+              onChange={(e) => onlyEnglish(e.target.value, setPlace)}
+              className="max-w-[85px] outline-none border-solid border-black border-[1px]"
+            />
+            <button
+              className="border-solid border-[1px] border-black ok_bttn"
+              onClick={changePlace}
+            >
+              ok
+            </button>
+          </div>
           <p className="popup__el !flex !items-center gap-[5px]">
             {wBar}
             <span onClick={() => handleCopy(wBar)}>
@@ -349,7 +399,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="#777777"
-                strokeWidth="2"
+                strokeWidth="3"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               >
@@ -398,7 +448,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
             <button onClick={EditBttn} className="edit_bttn">
               <span>Edit</span>
             </button>
-            <button className="edit_bttn" onClick={ChangeArea}>
+            <button className="edit_bttn arrows" onClick={ChangeArea}>
               <svg
                 version="1.0"
                 xmlns="http://www.w3.org/2000/svg"
@@ -409,7 +459,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
               >
                 <g
                   transform="translate(0.000000,866.000000) scale(0.100000,-0.100000)"
-                  fill="#000000"
+                  fill="#fff"
                   stroke="none"
                 >
                   <path
@@ -434,7 +484,7 @@ l-285 285 -658 -658 c-361 -361 -660 -657 -665 -657 -4 0 -7 1310 -7 2910 l0
             </button>
           </div>
           <div className="edit_bttns_two">
-            <button className="edit_bttn" onClick={PrintInfo}>
+            <button className="edit_bttn print-svg" onClick={PrintInfo}>
               <PrintSVG width="28px" />
             </button>
           </div>

@@ -1301,6 +1301,7 @@ const MainPage = () => {
                         wStocks={el.wStocks}
                         edited={el.edited}
                         wbAdded={el.wbAdded}
+                        place={el.place}
                       />
                     );
                   })}

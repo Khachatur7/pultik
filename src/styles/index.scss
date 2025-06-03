@@ -825,18 +825,24 @@ body {
 
   svg,
   path {
-    fill: #fff;
+    fill: #fff !important;
   }
 }
 
 .trash-svg:hover {
   svg,
   path {
-    stroke: #fff;
-    fill: #000;
+    stroke: #fff !important;
+    fill: #000 !important;
   }
 }
-
+  .left{
+.popup__el{
+  svg,path{
+    fill:#fff !important;
+    stroke: 3;
+  }
+}}
 .modal_comp_left_i {
   margin-top: 30px;
   width: 100%;
@@ -859,6 +865,34 @@ body {
   gap: 20px;
   padding-top: -10px;
   padding-bottom: 20px;
+}
+.print-svg:hover {
+  svg,
+  path {
+    stroke: #fff !important;
+    fill: #000 !important;
+  }}
+.edit_bttns,
+.edit_bttns_two{
+  button {
+    svg,
+    path {
+    fill: #fff !important;
+  }
+  }
+  .arrows{
+    svg,
+    path {
+    fill: #000 !important;
+  }}
+  .arrows:hover {
+  svg,
+  path {
+    stroke: #000 !important;
+    fill: #fff !important;
+  }
+  
+}
 }
 
 .info_block {

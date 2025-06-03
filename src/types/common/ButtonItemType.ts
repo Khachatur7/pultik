@@ -29,6 +29,7 @@ interface ButtonItemType {
   h?: boolean | undefined;
   edited?: string;
   wbAdded: boolean | undefined;
+  place:string
 }
 
 export default ButtonItemType;
