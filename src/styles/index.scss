@@ -290,11 +290,11 @@ body {
 
 .wb_added {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: start;
-  gap: 10px;
   position: absolute;
-  bottom: 1px;
+  bottom: 0px;
   right: 15px;
 }
 
