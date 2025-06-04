@@ -293,9 +293,9 @@ const GridButton: React.FC<Props> = ({
         ) : (
           ""
         )}
-        {wbAdded && (
+        <div className="wb_added">
+            {wbAdded && (
           <svg
-            className="wb_added"
             xmlns="http://www.w3.org/2000/svg"
             width="23"
             height="23"
@@ -306,7 +306,11 @@ const GridButton: React.FC<Props> = ({
               d="M213 328L81 408l35-150L0 157l153-13L213 3l60 141l154 13l-117 101l35 150z"
             />
           </svg>
-        )}
+        )} 
+        <span style={{marginTop:"4px"}}>{place}</span>
+
+        </div>
+       
         <span
           style={{
             marginLeft: `${

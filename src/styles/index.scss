@@ -289,8 +289,12 @@ body {
 }
 
 .wb_added {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 10px;
   position: absolute;
-  bottom: 7px;
+  bottom: 1px;
   right: 15px;
 }
 
