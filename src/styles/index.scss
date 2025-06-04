@@ -293,9 +293,14 @@ body {
   flex-direction: column;
   align-items: end;
   justify-content: start;
+  padding-right: 3px;
   position: absolute;
   bottom: 0px;
   right: 15px;
+  font-size: 19px;
+  svg{
+    margin-bottom: -3px;
+  }
 }
 
 .btn__cont {
