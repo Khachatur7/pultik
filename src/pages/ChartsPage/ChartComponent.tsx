@@ -90,6 +90,7 @@ const ChartComponent: React.FC<ChartComponentProps> = ({
                 labels && data ? 
                     <Line 
                         options={options}
+                        className='chart'
                         data={{
                             labels: isPages ? labels.slice((page - 1) * 10, page * 10) : labels,
                             datasets: [

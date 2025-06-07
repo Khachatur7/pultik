@@ -310,7 +310,6 @@ const GridButton: React.FC<Props> = ({
         <span style={{marginTop:"4px"}}>{place}</span>
 
         </div>
-       
         <span
           style={{
             marginLeft: `${

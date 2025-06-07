@@ -112,13 +112,34 @@ const MainPageFexp:FC<{number: string,setNumber: React.Dispatch<React.SetStateAc
           Доб. расход
         </button>
       </form>
-      <form className="number_form" onSubmit={postNumber} >
+      <form className="number_form" onSubmit={postNumber} style={{position:"relative"}}>
         <input
           type="text"
           placeholder="Номер"
           value={number}
           onChange={(e) =>onlyEnglish(e.target.value,setNumber)}
         />
+         {number.length > 0 && (
+                    <div
+                      style={{position:"absolute",left:"48%",top:"25%",zIndex:"1111",cursor:"pointer"}}
+                      onClick={() => setNumber("")}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="40"
+                        height="40"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          fill="none"
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeWidth="2"
+                          d="M20 20L4 4m16 0L4 20"
+                        />
+                      </svg>
+                    </div>
+                  )}
         <button type="submit" className="btn !w-[250px] disabled:opacity-30">
           Отгрузить
         </button>
