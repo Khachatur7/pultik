@@ -47,7 +47,7 @@ const ButtonCreatePage = () => {
   const [nameFieldType, setNameFieldType] = useState<string>("number");
   const [dataField, setDataField] = useState<string>("");
   const [dataCompare, setDataCompare] = useState<string[]>();
-  const [changedData, setChangedData] = useState<string>();
+  const [changedData, setChangedData] = useState<string[]>([]);
   const readMessages = localStorage.getItem("read-messages");
   const allMessages = localStorage.getItem("messages");
 
@@ -171,7 +171,7 @@ const ButtonCreatePage = () => {
           keyField.trim(),
           nameFieldType == "string" ? nameField.trim() : +nameField.trim(),
         ],
-        dict: JSON.parse(`{${changedData}}`),
+        dict: JSON.parse(`{${[...changedData]}}`),
       });
 
       if (res.status == 200) {
@@ -184,12 +184,16 @@ const ButtonCreatePage = () => {
 
   const checkChangedData = () => {
     let changedFieldData = JSON.stringify(JSON.parse(dataField)).split(",");
+    const newData: string[] = [];
     dataCompare?.map((el, ind) => {
       if (el != changedFieldData[ind]) {
-        setDataCompare(changedFieldData);
-        setChangedData(changedFieldData[ind].replace(/[{}]/g, ""));
+        newData.push(changedFieldData[ind].replace(/[{}]/g, ""));
       }
     });
+    if (newData.length != 0) {
+      setDataCompare(changedFieldData);
+      setChangedData([...newData]);
+    }
   };
   const onlyEnglish = (
     value: string,
@@ -277,7 +281,7 @@ const ButtonCreatePage = () => {
   };
 
   useEffect(() => {
-    if (changedData) {
+    if (changedData.length > 0) {
       sendChangedData();
     }
   }, [changedData]);
@@ -507,7 +511,9 @@ const ButtonCreatePage = () => {
               <span>Изменить</span>
             </button>
           </div>
-          <span style={{marginBottom:"10px",fontSize:"25px"}}>Создать заказ Озон вручную:</span>
+          <span style={{ marginBottom: "10px", fontSize: "25px" }}>
+            Создать заказ Озон вручную:
+          </span>
           <div className="create_order">
             <div className="form_field">
               <input
