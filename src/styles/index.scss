@@ -1017,6 +1017,11 @@ body {
     color: #000;
     transition: 0.4s ease;
     font-size: 24px;
+    border-right: 1px solid #000;
+  }
+
+  .button:last-child{
+    border-right: none;
   }
 
   .active-s-button {
@@ -1126,6 +1131,8 @@ body {
   right: 30%;
   padding: 20px;
   border-radius: 20px;
+  z-index: 111111;
+
 
   .close_bttns_modal {
     width: 35px;
