@@ -167,7 +167,7 @@ const MainPage = () => {
   const [colorsChecked, setColorsChecked] = useState(false);
   const [bttnSearcher, setBttnSearcher] = useState("");
   const [number, setNumber] = useState("");
-  const searchByWhatButtons = ["Имя", "Sku", "Место"];
+  const searchByWhatButtons = ["Имя", "Sku", "Место", "Группа"];
   const [searchByWhat, setSearchByWhat] = useState(searchByWhatButtons[0]);
   const [bttnsIndex, setBttnsIndex] = useState<ButtonItemType[]>([]);
   const [notSearchYet, setNotSearchYet] = useState(true);
@@ -741,6 +741,14 @@ const MainPage = () => {
       items?.map((bttn) => {
         if (
           bttn.place?.toLowerCase().includes(bttnSearcher.trim().toLowerCase())
+        ) {
+          res.push(bttn);
+        }
+      });
+    } else if (searchByWhat == "Группа") {
+      items?.map((bttn) => {
+        if (
+          bttn.group?.toLowerCase().includes(bttnSearcher.trim().toLowerCase())
         ) {
           res.push(bttn);
         }

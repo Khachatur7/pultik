@@ -30,6 +30,7 @@ interface ButtonItemType {
   edited?: string;
   wbAdded: boolean | undefined;
   place:string
+  group:string
 }
 
 export default ButtonItemType;
