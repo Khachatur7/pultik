@@ -55,6 +55,7 @@ interface Props {
   edited?: string;
   wbAdded: boolean | undefined;
   place: string;
+  group:string|undefined
 }
 
 const GridButton: React.FC<Props> = ({
@@ -87,6 +88,7 @@ const GridButton: React.FC<Props> = ({
   edited,
   wbAdded,
   place,
+  group
 }) => {
   const [currentPrice, setCurrentPrice] = useState(price);
   const [currentPriceFixed, setCurrentPriceFixed] = useState(price);
@@ -434,6 +436,7 @@ const GridButton: React.FC<Props> = ({
           fullName={fullName}
           fStocks={fStocks}
           btnPlace={place}
+          btnGroup={group}
         />
         <CircleModalComponentBottomLeft cust={cust} edited={edited} />
       </button>

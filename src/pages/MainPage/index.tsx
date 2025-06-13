@@ -1323,6 +1323,7 @@ const MainPage = () => {
                         edited={el.edited}
                         wbAdded={el.wbAdded}
                         place={el.place}
+                        group={el.group}
                       />
                     );
                   })}

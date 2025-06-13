@@ -288,6 +288,13 @@ body {
   }
 }
 
+.btn:hover .w_sign{
+  path {
+    stroke: #7ee41f !important;
+    fill: #7ee41f !important;
+  } 
+}
+
 .wb_added {
   display: flex;
   flex-direction: column;

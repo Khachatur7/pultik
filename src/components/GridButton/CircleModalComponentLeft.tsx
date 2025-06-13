@@ -26,6 +26,7 @@ interface CircleModalComponentLeftProps {
   fullName: string;
   fStocks?: number;
   btnPlace: string;
+  btnGroup: string | undefined;
 }
 
 const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
@@ -41,12 +42,14 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
   fullName,
   fStocks,
   btnPlace,
+  btnGroup,
 }) => {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState(false);
   const [exitHover, setExitHover] = useState(false);
   const [price, setPrice] = useState(basePrice.toString());
   const [place, setPlace] = useState(btnPlace);
+  const [group, setGroup] = useState(btnGroup || "N/A");
   const [xaltura, setXaltura] = useState(
     JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem(`${sku}`)))) ||
       false
@@ -58,8 +61,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
       setIsActive(true);
     }
   }
-  // const itemsPerPage = 77;
-  // const bttnArray = [...Array(itemsPerPage * 9)];
+
   if (ind > index && firstRender) {
     setIndex(ind);
   }
@@ -106,6 +108,21 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
       console.log("Не удалось изменить цену");
     }
   };
+  const changeGroup = async () => {
+    try {
+      const res = await axios.post("/changeGroup", {
+        group: group,
+        sku,
+        user: localStorage.getItem("pultik-user-login"),
+      });
+
+      if (res.status == 200) {
+        alert(res.data.massage);
+      }
+    } catch (error) {
+      console.log("Не удалось изменить группу");
+    }
+  };
   const postNewBttnIndex = async (newInd?: number) => {
     const post = await axios.post("/changeIndex", {
       old: ind,
@@ -133,26 +150,6 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
       if (res.data) {
         alert(res.data.massage);
       }
-
-      // const resData = res.data.countedStocks;
-      // const items = resData.filter(
-      //   (el: ButtonItemType) => !dataFilterHandler(el._id) && !isNaN(el.i)
-      // );
-      // let areaChanged = false;
-      // const firstIndex: number = index <= 155 ? 1 : 155;
-      // const lastIndex: number = index <= 155 ? 154 : 2310;
-      // bttnArray.slice(firstIndex, lastIndex).map((_, bttnInd: number) => {
-      //   const itemIndex = bttnInd + firstIndex;
-
-      //   const elements = items.filter(
-      //     (el: ButtonItemType) => el.i === itemIndex
-      //   );
-
-      //   if (elements.length == 0 && !areaChanged) {
-      //     areaChanged = true;
-      //     postNewBttnIndex(itemIndex);
-      //   }
-      // });
     } catch (error) {
       alert("Не удалось поменять местоположение кнопки :(");
     }
@@ -361,7 +358,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
             </span>
           </p>
           <div className="flex gap-2">
-            BP
+            BP:
             <input
               type="number"
               value={price}
@@ -376,9 +373,9 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
             </button>
           </div>
           <div className="flex gap-2">
-            Place
+            Place:
             <input
-              type="string"
+              type="text"
               value={place}
               onChange={(e) => onlyEnglish(e.target.value, setPlace)}
               className="max-w-[85px] outline-none border-solid border-black border-[1px]"
@@ -386,6 +383,21 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
             <button
               className="border-solid border-[1px] border-black ok_bttn"
               onClick={changePlace}
+            >
+              ok
+            </button>
+          </div>
+          <div className="flex gap-2">
+            Group:
+            <input
+              type="text"
+              value={group}
+              onChange={(e) => onlyEnglish(e.target.value, setGroup)}
+              className="max-w-[85px] outline-none border-solid border-black border-[1px]"
+            />
+            <button
+              className="border-solid border-[1px] border-black ok_bttn"
+              onClick={changeGroup}
             >
               ok
             </button>
