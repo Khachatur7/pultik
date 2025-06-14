@@ -1385,16 +1385,26 @@ body {
   }
 }
 
-.right_column_bttn_list {
-  width: 155px !important;
-  position: absolute;
+.right_column_bttn_list{
+    position: absolute;
   bottom: 14px;
   right: 35px;
+  height: 500px;
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: space-between;
   gap: 10px;
+}
+
+.right_column,
+.left_column {
+  width: 155px !important;
+  height: 100%;
+  display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: end;
+  gap: 10px;
 
   .trash-bttn,
   .bttn {

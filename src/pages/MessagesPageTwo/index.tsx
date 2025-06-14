@@ -8,14 +8,14 @@ interface IMessage {
   _id: string;
 }
 
-const TPage = () => {
+const MessagesPageTwo = () => {
   const [messages, setMessages] = useState<IMessage[]>([]);
   const endOfMessagesRef = useRef<HTMLDivElement>(null);
   const readMessages = localStorage.getItem("read-messages");
   const [newMessagesIndex, setNewMessagesIndex] = useState(0);
   const getMessages = async () => {
     try {
-      const res = await axios.post("/massages");
+      const res = await axios.post("/massages2");
 
       if (res.data) {
         if (messages.length < res.data.massage.length) {
@@ -92,4 +92,4 @@ const TPage = () => {
   );
 };
 
-export default TPage;
+export default MessagesPageTwo;
