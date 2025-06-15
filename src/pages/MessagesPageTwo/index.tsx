@@ -11,7 +11,7 @@ interface IMessage {
 const MessagesPageTwo = () => {
   const [messages, setMessages] = useState<IMessage[]>([]);
   const endOfMessagesRef = useRef<HTMLDivElement>(null);
-  const readMessages = localStorage.getItem("read-messages");
+  const readMessages = localStorage.getItem("read-messages-two");
   const [newMessagesIndex, setNewMessagesIndex] = useState(0);
   const getMessages = async () => {
     try {
@@ -22,7 +22,7 @@ const MessagesPageTwo = () => {
           setMessages(res.data.massage);
         }
         localStorage.setItem(
-          "read-messages",
+          "read-messages-two",
           JSON.stringify(res.data.massage.length)
         );
       }
@@ -45,7 +45,7 @@ const MessagesPageTwo = () => {
 
   useEffect(() => {
     if (!readMessages) {
-      localStorage.setItem("read-messages", JSON.stringify(messages.length));
+      localStorage.setItem("read-messages-two", JSON.stringify(messages.length));
     } else {
       setNewMessagesIndex(+readMessages);
     }

@@ -55,7 +55,7 @@ const MessagesPage = () => {
     if (endOfMessagesRef.current) {
       endOfMessagesRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [messages]);
+  }, []);
 
   return (
     <AuthCheck>
