@@ -9,6 +9,7 @@ interface IMessage {
 }
 
 const MessagesPage = () => {
+  const [messagesAccepted,setMessagesAccepted] = useState<boolean>(false)
   const [messages, setMessages] = useState<IMessage[]>([]);
   const endOfMessagesRef = useRef<HTMLDivElement>(null);
   const readMessages = localStorage.getItem("read-messages");
@@ -20,6 +21,7 @@ const MessagesPage = () => {
       if (res.data) {
         if (messages.length < res.data.massage.length) {
           setMessages(res.data.massage);
+          !messagesAccepted?setMessagesAccepted(true):""
         }
         localStorage.setItem(
           "read-messages",
@@ -55,7 +57,7 @@ const MessagesPage = () => {
     if (endOfMessagesRef.current) {
       endOfMessagesRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, []);
+  }, [messagesAccepted]);
 
   return (
     <AuthCheck>
