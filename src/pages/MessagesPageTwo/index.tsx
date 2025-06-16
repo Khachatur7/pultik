@@ -61,7 +61,7 @@ const MessagesPageTwo = () => {
 
   return (
     <AuthCheck>
-      <div className="decr_page">
+      <div className="decr_page_two">
         <div className="messages">
           {messages.map((m, ind) => {
             if (ind == newMessagesIndex) {
