@@ -1394,6 +1394,7 @@ c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
                       />
                     </g>
                   </svg>
+                {localStorage.getItem("read-messages-two")}
                 </Link>
               </div>
               <div className="right_column">
