@@ -9,24 +9,42 @@ interface IMessage {
 }
 
 const MessagesPageTwo = () => {
-  const [messagesAccepted,setMessagesAccepted] = useState<boolean>(false)
+  const [messagesAccepted, setMessagesAccepted] = useState<boolean>(false);
   const [messages, setMessages] = useState<IMessage[]>([]);
   const endOfMessagesRef = useRef<HTMLDivElement>(null);
   const readMessages = localStorage.getItem("read-messages-two");
   const [newMessagesIndex, setNewMessagesIndex] = useState(0);
   const getMessages = async () => {
     try {
-      const res = await axios.post("/massages2");
+      const res = await axios.post("/massages2", {
+        user: localStorage.getItem("pultik-user-login"),
+      });
 
       if (res.data) {
         if (messages.length < res.data.massage.length) {
           setMessages(res.data.massage);
-          !messagesAccepted?setMessagesAccepted(true):""
+          !messagesAccepted ? setMessagesAccepted(true) : "";
         }
         localStorage.setItem(
           "read-messages-two",
           JSON.stringify(res.data.massage.length)
         );
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const PrintMessage = async (text: string) => {
+    const orderNum = text.split("|")[3];
+    try {
+      const res = await axios.post("/printOzonLbl", {
+        orderNum,
+        user: localStorage.getItem("pultik-user-login"),
+      });
+
+      if (res.data) {
+        alert(res.data.massage);
       }
     } catch (error) {
       console.log(error);
@@ -47,7 +65,10 @@ const MessagesPageTwo = () => {
 
   useEffect(() => {
     if (!readMessages) {
-      localStorage.setItem("read-messages-two", JSON.stringify(messages.length));
+      localStorage.setItem(
+        "read-messages-two",
+        JSON.stringify(messages.length)
+      );
     } else {
       setNewMessagesIndex(+readMessages);
     }
@@ -61,6 +82,9 @@ const MessagesPageTwo = () => {
 
   return (
     <AuthCheck>
+        <div className="header__">
+          <span>Заказы готовые для самостоятельной отгрузки</span>
+        </div>
       <div className="decr_page_two">
         <div className="messages">
           {messages.map((m, ind) => {
@@ -68,21 +92,37 @@ const MessagesPageTwo = () => {
               return (
                 <>
                   <div className="new_messages">Не прочитанны сообщения</div>
+                  <div className="message_content" key={m._id}>
+                    <div className="message">
+                      <div className="text">
+                        {ind + 1}. {m.massage}
+                      </div>
+                      <div className="data">{m.moment}</div>
+                    </div>
+                    <div
+                      className="print_bttn"
+                      onClick={() => PrintMessage(m.massage)}
+                    >
+                      K
+                    </div>
+                  </div>
+                </>
+              );
+            } else {
+              return (
+                <div className="message_content" key={m._id}>
                   <div className="message">
                     <div className="text">
                       {ind + 1}. {m.massage}
                     </div>
                     <div className="data">{m.moment}</div>
                   </div>
-                </>
-              );
-            } else {
-              return (
-                <div className="message">
-                  <div className="text">
-                    {ind + 1}. {m.massage}
+                  <div
+                    className="print_bttn"
+                    onClick={() => PrintMessage(m.massage)}
+                  >
+                    K
                   </div>
-                  <div className="data">{m.moment}</div>
                 </div>
               );
             }
