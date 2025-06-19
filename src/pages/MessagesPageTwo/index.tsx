@@ -88,10 +88,9 @@ const MessagesPageTwo = () => {
       <div className="decr_page_two">
         <div className="messages">
           {messages.map((m, ind) => {
-            if (ind == newMessagesIndex) {
+            if (ind != newMessagesIndex) {
               return (
                 <>
-                  <div className="new_messages">Не прочитанны сообщения</div>
                   <div className="message_content" key={m._id}>
                     <div className="message">
                       <div className="text">
@@ -100,17 +99,19 @@ const MessagesPageTwo = () => {
                       <div className="data">{m.moment}</div>
                     </div>
                     <div
-                      className="print_bttn"
-                      onClick={() => PrintMessage(m.massage)}
-                    >
-                      K
-                    </div>
+                    className="print_bttn"
+                    onClick={() => PrintMessage(m.massage)}
+                  >
+                    <span>Напечатать ярлык</span>
+                  </div>
                   </div>
                 </>
               );
             } else {
               return (
-                <div className="message_content" key={m._id}>
+                <>
+                  <div className="new_messages">Не прочитанны сообщения</div>
+                    <div className="message_content" key={m._id}>
                   <div className="message">
                     <div className="text">
                       {ind + 1}. {m.massage}
@@ -121,9 +122,11 @@ const MessagesPageTwo = () => {
                     className="print_bttn"
                     onClick={() => PrintMessage(m.massage)}
                   >
-                    K
+                    <span>Напечатать ярлык</span>
                   </div>
                 </div>
+                </>
+              
               );
             }
           })}
