@@ -534,8 +534,9 @@ body {
       justify-content: start;
       gap: 20px;
       .message {
-        height: 150px;
-        padding: 5px 10px;
+        max-width: 80%;
+        height: 160px;
+        padding: 10px 30px;
         background: #fffffffa;
         border-radius: 15px;
         display: flex;
@@ -548,7 +549,7 @@ body {
         }
       }
       .print_bttn {
-        height: 150px;
+        height: 160px;
         padding: 10px 50px;
         background: #fffffffa;
         border-radius: 15px;

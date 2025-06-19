@@ -39,7 +39,7 @@ const MessagesPageTwo = () => {
     const orderNum = text.split("|")[3];
     try {
       const res = await axios.post("/printOzonLbl", {
-        orderNum,
+       orderNum: orderNum.trim(),
         user: localStorage.getItem("pultik-user-login"),
       });
 
@@ -73,6 +73,7 @@ const MessagesPageTwo = () => {
       setNewMessagesIndex(+readMessages);
     }
   }, []);
+console.log(messages);
 
   useEffect(() => {
     if (endOfMessagesRef.current) {
@@ -91,12 +92,12 @@ const MessagesPageTwo = () => {
             if (ind != newMessagesIndex) {
               return (
                 <>
-                  <div className="message_content" key={m._id}>
+                  <div className="message_content" key={ind+100}>
                     <div className="message">
                       <div className="text">
                         {ind + 1}. {m.massage}
                       </div>
-                      <div className="data">{m.moment}</div>
+                      {/* <div className="data">{m.moment}</div> */}
                     </div>
                     <div
                     className="print_bttn"
@@ -114,9 +115,9 @@ const MessagesPageTwo = () => {
                     <div className="message_content" key={m._id}>
                   <div className="message">
                     <div className="text">
-                      {ind + 1}. {m.massage}
+                      <span>{ind + 1}.</span> <span>{m.massage}</span>
                     </div>
-                    <div className="data">{m.moment}</div>
+                    {/* <div className="data">{m.moment}</div> */}
                   </div>
                   <div
                     className="print_bttn"
