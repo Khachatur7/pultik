@@ -6,6 +6,7 @@ interface IMessage {
   massage: string;
   moment: string;
   _id: string;
+  isReady:boolean
 }
 
 const MessagesPageTwo = () => {
@@ -73,7 +74,6 @@ const MessagesPageTwo = () => {
       setNewMessagesIndex(+readMessages);
     }
   }, []);
-console.log(messages);
 
   useEffect(() => {
     if (endOfMessagesRef.current) {
@@ -93,14 +93,14 @@ console.log(messages);
               return (
                 <>
                   <div className="message_content" key={ind+100}>
-                    <div className="message">
+                    <div className={`message ${m.isReady?"message_ready":""}`}>
                       <div className="text">
                         {ind + 1}. {m.massage}
                       </div>
                       {/* <div className="data">{m.moment}</div> */}
                     </div>
                     <div
-                    className="print_bttn"
+                    className={`print_bttn ${m.isReady?"message_ready":""}`}
                     onClick={() => PrintMessage(m.massage)}
                   >
                     <span>Напечатать ярлык</span>
@@ -112,15 +112,15 @@ console.log(messages);
               return (
                 <>
                   <div className="new_messages">Не прочитанны сообщения</div>
-                    <div className="message_content" key={m._id}>
-                  <div className="message">
+                    <div className="message_cotent" key={m._id}>
+                  <div className={`message ${m.isReady?"message_ready":""}`}>
                     <div className="text">
                       <span>{ind + 1}.</span> <span>{m.massage}</span>
                     </div>
                     {/* <div className="data">{m.moment}</div> */}
                   </div>
                   <div
-                    className="print_bttn"
+                    className={`print_bttn ${m.isReady?"message_ready":""}`}
                     onClick={() => PrintMessage(m.massage)}
                   >
                     <span>Напечатать ярлык</span>

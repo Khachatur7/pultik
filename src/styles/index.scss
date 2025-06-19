@@ -501,24 +501,24 @@ body {
 }
 
 .header__ {
-    width: 90%;
-    padding: 10px 40px;
-    background: #fff;
-    margin: 0 auto;
-    margin-bottom: 50px;
-    font-size: 70px;
-    font-weight: 700;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    clip-path: polygon(0% 0%, 100% 0%, 97% 100%, 3% 100%);
-  }
+  width: 90%;
+  padding: 10px 40px;
+  background: #fff;
+  margin: 0 auto;
+  margin-bottom: 50px;
+  font-size: 70px;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  clip-path: polygon(0% 0%, 100% 0%, 97% 100%, 3% 100%);
+}
 
 .decr_page_two {
   width: 100%;
   height: 100%;
   padding: 0px 30px;
-  
+
   .messages {
     display: flex;
     flex-direction: column;
@@ -534,7 +534,7 @@ body {
       justify-content: start;
       gap: 20px;
       .message {
-        max-width: 80%;
+        width: 85%;
         height: 160px;
         padding: 10px 30px;
         background: #fffffffa;
@@ -548,6 +548,7 @@ body {
           font-size: 39px;
         }
       }
+
       .print_bttn {
         height: 160px;
         padding: 10px 50px;
@@ -562,7 +563,11 @@ body {
         transition: 0.45s;
         cursor: pointer;
       }
-      .print_bttn:hover{
+      .message_ready {
+        opacity: 0.7;
+        background: #cacaca;
+      }
+      .print_bttn:hover {
         background: #000;
         color: #fff;
       }
@@ -895,15 +900,17 @@ body {
   }
 }
 
-.copy_svg{
-  svg,path{
+.copy_svg {
+  svg,
+  path {
     fill: #fff !important;
-    transition: .45s ease;
+    transition: 0.45s ease;
   }
 }
 
-.copy_svg:hover{
-  svg,path{
+.copy_svg:hover {
+  svg,
+  path {
     stroke: #000 !important;
   }
 }
