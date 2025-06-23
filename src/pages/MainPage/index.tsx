@@ -36,6 +36,7 @@ import WalkingManSVG from "@/components/SVGcomponents/WalkingManSVG";
 import RecyclingSVG from "@/components/SVGcomponents/RecyclingSVG";
 import TrashSVG from "@/components/SVGcomponents/TrashSVG";
 import ShelfSVG from "@/components/SVGcomponents/ShelfSVG";
+import FolderSVG from "@/components/SVGcomponents/FolderSVG";
 interface IChart {
   aS: number;
   aSp: number;
@@ -189,7 +190,7 @@ const MainPage = () => {
   const createTabsItems = () => {
     const localTabs: { id: string; value: number | string }[] = [];
     for (let i = 1; i < 131; i++) {
-      if (i == 5) {
+      if (i == 6) {
         localTabs.push({ id: nanoid(), value: "upDown" });
         localTabs.push({ id: nanoid(), value: i });
       } else {
@@ -1192,6 +1193,8 @@ const MainPage = () => {
                         <WalkingManSVG fill={"#000"} width="45px" />
                       ) : item.value == 4 ? 
                         <ShelfSVG width="50px"/>
+                      : item.value == 5 ? 
+                        <FolderSVG width="50px" height="45px"/>
                       : (
                         <RunnerSVG fill={"#000"} width="65px" />
                       )}
@@ -1253,7 +1256,8 @@ const MainPage = () => {
 
           <div className="btn__wrapper">
             {items && items.length ? (
-              currentTab!=4 ?<>
+              currentTab!=4 && currentTab!=5 ?
+              <>
                 {buttonsArray
                   .slice(
                     currentTab < tabs.length
@@ -1338,6 +1342,12 @@ const MainPage = () => {
           {window.innerWidth > 600 && (
             <div className="right_column_bttn_list">
               <div className="left_column">
+                <Link
+                  to={"/O"}
+                  className="btn btn__changing-item flex items-center justify-center bttn"
+                >
+O
+                </Link>
                 <Link
                   to={"/t-page-two"}
                   className="btn btn__changing-item flex items-center justify-center bttn"
