@@ -1253,7 +1253,7 @@ const MainPage = () => {
 
           <div className="btn__wrapper">
             {items && items.length ? (
-              <>
+              currentTab!=4 ?<>
                 {buttonsArray
                   .slice(
                     currentTab < tabs.length
@@ -1330,7 +1330,7 @@ const MainPage = () => {
                       />
                     );
                   })}
-              </>
+              </>: <div style={{width:"100%",height:"980px"}}></div> 
             ) : (
               <></>
             )}
