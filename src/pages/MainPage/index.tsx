@@ -35,6 +35,7 @@ import RunnerSVG from "@/components/SVGcomponents/RunnerSVG";
 import WalkingManSVG from "@/components/SVGcomponents/WalkingManSVG";
 import RecyclingSVG from "@/components/SVGcomponents/RecyclingSVG";
 import TrashSVG from "@/components/SVGcomponents/TrashSVG";
+import ShelfSVG from "@/components/SVGcomponents/ShelfSVG";
 interface IChart {
   aS: number;
   aSp: number;
@@ -188,7 +189,7 @@ const MainPage = () => {
   const createTabsItems = () => {
     const localTabs: { id: string; value: number | string }[] = [];
     for (let i = 1; i < 131; i++) {
-      if (i == 4) {
+      if (i == 5) {
         localTabs.push({ id: nanoid(), value: "upDown" });
         localTabs.push({ id: nanoid(), value: i });
       } else {
@@ -1189,7 +1190,9 @@ const MainPage = () => {
                     >
                       {item.value == 1 || item.value == 2 || item.value == 3 ? (
                         <WalkingManSVG fill={"#000"} width="45px" />
-                      ) : (
+                      ) : item.value == 4 ? 
+                        <ShelfSVG width="50px"/>
+                      : (
                         <RunnerSVG fill={"#000"} width="65px" />
                       )}
                       <div className="bttns-count">

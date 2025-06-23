@@ -6,7 +6,7 @@ interface IMessage {
   massage: string;
   moment: string;
   _id: string;
-  isReady:boolean
+  isReady: boolean;
 }
 
 const MessagesPageTwo = () => {
@@ -40,7 +40,7 @@ const MessagesPageTwo = () => {
     const orderNum = text.split("|")[3];
     try {
       const res = await axios.post("/printOzonLbl", {
-       orderNum: orderNum.trim(),
+        orderNum: orderNum.trim(),
         user: localStorage.getItem("pultik-user-login"),
       });
 
@@ -83,54 +83,67 @@ const MessagesPageTwo = () => {
 
   return (
     <AuthCheck>
-        <div className="header__">
-          <span>Заказы готовые для самостоятельной отгрузки</span>
-        </div>
+      <div className="header__">
+        <span>Заказы готовые для самостоятельной отгрузки</span>
+      </div>
       <div className="decr_page_two">
         <div className="messages">
-          {messages.map((m, ind) => {
-            if (ind != newMessagesIndex) {
-              return (
-                <>
-                  <div className="message_content" key={ind+100}>
-                    <div className={`message ${m.isReady?"message_ready":""}`}>
-                      <div className="text">
-                        {ind + 1}. {m.massage}
+          {messages.length != 0 ? (
+            messages.map((m, ind) => {
+              if (ind != newMessagesIndex) {
+                return (
+                  <>
+                    <div className="message_content" key={m._id}>
+                      <div
+                        className={`message ${
+                          m.isReady ? "message_ready" : ""
+                        }`}
+                      >
+                        <div className="text">
+                          {ind + 1}. {m.massage}
+                        </div>
                       </div>
-                      {/* <div className="data">{m.moment}</div> */}
+                      <div
+                        className={`print_bttn ${
+                          m.isReady ? "message_ready" : ""
+                        }`}
+                        onClick={() => PrintMessage(m.massage)}
+                      >
+                        <span>Напечатать ярлык</span>
+                      </div>
                     </div>
-                    <div
-                    className={`print_bttn ${m.isReady?"message_ready":""}`}
-                    onClick={() => PrintMessage(m.massage)}
-                  >
-                    <span>Напечатать ярлык</span>
-                  </div>
-                  </div>
-                </>
-              );
-            } else {
-              return (
-                <>
-                  <div className="new_messages">Не прочитанны сообщения</div>
-                    <div className="message_cotent" key={m._id}>
-                  <div className={`message ${m.isReady?"message_ready":""}`}>
-                    <div className="text">
-                      <span>{ind + 1}.</span> <span>{m.massage}</span>
+                  </>
+                );
+              } else {
+                return (
+                  <>
+                    <div className="new_messages">Не прочитанны сообщения</div>
+                    <div className="message_content" key={m._id}>
+                      <div
+                        className={`message ${
+                          m.isReady ? "message_ready" : ""
+                        }`}
+                      >
+                        <div className="text">
+                          {ind + 1}. {m.massage}
+                        </div>
+                      </div>
+                      <div
+                        className={`print_bttn ${
+                          m.isReady ? "message_ready" : ""
+                        }`}
+                        onClick={() => PrintMessage(m.massage)}
+                      >
+                        <span>Напечатать ярлык</span>
+                      </div>
                     </div>
-                    {/* <div className="data">{m.moment}</div> */}
-                  </div>
-                  <div
-                    className={`print_bttn ${m.isReady?"message_ready":""}`}
-                    onClick={() => PrintMessage(m.massage)}
-                  >
-                    <span>Напечатать ярлык</span>
-                  </div>
-                </div>
-                </>
-              
-              );
-            }
-          })}
+                  </>
+                );
+              }
+            })
+          ) : (
+            <span style={{margin:"0 auto",marginTop:"20px",fontSize:"100px",fontWeight:"700"}}>Заказов нет</span>
+          )}
           <div ref={endOfMessagesRef} />
         </div>
       </div>
