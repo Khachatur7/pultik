@@ -2023,7 +2023,7 @@ c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
                   }
                 />
               </div>
-              <div className="all_price">{fieldsCount}</div>
+              <div className="all_price">{fieldsCount}%</div>
               <div className="not_read_messages">
                 <svg
                   height="30px"
@@ -2047,7 +2047,7 @@ c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
 		C462.107,387.195,462.94,397.75,456.948,404.771z"
                     />
                   </g>
-                </svg>{" "}
+                </svg><span><span style={{fontWeight:"700"}}>T</span>:</span>{" "}
                 {allMessages && readMessages ? +allMessages - +readMessages : 0}
               </div>
               <div className="not_read_messages">
@@ -2073,7 +2073,7 @@ c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
 		C462.107,387.195,462.94,397.75,456.948,404.771z"
                     />
                   </g>
-                </svg>{" "}
+                </svg><span><span style={{fontWeight:"700"}}>O</span>:</span>{" "}
                 {allOMessages && readOMessages
                   ? +allOMessages - +readOMessages
                   : 0}

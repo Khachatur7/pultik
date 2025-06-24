@@ -436,10 +436,15 @@ body {
   }
   .not_read_messages {
     top: -390px;
+    left: 225px;
     display: flex;
     justify-content: start;
     align-items: center;
     gap: 15px;
+  }
+  .not_read_messages:last-child{
+    left: 228px;
+
   }
 }
 
