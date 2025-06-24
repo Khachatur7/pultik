@@ -2029,7 +2029,7 @@ c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
               <div className="not_read_messages">
                 <EnvelopeSVG />
                 <span>
-                  <span style={{ fontWeight: "700" }}>T</span> :
+                  <span style={{ fontWeight: "700" }}>T</span>:{" "}
                   {allMessages && readMessages
                     ? +allMessages - +readMessages
                     : 0}
@@ -2038,7 +2038,7 @@ c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
               <div className="not_read_messages">
                 <EnvelopeSVG />
                 <span>
-                  <span style={{ fontWeight: "700" }}>O</span> :
+                  <span style={{ fontWeight: "700" }}>O</span>:{" "}
                   {allOMessages && readOMessages
                     ? +allOMessages - +readOMessages
                     : 0}
