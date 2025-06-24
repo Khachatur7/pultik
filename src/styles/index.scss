@@ -430,20 +430,21 @@ body {
   .all_price {
     position: relative;
     top: -380px;
-    left: 200px;
+    left: 205px;
     font-size: 40px;
     z-index: 1111;
   }
   .not_read_messages {
     top: -390px;
-    left: 225px;
+    left: 217px;
     display: flex;
     justify-content: start;
     align-items: center;
-    gap: 15px;
+    gap: 5px;
   }
   .not_read_messages:last-child{
-    left: 228px;
+    left: 220px;
+    top: -395px;
 
   }
 }

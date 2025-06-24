@@ -12,7 +12,6 @@ const playNotificationSound = (): void => {
 };
 
 export const checkNewMessagesO = async (): Promise<void> => {
-    console.log(55535);
   try {
     const userLogin = localStorage.getItem('pultik-user-login');
     if (!userLogin) return;

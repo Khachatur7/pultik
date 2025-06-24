@@ -29,8 +29,9 @@ interface ButtonItemType {
   h?: boolean | undefined;
   edited?: string;
   wbAdded: boolean | undefined;
-  place:string
-  group:string
+  place: string;
+  group: string;
+  ozCommission: number;
 }
 
 export default ButtonItemType;
