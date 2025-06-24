@@ -9,7 +9,7 @@ interface CircleModalComponentBottomLeftProps {
 
 const CircleModalComponentBottomLeft: React.FC<
   CircleModalComponentBottomLeftProps
-> = ({ cust, edited }) => {
+> = ({ cust, edited,ozCommission }) => {
   const [isActive, setIsActive] = useState(false);
   const [exitHover, setExitHover] = useState(false);
   function onMouseOver() {
@@ -33,7 +33,7 @@ const CircleModalComponentBottomLeft: React.FC<
         <>
           <p className="popup__el">cust: {cust || 0}</p>
           <p className="popup__el">edited: {edited || 0}</p>
-          <p className="popup__el">ozCom: {edited || 0}</p>
+          <p className="popup__el">ozCom: {ozCommission || 0}</p>
           <p className="popup__el">...</p>
           <p className="popup__el">...</p>
         </>
