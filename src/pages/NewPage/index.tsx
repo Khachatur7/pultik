@@ -1,6 +1,8 @@
 import { AuthCheck, Container } from "@/components";
 import { useEffect, useState } from "react";
 import axios from "@/axios";
+import { checkNewMessagesO } from "@/handlers/messagesTwo";
+import { checkNewMessagesT } from "@/handlers/messages";
 
 interface ReadButton {
   date: number;
@@ -16,6 +18,8 @@ const NewPage = () => {
   const [items, setItems] = useState<ReadButton[] | null>(null);
   const readMessages = localStorage.getItem("read-messages");
   const allMessages = localStorage.getItem("messages");
+  const allOMessages = localStorage.getItem("o-messages");
+  const readOMessages = localStorage.getItem("read-o-messages");
 
   const loadData = async () => {
     try {
@@ -67,41 +71,77 @@ const NewPage = () => {
     }
   };
 
-  const getMessages = async () => {
-    try {
-      const res = await axios.post("/massages",{
-        user: localStorage.getItem("pultik-user-login"),
-      });
-      const messagesLength = localStorage.getItem("messages");
+  // const getMessages = async () => {
+  //   try {
+  //     const res = await axios.post("/massages",{
+  //       user: localStorage.getItem("pultik-user-login"),
+  //     });
+  //     const messagesLength = localStorage.getItem("messages");
 
-      if (res.data) {
-        if (!messagesLength) {
-          localStorage.setItem(
-            "messages",
-            JSON.stringify(res.data.massage.length)
-          );
-        } else if (+messagesLength < res.data.massage.length) {
-        const audio = new Audio("/new-message.mp3");
+  //     if (res.data) {
+  //       if (!messagesLength) {
+  //         localStorage.setItem(
+  //           "messages",
+  //           JSON.stringify(res.data.massage.length)
+  //         );
+  //       } else if (+messagesLength < res.data.massage.length) {
+  //       const audio = new Audio("/new-message.mp3");
+  //         audio.play().catch((error) => {
+  //           console.error("Ошибка воспроизведения звука:", error);
+  //         });
+  //         localStorage.setItem(
+  //           "messages",
+  //           JSON.stringify(res.data.massage.length)
+  //         );
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  //   useEffect(() => {
+  //     const checkNewMessages = setInterval(() => {
+  //       getMessages();
+  //  }, 5000);
+
+  //   return () => clearInterval(checkNewMessages);
+  // }, []);
+
+  useEffect(() => {
+    const intervalId = setInterval(checkNewMessagesT, 5000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  useEffect(() => {
+    const intervalId = setInterval(checkNewMessagesO, 5000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+  useEffect(() => {
+    const checkNewMessagesCount = setInterval(() => {
+      if (allOMessages && readOMessages) {
+        if (+allOMessages > +readOMessages) {
+          const audio = new Audio("/piii.mp3");
           audio.play().catch((error) => {
             console.error("Ошибка воспроизведения звука:", error);
           });
-          localStorage.setItem(
-            "messages",
-            JSON.stringify(res.data.massage.length)
-          );
         }
       }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    }, 5000);
+    return () => clearInterval(checkNewMessagesCount);
+  }, []);
+  useEffect(() => {
+    const intervalId = setInterval(checkNewMessagesT, 5000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   useEffect(() => {
-    const checkNewMessages = setInterval(() => {
-      getMessages();
- }, 5000);
+    const intervalId = setInterval(checkNewMessagesO, 5000);
 
-    return () => clearInterval(checkNewMessages);
+    return () => clearInterval(intervalId);
   }, []);
 
   useEffect(() => {
@@ -114,7 +154,6 @@ const NewPage = () => {
           });
         }
       }
-      
     }, 5000);
     return () => clearInterval(checkNewMessagesCount);
   }, []);

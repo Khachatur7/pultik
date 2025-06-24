@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import axios from "@/axios";
 // import { useNavigate } from "react-router-dom";
 import { transliterationMap } from "@/common";
+import { checkNewMessagesT } from "@/handlers/messages";
+import { checkNewMessagesO } from "@/handlers/messagesTwo";
 
 // interface ITypeList {
 //   "0": string;
@@ -50,6 +52,8 @@ const ButtonCreatePage = () => {
   const [changedData, setChangedData] = useState<string[]>([]);
   const readMessages = localStorage.getItem("read-messages");
   const allMessages = localStorage.getItem("messages");
+  const allOMessages = localStorage.getItem("o-messages");
+  const readOMessages = localStorage.getItem("read-o-messages");
 
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -236,33 +240,33 @@ const ButtonCreatePage = () => {
     } catch (error) {}
   };
 
-  const getMessages = async () => {
-    try {
-      const res = await axios.post("/massages", {
-        user: localStorage.getItem("pultik-user-login"),
-      });
-      const messagesLength = localStorage.getItem("messages");
-      if (res.data) {
-        if (!messagesLength) {
-          localStorage.setItem(
-            "messages",
-            JSON.stringify(res.data.massage.length)
-          );
-        } else if (+messagesLength < res.data.massage.length) {
-          const audio = new Audio("/new-message.mp3");
-          audio.play().catch((error) => {
-            console.error("Ошибка воспроизведения звука:", error);
-          });
-          localStorage.setItem(
-            "messages",
-            JSON.stringify(res.data.massage.length)
-          );
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getMessages = async () => {
+  //   try {
+  //     const res = await axios.post("/massages", {
+  //       user: localStorage.getItem("pultik-user-login"),
+  //     });
+  //     const messagesLength = localStorage.getItem("messages");
+  //     if (res.data) {
+  //       if (!messagesLength) {
+  //         localStorage.setItem(
+  //           "messages",
+  //           JSON.stringify(res.data.massage.length)
+  //         );
+  //       } else if (+messagesLength < res.data.massage.length) {
+  //         const audio = new Audio("/new-message.mp3");
+  //         audio.play().catch((error) => {
+  //           console.error("Ошибка воспроизведения звука:", error);
+  //         });
+  //         localStorage.setItem(
+  //           "messages",
+  //           JSON.stringify(res.data.massage.length)
+  //         );
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const createOrder = async () => {
     try {
@@ -302,18 +306,45 @@ const ButtonCreatePage = () => {
     return () => clearInterval(comListTimer);
   }, []);
 
-  useEffect(() => {
-    const checkNewMessages = setInterval(() => {
-      getMessages();
-    }, 5000);
+  // useEffect(() => {
+  //   const checkNewMessages = setInterval(() => {
+  //     getMessages();
+  //   }, 5000);
 
-    return () => clearInterval(checkNewMessages);
+  //   return () => clearInterval(checkNewMessages);
+  // }, []);
+
+  useEffect(() => {
+    const intervalId = setInterval(checkNewMessagesT, 5000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  useEffect(() => {
+    const intervalId = setInterval(checkNewMessagesO, 5000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   useEffect(() => {
     const checkNewMessagesCount = setInterval(() => {
       if (allMessages && readMessages) {
         if (+allMessages > +readMessages) {
+          const audio = new Audio("/piii.mp3");
+          audio.play().catch((error) => {
+            console.error("Ошибка воспроизведения звука:", error);
+          });
+        }
+      }
+    }, 5000);
+    return () => clearInterval(checkNewMessagesCount);
+  }, []);
+
+
+  useEffect(() => {
+    const checkNewMessagesCount = setInterval(() => {
+      if (allOMessages && readOMessages) {
+        if (+allOMessages > +readOMessages) {
           const audio = new Audio("/piii.mp3");
           audio.play().catch((error) => {
             console.error("Ошибка воспроизведения звука:", error);

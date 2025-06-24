@@ -17,7 +17,7 @@ import NewPage from "./pages/NewPage";
 import DPage from "./pages/DecrPage";
 import MessagesPage from "./pages/MessagesPage";
 import MessagesPageTwo from "./pages/MessagesPageTwo";
-import OPage from "./pages/OPage";
+import OMessagePage from "./pages/OMessagePage";
 
 const routes: RouteProps[] = [
   {
@@ -75,7 +75,7 @@ const routes: RouteProps[] = [
   },
    {
     path: "/O",
-    element: <OPage />,
+    element: <OMessagePage />,
   },
 ];
 

@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "@/axios";
 import { AuthCheck, Container } from "@/components";
 import ChartComponent from "./ChartComponent";
+import { checkNewMessagesT } from "@/handlers/messages";
+import { checkNewMessagesO } from "@/handlers/messagesTwo";
 
 const ChartsPage = () => {
   const [dates, setDates] = useState<string[] | null>(null);
@@ -12,6 +14,8 @@ const ChartsPage = () => {
   const [chartDataRight, setChartDataRight] = useState<number[] | null>(null);
   const readMessages = localStorage.getItem("read-messages");
   const allMessages = localStorage.getItem("messages");
+  const allOMessages = localStorage.getItem("o-messages");
+  const readOMessages = localStorage.getItem("read-o-messages");
 
   const getChartData = async () => {
     interface ChartDataType {
@@ -63,46 +67,72 @@ const ChartsPage = () => {
       console.log("Не удалось получить графики");
     }
   };
-  const getMessages = async () => {
-    try {
-      const res = await axios.post("/massages",{
-        user: localStorage.getItem("pultik-user-login"),
-      });
-      const messagesLength = localStorage.getItem("messages");
-      if (res.data) {
-        if (!messagesLength) {
-          localStorage.setItem(
-            "messages",
-            JSON.stringify(res.data.massage.length)
-          );
-        } else if (+messagesLength < res.data.massage.length) {
-          const audio = new Audio("/new-message.mp3");
-          audio.play().catch((error) => {
-            console.error("Ошибка воспроизведения звука:", error);
-          });
-          localStorage.setItem(
-            "messages",
-            JSON.stringify(res.data.massage.length)
-          );
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getMessages = async () => {
+  //   try {
+  //     const res = await axios.post("/massages",{
+  //       user: localStorage.getItem("pultik-user-login"),
+  //     });
+  //     const messagesLength = localStorage.getItem("messages");
+  //     if (res.data) {
+  //       if (!messagesLength) {
+  //         localStorage.setItem(
+  //           "messages",
+  //           JSON.stringify(res.data.massage.length)
+  //         );
+  //       } else if (+messagesLength < res.data.massage.length) {
+  //         const audio = new Audio("/new-message.mp3");
+  //         audio.play().catch((error) => {
+  //           console.error("Ошибка воспроизведения звука:", error);
+  //         });
+  //         localStorage.setItem(
+  //           "messages",
+  //           JSON.stringify(res.data.massage.length)
+  //         );
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   const checkNewMessages = setInterval(() => {
+  //     getMessages();
+  //   }, 5000);
+
+  //   return () => clearInterval(checkNewMessages);
+  // }, []);
 
   useEffect(() => {
-    const checkNewMessages = setInterval(() => {
-      getMessages();
-    }, 5000);
+    const intervalId = setInterval(checkNewMessagesT, 5000);
 
-    return () => clearInterval(checkNewMessages);
+    return () => clearInterval(intervalId);
+  }, []);
+
+  useEffect(() => {
+    const intervalId = setInterval(checkNewMessagesO, 5000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   useEffect(() => {
     const checkNewMessagesCount = setInterval(() => {
       if (allMessages && readMessages) {
         if (+allMessages > +readMessages) {
+          const audio = new Audio("/piii.mp3");
+          audio.play().catch((error) => {
+            console.error("Ошибка воспроизведения звука:", error);
+          });
+        }
+      }
+    }, 5000);
+    return () => clearInterval(checkNewMessagesCount);
+  }, []);
+
+  useEffect(() => {
+    const checkNewMessagesCount = setInterval(() => {
+      if (allOMessages && readOMessages) {
+        if (+allOMessages > +readOMessages) {
           const audio = new Audio("/piii.mp3");
           audio.play().catch((error) => {
             console.error("Ошибка воспроизведения звука:", error);

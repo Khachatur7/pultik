@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import axios from "@/axios";
 import { createPortal } from "react-dom";
 import { transliterationMap } from "@/common";
+import { checkNewMessagesT } from "@/handlers/messages";
+import { checkNewMessagesO } from "@/handlers/messagesTwo";
 // import { useNavigate } from 'react-router-dom';
 
 // interface OrderInfoType {
@@ -48,21 +50,17 @@ interface FexpItemType {
 
 const ButtonCreatePage = () => {
   const [orderId, setOrderId] = useState("");
-  // const [sku, setSku] = useState("");
-  // const [isOpened, setIsOpened] = useState(false);
   const [loading, setLoading] = useState(false);
   const [salesInfo, setSalesInfo] = useState<ModalDataType[] | null>(null);
   const [fexpInfo, setFexpInfo] = useState<FexpItemType[] | null>(null);
   const [ctaxInfo, setCtaxInfo] = useState<FexpItemType[] | null>(null);
   const [isShiped, setIsShiped] = useState<ModalDataType[] | null>(null);
-  // const [shipSku, setShipSku] = useState("");
-  // const [shipPrice, setShipPrice] = useState("");
-  // const [shipAmount, setShipAmount] = useState("");
-  // const [shipNumber, setShipNumber] = useState("");
   const [modalData, setModalData] = useState<ModalDataType | null>(null);
   const [countFStocks, setCountFStocks] = useState(false);
   const readMessages = localStorage.getItem("read-messages");
   const allMessages = localStorage.getItem("messages");
+  const allOMessages = localStorage.getItem("o-messages");
+  const readOMessages = localStorage.getItem("read-o-messages");
 
   const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -145,81 +143,6 @@ const ButtonCreatePage = () => {
       setLoading(false);
     }
   };
-
-  // const returnHandler = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-
-  //   if (loading) {
-  //     return;
-  //   }
-
-  //   try {
-  //     setLoading(true);
-
-  //     if (!sku.trim()) {
-  //       return toast.error("Введите значение");
-  //     }
-
-  //     const res = await axios.post(`/returnCom`, {
-  //       text: sku,
-  //       user: localStorage.getItem("pultik-user-login"),
-  //     });
-
-  //     if (res.status !== 200 || !res.data || !res.data.complete) {
-  //       throw Error();
-  //     }
-
-  //     alert(res.data.complete);
-  //     // navigate("/");
-  //   } catch (error) {
-  //     toast.error("Ошибка отправления запроса");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // const createShip = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-
-  //   if (!shipSku.trim()) {
-  //     return toast.error("Введите sku");
-  //   }
-
-  //   if (!shipPrice.trim()) {
-  //     return toast.error("Введите цену");
-  //   }
-
-  //   if (!shipAmount.trim()) {
-  //     return toast.error("Введите количество");
-  //   }
-
-  //   if (!shipNumber.trim()) {
-  //     return toast.error("Введите номер");
-  //   }
-
-  //   try {
-  //     setLoading(true);
-
-  //     const res = await axios.post(`/cCargo`, {
-  //       sku: shipSku,
-  //       price: shipPrice,
-  //       quant: shipAmount,
-  //       number: shipNumber,
-  //       user: localStorage.getItem("pultik-user-login"),
-  //     });
-
-  //     if (res.status !== 200 || !res.data || !res.data.answer) {
-  //       throw Error();
-  //     }
-
-  //     toast.success("Поставка успешно создана");
-  //     alert(res.data.answer);
-  //   } catch (error) {
-  //     toast.error("Ошибка создания поставки");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   const getSalesInfo = async () => {
     try {
@@ -317,33 +240,45 @@ const ButtonCreatePage = () => {
     await getCtax();
   };
 
-  const getMessages = async () => {
-    try {
-      const res = await axios.post("/massages",{
-        user: localStorage.getItem("pultik-user-login"),
-      });
-      const messagesLength = localStorage.getItem("messages");
-      if (res.data) {
-        if (!messagesLength) {
-          localStorage.setItem(
-            "messages",
-            JSON.stringify(res.data.massage.length)
-          );
-        } else if (+messagesLength < res.data.massage.length) {
-         const audio = new Audio("/new-message.mp3");
-          audio.play().catch((error) => {
-            console.error("Ошибка воспроизведения звука:", error);
-          });
-          localStorage.setItem(
-            "messages",
-            JSON.stringify(res.data.massage.length)
-          );
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getMessages = async () => {
+  //   try {
+  //     const res = await axios.post("/massages",{
+  //       user: localStorage.getItem("pultik-user-login"),
+  //     });
+  //     const messagesLength = localStorage.getItem("messages");
+  //     if (res.data) {
+  //       if (!messagesLength) {
+  //         localStorage.setItem(
+  //           "messages",
+  //           JSON.stringify(res.data.massage.length)
+  //         );
+  //       } else if (+messagesLength < res.data.massage.length) {
+  //        const audio = new Audio("/new-message.mp3");
+  //         audio.play().catch((error) => {
+  //           console.error("Ошибка воспроизведения звука:", error);
+  //         });
+  //         localStorage.setItem(
+  //           "messages",
+  //           JSON.stringify(res.data.massage.length)
+  //         );
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  useEffect(() => {
+    const intervalId = setInterval(checkNewMessagesT, 5000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  useEffect(() => {
+    const intervalId = setInterval(checkNewMessagesO, 5000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   useEffect(() => {
     const checkNewMessagesCount = setInterval(() => {
@@ -360,12 +295,25 @@ const ButtonCreatePage = () => {
   }, []);
 
   useEffect(() => {
-    const checkNewMessages = setInterval(() => {
-      getMessages();
- }, 5000);
-
-    return () => clearInterval(checkNewMessages);
+    const checkNewMessagesCount = setInterval(() => {
+      if (allOMessages && readOMessages) {
+        if (+allOMessages > +readOMessages) {
+          const audio = new Audio("/piii.mp3");
+          audio.play().catch((error) => {
+            console.error("Ошибка воспроизведения звука:", error);
+          });
+        }
+      }
+    }, 5000);
+    return () => clearInterval(checkNewMessagesCount);
   }, []);
+
+  //   useEffect(() => {
+  //     const checkNewMessages = setInterval(() => {
+  //       getMessages();
+  //  }, 5000);
+  //   return () => clearInterval(checkNewMessages);
+  // }, []);
 
   useEffect(() => {
     getAllInfo();

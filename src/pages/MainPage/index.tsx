@@ -37,6 +37,8 @@ import RecyclingSVG from "@/components/SVGcomponents/RecyclingSVG";
 import TrashSVG from "@/components/SVGcomponents/TrashSVG";
 import ShelfSVG from "@/components/SVGcomponents/ShelfSVG";
 import FolderSVG from "@/components/SVGcomponents/FolderSVG";
+import { checkNewMessagesT } from "@/handlers/messages";
+import { checkNewMessagesO } from "@/handlers/messagesTwo";
 interface IChart {
   aS: number;
   aSp: number;
@@ -185,6 +187,8 @@ const MainPage = () => {
   const [fieldsCount, setFieldsCount] = useState(0);
   const readMessages = localStorage.getItem("read-messages");
   const allMessages = localStorage.getItem("messages");
+  const allOMessages = localStorage.getItem("o-messages");
+  const readOMessages = localStorage.getItem("read-o-messages");
   const [delSum, setDelSum] = useState<number[]>([]);
 
   const createTabsItems = () => {
@@ -869,45 +873,57 @@ const MainPage = () => {
     }, 4000);
   }, []);
 
-  const getMessages = async () => {
-    try {
-      const res = await axios.post("/massages", {
-        user: localStorage.getItem("pultik-user-login"),
-      });
-      const messagesLength = localStorage.getItem("messages");
+  // const getMessages = async () => {
+  //   try {
+  //     const res = await axios.post("/massages", {
+  //       user: localStorage.getItem("pultik-user-login"),
+  //     });
+  //     const messagesLength = localStorage.getItem("messages");
 
-      if (res.data) {
-        if (!messagesLength || !readMessages) {
-          localStorage.setItem(
-            "messages",
-            JSON.stringify(res.data.massage.length)
-          );
-          localStorage.setItem(
-            "read-messages",
-            JSON.stringify(res.data.massage.length)
-          );
-        } else if (+messagesLength < res.data.massage.length) {
-          const audio = new Audio("/new-message.mp3");
-          audio.play().catch((error) => {
-            console.error("Ошибка воспроизведения звука:", error);
-          });
-          localStorage.setItem(
-            "messages",
-            JSON.stringify(res.data.massage.length)
-          );
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     if (res.data) {
+  //       if (!messagesLength || !readMessages) {
+  //         localStorage.setItem(
+  //           "messages",
+  //           JSON.stringify(res.data.massage.length)
+  //         );
+  //         localStorage.setItem(
+  //           "read-messages",
+  //           JSON.stringify(res.data.massage.length)
+  //         );
+  //       } else if (+messagesLength < res.data.massage.length) {
+  //         const audio = new Audio("/new-message.mp3");
+  //         audio.play().catch((error) => {
+  //           console.error("Ошибка воспроизведения звука:", error);
+  //         });
+  //         localStorage.setItem(
+  //           "messages",
+  //           JSON.stringify(res.data.massage.length)
+  //         );
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   const checkNewMessages = setInterval(() => {
+  //     getMessages();
+  //   }, 5000);
+
+  //   return () => clearInterval(checkNewMessages);
+  // }, []);
 
   useEffect(() => {
-    const checkNewMessages = setInterval(() => {
-      getMessages();
-    }, 5000);
+    const intervalId = setInterval(checkNewMessagesT, 5000);
 
-    return () => clearInterval(checkNewMessages);
+    return () => clearInterval(intervalId);
+  }, []);
+
+  useEffect(() => {
+    const intervalId = setInterval(checkNewMessagesO, 5000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   useEffect(() => {
@@ -924,8 +940,22 @@ const MainPage = () => {
     return () => clearInterval(checkNewMessagesCount);
   }, []);
 
+  useEffect(() => {
+    const checkNewMessagesCount = setInterval(() => {
+      if (allOMessages && readOMessages) {
+        if (+allOMessages > +readOMessages) {
+          const audio = new Audio("/piii.mp3");
+          audio.play().catch((error) => {
+            console.error("Ошибка воспроизведения звука:", error);
+          });
+        }
+      }
+    }, 5000);
+    return () => clearInterval(checkNewMessagesCount);
+  }, []);
+
   const navButtonClasses = useMemo(() => {
-    console.log(tabs.filter((item) => item.value != "upDown"));
+    // console.log(tabs.filter((item) => item.value != "upDown"));
 
     return tabs
       .filter((item) => item.value != "upDown")
@@ -1191,11 +1221,11 @@ const MainPage = () => {
                     >
                       {item.value == 1 || item.value == 2 || item.value == 3 ? (
                         <WalkingManSVG fill={"#000"} width="45px" />
-                      ) : item.value == 4 ? 
-                        <ShelfSVG width="50px"/>
-                      : item.value == 5 ? 
-                        <FolderSVG width="50px" height="45px"/>
-                      : (
+                      ) : item.value == 4 ? (
+                        <ShelfSVG width="50px" />
+                      ) : item.value == 5 ? (
+                        <FolderSVG width="50px" height="45px" />
+                      ) : (
                         <RunnerSVG fill={"#000"} width="65px" />
                       )}
                       <div className="bttns-count">
@@ -1256,85 +1286,88 @@ const MainPage = () => {
 
           <div className="btn__wrapper">
             {items && items.length ? (
-              currentTab!=4 && currentTab!=5 ?
-              <>
-                {buttonsArray
-                  .slice(
-                    currentTab < tabs.length
-                      ? (currentTab - 1) * itemsPerPage
-                      : currentTab - tabs.length - 2 * itemsPerPage,
-                    currentTab < tabs.length
-                      ? currentTab * itemsPerPage
-                      : currentTab - tabs.length - 1 * itemsPerPage
-                  )
-                  .map((_, index: number) => {
-                    const itemIndex =
-                      index +
-                      1 +
-                      (currentTab < tabs.length
-                        ? currentTab - 1
-                        : currentTab - (tabs.length - 1) - 1) *
-                        itemsPerPage;
+              currentTab != 4 && currentTab != 5 ? (
+                <>
+                  {buttonsArray
+                    .slice(
+                      currentTab < tabs.length
+                        ? (currentTab - 1) * itemsPerPage
+                        : currentTab - tabs.length - 2 * itemsPerPage,
+                      currentTab < tabs.length
+                        ? currentTab * itemsPerPage
+                        : currentTab - tabs.length - 1 * itemsPerPage
+                    )
+                    .map((_, index: number) => {
+                      const itemIndex =
+                        index +
+                        1 +
+                        (currentTab < tabs.length
+                          ? currentTab - 1
+                          : currentTab - (tabs.length - 1) - 1) *
+                          itemsPerPage;
 
-                    const elements = items.filter(
-                      (el: ButtonItemType) => el.i === itemIndex
-                    );
-
-                    if (!elements.length) {
-                      return (
-                        <div className="btn__cont" key={index}>
-                          <button className="btn _hover">{itemIndex}</button>
-                        </div>
+                      const elements = items.filter(
+                        (el: ButtonItemType) => el.i === itemIndex
                       );
-                    }
 
-                    const el = elements[0];
-                    return (
-                      <GridButton
-                        key={index}
-                        tel={el.tel}
-                        fullName={el.fullName}
-                        stocks={el.stocks}
-                        index={index}
-                        price={el.basePrice}
-                        multi={multi}
-                        multiTwo={multiTwo}
-                        comValue={el.com}
-                        firstValue={firstValue}
-                        secondValue={secondValue}
-                        boolValue={el.bool}
-                        h={el.h}
-                        i={el.i}
-                        sku={el.sku}
-                        setLastButton={setLastButton}
-                        percent={el.percent}
-                        lastEvent={lastEvent}
-                        basePrices={{
-                          avito: el.avPrice,
-                          mega: el.mmPrice,
-                          ozon: el.ozPrice,
-                          wb: el.wbPrice,
-                          yaE: el.yaEPrice,
-                          ya: el.yaPrice,
-                        }}
-                        fStocks={el.fStocks}
-                        boostValue={boostValue}
-                        boostInitial={el.boost}
-                        wBar={el.wBar}
-                        cp={el.cP}
-                        cust={el.cust}
-                        returnMode={returnMode}
-                        copy={copy}
-                        setCopy={setCopy}
-                        wStocks={el.wStocks}
-                        edited={el.edited}
-                        wbAdded={el.wbAdded}
-                        place={el.place}
-                        group={el.group}
-                      />
-                    );
-                  })}
-              </>: <div style={{width:"100%",height:"980px"}}></div> 
+                      if (!elements.length) {
+                        return (
+                          <div className="btn__cont" key={index}>
+                            <button className="btn _hover">{itemIndex}</button>
+                          </div>
+                        );
+                      }
+
+                      const el = elements[0];
+                      return (
+                        <GridButton
+                          key={index}
+                          tel={el.tel}
+                          fullName={el.fullName}
+                          stocks={el.stocks}
+                          index={index}
+                          price={el.basePrice}
+                          multi={multi}
+                          multiTwo={multiTwo}
+                          comValue={el.com}
+                          firstValue={firstValue}
+                          secondValue={secondValue}
+                          boolValue={el.bool}
+                          h={el.h}
+                          i={el.i}
+                          sku={el.sku}
+                          setLastButton={setLastButton}
+                          percent={el.percent}
+                          lastEvent={lastEvent}
+                          basePrices={{
+                            avito: el.avPrice,
+                            mega: el.mmPrice,
+                            ozon: el.ozPrice,
+                            wb: el.wbPrice,
+                            yaE: el.yaEPrice,
+                            ya: el.yaPrice,
+                          }}
+                          fStocks={el.fStocks}
+                          boostValue={boostValue}
+                          boostInitial={el.boost}
+                          wBar={el.wBar}
+                          cp={el.cP}
+                          cust={el.cust}
+                          returnMode={returnMode}
+                          copy={copy}
+                          setCopy={setCopy}
+                          wStocks={el.wStocks}
+                          edited={el.edited}
+                          wbAdded={el.wbAdded}
+                          place={el.place}
+                          group={el.group}
+                        />
+                      );
+                    })}
+                </>
+              ) : (
+                <div style={{ width: "100%", height: "980px" }}></div>
+              )
             ) : (
               <></>
             )}
@@ -1346,7 +1379,7 @@ const MainPage = () => {
                   to={"/O"}
                   className="btn btn__changing-item flex items-center justify-center bttn"
                 >
-O
+                  O
                 </Link>
                 <Link
                   to={"/t-page-two"}
@@ -1407,7 +1440,7 @@ c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
                       />
                     </g>
                   </svg>
-                {localStorage.getItem("read-messages-two")}
+                  {localStorage.getItem("read-messages-two")}
                 </Link>
               </div>
               <div className="right_column">
@@ -2016,6 +2049,34 @@ c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
                   </g>
                 </svg>{" "}
                 {allMessages && readMessages ? +allMessages - +readMessages : 0}
+              </div>
+              <div className="not_read_messages">
+                <svg
+                  height="30px"
+                  width="30px"
+                  version="1.1"
+                  id="_x32_"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                >
+                  <g>
+                    <path
+                      d="M440.917,67.925H71.083C31.827,67.925,0,99.752,0,139.008v233.984c0,39.256,31.827,71.083,71.083,71.083
+		h369.834c39.255,0,71.083-31.827,71.083-71.083V139.008C512,99.752,480.172,67.925,440.917,67.925z M178.166,321.72l-99.54,84.92
+		c-7.021,5.992-17.576,5.159-23.567-1.869c-5.992-7.021-5.159-17.576,1.87-23.567l99.54-84.92c7.02-5.992,17.574-5.159,23.566,1.87
+		C186.027,305.174,185.194,315.729,178.166,321.72z M256,289.436c-13.314-0.033-26.22-4.457-36.31-13.183l0.008,0.008l-0.032-0.024
+		c0.008,0.008,0.017,0.008,0.024,0.016L66.962,143.694c-6.98-6.058-7.723-16.612-1.674-23.583c6.057-6.98,16.612-7.723,23.582-1.674
+		l152.771,132.592c3.265,2.906,8.645,5.004,14.359,4.971c5.706,0.017,10.995-2.024,14.44-5.028l0.074-0.065l152.615-132.469
+		c6.971-6.049,17.526-5.306,23.583,1.674c6.048,6.97,5.306,17.525-1.674,23.583l-152.77,132.599
+		C282.211,284.929,269.322,289.419,256,289.436z M456.948,404.771c-5.992,7.028-16.547,7.861-23.566,1.869l-99.54-84.92
+		c-7.028-5.992-7.861-16.546-1.869-23.566c5.991-7.029,16.546-7.861,23.566-1.87l99.54,84.92
+		C462.107,387.195,462.94,397.75,456.948,404.771z"
+                    />
+                  </g>
+                </svg>{" "}
+                {allOMessages && readOMessages
+                  ? +allOMessages - +readOMessages
+                  : 0}
               </div>
             </div>
 
