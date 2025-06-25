@@ -426,27 +426,27 @@ body {
       }
     }
   }
-  .not_read_messages,
-  .all_price {
+  .additionall_details{
     position: relative;
     top: -380px;
-    left: 205px;
+    left: 230px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    gap: 3px;
+  .not_read_messages,
+  .all_price {
     font-size: 40px;
-    z-index: 1111;
   }
   .not_read_messages {
-    top: -390px;
-    left: 217px;
     display: flex;
     justify-content: start;
     align-items: center;
     gap: 5px;
   }
-  .not_read_messages:last-child{
-    left: 220px;
-    top: -395px;
-
   }
+
 }
 
 .bttn_arrow {

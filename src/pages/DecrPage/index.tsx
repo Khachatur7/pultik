@@ -17,8 +17,6 @@ interface Decr {
 const DecrPage = () => {
   const [dLines, setDLines] = useState<Decr[]>([]);
   const [update, setUpdate] = useState(false);
-  const readMessages = localStorage.getItem("read-messages");
-  const allMessages = localStorage.getItem("messages");
 
   const getDecrs = async () => {
     try {
@@ -59,20 +57,6 @@ const DecrPage = () => {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    const checkNewMessagesCount = setInterval(() => {
-      if (allMessages && readMessages) {
-        if (+allMessages > +readMessages) {
-          const audio = new Audio("/piii.mp3");
-          audio.play().catch((error) => {
-            console.error("Ошибка воспроизведения звука:", error);
-          });
-        }
-      }
-    }, 5000);
-    return () => clearInterval(checkNewMessagesCount);
-  }, []);
 
   useEffect(() => {
     const checkNewMessages = setInterval(() => {

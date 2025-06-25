@@ -768,6 +768,24 @@ const MainPage = () => {
       setNotSearchYet(false);
     }
   };
+
+  const getMessagesTwo = async () => {
+    try {
+      const res = await axios.post("/massages2", {
+        user: localStorage.getItem("pultik-user-login"),
+      });
+
+      if (res.data) {
+        localStorage.setItem(
+          "read-messages-two",
+          JSON.stringify(res.data.massage.length)
+        );
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const GetDelSum = async () => {
     try {
       const res = await axios.post<{ message: number[] }>("/getDelInDelSum");
@@ -928,18 +946,24 @@ const MainPage = () => {
   }, []);
 
   useEffect(() => {
-    const checkNewMessagesCount = setInterval(() => {
-      if (allMessages && readMessages) {
-        if (+allMessages > +readMessages) {
-          const audio = new Audio("/piii.mp3");
-          audio.play().catch((error) => {
-            console.error("Ошибка воспроизведения звука:", error);
-          });
-        }
-      }
-    }, 5000);
-    return () => clearInterval(checkNewMessagesCount);
+    const intervalId = setInterval(getMessagesTwo, 5000);
+
+    return () => clearInterval(intervalId);
   }, []);
+
+  // useEffect(() => {
+  //   const checkNewMessagesCount = setInterval(() => {
+  //     if (allMessages && readMessages) {
+  //       if (+allMessages > +readMessages) {
+  //         const audio = new Audio("/piii.mp3");
+  //         audio.play().catch((error) => {
+  //           console.error("Ошибка воспроизведения звука:", error);
+  //         });
+  //       }
+  //     }
+  //   }, 5000);
+  //   return () => clearInterval(checkNewMessagesCount);
+  // }, []);
 
   useEffect(() => {
     const checkNewMessagesCount = setInterval(() => {
@@ -1518,6 +1542,9 @@ c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
                   className="btn btn__changing-item flex items-center justify-center bttn"
                 >
                   T
+                    {" "}{allMessages && readMessages
+                    ? +allMessages - +readMessages
+                    : 0}
                 </Link>
                 <Link
                   to={"/d-page"}
@@ -2025,24 +2052,26 @@ c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
                   }
                 />
               </div>
-              <div className="all_price">{fieldsCount} %</div>
-              <div className="not_read_messages">
-                <EnvelopeSVG />
-                <span>
-                  <span style={{ fontWeight: "700" }}>T</span>:{" "}
-                  {allMessages && readMessages
-                    ? +allMessages - +readMessages
-                    : 0}
-                </span>{" "}
-              </div>
-              <div className="not_read_messages">
-                <EnvelopeSVG />
-                <span>
-                  <span style={{ fontWeight: "700" }}>O</span>:{" "}
-                  {allOMessages && readOMessages
-                    ? +allOMessages - +readOMessages
-                    : 0}
-                </span>{" "}
+              <div className="additionall_details">
+                <div className="all_price">{fieldsCount} %</div>
+                <div className="not_read_messages">
+                  <EnvelopeSVG />
+                  <span>
+                    <span style={{ fontWeight: "700" }}>T</span>:{" "}
+                    {allMessages && readMessages
+                      ? +allMessages - +readMessages
+                      : 0}
+                  </span>{" "}
+                </div>
+                <div className="not_read_messages">
+                  <EnvelopeSVG />
+                  <span>
+                    <span style={{ fontWeight: "700" }}>O</span>:{" "}
+                    {allOMessages && readOMessages
+                      ? +allOMessages - +readOMessages
+                      : 0}
+                  </span>{" "}
+                </div>
               </div>
             </div>
 

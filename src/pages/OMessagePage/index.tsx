@@ -9,7 +9,6 @@ interface IMessage {
 }
 
 const OMessagePage = () => {
-
   const [messagesAccepted,setMessagesAccepted] = useState<boolean>(false)
   const [messages, setMessages] = useState<IMessage[]>([]);
   const endOfMessagesRef = useRef<HTMLDivElement>(null);

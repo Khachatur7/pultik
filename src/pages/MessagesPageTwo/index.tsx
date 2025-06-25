@@ -14,7 +14,6 @@ const MessagesPageTwo = () => {
   const [messages, setMessages] = useState<IMessage[]>([]);
   const endOfMessagesRef = useRef<HTMLDivElement>(null);
   const readMessages = localStorage.getItem("read-messages-two");
-  const [newMessagesIndex, setNewMessagesIndex] = useState(0);
   const getMessages = async () => {
     try {
       const res = await axios.post("/massages2", {
@@ -70,9 +69,7 @@ const MessagesPageTwo = () => {
         "read-messages-two",
         JSON.stringify(messages.length)
       );
-    } else {
-      setNewMessagesIndex(+readMessages);
-    }
+    } 
   }, []);
 
   useEffect(() => {
@@ -90,59 +87,39 @@ const MessagesPageTwo = () => {
         <div className="messages">
           {messages.length != 0 ? (
             messages.map((m, ind) => {
-              if (ind != newMessagesIndex) {
-                return (
-                  <>
-                    <div className="message_content" key={m._id}>
-                      <div
-                        className={`message ${
-                          m.isReady ? "message_ready" : ""
-                        }`}
-                      >
-                        <div className="text">
-                          {ind + 1}. {m.massage}
-                        </div>
-                      </div>
-                      <div
-                        className={`print_bttn ${
-                          m.isReady ? "message_ready" : ""
-                        }`}
-                        onClick={() => PrintMessage(m.massage)}
-                      >
-                        <span>Напечатать ярлык</span>
+              return (
+                <>
+                  <div className="message_content" key={m._id}>
+                    <div
+                      className={`message ${m.isReady ? "message_ready" : ""}`}
+                    >
+                      <div className="text">
+                        {ind + 1}. {m.massage}
                       </div>
                     </div>
-                  </>
-                );
-              } else {
-                return (
-                  <>
-                    <div className="new_messages">Не прочитанны сообщения</div>
-                    <div className="message_content" key={m._id}>
-                      <div
-                        className={`message ${
-                          m.isReady ? "message_ready" : ""
-                        }`}
-                      >
-                        <div className="text">
-                          {ind + 1}. {m.massage}
-                        </div>
-                      </div>
-                      <div
-                        className={`print_bttn ${
-                          m.isReady ? "message_ready" : ""
-                        }`}
-                        onClick={() => PrintMessage(m.massage)}
-                      >
-                        <span>Напечатать ярлык</span>
-                      </div>
+                    <div
+                      className={`print_bttn ${
+                        m.isReady ? "message_ready" : ""
+                      }`}
+                      onClick={() => PrintMessage(m.massage)}
+                    >
+                      <span>Напечатать ярлык</span>
                     </div>
-                  </>
-                );
-              }
+                  </div>
+                </>
+              );
             })
           ) : (
-            <span style={{margin:"0 auto",marginTop:"20px",fontSize:"100px",fontWeight:"700"}}>Заказов нет</span>
+            <span
+              style={{
+                margin: "0 auto",
+                marginTop: "20px",
+                fontSize: "100px",
+                fontWeight: "700",
+              }}
+            >
+              Заказов нет
+            </span>
           )}
           <div ref={endOfMessagesRef} />
         </div>

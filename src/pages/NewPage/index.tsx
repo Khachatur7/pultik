@@ -16,8 +16,6 @@ interface ReadButton {
 
 const NewPage = () => {
   const [items, setItems] = useState<ReadButton[] | null>(null);
-  const readMessages = localStorage.getItem("read-messages");
-  const allMessages = localStorage.getItem("messages");
   const allOMessages = localStorage.getItem("o-messages");
   const readOMessages = localStorage.getItem("read-o-messages");
 
@@ -144,19 +142,6 @@ const NewPage = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  useEffect(() => {
-    const checkNewMessagesCount = setInterval(() => {
-      if (allMessages && readMessages) {
-        if (+allMessages > +readMessages) {
-          const audio = new Audio("/piii.mp3");
-          audio.play().catch((error) => {
-            console.error("Ошибка воспроизведения звука:", error);
-          });
-        }
-      }
-    }, 5000);
-    return () => clearInterval(checkNewMessagesCount);
-  }, []);
 
   useEffect(() => {
     loadData();

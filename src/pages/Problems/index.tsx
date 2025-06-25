@@ -17,8 +17,6 @@ interface Problem {
 const ProblemsPage = () => {
   const [problems, setProblems] = useState<Problem[]>([]);
   const [text, setText] = useState<string>("");
-  const readMessages = localStorage.getItem("read-messages");
-  const allMessages = localStorage.getItem("messages");
   const allOMessages = localStorage.getItem("o-messages");
   const readOMessages = localStorage.getItem("read-o-messages");
 
@@ -122,20 +120,6 @@ const ProblemsPage = () => {
     const intervalId = setInterval(checkNewMessagesO, 5000);
 
     return () => clearInterval(intervalId);
-  }, []);
-
-  useEffect(() => {
-    const checkNewMessagesCount = setInterval(() => {
-      if (allMessages && readMessages) {
-        if (+allMessages > +readMessages) {
-          const audio = new Audio("/piii.mp3");
-          audio.play().catch((error) => {
-            console.error("Ошибка воспроизведения звука:", error);
-          });
-        }
-      }
-    }, 5000);
-    return () => clearInterval(checkNewMessagesCount);
   }, []);
 
   useEffect(() => {

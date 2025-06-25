@@ -13,8 +13,6 @@ const WatchPage = () => {
     localStorage.removeItem("pultik-token-key");
     navigate("/auth");
   };
-  const readMessages = localStorage.getItem("read-messages");
-  const allMessages = localStorage.getItem("messages");
     const allOMessages = localStorage.getItem("o-messages");
   const readOMessages = localStorage.getItem("read-o-messages");
 
@@ -76,19 +74,6 @@ const WatchPage = () => {
     const checkNewMessagesCount = setInterval(() => {
       if (allOMessages && readOMessages) {
         if (+allOMessages > +readOMessages) {
-          const audio = new Audio("/piii.mp3");
-          audio.play().catch((error) => {
-            console.error("Ошибка воспроизведения звука:", error);
-          });
-        }
-      }
-    }, 5000);
-    return () => clearInterval(checkNewMessagesCount);
-  }, []);
-  useEffect(() => {
-    const checkNewMessagesCount = setInterval(() => {
-      if (allMessages && readMessages) {
-        if (+allMessages > +readMessages) {
           const audio = new Audio("/piii.mp3");
           audio.play().catch((error) => {
             console.error("Ошибка воспроизведения звука:", error);

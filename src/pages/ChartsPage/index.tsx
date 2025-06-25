@@ -12,8 +12,6 @@ const ChartsPage = () => {
   const [ordersNum, setOrdersNum] = useState<number[] | null>(null);
   const [chartDataLeft, setChartDataLeft] = useState<number[] | null>(null);
   const [chartDataRight, setChartDataRight] = useState<number[] | null>(null);
-  const readMessages = localStorage.getItem("read-messages");
-  const allMessages = localStorage.getItem("messages");
   const allOMessages = localStorage.getItem("o-messages");
   const readOMessages = localStorage.getItem("read-o-messages");
 
@@ -113,20 +111,6 @@ const ChartsPage = () => {
     const intervalId = setInterval(checkNewMessagesO, 5000);
 
     return () => clearInterval(intervalId);
-  }, []);
-
-  useEffect(() => {
-    const checkNewMessagesCount = setInterval(() => {
-      if (allMessages && readMessages) {
-        if (+allMessages > +readMessages) {
-          const audio = new Audio("/piii.mp3");
-          audio.play().catch((error) => {
-            console.error("Ошибка воспроизведения звука:", error);
-          });
-        }
-      }
-    }, 5000);
-    return () => clearInterval(checkNewMessagesCount);
   }, []);
 
   useEffect(() => {
