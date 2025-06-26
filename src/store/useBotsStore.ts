@@ -207,9 +207,9 @@ export const infoBlockItems = [
     },
     {
         id: nanoid(),
-        text: "USDC bot",
+        text: "ozCom",
         link: "http://94.158.166.11:10008/test",
-        errorText: "Не удалось получить инфу по USDC bot",
+        errorText: "Не удалось получить инфу по ozCom bot",
         saveField: "bot8-info",
         connected: false,
         noIndicator: false,
@@ -229,9 +229,9 @@ export const infoBlockItems = [
     },
     {
         id: nanoid(),
-        text: "BNB bot",
+        text: "ozonFS bot",
         link: "http://94.158.166.11:10001/test",
-        errorText: "Не удалось получить инфу по BNB bot1",
+        errorText: "Не удалось получить инфу по ozonFS bot1",
         saveField: "bot10-info",
         connected: false,
         noIndicator: false,

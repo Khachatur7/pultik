@@ -1405,7 +1405,9 @@ const MainPage = () => {
                   to={"/O"}
                   className="btn btn__changing-item flex items-center justify-center bttn"
                 >
-                  O
+                  O{" "}{allOMessages && readOMessages
+                    ? +allOMessages - +readOMessages
+                    : 0}
                 </Link>
                 <Link
                   to={"/t-page-two"}

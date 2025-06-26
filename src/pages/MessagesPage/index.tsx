@@ -61,6 +61,9 @@ const MessagesPage = () => {
 
   return (
     <AuthCheck>
+        <div className="header__">
+        <span>Сообщения</span>
+      </div>
       <div className="decr_page">
         <div className="messages">
           {messages.map((m, ind) => {

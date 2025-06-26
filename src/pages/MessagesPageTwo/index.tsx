@@ -81,7 +81,7 @@ const MessagesPageTwo = () => {
   return (
     <AuthCheck>
       <div className="header__">
-        <span>Заказы готовые для самостоятельной отгрузки</span>
+        <span>Заказы, готовые для самостоятельной отгрузки</span>
       </div>
       <div className="decr_page_two">
         <div className="messages">

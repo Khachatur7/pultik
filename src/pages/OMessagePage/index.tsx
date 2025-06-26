@@ -61,6 +61,9 @@ const OMessagePage = () => {
 
   return (
     <AuthCheck>
+      <div className="header__">
+        <span>Заказы</span>
+      </div>
       <div className="decr_page">
         <div className="messages">
           {messages.map((m, ind) => {
