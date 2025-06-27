@@ -69,7 +69,7 @@ const MessagesPageTwo = () => {
         "read-messages-two",
         JSON.stringify(messages.length)
       );
-    } 
+    }
   }, []);
 
   useEffect(() => {
@@ -94,7 +94,15 @@ const MessagesPageTwo = () => {
                       className={`message ${m.isReady ? "message_ready" : ""}`}
                     >
                       <div className="text">
-                        {ind + 1}. {m.massage}
+                        {ind + 1}.{" "}
+                        <span style={{ fontSize: "57px" }}>
+                          {m.massage.split("|")[0]}
+                        </span>{" "}
+                        |{" "}
+                        {m.massage
+                          .split("|")
+                          .filter((el, ind) => (ind != 0 ? el : 0))
+                          .join("|")}
                       </div>
                     </div>
                     <div
