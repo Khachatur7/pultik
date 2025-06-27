@@ -195,7 +195,9 @@ const MainPage = () => {
   const createTabsItems = () => {
     const localTabs: { id: string; value: number | string }[] = [];
     for (let i = 1; i < 131; i++) {
-      if (i == 6) {
+      if (i == 5) {
+                localTabs.push({ id: nanoid(), value: "Envelope" });
+        localTabs.push({ id: nanoid(), value: "Folder" });
         localTabs.push({ id: nanoid(), value: "upDown" });
         localTabs.push({ id: nanoid(), value: i });
       } else {
@@ -980,10 +982,8 @@ const MainPage = () => {
   }, []);
 
   const navButtonClasses = useMemo(() => {
-    // console.log(tabs.filter((item) => item.value != "upDown"));
-
     return tabs
-      .filter((item) => item.value != "upDown")
+      .filter((item) => item.value != "upDown" && item.value != "Envelope" && item.value != "Folder")
       .map((item) => findNavBttnsColor(+item.value - 1));
   }, [tabs, items]);
 
@@ -1233,6 +1233,23 @@ const MainPage = () => {
                       style={{ width: "35px" }}
                       key={ind * 10}
                     />
+                  ) : item.value == "Envelope" ? (
+                    <Link
+                      to={`/${item.value}`}
+                      className={`btns-page-btn btn black_svg btn__changing-item empty`}
+                      key={item.id}
+                    >
+                      <ShelfSVG width="60px" />
+                    </Link>
+                  ) : item.value == "Folder" ? (
+                    <Link
+                      to={`/${item.value}`}
+                      className={`btns-page-btn btn black_svg btn__changing-item empty`}
+                      key={item.id}
+                    >
+                      {" "}
+                      <FolderSVG width="60px" height="65px" />{" "}
+                    </Link>
                   ) : (
                     <Link
                       to={`/${item.value}`}
@@ -1246,10 +1263,6 @@ const MainPage = () => {
                     >
                       {item.value == 1 || item.value == 2 || item.value == 3 ? (
                         <WalkingManSVG fill={"#000"} width="45px" />
-                      ) : item.value == 4 ? (
-                        <ShelfSVG width="50px" />
-                      ) : item.value == 5 ? (
-                        <FolderSVG width="50px" height="45px" />
                       ) : (
                         <RunnerSVG fill={"#000"} width="65px" />
                       )}
@@ -1311,7 +1324,6 @@ const MainPage = () => {
 
           <div className="btn__wrapper">
             {items && items.length ? (
-              currentTab != 4 && currentTab != 5 ? (
                 <>
                   {buttonsArray
                     .slice(
@@ -1392,9 +1404,6 @@ const MainPage = () => {
                     })}
                 </>
               ) : (
-                <div style={{ width: "100%", height: "980px" }}></div>
-              )
-            ) : (
               <></>
             )}
           </div>
@@ -1405,7 +1414,8 @@ const MainPage = () => {
                   to={"/O"}
                   className="btn btn__changing-item flex items-center justify-center bttn"
                 >
-                  O{" "}{allOMessages && readOMessages
+                  O{" "}
+                  {allOMessages && readOMessages
                     ? +allOMessages - +readOMessages
                     : 0}
                 </Link>
@@ -1543,8 +1553,8 @@ c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
                   to={"/t-page"}
                   className="btn btn__changing-item flex items-center justify-center bttn"
                 >
-                  T
-                    {" "}{allMessages && readMessages
+                  T{" "}
+                  {allMessages && readMessages
                     ? +allMessages - +readMessages
                     : 0}
                 </Link>

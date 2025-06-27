@@ -4,25 +4,16 @@ type MessageData = {
   massage: any[]; // Уточните тип для message согласно вашей API
 };
 
-const playNotificationSound = (): void => {
-  try {
-    const audio = new Audio('/new-message.mp3');
-    audio.play().catch(error => {
-      console.error('Failed to play notification sound:', error);
-    });
-  } catch (error) {
-    console.error('Error initializing audio:', error);
-  }
-};
-
-// if (allMessages && readMessages) {
-//         if (+allMessages > +readMessages) {
-//           const audio = new Audio("/piii.mp3");
-//           audio.play().catch((error) => {
-//             console.error("Ошибка воспроизведения звука:", error);
-//           });
-//         }
-//       }
+// const playNotificationSound = (): void => {
+//   try {
+//     const audio = new Audio('/new-message.mp3');
+//     audio.play().catch(error => {
+//       console.error('Failed to play notification sound:', error);
+//     });
+//   } catch (error) {
+//     console.error('Error initializing audio:', error);
+//   }
+// };
 
 export const checkNewMessagesT = async (): Promise<void> => {
   try {
@@ -44,7 +35,7 @@ export const checkNewMessagesT = async (): Promise<void> => {
 
     // Если есть новые сообщения
     if (currentMessages.length > storedMessagesCount) {
-      playNotificationSound();
+      // playNotificationSound();
       localStorage.setItem('messages', JSON.stringify(currentMessages.length));
     }
 
