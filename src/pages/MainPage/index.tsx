@@ -196,7 +196,7 @@ const MainPage = () => {
     const localTabs: { id: string; value: number | string }[] = [];
     for (let i = 1; i < 131; i++) {
       if (i == 5) {
-                localTabs.push({ id: nanoid(), value: "Envelope" });
+        localTabs.push({ id: nanoid(), value: "Envelope" });
         localTabs.push({ id: nanoid(), value: "Folder" });
         localTabs.push({ id: nanoid(), value: "upDown" });
         localTabs.push({ id: nanoid(), value: i });
@@ -983,7 +983,12 @@ const MainPage = () => {
 
   const navButtonClasses = useMemo(() => {
     return tabs
-      .filter((item) => item.value != "upDown" && item.value != "Envelope" && item.value != "Folder")
+      .filter(
+        (item) =>
+          item.value != "upDown" &&
+          item.value != "Envelope" &&
+          item.value != "Folder"
+      )
       .map((item) => findNavBttnsColor(+item.value - 1));
   }, [tabs, items]);
 
@@ -1236,16 +1241,18 @@ const MainPage = () => {
                   ) : item.value == "Envelope" ? (
                     <Link
                       to={`/${item.value}`}
-                      className={`btns-page-btn btn black_svg btn__changing-item empty`}
+                      className={`btns-page-btn btn black_svg btn__changing-item empty ${ currentTab== 1000 ? "active" : ""}`}
                       key={item.id}
+                      onClick={() => setCurrentTab(1000)}
                     >
                       <ShelfSVG width="60px" />
                     </Link>
                   ) : item.value == "Folder" ? (
                     <Link
                       to={`/${item.value}`}
-                      className={`btns-page-btn btn black_svg btn__changing-item empty`}
+                      className={`btns-page-btn btn black_svg btn__changing-item empty ${currentTab == 1001? "active" : ""}`}
                       key={item.id}
+                      onClick={() => setCurrentTab(1001)}
                     >
                       {" "}
                       <FolderSVG width="60px" height="65px" />{" "}
@@ -1323,87 +1330,89 @@ const MainPage = () => {
           </div>
 
           <div className="btn__wrapper">
-            {items && items.length ? (
-                <>
-                  {buttonsArray
-                    .slice(
-                      currentTab < tabs.length
-                        ? (currentTab - 1) * itemsPerPage
-                        : currentTab - tabs.length - 2 * itemsPerPage,
-                      currentTab < tabs.length
-                        ? currentTab * itemsPerPage
-                        : currentTab - tabs.length - 1 * itemsPerPage
-                    )
-                    .map((_, index: number) => {
-                      const itemIndex =
-                        index +
-                        1 +
-                        (currentTab < tabs.length
-                          ? currentTab - 1
-                          : currentTab - (tabs.length - 1) - 1) *
-                          itemsPerPage;
+            {items && items.length ? currentTab!=1000 && currentTab!=1001 ?(
+              <>
+                {buttonsArray
+                  .slice(
+                    currentTab < tabs.length
+                      ? (currentTab - 1) * itemsPerPage
+                      : currentTab - tabs.length - 2 * itemsPerPage,
+                    currentTab < tabs.length
+                      ? currentTab * itemsPerPage
+                      : currentTab - tabs.length - 1 * itemsPerPage
+                  )
+                  .map((_, index: number) => {
+                    const itemIndex =
+                      index +
+                      1 +
+                      (currentTab < tabs.length
+                        ? currentTab - 1
+                        : currentTab - (tabs.length - 1) - 1) *
+                        itemsPerPage;
 
-                      const elements = items.filter(
-                        (el: ButtonItemType) => el.i === itemIndex
-                      );
+                    const elements = items.filter(
+                      (el: ButtonItemType) => el.i === itemIndex
+                    );
 
-                      if (!elements.length) {
-                        return (
-                          <div className="btn__cont" key={index}>
-                            <button className="btn _hover">{itemIndex}</button>
-                          </div>
-                        );
-                      }
-
-                      const el = elements[0];
+                    if (!elements.length) {
                       return (
-                        <GridButton
-                          key={index}
-                          tel={el.tel}
-                          fullName={el.fullName}
-                          stocks={el.stocks}
-                          index={index}
-                          price={el.basePrice}
-                          multi={multi}
-                          multiTwo={multiTwo}
-                          comValue={el.com}
-                          firstValue={firstValue}
-                          secondValue={secondValue}
-                          boolValue={el.bool}
-                          h={el.h}
-                          i={el.i}
-                          sku={el.sku}
-                          setLastButton={setLastButton}
-                          percent={el.percent}
-                          lastEvent={lastEvent}
-                          basePrices={{
-                            avito: el.avPrice,
-                            mega: el.mmPrice,
-                            ozon: el.ozPrice,
-                            wb: el.wbPrice,
-                            yaE: el.yaEPrice,
-                            ya: el.yaPrice,
-                          }}
-                          fStocks={el.fStocks}
-                          boostValue={boostValue}
-                          boostInitial={el.boost}
-                          wBar={el.wBar}
-                          cp={el.cP}
-                          cust={el.cust}
-                          returnMode={returnMode}
-                          copy={copy}
-                          setCopy={setCopy}
-                          wStocks={el.wStocks}
-                          edited={el.edited}
-                          wbAdded={el.wbAdded}
-                          place={el.place}
-                          group={el.group}
-                          ozCommission={el.ozCommission}
-                        />
+                        <div className="btn__cont" key={index}>
+                          <button className="btn _hover">{itemIndex}</button>
+                        </div>
                       );
-                    })}
-                </>
-              ) : (
+                    }
+
+                    const el = elements[0];
+                    return (
+                      <GridButton
+                        key={index}
+                        tel={el.tel}
+                        fullName={el.fullName}
+                        stocks={el.stocks}
+                        index={index}
+                        price={el.basePrice}
+                        multi={multi}
+                        multiTwo={multiTwo}
+                        comValue={el.com}
+                        firstValue={firstValue}
+                        secondValue={secondValue}
+                        boolValue={el.bool}
+                        h={el.h}
+                        i={el.i}
+                        sku={el.sku}
+                        setLastButton={setLastButton}
+                        percent={el.percent}
+                        lastEvent={lastEvent}
+                        basePrices={{
+                          avito: el.avPrice,
+                          mega: el.mmPrice,
+                          ozon: el.ozPrice,
+                          wb: el.wbPrice,
+                          yaE: el.yaEPrice,
+                          ya: el.yaPrice,
+                        }}
+                        fStocks={el.fStocks}
+                        boostValue={boostValue}
+                        boostInitial={el.boost}
+                        wBar={el.wBar}
+                        cp={el.cP}
+                        cust={el.cust}
+                        returnMode={returnMode}
+                        copy={copy}
+                        setCopy={setCopy}
+                        wStocks={el.wStocks}
+                        edited={el.edited}
+                        wbAdded={el.wbAdded}
+                        place={el.place}
+                        group={el.group}
+                        ozCommission={el.ozCommission}
+                      />
+                    );
+                  })}
+              </>
+            ) : ( 
+             <div style={{ width: "100%", height: "980px" }}></div> 
+             )  : (
               <></>
             )}
           </div>
