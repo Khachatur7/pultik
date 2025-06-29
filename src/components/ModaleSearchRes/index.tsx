@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 interface ModalBttns {
   bttns: ButtonItemType[];
   closeModule: React.Dispatch<React.SetStateAction<boolean>>;
-  setTub: React.Dispatch<React.SetStateAction<number>>;
+  setTub: React.Dispatch<React.SetStateAction<number | string>>;
   byWhat: string;
 }
 

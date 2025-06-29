@@ -103,6 +103,7 @@ const MainPage = () => {
   const [multi, setMulti] = useState<MultiType | null>(null);
   const [multiTwo, setMultiTwo] = useState<MultiType | null>(null);
   const [items, setItems] = useState<ButtonItemType[] | null>(null);
+  const folderBttns = new Array(70).fill(0);
   const [copy, setCopy] = useState(false);
   const [xData, setXData] = useState<string[]>([]);
   const [yData, setYData] = useState<number[]>([]);
@@ -147,7 +148,7 @@ const MainPage = () => {
   const [secondValue, setSecondValue] = useState("0");
   const [boostValue, setBoostValue] = useState("0");
   const { id } = useParams();
-  const [currentTab, setCurrentTab] = useState(id ? +id : 1);
+  const [currentTab, setCurrentTab] = useState<number | string>(id ? +id : 1);
   const timerInterval = useRef<null | number | any>(null);
   const [lastEvent, setLastEvent] = useState<LastEventType>(null);
   const [monitoring, setMonitoring] = useState(false);
@@ -824,7 +825,7 @@ const MainPage = () => {
 
   useEffect(() => {
     const UpdateData = setInterval(() => {
-      initialLoad(items != null ? currentTab < tabs.length - 1 : true);
+      initialLoad(items != null ? +currentTab < tabs.length - 1 : true);
       SelectMonth(localStorage.getItem("piker") || "01");
     }, 5000);
 
@@ -832,7 +833,7 @@ const MainPage = () => {
   }, [currentTab]);
 
   useEffect(() => {
-    loadData(items != null ? currentTab < tabs.length - 1 : true);
+    loadData(items != null ? +currentTab < tabs.length - 1 : true);
   }, [currentTab]);
 
   useEffect(() => {
@@ -1241,18 +1242,22 @@ const MainPage = () => {
                   ) : item.value == "Envelope" ? (
                     <Link
                       to={`/${item.value}`}
-                      className={`btns-page-btn btn black_svg btn__changing-item empty ${ currentTab== 1000 ? "active" : ""}`}
+                      className={`btns-page-btn btn black_svg btn__changing-item empty ${
+                        currentTab == 1000 ? "active" : ""
+                      }`}
                       key={item.id}
-                      onClick={() => setCurrentTab(1000)}
+                      onClick={() => setCurrentTab("Envelope")}
                     >
                       <ShelfSVG width="60px" />
                     </Link>
                   ) : item.value == "Folder" ? (
                     <Link
                       to={`/${item.value}`}
-                      className={`btns-page-btn btn black_svg btn__changing-item empty ${currentTab == 1001? "active" : ""}`}
+                      className={`btns-page-btn btn black_svg btn__changing-item empty ${
+                        currentTab == 1001 ? "active" : ""
+                      }`}
                       key={item.id}
-                      onClick={() => setCurrentTab(1001)}
+                      onClick={() => setCurrentTab("Folder")}
                     >
                       {" "}
                       <FolderSVG width="60px" height="65px" />{" "}
@@ -1330,89 +1335,100 @@ const MainPage = () => {
           </div>
 
           <div className="btn__wrapper">
-            {items && items.length ? currentTab!=1000 && currentTab!=1001 ?(
-              <>
-                {buttonsArray
-                  .slice(
-                    currentTab < tabs.length
-                      ? (currentTab - 1) * itemsPerPage
-                      : currentTab - tabs.length - 2 * itemsPerPage,
-                    currentTab < tabs.length
-                      ? currentTab * itemsPerPage
-                      : currentTab - tabs.length - 1 * itemsPerPage
-                  )
-                  .map((_, index: number) => {
-                    const itemIndex =
-                      index +
-                      1 +
-                      (currentTab < tabs.length
-                        ? currentTab - 1
-                        : currentTab - (tabs.length - 1) - 1) *
-                        itemsPerPage;
+            {items && items.length ? (
+              typeof currentTab == "number" ? (
+                <>
+                  {buttonsArray
+                    .slice(
+                      currentTab < tabs.length
+                        ? (currentTab - 1) * itemsPerPage
+                        : currentTab - tabs.length - 2 * itemsPerPage,
+                      currentTab < tabs.length
+                        ? currentTab * itemsPerPage
+                        : currentTab - tabs.length - 1 * itemsPerPage
+                    )
+                    .map((_, index: number) => {
+                      const itemIndex =
+                        index +
+                        1 +
+                        (currentTab < tabs.length
+                          ? currentTab - 1
+                          : currentTab - (tabs.length - 1) - 1) *
+                          itemsPerPage;
 
-                    const elements = items.filter(
-                      (el: ButtonItemType) => el.i === itemIndex
-                    );
-
-                    if (!elements.length) {
-                      return (
-                        <div className="btn__cont" key={index}>
-                          <button className="btn _hover">{itemIndex}</button>
-                        </div>
+                      const elements = items.filter(
+                        (el: ButtonItemType) => el.i === itemIndex
                       );
-                    }
 
-                    const el = elements[0];
-                    return (
-                      <GridButton
-                        key={index}
-                        tel={el.tel}
-                        fullName={el.fullName}
-                        stocks={el.stocks}
-                        index={index}
-                        price={el.basePrice}
-                        multi={multi}
-                        multiTwo={multiTwo}
-                        comValue={el.com}
-                        firstValue={firstValue}
-                        secondValue={secondValue}
-                        boolValue={el.bool}
-                        h={el.h}
-                        i={el.i}
-                        sku={el.sku}
-                        setLastButton={setLastButton}
-                        percent={el.percent}
-                        lastEvent={lastEvent}
-                        basePrices={{
-                          avito: el.avPrice,
-                          mega: el.mmPrice,
-                          ozon: el.ozPrice,
-                          wb: el.wbPrice,
-                          yaE: el.yaEPrice,
-                          ya: el.yaPrice,
-                        }}
-                        fStocks={el.fStocks}
-                        boostValue={boostValue}
-                        boostInitial={el.boost}
-                        wBar={el.wBar}
-                        cp={el.cP}
-                        cust={el.cust}
-                        returnMode={returnMode}
-                        copy={copy}
-                        setCopy={setCopy}
-                        wStocks={el.wStocks}
-                        edited={el.edited}
-                        wbAdded={el.wbAdded}
-                        place={el.place}
-                        group={el.group}
-                        ozCommission={el.ozCommission}
-                      />
-                    );
-                  })}
-              </>
-            ) : ( 
-             <div style={{ width: "100%", height: "980px" }}></div> 
-             )  : (
+                      if (!elements.length) {
+                        return (
+                          <div className="btn__cont" key={index}>
+                            <button className="btn _hover">{itemIndex}</button>
+                          </div>
+                        );
+                      }
+
+                      const el = elements[0];
+                      return (
+                        <GridButton
+                          key={index}
+                          tel={el.tel}
+                          fullName={el.fullName}
+                          stocks={el.stocks}
+                          index={index}
+                          price={el.basePrice}
+                          multi={multi}
+                          multiTwo={multiTwo}
+                          comValue={el.com}
+                          firstValue={firstValue}
+                          secondValue={secondValue}
+                          boolValue={el.bool}
+                          h={el.h}
+                          i={el.i}
+                          sku={el.sku}
+                          setLastButton={setLastButton}
+                          percent={el.percent}
+                          lastEvent={lastEvent}
+                          basePrices={{
+                            avito: el.avPrice,
+                            mega: el.mmPrice,
+                            ozon: el.ozPrice,
+                            wb: el.wbPrice,
+                            yaE: el.yaEPrice,
+                            ya: el.yaPrice,
+                          }}
+                          fStocks={el.fStocks}
+                          boostValue={boostValue}
+                          boostInitial={el.boost}
+                          wBar={el.wBar}
+                          cp={el.cP}
+                          cust={el.cust}
+                          returnMode={returnMode}
+                          copy={copy}
+                          setCopy={setCopy}
+                          wStocks={el.wStocks}
+                          edited={el.edited}
+                          wbAdded={el.wbAdded}
+                          place={el.place}
+                          group={el.group}
+                          ozCommission={el.ozCommission}
+                        />
+                      );
+                    })}
+                </>
+              ) : currentTab == "Folder" ? (
+                folderBttns.map((_, index) => {
+                  
+                  return (
+                    <div className="btn__cont" key={index}>
+                      <button className="btn _hover">{index + 1}</button>
+                    </div>
+                  );
+                })
+              ) : (
+                <div style={{ width: "100%", height: "980px" }}></div>
+              )
+            ) : (
               <></>
             )}
           </div>
