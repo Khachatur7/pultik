@@ -103,7 +103,7 @@ const MainPage = () => {
   const [multi, setMulti] = useState<MultiType | null>(null);
   const [multiTwo, setMultiTwo] = useState<MultiType | null>(null);
   const [items, setItems] = useState<ButtonItemType[] | null>(null);
-  const folderBttns = new Array(70).fill(0);
+  const folderBttns = new Array(63).fill(0);
   const [copy, setCopy] = useState(false);
   const [xData, setXData] = useState<string[]>([]);
   const [yData, setYData] = useState<number[]>([]);
@@ -1334,7 +1334,7 @@ const MainPage = () => {
             </div>
           </div>
 
-          <div className="btn__wrapper">
+          <div className={`${typeof currentTab != "number"?"special__wrapper":"btn__wrapper"}`}>
             {items && items.length ? (
               typeof currentTab == "number" ? (
                 <>
@@ -1421,7 +1421,7 @@ const MainPage = () => {
                   
                   return (
                     <div className="btn__cont" key={index}>
-                      <button className="btn _hover">{index + 1}</button>
+                      <button className="btn _hover"></button>
                     </div>
                   );
                 })

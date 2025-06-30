@@ -12,7 +12,7 @@ body {
   z-index: 100;
   opacity: 0;
 }
-
+.btn__wrapper
 .cope_info_bttn {
   padding: 15px 30px;
   font-size: 18px;
@@ -2788,6 +2788,14 @@ body {
   align-content: start;
   grid-gap: 20px;
   width: 100%;
+}
+
+.special__wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  align-content: start;
+  gap: 40px;
+  width: 90%;
 }
 
 .btn__cont {
