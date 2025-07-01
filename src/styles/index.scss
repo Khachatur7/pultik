@@ -12,8 +12,8 @@ body {
   z-index: 100;
   opacity: 0;
 }
-.btn__wrapper
-.cope_info_bttn {
+
+.btn__wrapper .cope_info_bttn {
   padding: 15px 30px;
   font-size: 18px;
   color: #fff;
@@ -305,6 +305,7 @@ body {
   bottom: 0px;
   right: 15px;
   font-size: 19px;
+
   svg {
     margin-bottom: -3px;
   }
@@ -426,7 +427,8 @@ body {
       }
     }
   }
-  .additionall_details{
+
+  .additionall_details {
     position: relative;
     top: -380px;
     left: 230px;
@@ -435,18 +437,19 @@ body {
     align-items: start;
     justify-content: start;
     gap: 3px;
-  .not_read_messages,
-  .all_price {
-    font-size: 40px;
-  }
-  .not_read_messages {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    gap: 5px;
-  }
-  }
 
+    .not_read_messages,
+    .all_price {
+      font-size: 40px;
+    }
+
+    .not_read_messages {
+      display: flex;
+      justify-content: start;
+      align-items: center;
+      gap: 5px;
+    }
+  }
 }
 
 .bttn_arrow {
@@ -471,6 +474,7 @@ body {
 .decr_page {
   width: 100%;
   height: 100%;
+
   .messages {
     display: flex;
     flex-direction: column;
@@ -479,6 +483,7 @@ body {
     gap: 15px;
     width: 100%;
     height: 100%;
+
     .message {
       padding: 5px 10px;
       background: #fffffffa;
@@ -488,6 +493,7 @@ body {
       align-items: start;
       justify-content: start;
       font-size: 40px;
+
       .data {
         font-size: 30px;
       }
@@ -524,6 +530,7 @@ body {
   width: 100%;
   height: 100%;
   padding: 0px 30px;
+  overflow: auto;
 
   .messages {
     display: flex;
@@ -533,12 +540,14 @@ body {
     gap: 15px;
     width: 100%;
     height: 100%;
+
     .message_content {
       width: 100%;
       display: flex;
       align-items: center;
       justify-content: start;
       gap: 20px;
+
       .message {
         width: 85%;
         height: 160px;
@@ -550,6 +559,7 @@ body {
         align-items: start;
         justify-content: start;
         font-size: 50px;
+
         .data {
           font-size: 39px;
         }
@@ -569,10 +579,12 @@ body {
         transition: 0.45s;
         cursor: pointer;
       }
+
       .message_ready {
         opacity: 0.7;
         background: #cacaca;
       }
+
       .print_bttn:hover {
         background: #000;
         color: #fff;
@@ -591,6 +603,7 @@ body {
     }
   }
 }
+
 .cp_loading {
   display: flex;
   justify-content: start;
@@ -872,6 +885,7 @@ body {
     transform: translateX(0px);
   }
 }
+
 .edit_bttns,
 .edit_bttns_two {
   display: flex;
@@ -884,6 +898,7 @@ body {
 .edit_bttns_two {
   justify-content: end;
   padding-right: 3px;
+
   .edit_bttn {
     width: 31%;
   }
@@ -939,6 +954,7 @@ body {
     transition: 0.4s ease;
   }
 }
+
 .ok_bttn:hover,
 .edit_bttn:hover {
   background: #000;
@@ -957,6 +973,7 @@ body {
     fill: #000 !important;
   }
 }
+
 .left {
   .popup__el {
     svg,
@@ -966,6 +983,7 @@ body {
     }
   }
 }
+
 .modal_comp_left_i {
   margin-top: 30px;
   width: 100%;
@@ -989,6 +1007,7 @@ body {
   padding-top: -10px;
   padding-bottom: 20px;
 }
+
 .print-svg:hover {
   svg,
   path {
@@ -996,6 +1015,7 @@ body {
     fill: #000 !important;
   }
 }
+
 .edit_bttns,
 .edit_bttns_two {
   button {
@@ -1004,12 +1024,14 @@ body {
       fill: #fff !important;
     }
   }
+
   .arrows {
     svg,
     path {
       fill: #000 !important;
     }
   }
+
   .arrows:hover {
     svg,
     path {
@@ -1459,9 +1481,11 @@ body {
   justify-content: start;
   align-items: center;
   gap: 15px;
+
   .form_field {
     width: 400px;
     height: 55px;
+
     input {
       width: 100%;
       height: 100%;
@@ -1470,6 +1494,7 @@ body {
       font-size: 29px;
     }
   }
+
   .change_data_bttn {
     padding: 12px 27px;
     background: #2d2d2d;
@@ -1531,9 +1556,11 @@ body {
 
   .trash-bttn {
     gap: 14px !important;
+
     .bttns-count {
       font-size: 20px;
     }
+
     line {
       transition: 0.4s ease;
     }
@@ -1636,6 +1663,7 @@ body {
       left: 690px;
       top: 90px;
     }
+
     .min_price {
       width: 430px;
       position: absolute;
@@ -2289,6 +2317,7 @@ body {
     right: unset;
     left: 5%;
   }
+
   &.bottom-left {
     right: unset;
     left: 5%;
@@ -2794,7 +2823,8 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   align-content: start;
-  gap: 60px;
+  row-gap: 32.5px;
+  column-gap: 60px;
   width: 90%;
 }
 
@@ -2886,6 +2916,7 @@ body {
   background-color: #2d2d2d;
   color: #fff;
   opacity: 1;
+
   svg,
   path {
     fill: #000000;
@@ -2894,6 +2925,7 @@ body {
 
 .full {
   background-color: rgb(114, 114, 114);
+
   .bttns-count {
     color: #fff;
   }
@@ -2901,9 +2933,11 @@ body {
 
 .full:hover {
   background-color: rgb(114, 114, 114);
+
   .bttns-count {
     color: #000 !important;
   }
+
   svg,
   path {
     fill: #000000 !important;
@@ -2912,10 +2946,13 @@ body {
 
 .full.active {
   background-color: rgb(114, 114, 114);
+
   .bttns-count {
     color: #fff;
   }
+
   opacity: 1;
+
   svg,
   path {
     fill: #fff;
@@ -2924,6 +2961,7 @@ body {
 
 .not-full {
   background-color: rgb(189, 189, 189);
+
   .bttns-count {
     color: #000;
   }
@@ -2931,9 +2969,11 @@ body {
 
 .not-full:hover {
   background-color: rgb(189, 189, 189);
+
   .bttns-count {
     color: #000 !important;
   }
+
   svg,
   path {
     fill: #000000 !important;
@@ -2942,15 +2982,19 @@ body {
 
 .not-full.active {
   background-color: rgb(179, 179, 179);
+
   .bttns-count {
     color: #ffffff;
   }
+
   opacity: 1;
+
   svg,
   path {
     fill: #ffffff;
   }
 }
+
 .input__wrapper input:focus {
   border: 2px solid #2d2d2d;
   opacity: 1;

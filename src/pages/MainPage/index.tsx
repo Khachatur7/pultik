@@ -219,8 +219,6 @@ const MainPage = () => {
         items.forEach((el) => (el.i === itemIndex ? localItems.push(el) : ""));
       });
 
-    // console.log({a:localItems,as:index});
-
     if (localItems.length === 0) return "empty";
 
     const hasEmptyElement = buttonsArray
@@ -825,15 +823,19 @@ const MainPage = () => {
 
   useEffect(() => {
     const UpdateData = setInterval(() => {
-      initialLoad(items != null ? +currentTab < tabs.length - 1 : true);
-      SelectMonth(localStorage.getItem("piker") || "01");
+      if (currentTab != "Envelope" && currentTab != "Folder") {
+        initialLoad(items != null ? +currentTab < tabs.length - 1 : true);
+        SelectMonth(localStorage.getItem("piker") || "01");
+      }
     }, 5000);
 
     return () => clearInterval(UpdateData);
   }, [currentTab]);
 
   useEffect(() => {
-    loadData(items != null ? +currentTab < tabs.length - 1 : true);
+    if (currentTab != "Envelope" && currentTab != "Folder") {
+      loadData(items != null ? +currentTab < tabs.length - 1 : true);
+    }
   }, [currentTab]);
 
   useEffect(() => {
@@ -895,47 +897,6 @@ const MainPage = () => {
     }, 4000);
   }, []);
 
-  // const getMessages = async () => {
-  //   try {
-  //     const res = await axios.post("/massages", {
-  //       user: localStorage.getItem("pultik-user-login"),
-  //     });
-  //     const messagesLength = localStorage.getItem("messages");
-
-  //     if (res.data) {
-  //       if (!messagesLength || !readMessages) {
-  //         localStorage.setItem(
-  //           "messages",
-  //           JSON.stringify(res.data.massage.length)
-  //         );
-  //         localStorage.setItem(
-  //           "read-messages",
-  //           JSON.stringify(res.data.massage.length)
-  //         );
-  //       } else if (+messagesLength < res.data.massage.length) {
-  //         const audio = new Audio("/new-message.mp3");
-  //         audio.play().catch((error) => {
-  //           console.error("Ошибка воспроизведения звука:", error);
-  //         });
-  //         localStorage.setItem(
-  //           "messages",
-  //           JSON.stringify(res.data.massage.length)
-  //         );
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const checkNewMessages = setInterval(() => {
-  //     getMessages();
-  //   }, 5000);
-
-  //   return () => clearInterval(checkNewMessages);
-  // }, []);
-
   useEffect(() => {
     const intervalId = setInterval(checkNewMessagesT, 5000);
 
@@ -953,20 +914,6 @@ const MainPage = () => {
 
     return () => clearInterval(intervalId);
   }, []);
-
-  // useEffect(() => {
-  //   const checkNewMessagesCount = setInterval(() => {
-  //     if (allMessages && readMessages) {
-  //       if (+allMessages > +readMessages) {
-  //         const audio = new Audio("/piii.mp3");
-  //         audio.play().catch((error) => {
-  //           console.error("Ошибка воспроизведения звука:", error);
-  //         });
-  //       }
-  //     }
-  //   }, 5000);
-  //   return () => clearInterval(checkNewMessagesCount);
-  // }, []);
 
   useEffect(() => {
     const checkNewMessagesCount = setInterval(() => {
@@ -992,6 +939,8 @@ const MainPage = () => {
       )
       .map((item) => findNavBttnsColor(+item.value - 1));
   }, [tabs, items]);
+
+  console.log(items);
 
   return (
     <AuthCheck>
@@ -1243,7 +1192,7 @@ const MainPage = () => {
                     <Link
                       to={`/${item.value}`}
                       className={`btns-page-btn btn black_svg btn__changing-item empty ${
-                        currentTab == 1000 ? "active" : ""
+                        currentTab == "Envelope" ? "active" : ""
                       }`}
                       key={item.id}
                       onClick={() => setCurrentTab("Envelope")}
@@ -1254,7 +1203,7 @@ const MainPage = () => {
                     <Link
                       to={`/${item.value}`}
                       className={`btns-page-btn btn black_svg btn__changing-item empty ${
-                        currentTab == 1001 ? "active" : ""
+                        currentTab == "Folder" ? "active" : ""
                       }`}
                       key={item.id}
                       onClick={() => setCurrentTab("Folder")}
@@ -1334,7 +1283,13 @@ const MainPage = () => {
             </div>
           </div>
 
-          <div className={`${typeof currentTab != "number"?"special__wrapper":"btn__wrapper"}`}>
+          <div
+            className={`${
+              typeof currentTab != "number"
+                ? "special__wrapper"
+                : "btn__wrapper"
+            }`}
+          >
             {items && items.length ? (
               typeof currentTab == "number" ? (
                 <>
@@ -1418,7 +1373,6 @@ const MainPage = () => {
                 </>
               ) : currentTab == "Folder" ? (
                 folderBttns.map((_, index) => {
-                  
                   return (
                     <div className="btn__cont" key={index}>
                       <button className="btn _hover"></button>
