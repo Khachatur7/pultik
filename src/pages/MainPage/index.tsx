@@ -103,7 +103,7 @@ const MainPage = () => {
   const [multi, setMulti] = useState<MultiType | null>(null);
   const [multiTwo, setMultiTwo] = useState<MultiType | null>(null);
   const [items, setItems] = useState<ButtonItemType[] | null>(null);
-  const folderBttns = new Array(63).fill(0);
+  const folderBttns = new Array(60).fill(0);
   const [copy, setCopy] = useState(false);
   const [xData, setXData] = useState<string[]>([]);
   const [yData, setYData] = useState<number[]>([]);
