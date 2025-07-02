@@ -93,7 +93,6 @@ const MainPage = () => {
   const pages = tabs.length;
   const totalButtons = itemsPerPage * pages;
   const buttonsArray = [...Array(totalButtons)];
-
   const storageData = localStorage.getItem("initial-date");
   const [bots, setBots] = useState<IBots[] | null>(null);
   const [http, setHttp] = useState<string | null>(null);
@@ -108,6 +107,7 @@ const MainPage = () => {
   const [xData, setXData] = useState<string[]>([]);
   const [yData, setYData] = useState<number[]>([]);
   const [ordersYData, setOrdersYData] = useState<number[]>([]);
+  const [freeSlotz, setFreeSlotz] = useState<string[] | number[]>([]);
   const [cpData, setCpData] = useState<{
     cP: string;
     eX: string;
@@ -382,6 +382,19 @@ const MainPage = () => {
       setSelectOpened(false);
     } catch (error) {
       console.log(error);
+    }
+  };
+  const getFreeSlotz = async () => {
+    try {
+      const res = await axios.post("/getFreeSlotz", {
+        user: localStorage.getItem("pultik-user-login"),
+      });
+
+      if (res.status == 200) {
+        setFreeSlotz(res.data.message);
+      }
+    } catch (error) {
+      console.log("Не удалось получить данные с роута `/getFreeSlotz`");
     }
   };
 
@@ -884,6 +897,7 @@ const MainPage = () => {
     createTabsItems();
     checkInitialDate();
     getChartData();
+    getFreeSlotz();
     console.log(data, lastButton);
   }, []);
 
@@ -897,6 +911,11 @@ const MainPage = () => {
     }, 4000);
   }, []);
 
+  useEffect(() => {
+    setInterval(() => {
+      getFreeSlotz();
+    }, 15000);
+  }, []);
   useEffect(() => {
     const intervalId = setInterval(checkNewMessagesT, 5000);
 
@@ -939,8 +958,6 @@ const MainPage = () => {
       )
       .map((item) => findNavBttnsColor(+item.value - 1));
   }, [tabs, items]);
-
-  console.log(items);
 
   return (
     <AuthCheck>
@@ -2109,6 +2126,7 @@ c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
                       )}{" "}
                     Rub
                   </p>
+                  <p>fS: {`[ ${freeSlotz.join(", ")} ]`}</p>
                 </>
               ) : (
                 <></>
