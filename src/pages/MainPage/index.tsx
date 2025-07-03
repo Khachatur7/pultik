@@ -191,7 +191,7 @@ const MainPage = () => {
   const allMessages = localStorage.getItem("messages");
   const allOMessages = localStorage.getItem("o-messages");
   const readOMessages = localStorage.getItem("read-o-messages");
-  const [delSum, setDelSum] = useState<number[]>([]);
+  const [ozInDelSum, setOzInDelSum] = useState<number>();
 
   const createTabsItems = () => {
     const localTabs: { id: string; value: number | string }[] = [];
@@ -802,9 +802,11 @@ const MainPage = () => {
 
   const GetDelSum = async () => {
     try {
-      const res = await axios.post<{ message: number[] }>("/getDelInDelSum");
+      const res = await axios.post("/getOzInDelSum",{
+        user: localStorage.getItem("pultik-user-login"),
+      });
       if (res.status == 200) {
-        setDelSum(res.data.message);
+        setOzInDelSum(res.data.message);
       }
     } catch (error) {
       console.log(`Не удалось поменять данные: ${error}`);
@@ -2111,19 +2113,8 @@ c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
                   <p>mP: {cpData.minPer}</p>
                   <p>
                     ozDelSum:{" "}
-                    {delSum[0]
-                      ?.toString()
-                      .replace(
-                        /(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g,
-                        "$1" + " "
-                      )}{" "}
                     Rub | ozInDelSum:{" "}
-                    {delSum[1]
-                      ?.toString()
-                      .replace(
-                        /(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g,
-                        "$1" + " "
-                      )}{" "}
+                    {ozInDelSum}{" "}
                     Rub
                   </p>
                   <p>fS: {`[ ${freeSlotz.join(", ")} ]`}</p>
