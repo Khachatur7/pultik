@@ -262,7 +262,7 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
       });
 
       if (res.data) {
-        alert(res.data.massage);
+        alert(res.data.message);
       }
     } catch (error) {
       alert("Что-то пошло не так :(");

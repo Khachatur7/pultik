@@ -800,7 +800,7 @@ const MainPage = () => {
     }
   };
 
-  const GetDelSum = async () => {
+  const GetOzInDelSum = async () => {
     try {
       const res = await axios.post("/getOzInDelSum",{
         user: localStorage.getItem("pultik-user-login"),
@@ -895,7 +895,7 @@ const MainPage = () => {
   useEffect(() => {
     getPhrases();
     getPrices();
-    GetDelSum();
+    GetOzInDelSum();
     createTabsItems();
     checkInitialDate();
     getChartData();
