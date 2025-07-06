@@ -106,9 +106,8 @@ const MessagesPageTwo = () => {
                       </div>
                     </div>
                     <div
-                      className={`print_bttn ${
-                        m.isReady ? "message_ready" : ""
-                      }`}
+                      className={`print_bttn ${m.isReady ? "message_ready" : ""
+                        }`}
                       onClick={() => PrintMessage(m.massage)}
                     >
                       <span>Напечатать ярлык</span>
