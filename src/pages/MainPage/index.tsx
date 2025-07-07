@@ -2049,6 +2049,56 @@ c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
                       : ""
                   }
                 />
+                <div className="change_count">
+                  <div
+                    className="change_count_bttn"
+                    onClick={() =>
+                      +actField > 0
+                        ? setActField(
+                            (+actField - 1)?.toString()
+                          )
+                        : 0
+                    }
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="m6 10l6 6l6-6"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div
+                    className="change_count_bttn"
+                    onClick={() =>
+                      setActField((+actField + 1)?.toString())
+                    }
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="m4 15l8-8l8 8"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
               </div>
               <div className="field">
                 <span>Pas:</span>{" "}
@@ -2061,6 +2111,56 @@ c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
                       : ""
                   }
                 />
+                <div className="change_count">
+                  <div
+                    className="change_count_bttn"
+                    onClick={() =>
+                      +pasField > 0
+                        ? setPasField(
+                            (+pasField - 1)?.toString()
+                          )
+                        : 0
+                    }
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="m6 10l6 6l6-6"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div
+                    className="change_count_bttn"
+                    onClick={() =>
+                      setPasField((+pasField + 1)?.toString())
+                    }
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="m4 15l8-8l8 8"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
               </div>
               <div className="additionall_details">
                 <div className="all_price">{fieldsCount} %</div>
