@@ -346,7 +346,7 @@ const GridButton: React.FC<Props> = ({
           }}
         >
           {`${!isNaN(stockValue) ? ` S ${stockValue}` : ""} ||`}{" "}
-          {i > 231 && fStocksValue ? (
+          {i > 308 && fStocksValue ? (
             <svg
               version="1.0"
               xmlns="http://www.w3.org/2000/svg"
