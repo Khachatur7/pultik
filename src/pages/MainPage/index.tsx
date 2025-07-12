@@ -108,6 +108,7 @@ const MainPage = () => {
   const [yData, setYData] = useState<number[]>([]);
   const [ordersYData, setOrdersYData] = useState<number[]>([]);
   const [freeSlotz, setFreeSlotz] = useState<string[] | number[]>([]);
+  const [mOzCom, setmOzCom] = useState<number>();
   const [cpData, setCpData] = useState<{
     cP: string;
     eX: string;
@@ -397,7 +398,19 @@ const MainPage = () => {
       console.log("Не удалось получить данные с роута `/getFreeSlotz`");
     }
   };
+  const getOzMiddleCom = async () => {
+    try {
+      const res = await axios.post("/getOzMiddleCom", {
+        user: localStorage.getItem("pultik-user-login"),
+      });
 
+      if (res.status == 200) {
+        setmOzCom(res.data.message);
+      }
+    } catch (error) {
+      console.log("Не удалось получить данные с роута `/getFreeSlotz`");
+    }
+  };
   const loadData = async (garbagePageOrNot: boolean) => {
     try {
       const res = await axios.post(
@@ -900,6 +913,7 @@ const MainPage = () => {
     checkInitialDate();
     getChartData();
     getFreeSlotz();
+    getOzMiddleCom()
     console.log(data, lastButton);
   }, []);
 
@@ -2200,7 +2214,7 @@ c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
                     {cpData.salesYa} | Av: {cpData.salesAv} | Mm:{" "}
                     {cpData.salesMm}
                   </p>
-                  <p>fE/m: {cpData.fixedExp} Rub</p>
+                  <p>mOzCom: {mOzCom} %</p>
                   <p>
                     Quartal: {cpData.quart} |
                     {cpData.priceIndex.split(",")[1].split("|")[1]} ,{" "}
