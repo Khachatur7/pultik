@@ -8,15 +8,15 @@ interface IMessage {
   _id: string;
 }
 
-const MessagesPage = () => {
+const EndingGoods = () => {
   const [messagesAccepted,setMessagesAccepted] = useState<boolean>(false)
   const [messages, setMessages] = useState<IMessage[]>([]);
   const endOfMessagesRef = useRef<HTMLDivElement>(null);
-  const readMessages = localStorage.getItem("read-messages");
+  const readMessages = localStorage.getItem("ending-good-m");
   const [newMessagesIndex, setNewMessagesIndex] = useState(0);
   const getMessages = async () => {
     try {
-      const res = await axios.post("/massages",{
+      const res = await axios.post("/endingGoods",{
         user: localStorage.getItem("pultik-user-login"),
       });
 
@@ -26,7 +26,7 @@ const MessagesPage = () => {
           !messagesAccepted?setMessagesAccepted(true):""
         }
         localStorage.setItem(
-          "read-messages",
+          "ending-good-m",
           JSON.stringify(res.data.massage.length)
         );
       }
@@ -49,7 +49,7 @@ const MessagesPage = () => {
 
   useEffect(() => {
     if (!readMessages) {
-      localStorage.setItem("read-messages", JSON.stringify(messages.length));
+      localStorage.setItem("ending-good-m", JSON.stringify(messages.length));
     } else {
       setNewMessagesIndex(+readMessages);
     }
@@ -99,4 +99,4 @@ const MessagesPage = () => {
   );
 };
 
-export default MessagesPage;
+export default EndingGoods;

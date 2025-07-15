@@ -16,7 +16,9 @@ const OMessagePage = () => {
   const [newMessagesIndex, setNewMessagesIndex] = useState(0);
   const getMessages = async () => {
     try {
-      const res = await axios.post("/messeges3");
+      const res = await axios.post("/messeges3",{
+        user: localStorage.getItem("pultik-user-login"),
+      });
 
       if (res.data) {
         if (messages.length < res.data.massage.length) {
