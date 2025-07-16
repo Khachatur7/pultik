@@ -163,9 +163,9 @@ export const infoBlockItems = [
     },
     {
         id: nanoid(),
-        text: "USDT Bot",
+        text: "ozDel Bot",
         link: "http://94.158.166.11:10004/test",
-        errorText: "Не удалось получить инфу по USDT bot",
+        errorText: "Не удалось получить инфу по ozDel bot",
         saveField: "bot4-info",
         connected: false,
         noIndicator: false,
