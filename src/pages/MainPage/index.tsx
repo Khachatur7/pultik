@@ -825,6 +825,22 @@ const MainPage = () => {
       console.log(`Не удалось поменять данные: ${error}`);
     }
   };
+
+    const GetInDelSum = async () => {
+      console.log(1888);
+
+    try {
+      const res = await axios.post("/getGroupData", {
+        user: localStorage.getItem("pultik-user-login"),
+      });
+      
+console.log(res.data);
+
+    } catch (error) {
+      console.log(`Не удалось поменять данные: ${error}`);
+    }
+  };
+
   const SetFieldValue = async () => {
     try {
       const res = await axios.post("/priceDataChange", {
@@ -909,6 +925,7 @@ const MainPage = () => {
     getPhrases();
     getPrices();
     GetOzInDelSum();
+    GetInDelSum()
     createTabsItems();
     checkInitialDate();
     getChartData();

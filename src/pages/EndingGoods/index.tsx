@@ -9,22 +9,24 @@ interface IMessage {
 }
 
 const EndingGoods = () => {
-  const [messagesAccepted,setMessagesAccepted] = useState<boolean>(false)
+  const [messagesAccepted, setMessagesAccepted] = useState<boolean>(false);
   const [messages, setMessages] = useState<IMessage[]>([]);
   const endOfMessagesRef = useRef<HTMLDivElement>(null);
   const readMessages = localStorage.getItem("ending-good-m");
   const [newMessagesIndex, setNewMessagesIndex] = useState(0);
   const getMessages = async () => {
     try {
-      const res = await axios.post("/endingGoods",{
+      const res = await axios.post("/endingGoods", {
         user: localStorage.getItem("pultik-user-login"),
       });
 
       if (res.data) {
         if (messages.length < res.data.massage.length) {
           setMessages(res.data.massage);
-          !messagesAccepted?setMessagesAccepted(true):""
+          !messagesAccepted ? setMessagesAccepted(true) : "";
         }
+        console.log(res.data);
+
         localStorage.setItem(
           "ending-good-m",
           JSON.stringify(res.data.massage.length)
@@ -63,8 +65,8 @@ const EndingGoods = () => {
 
   return (
     <AuthCheck>
-        <div className="header__">
-        <span>Сообщения</span>
+      <div className="header__">
+        <span>Нулевые остатки</span>
       </div>
       <div className="decr_page">
         <div className="messages">
@@ -73,22 +75,34 @@ const EndingGoods = () => {
               return (
                 <>
                   <div className="new_messages">Не прочитанны сообщения</div>
-                  <div className="message">
-                    <div className="text">
-                      {ind + 1}. {m.massage}
+                  <div className="message_content" key={m._id}>
+                    <div className={`message ${m.massage.length>90?"small_text":""}`}>
+                      <div className="text">
+                        {ind + 1}. {m.massage}
+                      </div>
+                      <div className="data">{m.moment}</div>
                     </div>
-                    <div className="data">{m.moment}</div>
+                    <div className={`bought_bttn`}>
+                      <span>Купил!</span>
+                    </div>
                   </div>
                 </>
               );
             } else {
               return (
-                <div className="message">
-                  <div className="text">
-                    {ind + 1}. {m.massage}
+                <>
+                  <div className="message_content" key={m._id}>
+                    <div className={`message ${m.massage.length>90?"small_text":""}`}>
+                      <div className="text">
+                        {ind + 1}. {m.massage}
+                      </div>
+                      <div className="data">{m.moment}</div>
+                    </div>
+                    <div className={`bought_bttn`}>
+                      <span>Купил!</span>
+                    </div>
                   </div>
-                  <div className="data">{m.moment}</div>
-                </div>
+                </>
               );
             }
           })}
