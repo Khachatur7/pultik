@@ -152,9 +152,9 @@ export const infoBlockItems = [
     },
     {
         id: nanoid(),
-        text: "ETH bot",
+        text: "ozCancel bot",
         link: "http://94.158.166.11:10003/test",
-        errorText: "Не удалось получить инфу по ETH bot",
+        errorText: "Не удалось получить инфу по ozCancel bot",
         saveField: "bot3-info",
         connected: false,
         noIndicator: false,
