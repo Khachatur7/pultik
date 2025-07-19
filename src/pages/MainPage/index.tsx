@@ -102,7 +102,8 @@ const MainPage = () => {
   const [multi, setMulti] = useState<MultiType | null>(null);
   const [multiTwo, setMultiTwo] = useState<MultiType | null>(null);
   const [items, setItems] = useState<ButtonItemType[] | null>(null);
-  const [folderBttns, setFolderBttns] = useState(new Array(84).fill(0));
+  const [folderBttns, setFolderBttns] =
+    useState<{ columnName: string; data: ButtonItemType[] }[]>();
   const [copy, setCopy] = useState(false);
   const [xData, setXData] = useState<string[]>([]);
   const [yData, setYData] = useState<number[]>([]);
@@ -831,12 +832,13 @@ const MainPage = () => {
       const res = await axios.post("/getGroupData", {
         user: localStorage.getItem("pultik-user-login"),
       });
-
-      let keys = res.data.message.map(
-        (obj: Record<string, unknown>) => Object.keys(obj)[0]
+      let foldersBttns: { columnName: string; data: ButtonItemType[] }[] = [];
+      res.data.message.map((obj: Record<string, ButtonItemType[]>) =>{
+        let key = Object.keys(obj)[0] as string
+        foldersBttns.push({ columnName: key, data: obj[key] })}
       );
 
-      setFolderBttns([...keys, ...folderBttns]);
+      setFolderBttns([...foldersBttns]);
     } catch (error) {
       console.log(`Не удалось поменять данные: ${error}`);
     }
@@ -1422,39 +1424,101 @@ const MainPage = () => {
                     })}
                 </>
               ) : currentTab == "Folder" ? (
-                folderBttns.map((keyName, index) => {
-                  return index < 12 ? (
-                    <div className="btn__cont" key={index} onClick={() => handleCopy(keyName)}>
-                      <button className="key">
-                        {keyName}
-                        <span>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="34"
-                            height="34"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="#777777"
-                            strokeWidth="3"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <rect
-                              width="14"
-                              height="14"
-                              x="8"
-                              y="8"
-                              rx="2"
-                              ry="2"
-                            />
-                            <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
-                          </svg>
-                        </span>
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="btn__cont" key={index}>
-                      <button className="btn _hover"></button>
+                folderBttns?.map((folderColumn, index) => {
+                  return (
+                    <div className="folder_column">
+                      <div
+                        className="btn__cont"
+                        key={index}
+                        onClick={() => handleCopy(folderColumn.columnName)}
+                      >
+                        <button className="key">
+                          {folderColumn.columnName}
+                          <span>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="34"
+                              height="34"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="#777777"
+                              strokeWidth="3"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <rect
+                                width="14"
+                                height="14"
+                                x="8"
+                                y="8"
+                                rx="2"
+                                ry="2"
+                              />
+                              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+                            </svg>
+                          </span>
+                        </button>
+                      </div>
+                      {
+                        (new Array(7).fill(0)).map((_,ind)=>{
+                          const bttn = folderColumn.data[ind]
+                          console.log(bttn);
+                          
+                          if (!bttn) {
+                        return (
+                          <div className="btn__cont" key={index}>
+                            <button className="btn _hover">{ind}</button>
+                          </div>
+                        );
+                      }
+
+                      return (
+                        <GridButton
+                          key={index}
+                          tel={bttn.tel}
+                          fullName={bttn.fullName}
+                          stocks={bttn.stocks}
+                          index={index}
+                          price={bttn.basePrice}
+                          multi={multi}
+                          multiTwo={multiTwo}
+                          comValue={bttn.com}
+                          firstValue={firstValue}
+                          secondValue={secondValue}
+                          boolValue={bttn.bool}
+                          h={bttn.h}
+                          i={bttn.i}
+                          sku={bttn.sku}
+                          setLastButton={setLastButton}
+                          percent={bttn.percent}
+                          lastEvent={lastEvent}
+                          basePrices={{
+                            avito: bttn.avPrice,
+                            mega: bttn.mmPrice,
+                            ozon: bttn.ozPrice,
+                            wb: bttn.wbPrice,
+                            yaE: bttn.yaEPrice,
+                            ya: bttn.yaPrice,
+                          }}
+                          fStocks={bttn.fStocks}
+                          boostValue={boostValue}
+                          boostInitial={bttn.boost}
+                          wBar={bttn.wBar}
+                          cp={bttn.cP}
+                          cust={bttn.cust}
+                          returnMode={returnMode}
+                          copy={copy}
+                          setCopy={setCopy}
+                          wStocks={bttn.wStocks}
+                          edited={bttn.edited}
+                          wbAdded={bttn.wbAdded}
+                          place={bttn.place}
+                          group={bttn.group}
+                          ozCommission={bttn.ozCommission}
+                        />
+                      );
+                        })
+                      }
                     </div>
                   );
                 })
