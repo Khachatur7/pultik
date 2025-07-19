@@ -826,14 +826,12 @@ const MainPage = () => {
     }
   };
 
-    const GetInDelSum = async () => {
-
+  const GetInDelSum = async () => {
     try {
       const res = await axios.post("/getGroupData", {
         user: localStorage.getItem("pultik-user-login"),
       });
-console.log(res.data);
-
+      console.log(res.data);
     } catch (error) {
       console.log(`Не удалось поменять данные: ${error}`);
     }
@@ -923,7 +921,7 @@ console.log(res.data);
     getPhrases();
     getPrices();
     GetOzInDelSum();
-    GetInDelSum()
+    GetInDelSum();
     createTabsItems();
     checkInitialDate();
     getChartData();
@@ -1330,7 +1328,11 @@ console.log(res.data);
               <span>Скопировано</span>
             </div>
           </div>
-
+          {currentTab == "Folder" ? (
+            <div style={{ width: "100vh", height: "110px" }}></div>
+          ) : (
+            ""
+          )}
           <div
             className={`${
               typeof currentTab != "number"

@@ -37,6 +37,22 @@ const EndingGoods = () => {
     }
   };
 
+  const GoodToBuy = async (text: string) => {
+    const sku = text.split("|")[0];
+    try {
+      const res = await axios.post("/goodsToBuy", {
+        sku: sku.trim(),
+        user: localStorage.getItem("pultik-user-login"),
+      });
+
+      if (res.data) {
+        alert(res.data.massage);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getMessages();
   }, []);
@@ -76,7 +92,11 @@ const EndingGoods = () => {
                 <>
                   <div className="new_messages">Не прочитанны сообщения</div>
                   <div className="message_content" key={m._id}>
-                    <div className={`message ${m.massage.length>90?"small_text":""}`}>
+                    <div
+                      className={`message ${
+                        m.massage.length > 90 ? "small_text" : ""
+                      }`}
+                    >
                       <div className="text">
                         {ind + 1}. {m.massage}
                       </div>
@@ -92,13 +112,20 @@ const EndingGoods = () => {
               return (
                 <>
                   <div className="message_content" key={m._id}>
-                    <div className={`message ${m.massage.length>90?"small_text":""}`}>
+                    <div
+                      className={`message ${
+                        m.massage.length > 90 ? "small_text" : ""
+                      }`}
+                    >
                       <div className="text">
                         {ind + 1}. {m.massage}
                       </div>
                       <div className="data">{m.moment}</div>
                     </div>
-                    <div className={`bought_bttn`}>
+                    <div
+                      className={`bought_bttn`}
+                      onClick={() => GoodToBuy(m.massage)}
+                    >
                       <span>Купил!</span>
                     </div>
                   </div>
