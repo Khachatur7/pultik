@@ -102,7 +102,7 @@ const MainPage = () => {
   const [multi, setMulti] = useState<MultiType | null>(null);
   const [multiTwo, setMultiTwo] = useState<MultiType | null>(null);
   const [items, setItems] = useState<ButtonItemType[] | null>(null);
-  const [folderBttns, setFolderBttns] = useState(new Array(60).fill(0))
+  const [folderBttns, setFolderBttns] = useState(new Array(84).fill(0));
   const [copy, setCopy] = useState(false);
   const [xData, setXData] = useState<string[]>([]);
   const [yData, setYData] = useState<number[]>([]);
@@ -594,8 +594,9 @@ const MainPage = () => {
         const month = date.getMonth() + 1;
         const year = date.getFullYear();
         let countDay = 1;
-        let fullDate = `${day < 10 ? `0${day}` : day}.${month < 10 ? `0${month}` : month
-          }.${year}`;
+        let fullDate = `${day < 10 ? `0${day}` : day}.${
+          month < 10 ? `0${month}` : month
+        }.${year}`;
         let newDate = date;
         res.data.result.map((el, ind) => {
           if (fullDate == el.date) {
@@ -604,8 +605,9 @@ const MainPage = () => {
             const day = newDate.getDate();
             const month = newDate.getMonth() + 1;
             const year = newDate.getFullYear();
-            fullDate = `${day < 10 ? `0${day}` : day}.${month < 10 ? `0${month}` : month
-              }.${year}`;
+            fullDate = `${day < 10 ? `0${day}` : day}.${
+              month < 10 ? `0${month}` : month
+            }.${year}`;
             x.push(el.date);
             precentY.push(el.middleDayPer ? +el.middleDayPer : +"0");
             ordersNumY.push(el.ordersNum);
@@ -617,8 +619,9 @@ const MainPage = () => {
               const day = xDate.getDate();
               const month = xDate.getMonth() + 1;
               const year = xDate.getFullYear();
-              fullDate = `${day < 10 ? `0${day}` : day}.${month < 10 ? `0${month}` : month
-                }.${year}`;
+              fullDate = `${day < 10 ? `0${day}` : day}.${
+                month < 10 ? `0${month}` : month
+              }.${year}`;
               x.push(fullDate);
             });
           }
@@ -702,8 +705,9 @@ const MainPage = () => {
     const initialDay = date.getDate();
     const initialDonth = date.getMonth() + 1;
     const initialDear = date.getFullYear();
-    let fullDate = `${initialDear}-${initialDonth < 10 ? `0${initialDonth}` : initialDonth
-      }-${initialDay < 10 ? `0${initialDay}` : initialDay}`;
+    let fullDate = `${initialDear}-${
+      initialDonth < 10 ? `0${initialDonth}` : initialDonth
+    }-${initialDay < 10 ? `0${initialDay}` : initialDay}`;
     localStorage.setItem("initial-date", JSON.stringify(fullDate));
     getChartData();
   };
@@ -822,17 +826,17 @@ const MainPage = () => {
     }
   };
 
-  const GetInDelSum = async () => {
+  const getGroupData = async () => {
     try {
       const res = await axios.post("/getGroupData", {
         user: localStorage.getItem("pultik-user-login"),
       });
 
-      let keys = res.data.message.map((obj: Record<string, unknown>) => Object.keys(obj)[0])
-
-      setFolderBttns(
-        [...keys, ...folderBttns]
+      let keys = res.data.message.map(
+        (obj: Record<string, unknown>) => Object.keys(obj)[0]
       );
+
+      setFolderBttns([...keys, ...folderBttns]);
     } catch (error) {
       console.log(`Не удалось поменять данные: ${error}`);
     }
@@ -922,7 +926,7 @@ const MainPage = () => {
     getPhrases();
     getPrices();
     GetOzInDelSum();
-    GetInDelSum();
+    getGroupData();
     createTabsItems();
     checkInitialDate();
     getChartData();
@@ -1000,8 +1004,9 @@ const MainPage = () => {
               ) : (
                 <button
                   key={item.id}
-                  className={`btn btn__changing-item${currentTab === item.value ? " active" : ""
-                    }`}
+                  className={`btn btn__changing-item${
+                    currentTab === item.value ? " active" : ""
+                  }`}
                   onClick={() => SetStates(item)}
                 >
                   {item.value == 1 || item.value == 2 ? (
@@ -1036,8 +1041,9 @@ const MainPage = () => {
               )
             )}
             <button
-              className={`btn btn__changing-item${currentTab === 15 ? " active" : ""
-                }`}
+              className={`btn btn__changing-item${
+                currentTab === 15 ? " active" : ""
+              }`}
               onClick={() => setCurrentTab(15)}
             >
               <TrashSVG
@@ -1103,12 +1109,13 @@ const MainPage = () => {
       )}
       {window.innerWidth > 450 && (
         <div
-          className={`bottom_left_modale ${bottomLeftModale == "closed"
-            ? "open_bottom_modale"
-            : bottomLeftModale == "opened"
+          className={`bottom_left_modale ${
+            bottomLeftModale == "closed"
+              ? "open_bottom_modale"
+              : bottomLeftModale == "opened"
               ? "close_bottom_modale"
               : ""
-            }`}
+          }`}
         >
           <div className="content">
             <button
@@ -1235,8 +1242,9 @@ const MainPage = () => {
                   ) : item.value == "Envelope" ? (
                     <Link
                       to={`/${item.value}`}
-                      className={`btns-page-btn btn black_svg btn__changing-item empty ${currentTab == "Envelope" ? "active" : ""
-                        }`}
+                      className={`btns-page-btn btn black_svg btn__changing-item empty ${
+                        currentTab == "Envelope" ? "active" : ""
+                      }`}
                       key={item.id}
                       onClick={() => setCurrentTab("Envelope")}
                     >
@@ -1245,8 +1253,9 @@ const MainPage = () => {
                   ) : item.value == "Folder" ? (
                     <Link
                       to={`/${item.value}`}
-                      className={`btns-page-btn btn black_svg btn__changing-item empty ${currentTab == "Folder" ? "active" : ""
-                        }`}
+                      className={`btns-page-btn btn black_svg btn__changing-item empty ${
+                        currentTab == "Folder" ? "active" : ""
+                      }`}
                       key={item.id}
                       onClick={() => setCurrentTab("Folder")}
                     >
@@ -1256,8 +1265,9 @@ const MainPage = () => {
                   ) : (
                     <Link
                       to={`/${item.value}`}
-                      className={`btns-page-btn btn black_svg btn__changing-item ${navButtonClasses[+item.value]
-                        } ${item.value == currentTab ? "active" : ""}`}
+                      className={`btns-page-btn btn black_svg btn__changing-item ${
+                        navButtonClasses[+item.value]
+                      } ${item.value == currentTab ? "active" : ""}`}
                       key={item.id}
                       onClick={() =>
                         item.value != "upDown" ? setCurrentTab(+item.value) : ""
@@ -1324,10 +1334,11 @@ const MainPage = () => {
             </div>
           </div>
           <div
-            className={`${typeof currentTab != "number"
-              ? "special__wrapper"
-              : "btn__wrapper"
-              }`}
+            className={`${
+              typeof currentTab != "number"
+                ? "special__wrapper"
+                : "btn__wrapper"
+            }`}
           >
             {items && items.length ? (
               typeof currentTab == "number" ? (
@@ -1348,7 +1359,7 @@ const MainPage = () => {
                         (currentTab < tabs.length
                           ? currentTab - 1
                           : currentTab - (tabs.length - 1) - 1) *
-                        itemsPerPage;
+                          itemsPerPage;
 
                       const elements = items.filter(
                         (el: ButtonItemType) => el.i === itemIndex
@@ -1412,14 +1423,40 @@ const MainPage = () => {
                 </>
               ) : currentTab == "Folder" ? (
                 folderBttns.map((keyName, index) => {
-                  return index < 12 ?
-                    <div className="btn__cont" key={index}>
-                      <button className="key">{keyName}</button>
+                  return index < 12 ? (
+                    <div className="btn__cont" key={index} onClick={() => handleCopy(keyName)}>
+                      <button className="key">
+                        {keyName}
+                        <span>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="34"
+                            height="34"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="#777777"
+                            strokeWidth="3"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <rect
+                              width="14"
+                              height="14"
+                              x="8"
+                              y="8"
+                              rx="2"
+                              ry="2"
+                            />
+                            <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+                          </svg>
+                        </span>
+                      </button>
                     </div>
-                    :
+                  ) : (
                     <div className="btn__cont" key={index}>
                       <button className="btn _hover"></button>
                     </div>
+                  );
                 })
               ) : (
                 <div style={{ width: "100%", height: "980px" }}></div>
@@ -1660,8 +1697,9 @@ c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
                 {searchByWhatButtons.map((b) => {
                   return (
                     <div
-                      className={`button ${searchByWhat == b ? "active-s-button" : ""
-                        }`}
+                      className={`button ${
+                        searchByWhat == b ? "active-s-button" : ""
+                      }`}
                       onClick={() => setSearchByWhat(b)}
                       key={b}
                     >
@@ -1878,8 +1916,8 @@ c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
                     onClick={() =>
                       +deleteField > 0
                         ? setDeleteField(
-                          (+deleteField - 0.1).toFixed(1)?.toString()
-                        )
+                            (+deleteField - 0.1).toFixed(1)?.toString()
+                          )
                         : 0
                     }
                   >
@@ -1942,8 +1980,8 @@ c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
                     onClick={() =>
                       +agentsField > 0
                         ? setAgentsField(
-                          (+agentsField - 0.1).toFixed(1)?.toString()
-                        )
+                            (+agentsField - 0.1).toFixed(1)?.toString()
+                          )
                         : 0
                     }
                   >
@@ -2006,8 +2044,8 @@ c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
                     onClick={() =>
                       +promoField > 0
                         ? setPromoField(
-                          (+promoField - 0.1).toFixed(1)?.toString()
-                        )
+                            (+promoField - 0.1).toFixed(1)?.toString()
+                          )
                         : 0
                     }
                   >
@@ -2068,8 +2106,8 @@ c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
                     onClick={() =>
                       +otherField > 0
                         ? setOtherField(
-                          (+otherField - 0.1).toFixed(1)?.toString()
-                        )
+                            (+otherField - 0.1).toFixed(1)?.toString()
+                          )
                         : 0
                     }
                   >
@@ -2442,12 +2480,12 @@ c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
                   +piker <= 3
                     ? "red"
                     : +piker <= 6
-                      ? "blue"
-                      : +piker <= 9
-                        ? "orange"
-                        : +piker <= 12
-                          ? "green"
-                          : ""
+                    ? "blue"
+                    : +piker <= 9
+                    ? "orange"
+                    : +piker <= 12
+                    ? "green"
+                    : ""
                 }
               >
                 {+piker}
