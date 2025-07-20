@@ -234,8 +234,8 @@ body {
   }
 }
 
-.key{
-    position: relative;
+.key {
+  position: relative;
   width: 100%;
   height: 80px;
   font-size: 40px;
@@ -244,9 +244,9 @@ body {
   align-items: center;
   justify-content: center;
   gap: 15px;
-  &:hover{
-    svg{
-    stroke:#fff;
+  &:hover {
+    svg {
+      stroke: #fff;
       fill: none;
     }
   }
@@ -2331,7 +2331,6 @@ body {
   gap: 5px;
   flex-direction: column;
   width: 90%;
-  overflow-x: auto;
 }
 
 .btn__flex {
@@ -2873,18 +2872,24 @@ body {
 }
 
 .special__wrapper {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-  align-content: start;
-  row-gap: 32.5px;
-  column-gap: 60px;
-  width: 160%;
-  .folder_column{
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 60px;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  overflow-x: auto;
+  .folder_column {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 20px;
+    .btn__cont {
+      width: 440px;
+      height: 80px;
+    }
   }
 }
 

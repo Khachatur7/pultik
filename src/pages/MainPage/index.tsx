@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useEffect, useRef, useMemo } from "react";
 import {
   Container,
@@ -6,7 +5,6 @@ import {
   Button,
   GridButton,
   AuthCheck,
-  InfoBlockParser,
 } from "@/components";
 import { nanoid } from "nanoid";
 import axios from "@/axios";
@@ -18,15 +16,13 @@ import addImage from "@/images/add.png";
 import chartPageImage from "@/images/chart-page-icon.png";
 import eyeImage from "@/images/eyePng.png";
 import roiImage from "@/images/roi.png";
-import searchLogo from "@/images/search_1.svg";
 import problemsP from "@/images/new.jpg";
 import houseImage from "@/images/house.png";
 import upDownImage from "@/images/upDown.png";
 import { InputTypes, ButtonItemType, LastButtonType } from "@/types/common";
-import { minusButtons, plusButtons, transliterationMap } from "@/common";
+import { minusButtons, plusButtons } from "@/common";
 import MainPageFexp from "./MainPageFexp";
 import ZeroModesInfo from "./ZeroModesInfo";
-import { infoBlockItems } from "@/store/useBotsStore";
 import ModalSearchRes from "@/components/ModaleSearchRes";
 import LineChart from "@/components/Chart";
 import { addDays, isAfter, parseISO } from "date-fns";
@@ -39,7 +35,12 @@ import ShelfSVG from "@/components/SVGcomponents/ShelfSVG";
 import FolderSVG from "@/components/SVGcomponents/FolderSVG";
 import { checkNewMessagesT } from "@/handlers/messages";
 import { checkNewMessagesO } from "@/handlers/messagesTwo";
-import EnvelopeSVG from "@/components/SVGcomponents/EnvelopeSVG";
+import PriceInputs from "@/components/PriceInputs";
+import CpData from "@/types/common/CpDatType";
+import CpInfo from "@/components/CpInfo";
+import BttnsInfo from "@/components/BttnsInfo";
+import Bots from "@/components/Bots";
+import BttnsSearcher from "@/components/BttnsSearcher";
 interface IChart {
   aS: number;
   aSp: number;
@@ -77,12 +78,6 @@ interface ButtonsInfo {
   stroyAvailable: number;
 }
 
-interface IBots {
-  _id: string;
-  mon: string;
-  online: boolean;
-}
-
 export type LastEventType = "price" | "stocks" | null;
 
 const MainPage = () => {
@@ -94,8 +89,6 @@ const MainPage = () => {
   const totalButtons = itemsPerPage * pages;
   const buttonsArray = [...Array(totalButtons)];
   const storageData = localStorage.getItem("initial-date");
-  const [bots, setBots] = useState<IBots[] | null>(null);
-  const [http, setHttp] = useState<string | null>(null);
   const [timeLeft, setTimeLeft] = useState(40);
   const [openChangingMenu, setOpenChangingMenu] = useState<boolean>(false);
   const [data, setData] = useState<ButtonItemType[] | null>(null);
@@ -108,29 +101,7 @@ const MainPage = () => {
   const [xData, setXData] = useState<string[]>([]);
   const [yData, setYData] = useState<number[]>([]);
   const [ordersYData, setOrdersYData] = useState<number[]>([]);
-  const [freeSlotz, setFreeSlotz] = useState<string[] | number[]>([]);
-  const [mOzCom, setmOzCom] = useState<number>();
-  const [cpData, setCpData] = useState<{
-    cP: string;
-    eX: string;
-    pL: string;
-    eurRub: string;
-    customs: string;
-    round: string;
-    marg: string | number;
-    salesWb: number;
-    salesYa: number;
-    salesOz: number;
-    salesMm: number;
-    salesAv: number;
-    fixedExp: number;
-    quart: number;
-    priceIndex: string;
-    middlePercent: string;
-    middlePercent2: string;
-    minPer: string;
-    lS: string;
-  } | null>(null);
+  const [cpData, setCpData] = useState<CpData | null>(null);
   const [priceCountWaiting, setPriceCountWaiting] = useState("");
   const [returnMode, setReturnMode] = useState(false);
   const [buttonsInfo, setButtonsInfo] = useState<ButtonsInfo>({
@@ -153,7 +124,6 @@ const MainPage = () => {
   const [currentTab, setCurrentTab] = useState<number | string>(id ? +id : 1);
   const timerInterval = useRef<null | number | any>(null);
   const [lastEvent, setLastEvent] = useState<LastEventType>(null);
-  const [monitoring, setMonitoring] = useState(false);
   const [piker, setPiker] = useState<string>(
     localStorage.getItem("piker") || "01"
   );
@@ -182,19 +152,11 @@ const MainPage = () => {
   const [openBttnModal, setOpenBttnModal] = useState(false);
   const [bottomLeftModale, setBottomLeftModale] = useState("");
   const [answers, setAnswers] = useState<string[]>([]);
-  const [deleteField, setDeleteField] = useState("");
-  const [agentsField, setAgentsField] = useState("");
-  const [promoField, setPromoField] = useState("");
-  const [otherField, setOtherField] = useState("");
-  const [actField, setActField] = useState("");
-  const [pasField, setPasField] = useState("");
-  const [fieldsCount, setFieldsCount] = useState(0);
   const readMessages = localStorage.getItem("read-messages");
   const allMessages = localStorage.getItem("messages");
   const allOMessages = localStorage.getItem("o-messages");
   const readOMessages = localStorage.getItem("read-o-messages");
-  const [ozInDelSum, setOzInDelSum] = useState<number>();
-
+  const FolderColumn = new Array(7).fill(0);
   const createTabsItems = () => {
     const localTabs: { id: string; value: number | string }[] = [];
     for (let i = 1; i < 131; i++) {
@@ -269,23 +231,6 @@ const MainPage = () => {
     }
 
     setFirstValue((prev) => (Number(prev) - value).toString());
-  };
-
-  const onlyEnglish = (
-    value: string,
-    setState: React.Dispatch<React.SetStateAction<string>>
-  ) => {
-    const symb = value[value.length - 1];
-    const transliterationKeys = Object.keys(transliterationMap);
-
-    if (transliterationKeys.includes(symb)) {
-      const resVal =
-        value.slice(0, value.length - 1) + transliterationMap[symb];
-
-      setState(resVal);
-    } else {
-      setState(value);
-    }
   };
 
   const getPhrases = async () => {
@@ -386,32 +331,7 @@ const MainPage = () => {
       console.log(error);
     }
   };
-  const getFreeSlotz = async () => {
-    try {
-      const res = await axios.post("/getFreeSlotz", {
-        user: localStorage.getItem("pultik-user-login"),
-      });
 
-      if (res.status == 200) {
-        setFreeSlotz(res.data.message);
-      }
-    } catch (error) {
-      console.log("Не удалось получить данные с роута `/getFreeSlotz`");
-    }
-  };
-  const getOzMiddleCom = async () => {
-    try {
-      const res = await axios.post("/getOzMiddleCom", {
-        user: localStorage.getItem("pultik-user-login"),
-      });
-
-      if (res.status == 200) {
-        setmOzCom(res.data.message);
-      }
-    } catch (error) {
-      console.log("Не удалось получить данные с роута `/getFreeSlotz`");
-    }
-  };
   const loadData = async (garbagePageOrNot: boolean) => {
     try {
       const res = await axios.post(
@@ -507,6 +427,7 @@ const MainPage = () => {
       setMultiTwo(null);
     }
   };
+
   const initialLoad = async (garbagePageOrNot: boolean) => {
     await loadMulti();
     await loadData(garbagePageOrNot);
@@ -560,20 +481,6 @@ const MainPage = () => {
   const SetStates = (item: any) => {
     setOpenChangingMenu(!openChangingMenu);
     setCurrentTab(item.value);
-  };
-
-  const getBots = async () => {
-    try {
-      const res = await axios.post("/pultikMon", {
-        user: localStorage.getItem("pultik-user-login"),
-      });
-
-      if (res.data) {
-        setBots(res.data.answer);
-      }
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   const getChartData = async () => {
@@ -646,47 +553,6 @@ const MainPage = () => {
     }
   };
 
-  const getHttp = async () => {
-    try {
-      const res = await axios.get("/test");
-
-      if (res.data) {
-        setHttp(res.data.text);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getPrices = async () => {
-    try {
-      const res = await axios.post<{
-        massage: number[];
-        massage2: { act: number; pas: number };
-      }>("/priceData", {
-        user: localStorage.getItem("pultik-user-login"),
-      });
-
-      if (res.status == 200) {
-        setDeleteField(res.data.massage[0].toString());
-        setAgentsField(res.data.massage[1].toString());
-        setPromoField(res.data.massage[2].toString());
-        setOtherField(res.data.massage[3].toString());
-        setActField(res.data.massage2.act.toString());
-        setPasField(res.data.massage2.pas.toString());
-        const allPrices = (
-          +res.data.massage[0] +
-          +res.data.massage[1] +
-          +res.data.massage[2] +
-          +res.data.massage[3]
-        ).toFixed(2);
-        setFieldsCount(+allPrices);
-      }
-    } catch (error) {
-      console.log(`Не удалось получить данные с роута "/priceData"`);
-    }
-  };
-
   const checkInitialDate = () => {
     if (storageData) {
       if (check90DaysPassed(storageData)) {
@@ -729,6 +595,7 @@ const MainPage = () => {
       window.removeEventListener("click", selectHandle);
     }
   };
+
   const handleCopy = (textToCopy: string) => {
     if (/^[0-9 ()\s]+$/.test(textToCopy)) {
       const resText = textToCopy.replace(/[\s()]/g, "");
@@ -814,46 +681,18 @@ const MainPage = () => {
     }
   };
 
-  const GetOzInDelSum = async () => {
-    try {
-      const res = await axios.post("/getOzInDelSum", {
-        user: localStorage.getItem("pultik-user-login"),
-      });
-      if (res.status == 200) {
-        setOzInDelSum(res.data.message);
-      }
-    } catch (error) {
-      console.log(`Не удалось поменять данные: ${error}`);
-    }
-  };
-
   const getGroupData = async () => {
     try {
       const res = await axios.post("/getGroupData", {
         user: localStorage.getItem("pultik-user-login"),
       });
       let foldersBttns: { columnName: string; data: ButtonItemType[] }[] = [];
-      res.data.message.map((obj: Record<string, ButtonItemType[]>) =>{
-        let key = Object.keys(obj)[0] as string
-        foldersBttns.push({ columnName: key, data: obj[key] })}
-      );
+      res.data.message.map((obj: Record<string, ButtonItemType[]>) => {
+        let key = Object.keys(obj)[0] as string;
+        foldersBttns.push({ columnName: key, data: obj[key] });
+      });
 
       setFolderBttns([...foldersBttns]);
-    } catch (error) {
-      console.log(`Не удалось поменять данные: ${error}`);
-    }
-  };
-
-  const SetFieldValue = async () => {
-    try {
-      const res = await axios.post("/priceDataChange", {
-        user: localStorage.getItem("pultik-user-login"),
-        massage: [deleteField, agentsField, promoField, otherField],
-        massage2: { act: +actField, pas: +pasField },
-      });
-      if (res.status == 200) {
-        alert("Данные полей обновились!");
-      }
     } catch (error) {
       console.log(`Не удалось поменять данные: ${error}`);
     }
@@ -901,17 +740,6 @@ const MainPage = () => {
   }, [timeLeft]);
 
   useEffect(() => {
-    setTimeout(() => {
-      setMonitoring(!monitoring);
-    }, 5000);
-  }, []);
-
-  useEffect(() => {
-    getHttp();
-    getBots();
-  }, [monitoring]);
-
-  useEffect(() => {
     if (selectOpened) {
       return window.addEventListener("click", selectHandle);
     }
@@ -926,14 +754,10 @@ const MainPage = () => {
   // для одного рендеринга
   useEffect(() => {
     getPhrases();
-    getPrices();
-    GetOzInDelSum();
     getGroupData();
     createTabsItems();
     checkInitialDate();
     getChartData();
-    getFreeSlotz();
-    getOzMiddleCom();
     console.log(data, lastButton);
   }, []);
 
@@ -947,11 +771,6 @@ const MainPage = () => {
     }, 4000);
   }, []);
 
-  useEffect(() => {
-    setInterval(() => {
-      getFreeSlotz();
-    }, 15000);
-  }, []);
   useEffect(() => {
     const intervalId = setInterval(checkNewMessagesT, 5000);
 
@@ -1459,66 +1278,63 @@ const MainPage = () => {
                           </span>
                         </button>
                       </div>
-                      {
-                        (new Array(7).fill(0)).map((_,ind)=>{
-                          const bttn = folderColumn.data[ind]
-                          console.log(bttn);
-                          
-                          if (!bttn) {
-                        return (
-                          <div className="btn__cont" key={index}>
-                            <button className="btn _hover">{ind}</button>
-                          </div>
-                        );
-                      }
+                      {FolderColumn.map((_, ind) => {
+                        const bttn = folderColumn.data[ind];
 
-                      return (
-                        <GridButton
-                          key={index}
-                          tel={bttn.tel}
-                          fullName={bttn.fullName}
-                          stocks={bttn.stocks}
-                          index={index}
-                          price={bttn.basePrice}
-                          multi={multi}
-                          multiTwo={multiTwo}
-                          comValue={bttn.com}
-                          firstValue={firstValue}
-                          secondValue={secondValue}
-                          boolValue={bttn.bool}
-                          h={bttn.h}
-                          i={bttn.i}
-                          sku={bttn.sku}
-                          setLastButton={setLastButton}
-                          percent={bttn.percent}
-                          lastEvent={lastEvent}
-                          basePrices={{
-                            avito: bttn.avPrice,
-                            mega: bttn.mmPrice,
-                            ozon: bttn.ozPrice,
-                            wb: bttn.wbPrice,
-                            yaE: bttn.yaEPrice,
-                            ya: bttn.yaPrice,
-                          }}
-                          fStocks={bttn.fStocks}
-                          boostValue={boostValue}
-                          boostInitial={bttn.boost}
-                          wBar={bttn.wBar}
-                          cp={bttn.cP}
-                          cust={bttn.cust}
-                          returnMode={returnMode}
-                          copy={copy}
-                          setCopy={setCopy}
-                          wStocks={bttn.wStocks}
-                          edited={bttn.edited}
-                          wbAdded={bttn.wbAdded}
-                          place={bttn.place}
-                          group={bttn.group}
-                          ozCommission={bttn.ozCommission}
-                        />
-                      );
-                        })
-                      }
+                        if (!bttn) {
+                          return (
+                            <div className="btn__cont" key={nanoid()}>
+                              <button className="btn _hover">{ind}</button>
+                            </div>
+                          );
+                        }
+
+                        return (
+                          <GridButton
+                            key={nanoid()}
+                            tel={bttn.tel}
+                            fullName={bttn.fullName}
+                            stocks={bttn.stocks}
+                            index={index}
+                            price={bttn.basePrice}
+                            multi={multi}
+                            multiTwo={multiTwo}
+                            comValue={bttn.com}
+                            firstValue={firstValue}
+                            secondValue={secondValue}
+                            boolValue={bttn.bool}
+                            h={bttn.h}
+                            i={bttn.i}
+                            sku={bttn.sku}
+                            setLastButton={setLastButton}
+                            percent={bttn.percent}
+                            lastEvent={lastEvent}
+                            basePrices={{
+                              avito: bttn.avPrice,
+                              mega: bttn.mmPrice,
+                              ozon: bttn.ozPrice,
+                              wb: bttn.wbPrice,
+                              yaE: bttn.yaEPrice,
+                              ya: bttn.yaPrice,
+                            }}
+                            fStocks={bttn.fStocks}
+                            boostValue={boostValue}
+                            boostInitial={bttn.boost}
+                            wBar={bttn.wBar}
+                            cp={bttn.cP}
+                            cust={bttn.cust}
+                            returnMode={returnMode}
+                            copy={copy}
+                            setCopy={setCopy}
+                            wStocks={bttn.wStocks}
+                            edited={bttn.edited}
+                            wbAdded={bttn.wbAdded}
+                            place={bttn.place}
+                            group={bttn.group}
+                            ozCommission={bttn.ozCommission}
+                          />
+                        );
+                      })}
                     </div>
                   );
                 })
@@ -1776,50 +1592,13 @@ c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
 
               {window.innerWidth > 400 && (
                 <>
-                  <div className="input_search_bttns">
-                    <input
-                      type="text"
-                      className="searcher_input"
-                      placeholder="Search"
-                      value={bttnSearcher}
-                      onChange={(e) =>
-                        onlyEnglish(e.target.value, setBttnSearcher)
-                      }
-                    />
-                    {bttnSearcher.length > 0 && (
-                      <div
-                        className="reset_text"
-                        onClick={() => setBttnSearcher("")}
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="40"
-                          height="40"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            fill="none"
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeWidth="2"
-                            d="M20 20L4 4m16 0L4 20"
-                          />
-                        </svg>
-                      </div>
-                    )}
-                    <span className="bttns_search_res">
-                      {!notSearchYet &&
-                        bttnsIndex.length > 0 &&
-                        bttnsIndex.length}
-                      {!notSearchYet && bttnsIndex.length == 0 && "Not found"}
-                    </span>
-                  </div>
-                  <div
-                    className="search_logo"
-                    onClick={() => setOpenBttnModal(true)}
-                  >
-                    <img src={searchLogo} alt="search_logo" />
-                  </div>
+                  <BttnsSearcher
+                    bttnSearcher={bttnSearcher}
+                    setBttnSearcher={setBttnSearcher}
+                    notSearchYet={notSearchYet}
+                    bttnsIndex={bttnsIndex}
+                    setOpenBttnModal={setOpenBttnModal}
+                  />
                 </>
               )}
 
@@ -1841,7 +1620,6 @@ c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
                 )
               )}
             </div>
-
             <div className="mat__wrapper">
               {minusButtons.map((button) =>
                 button.value == 1 && button.input == 2 ? (
@@ -1860,7 +1638,7 @@ c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
                 )
               )}
             </div>
-            {window.innerWidth <= 400 && (
+            {/* {window.innerWidth <= 400 && (
               <>
                 {" "}
                 <div className="input_search_bttns">
@@ -1923,7 +1701,7 @@ c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
                   <img src={searchLogo} alt="search_logo" />
                 </div>
               </>
-            )}
+            )} */}
             <span className="pc">PC: {priceCountWaiting}</span>
             {xData.length > 0 && yData.length > 0 && (
               <div className="main_chart">
@@ -1959,537 +1737,10 @@ c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
                 </div>
               </div>
             )}
-            <div className="inputs_column">
-              <div className="field">
-                <span>Del:</span>{" "}
-                <input
-                  type="text"
-                  value={deleteField}
-                  onChange={(e) =>
-                    /^\d*([.,]?\d*)?$/.test(e.target.value)
-                      ? setDeleteField(e.target.value)
-                      : ""
-                  }
-                />
-                <div className="bttn" onClick={SetFieldValue}>
-                  OK
-                </div>
-                <div className="change_count">
-                  <div
-                    className="change_count_bttn"
-                    onClick={() =>
-                      +deleteField > 0
-                        ? setDeleteField(
-                            (+deleteField - 0.1).toFixed(1)?.toString()
-                          )
-                        : 0
-                    }
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="m6 10l6 6l6-6"
-                      ></path>
-                    </svg>
-                  </div>
-                  <div
-                    className="change_count_bttn"
-                    onClick={() =>
-                      setDeleteField(
-                        (+deleteField + 0.1).toFixed(1)?.toString()
-                      )
-                    }
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="m4 15l8-8l8 8"
-                      ></path>
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <div className="field">
-                <span>Ag:</span>{" "}
-                <input
-                  type="text"
-                  value={agentsField}
-                  onChange={(e) =>
-                    /^\d*([.,]?\d*)?$/.test(e.target.value)
-                      ? setAgentsField(e.target.value)
-                      : ""
-                  }
-                />
-                <div className="change_count">
-                  <div
-                    className="change_count_bttn"
-                    onClick={() =>
-                      +agentsField > 0
-                        ? setAgentsField(
-                            (+agentsField - 0.1).toFixed(1)?.toString()
-                          )
-                        : 0
-                    }
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="m6 10l6 6l6-6"
-                      ></path>
-                    </svg>
-                  </div>
-                  <div
-                    className="change_count_bttn"
-                    onClick={() =>
-                      setAgentsField(
-                        (+agentsField + 0.1).toFixed(1)?.toString()
-                      )
-                    }
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="m4 15l8-8l8 8"
-                      ></path>
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <div className="field">
-                <span>Pr:</span>{" "}
-                <input
-                  type="text"
-                  value={promoField}
-                  onChange={(e) =>
-                    /^\d*([.,]?\d*)?$/.test(e.target.value)
-                      ? setPromoField(e.target.value)
-                      : ""
-                  }
-                />{" "}
-                <div className="change_count">
-                  <div
-                    className="change_count_bttn"
-                    onClick={() =>
-                      +promoField > 0
-                        ? setPromoField(
-                            (+promoField - 0.1).toFixed(1)?.toString()
-                          )
-                        : 0
-                    }
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="m6 10l6 6l6-6"
-                      ></path>
-                    </svg>
-                  </div>
-                  <div
-                    className="change_count_bttn"
-                    onClick={() =>
-                      setPromoField((+promoField + 0.1).toFixed(1)?.toString())
-                    }
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="m4 15l8-8l8 8"
-                      ></path>
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <div className="field">
-                <span>Oth:</span>{" "}
-                <input
-                  type="text"
-                  value={otherField}
-                  onChange={(e) =>
-                    /^\d*([.,]?\d*)?$/.test(e.target.value)
-                      ? setOtherField(e.target.value)
-                      : ""
-                  }
-                />{" "}
-                <div className="change_count">
-                  <div
-                    className="change_count_bttn"
-                    onClick={() =>
-                      +otherField > 0
-                        ? setOtherField(
-                            (+otherField - 0.1).toFixed(1)?.toString()
-                          )
-                        : 0
-                    }
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="m6 10l6 6l6-6"
-                      ></path>
-                    </svg>
-                  </div>
-                  <div
-                    className="change_count_bttn"
-                    onClick={() =>
-                      setOtherField((+otherField + 0.1).toFixed(1)?.toString())
-                    }
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="m4 15l8-8l8 8"
-                      ></path>
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <div className="field">
-                <span>Act:</span>{" "}
-                <input
-                  type="text"
-                  value={actField}
-                  onChange={(e) =>
-                    /^\d*([.,]?\d*)?$/.test(e.target.value)
-                      ? setActField(e.target.value)
-                      : ""
-                  }
-                />
-                <div className="change_count">
-                  <div
-                    className="change_count_bttn"
-                    onClick={() =>
-                      +actField > 0
-                        ? setActField((+actField - 1)?.toString())
-                        : 0
-                    }
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="m6 10l6 6l6-6"
-                      ></path>
-                    </svg>
-                  </div>
-                  <div
-                    className="change_count_bttn"
-                    onClick={() => setActField((+actField + 1)?.toString())}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="m4 15l8-8l8 8"
-                      ></path>
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <div className="field">
-                <span>Pas:</span>{" "}
-                <input
-                  type="text"
-                  value={pasField}
-                  onChange={(e) =>
-                    /^\d*([.,]?\d*)?$/.test(e.target.value)
-                      ? setPasField(e.target.value)
-                      : ""
-                  }
-                />
-                <div className="change_count">
-                  <div
-                    className="change_count_bttn"
-                    onClick={() =>
-                      +pasField > 0
-                        ? setPasField((+pasField - 1)?.toString())
-                        : 0
-                    }
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="m6 10l6 6l6-6"
-                      ></path>
-                    </svg>
-                  </div>
-                  <div
-                    className="change_count_bttn"
-                    onClick={() => setPasField((+pasField + 1)?.toString())}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="m4 15l8-8l8 8"
-                      ></path>
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <div className="additionall_details">
-                <div className="all_price">{fieldsCount} %</div>
-                <div className="not_read_messages">
-                  <EnvelopeSVG />
-                  <span>
-                    <span style={{ fontWeight: "700" }}>T</span>:{" "}
-                    {allMessages && readMessages
-                      ? +allMessages - +readMessages
-                      : 0}
-                  </span>{" "}
-                </div>
-                <div className="not_read_messages">
-                  <EnvelopeSVG />
-                  <span>
-                    <span style={{ fontWeight: "700" }}>O</span>:{" "}
-                    {allOMessages && readOMessages
-                      ? +allOMessages - +readOMessages
-                      : 0}
-                  </span>{" "}
-                </div>
-              </div>
-            </div>
-
+            <PriceInputs />
+            {cpData && <CpInfo cpData={cpData} />}{" "}
             <MainPageFexp number={number} setNumber={setNumber} />
-            <div className="relative text_cp">
-              {cpData ? (
-                <>
-                  <p>cP: {cpData.cP}</p>
-                  <p>eX: {cpData.eX}</p>
-                  <p>pL: {cpData.pL}</p>
-                  <p>rO: {cpData.round}</p>
-                  <p>mG: {cpData.marg}</p>
-
-                  <p>
-                    Wb: {cpData.salesWb} | Oz: {cpData.salesOz} | Ya:{" "}
-                    {cpData.salesYa} | Av: {cpData.salesAv} | Mm:{" "}
-                    {cpData.salesMm}
-                  </p>
-                  <p>mOzCom: {mOzCom} %</p>
-                  <p>
-                    Quartal: {cpData.quart} |
-                    {cpData.priceIndex.split(",")[1].split("|")[1]} ,{" "}
-                    {cpData.priceIndex.split(",")[2]}
-                  </p>
-                  <p>uS: {localStorage.getItem("pultik-user-login")}</p>
-                  <p>
-                    {cpData.priceIndex.split(",")[3]} | {cpData.lS}
-                  </p>
-                  <p>mP: {cpData.minPer}</p>
-                  <p>ozDelSum: Rub | ozInDelSum: {ozInDelSum} Rub</p>
-                  <p>fS: {`[ ${freeSlotz.join(", ")} ]`}</p>
-                </>
-              ) : (
-                <></>
-              )}
-            </div>
-            <div
-              className="w-[100vw] flex items-center justify-center gap-[10px] bots_list overflow-auto"
-              style={{ marginTop: "15px" }}
-            >
-              {/* Если данные получены */}
-              {http &&
-                infoBlockItems
-                  ?.filter((item) => item.text === "Https server")
-                  .map((item) => (
-                    <InfoBlockParser
-                      key={item.text}
-                      bot={{
-                        _id: item.text,
-                        mon: "",
-                        online: http == "Success!" ? true : false,
-                      }}
-                      text={item.text}
-                    />
-                  ))}
-              {bots &&
-                infoBlockItems
-                  ?.filter(
-                    (item) =>
-                      item.page == "main" && item.text !== "Https server"
-                  )
-                  .map((item, index) => {
-                    if (index < 9) {
-                      return (
-                        <InfoBlockParser
-                          key={item.text}
-                          bot={bots[index]}
-                          text={item.text}
-                          isLast={!(index < 9)}
-                        />
-                      );
-                    }
-                  })}
-
-              {/* Если данные не получены */}
-              {!http &&
-                infoBlockItems
-                  ?.filter((item) => item.text === "Https server")
-                  .map((item) => (
-                    <InfoBlockParser
-                      key={item.text}
-                      bot={{
-                        _id: item.text,
-                        mon: "",
-                        online: false,
-                      }}
-                      text={item.text}
-                    />
-                  ))}
-              {!bots &&
-                infoBlockItems.map((item, index) => {
-                  if (item.page == "main" && item.text !== "Https server") {
-                    return (
-                      <InfoBlockParser
-                        key={item.text + index}
-                        bot={{ _id: "und" + index, mon: "", online: false }}
-                        text={item.text}
-                        isLast
-                      />
-                    );
-                  }
-                })}
-            </div>
-            <div className="w-[100vw] flex items-center justify-center gap-[10px] bots_list overflow-auto">
-              {/* Если данные получены */}
-              {bots &&
-                infoBlockItems
-                  ?.filter(
-                    (item) =>
-                      item.page == "main" && item.text !== "Https server"
-                  )
-                  .map((item, index, arr) => {
-                    if (index >= 9) {
-                      return (
-                        <InfoBlockParser
-                          key={item.text}
-                          bot={bots[index]}
-                          text={item.text}
-                          isLast={index + 1 === arr.length}
-                        />
-                      );
-                    }
-                  })}
-
-              {/* Если данные не получены */}
-              {!bots &&
-                infoBlockItems.map((item, index) => {
-                  if (item.page == "main" && item.text !== "Https server") {
-                    return (
-                      <InfoBlockParser
-                        key={item.text + index}
-                        bot={{ _id: "und" + index, mon: "", online: false }}
-                        text={item.text}
-                        isLast
-                      />
-                    );
-                  }
-                })}
-            </div>
+            <Bots />
           </div>
         </div>
         {window.innerWidth < 450 && (
@@ -2499,36 +1750,7 @@ c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
         )}
         <LabelText />
         <div className="absolute top-[40px] right-[10px] flex items-center justify-center flex-col p_list">
-          <p className="w-[60px] h-[60px] flex justify-center items-center mb-[20px] text-2xl border-black border-[1px] border-solid rounded-md">
-            {buttonsInfo.total}
-          </p>
-          <p className="w-[60px] h-[60px] flex justify-center items-center mb-[20px] bg-slate-400 rounded-md text-2xl text-white">
-            {buttonsInfo.grey}
-          </p>
-          <p className="w-[60px] h-[60px] flex justify-center items-center mb-[20px] rounded-md text-2xl bg-[red] text-white">
-            {buttonsInfo.red}
-          </p>
-          <p className="w-[60px] h-[60px] flex justify-center items-center mb-[20px] rounded-md text-2xl bg-[#cdcd44] text-white">
-            {buttonsInfo.yellow}
-          </p>
-          <p className="w-[60px] h-[60px] flex justify-center items-center mb-[20px] rounded-md text-2xl bg-[blue] text-white">
-            {buttonsInfo.blue}
-          </p>
-          <p className="w-[60px] h-[60px] flex justify-center items-center mb-[20px] rounded-md text-2xl bg-[green] text-white">
-            {buttonsInfo.green}
-          </p>
-          <p className="white_p w-[70px] h-[70px] flex justify-center items-center mb-[20px] rounded-md text-xl bg-slate-100">
-            tel: {buttonsInfo.telNumber}
-          </p>
-          <p className="white_p w-[70px] h-[70px] flex justify-center items-center mb-[20px] rounded-md text-xl bg-slate-100">
-            stroy: {buttonsInfo.stroyNumber}
-          </p>
-          <p className="white_p w-[70px] h-[70px] flex justify-center text-center items-center mb-[20px] rounded-md text-xl bg-slate-100">
-            sTel: {buttonsInfo.telAvailable}
-          </p>
-          <p className="white_p w-[70px] h-[70px] flex justify-center items-center text-center mb-[20px] rounded-md text-xl bg-slate-100">
-            sStroy: {buttonsInfo.stroyAvailable}
-          </p>
+          <BttnsInfo buttonsInfo={buttonsInfo} />
           <ZeroModesInfo
             returnMode={returnMode}
             setReturnMode={setReturnMode}
