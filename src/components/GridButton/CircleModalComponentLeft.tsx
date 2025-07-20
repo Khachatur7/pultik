@@ -294,6 +294,10 @@ const CircleModalComponentLeft: React.FC<CircleModalComponentLeftProps> = ({
     setIndex(ind);
   }, [ind]);
 
+  useEffect(() => {
+    setPlace(btnPlace);
+  }, [btnPlace]);
+
   return (
     <div
       className={`${!isActive ? "popup__circle" : "popup"} left`}
