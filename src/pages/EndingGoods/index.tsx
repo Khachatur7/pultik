@@ -6,6 +6,7 @@ interface IMessage {
   massage: string;
   moment: string;
   _id: string;
+  sku: string;
 }
 
 const EndingGoods = () => {
@@ -25,8 +26,6 @@ const EndingGoods = () => {
           setMessages(res.data.massage);
           !messagesAccepted ? setMessagesAccepted(true) : "";
         }
-        console.log(res.data);
-
         localStorage.setItem(
           "ending-good-m",
           JSON.stringify(res.data.massage.length)
@@ -37,16 +36,15 @@ const EndingGoods = () => {
     }
   };
 
-  const GoodToBuy = async (text: string) => {
-    const sku = text.split("|")[0];
+  const GoodToBuy = async (sku: string) => {
     try {
-      const res = await axios.post("/goodsToBuy", {
+      const res = await axios.post("/buyed", {
         sku: sku.trim(),
         user: localStorage.getItem("pultik-user-login"),
       });
 
       if (res.data) {
-        alert(res.data.massage);
+        alert(res.data.message);
       }
     } catch (error) {
       console.log(error);
@@ -102,7 +100,10 @@ const EndingGoods = () => {
                       </div>
                       <div className="data">{m.moment}</div>
                     </div>
-                    <div className={`bought_bttn`}>
+                    <div
+                      className={`bought_bttn`}
+                      onClick={() => GoodToBuy(m.sku)}
+                    >
                       <span>Купил!</span>
                     </div>
                   </div>
@@ -124,7 +125,7 @@ const EndingGoods = () => {
                     </div>
                     <div
                       className={`bought_bttn`}
-                      onClick={() => GoodToBuy(m.massage)}
+                      onClick={() => GoodToBuy(m.sku)}
                     >
                       <span>Купил!</span>
                     </div>

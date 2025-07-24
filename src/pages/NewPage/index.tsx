@@ -69,43 +69,6 @@ const NewPage = () => {
     }
   };
 
-  // const getMessages = async () => {
-  //   try {
-  //     const res = await axios.post("/massages",{
-  //       user: localStorage.getItem("pultik-user-login"),
-  //     });
-  //     const messagesLength = localStorage.getItem("messages");
-
-  //     if (res.data) {
-  //       if (!messagesLength) {
-  //         localStorage.setItem(
-  //           "messages",
-  //           JSON.stringify(res.data.massage.length)
-  //         );
-  //       } else if (+messagesLength < res.data.massage.length) {
-  //       const audio = new Audio("/new-message.mp3");
-  //         audio.play().catch((error) => {
-  //           console.error("Ошибка воспроизведения звука:", error);
-  //         });
-  //         localStorage.setItem(
-  //           "messages",
-  //           JSON.stringify(res.data.massage.length)
-  //         );
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  //   useEffect(() => {
-  //     const checkNewMessages = setInterval(() => {
-  //       getMessages();
-  //  }, 5000);
-
-  //   return () => clearInterval(checkNewMessages);
-  // }, []);
-
   useEffect(() => {
     const intervalId = setInterval(checkNewMessagesT, 5000);
 

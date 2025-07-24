@@ -85,7 +85,6 @@ const CpInfo: React.FC<{
           <p>
             {cpData.priceIndex.split(",")[3]} | {cpData.lS}
           </p>
-          <p>mP: {cpData.minPer}</p>
           <p>ozDelSum: Rub | ozInDelSum: {ozInDelSum} Rub</p>
           <p>fS: {`[ ${freeSlotz.join(", ")} ]`}</p>
         </>

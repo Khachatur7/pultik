@@ -11,13 +11,6 @@ import axios from "@/axios";
 import { MultiType } from "@/components/GridButton/CircleModalComponent";
 import { dataFilterHandler } from "@/handlers";
 import { Link, useParams } from "react-router-dom";
-import boxImage from "@/images/boxX.png";
-import addImage from "@/images/add.png";
-import chartPageImage from "@/images/chart-page-icon.png";
-import eyeImage from "@/images/eyePng.png";
-import roiImage from "@/images/roi.png";
-import problemsP from "@/images/new.jpg";
-import houseImage from "@/images/house.png";
 import upDownImage from "@/images/upDown.png";
 import { InputTypes, ButtonItemType, LastButtonType } from "@/types/common";
 import { minusButtons, plusButtons } from "@/common";
@@ -41,6 +34,15 @@ import CpInfo from "@/components/CpInfo";
 import BttnsInfo from "@/components/BttnsInfo";
 import Bots from "@/components/Bots";
 import BttnsSearcher from "@/components/BttnsSearcher";
+import AddSVG from "@/components/SVGcomponents/AddSVG";
+import BoxSVG from "@/components/SVGcomponents/BoxSVG";
+import ChartSVG from "@/components/SVGcomponents/ChartSVG";
+import RoiSVG from "@/components/SVGcomponents/RoiSVG";
+import EyeSVG from "@/components/SVGcomponents/EyeSVG";
+import ListSVG from "@/components/SVGcomponents/ListSVG";
+import HouseSVG from "@/components/SVGcomponents/HouseSVG";
+import TwoMenSVG from "@/components/SVGcomponents/TwoMenSVG";
+import TimesSVG from "@/components/SVGcomponents/TimesSVG";
 interface IChart {
   aS: number;
   aSp: number;
@@ -876,43 +878,43 @@ const MainPage = () => {
               to={"/save-sell"}
               className={`btn btn__changing-item flex items-center justify-center`}
             >
-              <img src={boxImage} alt="box-image" className="w-12" />
+              <BoxSVG width="45px" />
             </Link>
             <Link
               to={"/create-button"}
               className={`btn btn__changing-item flex items-center justify-center`}
             >
-              <img src={addImage} alt="box-image" className="w-12" />
+              <AddSVG width="45px" />
             </Link>
             <Link
               to={"/charts"}
               className={`btn btn__changing-item flex items-center justify-center`}
             >
-              <img src={chartPageImage} alt="box-image" className="w-12" />
+              <ChartSVG width="40px" />
             </Link>
             <Link
               to={"/charts2"}
               className={`btn btn__changing-item flex items-center justify-center`}
             >
-              <img src={roiImage} alt="roi-image" className="w-12" />
+              <RoiSVG width="45px" />
             </Link>
             <Link
               to={"/watch"}
               className={`btn btn__changing-item flex items-center justify-center`}
             >
-              <img src={eyeImage} alt="box-image" className="w-16" />
+              <EyeSVG width="60px" height="55px" />
             </Link>
             <Link
               to={"/problems"}
               className={`btn btn__changing-item flex items-center justify-center`}
             >
-              <img src={problemsP} alt="box-image" className="w-16" />
+              <ListSVG width="70px" height="40px" />
             </Link>
             <Link
               to={"/new"}
               className={`btn btn__changing-item flex items-center justify-center`}
             >
-              <img src={houseImage} alt="box-image" className="w-16" />
+              <HouseSVG width="45px" />
             </Link>
           </div>
         </>
@@ -1352,52 +1354,7 @@ const MainPage = () => {
                   to={"/ending-good"}
                   className="btn btn__changing-item flex items-center justify-center bttn"
                 >
-                  <svg
-                    version="1.0"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="45"
-                    height="45"
-                    viewBox="0 0 900 1000"
-                    preserveAspectRatio="xMidYMid meet"
-                  >
-                    <g
-                      transform="translate(0.000000,900.000000) scale(0.100000,-0.100000)"
-                      fill="#000000"
-                      stroke="none"
-                    >
-                      <path
-                        d="M1470 8263 c0 -230 2 -250 20 -281 11 -18 34 -41 52 -52 31 -19 51
--20 295 -20 l262 0 5 -32 c3 -18 7 -120 11 -227 12 -441 80 -864 195 -1226
-141 -443 332 -762 720 -1205 271 -310 350 -429 391 -587 38 -149 22 -339 -42
--502 -64 -160 -136 -280 -441 -733 -217 -323 -336 -521 -438 -733 -238 -489
--361 -999 -383 -1590 l-2 -60 -270 -5 c-390 -7 -373 8 -376 -355 l-1 -240
-2848 0 2849 0 0 240 c0 223 -1 242 -20 275 -42 70 -60 74 -345 80 l-255 5 -7
-155 c-23 540 -157 1058 -394 1530 -129 258 -229 419 -536 870 -206 303 -287
-449 -351 633 -30 87 -31 100 -32 242 0 131 3 159 23 219 55 163 115 250 403
-578 254 289 383 474 515 733 81 161 98 201 160 375 84 241 150 536 189 855 4
-28 8 61 10 75 4 32 23 334 31 503 l6 127 245 0 c260 0 274 2 320 52 36 39 42
-91 40 323 l-2 220 -2847 3 -2848 2 0 -247z m4662 -553 c-12 -779 -196 -1481
--520 -1980 -95 -147 -289 -396 -414 -530 -340 -367 -443 -605 -384 -887 42
--198 114 -333 433 -810 336 -505 416 -644 600 -1051 34 -76 116 -325 149 -451
-74 -287 112 -537 130 -868 l7 -123 -137 0 c-133 0 -138 1 -144 22 -20 78 -111
-206 -219 309 -127 122 -194 163 -583 361 -461 236 -554 294 -617 391 -23 35
--57 96 -74 135 -18 40 -37 72 -43 72 -6 0 -35 -50 -65 -110 -58 -120 -99 -169
--185 -224 -31 -20 -58 -36 -60 -36 -2 0 -50 -26 -107 -58 -57 -32 -223 -120
--369 -194 -146 -75 -283 -147 -305 -159 -197 -116 -356 -276 -433 -437 l-35
--73 -111 3 -111 3 3 105 c13 553 162 1138 410 1620 127 246 235 423 473 770
-305 448 394 617 430 824 14 85 7 240 -16 316 -43 144 -154 306 -419 607 -169
-192 -254 304 -386 503 -17 26 -54 92 -113 201 -168 311 -309 811 -357 1269 -6
-58 -13 123 -16 145 -8 57 -23 518 -17 528 2 4 815 6 1806 5 l1802 -3 -3 -195z"
-                      />
-                      <path
-                        d="M3070 6260 c0 -41 219 -297 754 -880 262 -285 369 -414 400 -482 39
--86 66 -206 91 -408 19 -150 34 -222 44 -216 7 5 14 42 46 277 47 338 69 377
-425 769 68 74 160 175 204 224 45 49 129 142 188 205 193 210 430 502 417 515
--2 2 -38 -16 -79 -40 -191 -113 -446 -224 -645 -282 -353 -104 -766 -104
--1120 -1 -225 66 -458 170 -692 311 -22 13 -33 15 -33 8z"
-                      />
-                    </g>
-                  </svg>
+                  <TimesSVG />
                 </Link>
               </div>
               <div className="bttn_list_column">
@@ -1414,62 +1371,10 @@ const MainPage = () => {
                   to={"/t-page-two"}
                   className="btn btn__changing-item flex items-center justify-center bttn"
                 >
-                  <svg
-                    version="1.0"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="78"
-                    height="33"
-                    viewBox="0 0 1200.000000 630.000000"
-                    preserveAspectRatio="xMidYMid meet"
-                  >
-                    <g
-                      transform="translate(0.000000,630.000000) scale(0.100000,-0.100000)"
-                      fill="#000000"
-                      stroke="none"
-                    >
-                      <path
-                        d="M3276 6259 c-185 -53 -328 -188 -393 -372 -22 -61 -26 -90 -26 -187
-0 -99 3 -124 25 -182 71 -188 197 -310 388 -374 41 -14 83 -18 170 -17 104 0
-122 3 195 32 337 132 477 517 301 831 -41 73 -147 178 -221 218 -130 71 -301
-90 -439 51z"
-                      />
-                      <path
-                        d="M8415 6260 c-99 -27 -180 -74 -255 -150 -115 -114 -171 -251 -171
--410 0 -241 146 -451 376 -541 73 -29 91 -32 195 -32 87 -1 129 3 170 17 191
-64 317 186 388 374 22 58 25 83 25 182 0 97 -4 126 -26 187 -104 292 -406 453
--702 373z"
-                      />
-                      <path
-                        d="M3351 4910 c-30 -5 -91 -27 -136 -49 -119 -59 -199 -150 -251 -287
--17 -46 -19 -99 -22 -868 -2 -552 1 -843 8 -890 17 -110 67 -207 150 -286 l70
--67 2 -1135 3 -1135 36 -54 c73 -110 216 -151 334 -95 58 27 94 63 127 126
-l23 45 5 1130 5 1130 63 60 c47 44 74 80 105 144 l42 84 5 539 5 538 87 -53
-c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
-0 -78 -7 -116 -16 -96 -23 -279 -23 -363 0 -216 60 -384 201 -568 476 -118
-176 -248 278 -383 300 -71 11 -80 11 -158 0z"
-                      />
-                      <path
-                        d="M8482 4909 c-122 -21 -260 -129 -367 -289 -114 -172 -185 -255 -293
--341 -83 -67 -188 -120 -283 -143 -83 -20 -270 -21 -364 -1 -96 20 -161 19
--215 -6 -59 -27 -86 -53 -118 -114 -52 -101 -28 -224 60 -300 69 -59 244 -95
-456 -95 244 1 445 54 630 167 l87 53 5 -538 5 -539 42 -84 c31 -64 58 -100
-105 -144 l63 -60 5 -1130 5 -1130 23 -45 c33 -63 69 -99 127 -126 118 -56 261
--15 334 95 l36 54 3 1135 2 1135 70 67 c83 79 133 176 150 286 7 47 10 338 8
-890 -4 901 0 843 -65 960 -70 124 -214 224 -353 244 -74 11 -86 11 -158 -1z"
-                      />
-                      <path
-                        d="M4765 4845 c-5 -2 -22 -6 -37 -9 -34 -8 -94 -59 -116 -100 -22 -43
--32 -377 -11 -403 12 -14 31 -15 174 -7 259 13 297 11 370 -25 163 -81 260
--282 227 -473 -24 -136 -114 -258 -235 -318 -81 -40 -254 -75 -415 -85 -143
--8 -139 -4 -129 -131 9 -115 59 -183 154 -205 57 -13 1291 -11 1353 2 61 13
-106 49 131 104 17 38 19 83 19 768 0 633 -2 732 -15 764 -20 48 -41 70 -90 97
--37 20 -57 21 -293 24 -181 3 -257 0 -267 -8 -11 -9 -14 -43 -13 -152 0 -109
--3 -142 -13 -149 -20 -12 -246 -11 -270 1 -17 10 -19 23 -19 154 0 122 -2 145
--16 150 -16 6 -471 7 -489 1z"
-                      />
-                    </g>
-                  </svg>
-                  {localStorage.getItem("read-messages-two")}
+                  <TwoMenSVG />
+                  <div className="no_read_mess">
+                    {localStorage.getItem("read-messages-two")}
+                  </div>
                 </Link>
               </div>
               <div className="bttn_list_column">
@@ -1498,47 +1403,43 @@ c185 -113 386 -166 630 -167 212 0 387 36 456 95 173 149 69 435 -159 435 -26
                   to={"/save-sell"}
                   className={`btn btn__changing-item flex items-center justify-center bttn`}
                 >
-                  <img src={boxImage} alt="box-image" className="w-12" />
+                  <BoxSVG width="45px" />
                 </Link>
                 <Link
                   to={"/create-button"}
                   className={`btn btn__changing-item flex items-center justify-center bttn`}
                 >
-                  <img src={addImage} alt="box-image" className="w-12" />
+                  <AddSVG width="45px" />
                 </Link>
                 <Link
                   to={"/charts"}
                   className={`btn btn__changing-item flex items-center justify-center bttn`}
                 >
-                  <img src={chartPageImage} alt="box-image" className="w-12" />
+                  <ChartSVG width="40px" />
                 </Link>
                 <Link
                   to={"/charts2"}
                   className={`btn btn__changing-item flex items-center justify-center bttn`}
                 >
-                  <img src={roiImage} alt="roi-image" className="w-12" />
+                  <RoiSVG width="45px" />
                 </Link>
                 <Link
                   to={"/watch"}
                   className={`btn btn__changing-item flex items-center justify-center bttn`}
                 >
-                  <img src={eyeImage} alt="box-image" className="w-16" />
+                  <EyeSVG width="60px" height="55px" />
                 </Link>
                 <Link
                   to={"/problems"}
                   className={`btn btn__changing-item flex items-center justify-center bttn`}
                 >
-                  <img
-                    src={problemsP}
-                    alt="box-image"
-                    style={{ width: "80px" }}
-                  />
+                  <ListSVG width="70px" height="40px" />
                 </Link>
                 <Link
                   to={"/new"}
                   className={`btn btn__changing-item flex items-center justify-center bttn`}
                 >
-                  <img src={houseImage} alt="box-image" className="w-12" />
+                  <HouseSVG width="45px" />
                 </Link>
                 <Link
                   to={"/t-page"}
