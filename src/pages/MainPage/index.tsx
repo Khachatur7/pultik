@@ -155,6 +155,7 @@ const MainPage = () => {
   const [bottomLeftModale, setBottomLeftModale] = useState("");
   const [answers, setAnswers] = useState<string[]>([]);
   const readMessages = localStorage.getItem("read-messages");
+  const readMessagesTwo = localStorage.getItem("read-messages-two");
   const allMessages = localStorage.getItem("messages");
   const allOMessages = localStorage.getItem("o-messages");
   const readOMessages = localStorage.getItem("read-o-messages");
@@ -1373,7 +1374,10 @@ const MainPage = () => {
                 >
                   <TwoMenSVG />
                   <div className="no_read_mess">
-                    {localStorage.getItem("read-messages-two")}
+                    {readMessagesTwo && +readMessagesTwo > 99
+                      ? "99+"
+                      : readMessagesTwo}
+                      
                   </div>
                 </Link>
               </div>
