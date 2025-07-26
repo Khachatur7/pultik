@@ -11,7 +11,7 @@ const divNum = division?division:0.1
       <div
         className="change_count_bttn"
         onClick={() =>
-          +state > 0 ? setState((+state - divNum).toFixed(1)?.toString()) : 0
+          +state > 0 ? setState((+state - divNum).toFixed(divNum==1?0:1)?.toString()) : 0
         }
       >
         <svg
@@ -32,7 +32,7 @@ const divNum = division?division:0.1
       </div>
       <div
         className="change_count_bttn"
-        onClick={() => setState((+state + divNum).toFixed(1)?.toString())}
+        onClick={() => setState((+state + divNum).toFixed(divNum==1?0:1)?.toString())}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

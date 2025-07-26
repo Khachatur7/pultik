@@ -133,7 +133,7 @@ const PriceInputs = () => {
               : ""
           }
         />
-        <ChangeCountBttns state={actField} setState={setActField}/>
+        <ChangeCountBttns state={actField} setState={setActField} division={1}/>
       </div>
       <div className="field">
         <span>Pas:</span>{" "}
@@ -146,52 +146,7 @@ const PriceInputs = () => {
               : ""
           }
         />
-        <ChangeCountBttns state={pasField} setState={setPasField}/>
-
-        <div className="change_count">
-          <div
-            className="change_count_bttn"
-            onClick={() =>
-              +pasField > 0 ? setPasField((+pasField - 1)?.toString()) : 0
-            }
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-            >
-              <path
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="m6 10l6 6l6-6"
-              ></path>
-            </svg>
-          </div>
-          <div
-            className="change_count_bttn"
-            onClick={() => setPasField((+pasField + 1)?.toString())}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-            >
-              <path
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="m4 15l8-8l8 8"
-              ></path>
-            </svg>
-          </div>
-        </div>
+        <ChangeCountBttns state={pasField} setState={setPasField} division={1}/>
       </div>
       <div className="additionall_details">
         <div className="all_price">{fieldsCount} %</div>

@@ -301,15 +301,15 @@ body {
   transform: rotate(-45deg);
 
   path {
-    stroke: #7ee41f;
-    fill: #7ee41f;
+    stroke: #6cc41b;
+    fill: #6cc41b;
   }
 }
 
 .btn:hover .w_sign {
   path {
-    stroke: #7ee41f !important;
-    fill: #7ee41f !important;
+    stroke: #6cc41b !important;
+    fill: #6cc41b !important;
   }
 }
 
@@ -503,16 +503,14 @@ body {
     height: 100%;
 
     .message {
-      width: 90%;
-      min-height: 160px;
       padding: 5px 10px;
       background: #fffffffa;
       border-radius: 15px;
       display: flex;
       flex-direction: column;
       align-items: start;
-      justify-content: space-between;
-      font-size: 47px;
+      justify-content: start;
+      font-size: 37px;
 
       .data {
         font-size: 30px;
@@ -524,6 +522,13 @@ body {
       align-items: center;
       justify-content: space-between;
       gap: 20px;
+
+      .message {
+        width: 90%;
+        min-height: 160px;
+        justify-content: space-between;
+        font-size: 47px;
+      }
 
       .bought_bttn {
         width: 10%;
@@ -2869,7 +2874,7 @@ body {
 body {
   width: 100vw;
   height: 100vh;
-  background: #7ee41f;
+  background: #6cc41b;
 }
 
 .container {

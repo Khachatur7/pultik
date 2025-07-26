@@ -1364,21 +1364,26 @@ const MainPage = () => {
                   className="btn btn__changing-item flex items-center justify-center bttn"
                 >
                   O{" "}
-                  {allOMessages && readOMessages
-                    ? +allOMessages - +readOMessages
-                    : 0}
+                  {allOMessages && readOMessages && +allOMessages - +readOMessages>0 ? (
+                    <div className="no_read_mess">
+                      {+allOMessages - +readOMessages > 99
+                        ? "99+"
+                        : +allOMessages - +readOMessages}
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </Link>
                 <Link
                   to={"/t-page-two"}
                   className="btn btn__changing-item flex items-center justify-center bttn"
                 >
                   <TwoMenSVG />
-                  <div className="no_read_mess">
-                    {readMessagesTwo && +readMessagesTwo > 99
-                      ? "99+"
-                      : readMessagesTwo}
-                      
-                  </div>
+                  {readMessagesTwo && +readMessagesTwo > 0 && (
+                    <div className="no_read_mess">
+                      {+readMessagesTwo > 99 ? "99+" : readMessagesTwo}
+                    </div>
+                  )}
                 </Link>
               </div>
               <div className="bttn_list_column">
@@ -1450,9 +1455,15 @@ const MainPage = () => {
                   className="btn btn__changing-item flex items-center justify-center bttn"
                 >
                   T{" "}
-                  {allMessages && readMessages
-                    ? +allMessages - +readMessages
-                    : 0}
+                   {allMessages && readMessages && +allMessages - +readMessages>0 ? (
+                    <div className="no_read_mess">
+                      {+allMessages - +readMessages > 99
+                        ? "99+"
+                        : +allMessages - +readMessages}
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </Link>
                 <Link
                   to={"/d-page"}
