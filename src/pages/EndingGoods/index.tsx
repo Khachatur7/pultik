@@ -8,6 +8,7 @@ interface IMessage {
   _id: string;
   sku: string;
   fStocks:number
+  buyed:boolean
 }
 
 const EndingGoods = () => {
@@ -16,7 +17,6 @@ const EndingGoods = () => {
   const endOfMessagesRef = useRef<HTMLDivElement>(null);
   const readMessages = localStorage.getItem("ending-good-m");
   const [newMessagesIndex, setNewMessagesIndex] = useState(0);
-
   const getMessages = async () => {
     try {
       const res = await axios.post("/endingGoods", {
@@ -97,6 +97,7 @@ const EndingGoods = () => {
       <div className="decr_page">
         <div className="messages">
           {messages.map((m, ind) => {
+            const buyed = m.buyed?"buyed":""
             if (ind == newMessagesIndex) {
               return (
                 <>
@@ -105,7 +106,7 @@ const EndingGoods = () => {
                     <div
                       className={`message ${
                         m.massage.length > 90 ? "small_text" : ""
-                      }`}
+                      } ${checkColor(m.fStocks)} ${buyed}`}
                     >
                       <div className="text">
                         {ind + 1}. {m.massage}
@@ -114,7 +115,7 @@ const EndingGoods = () => {
                     </div>
                     <div
                       className={`bought_bttn`}
-                      onClick={() => GoodToBuy(m.sku)}
+                      onClick={() => !buyed?GoodToBuy(m.sku):""}
                     >
                       <span>Купил!</span>
                     </div>
@@ -124,11 +125,11 @@ const EndingGoods = () => {
             } else {
               return (
                 <>
-                  <div className="message_content" key={m._id}>
+                  <div className="message_content"  key={m._id}>
                     <div
                       className={`message ${
                         m.massage.length > 90 ? "small_text" : ""
-                      } ${checkColor(m.fStocks)}`}
+                      } ${checkColor(m.fStocks)} ${buyed}`}
                     >
                       <div className="text">
                         {ind + 1}. {m.massage}
@@ -137,7 +138,7 @@ const EndingGoods = () => {
                     </div>
                     <div
                       className={`bought_bttn`}
-                      onClick={() => GoodToBuy(m.sku)}
+                      onClick={() =>  !buyed?GoodToBuy(m.sku):""}
                     >
                       <span>Купил!</span>
                     </div>
