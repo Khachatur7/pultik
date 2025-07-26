@@ -7,6 +7,7 @@ interface IMessage {
   moment: string;
   _id: string;
   sku: string;
+  fStocks:number
 }
 
 const EndingGoods = () => {
@@ -15,6 +16,7 @@ const EndingGoods = () => {
   const endOfMessagesRef = useRef<HTMLDivElement>(null);
   const readMessages = localStorage.getItem("ending-good-m");
   const [newMessagesIndex, setNewMessagesIndex] = useState(0);
+
   const getMessages = async () => {
     try {
       const res = await axios.post("/endingGoods", {
@@ -33,6 +35,16 @@ const EndingGoods = () => {
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const checkColor = (fStocks: number) => {
+    if (!fStocks) {
+      return "grid_bttn_red";
+    } else if (fStocks == 1) {
+      return "grid_bttn_yellow";
+    } else if (fStocks == 2) {
+      return "grid_bttn_blue";
     }
   };
 
@@ -116,7 +128,7 @@ const EndingGoods = () => {
                     <div
                       className={`message ${
                         m.massage.length > 90 ? "small_text" : ""
-                      }`}
+                      } ${checkColor(m.fStocks)}`}
                     >
                       <div className="text">
                         {ind + 1}. {m.massage}

@@ -524,10 +524,12 @@ body {
       gap: 20px;
 
       .message {
+        border-radius: 30px;
         width: 90%;
         min-height: 160px;
         justify-content: space-between;
         font-size: 47px;
+        color: #fff;
       }
 
       .bought_bttn {
@@ -4496,21 +4498,21 @@ body {
 }
 
 .grid_bttn_yellow {
-  background: #cdcd44;
+  background: #cdcd44 !important;
 }
 
 .grid_bttn_red {
-  background: red;
+  background: red !important;
 }
 
 .grid_bttn_black {
-  background: black;
+  background: black !important;
 }
 
 .grid_bttn_green {
-  background: green;
+  background: green !important;
 }
 
 .grid_bttn_blue {
-  background: blue;
+  background: blue !important;
 }
